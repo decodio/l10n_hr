@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="fiskal_hr_user_defaults" model="ir.ui.view">
+            <field name="name">fiskal_hr_user_defaults</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form" />
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="CRO - Fiskal defaults">
+                    <group>
+                    <field name="journal_id" />
+                    <field name="prostor_id" />
+                    <field name="uredjaj_id" />
+                    <field name="double_check" />
+                    <field name="journals" />
+                    <field name="uredjaji" >
+                        <tree string="uredjaji">
+               
+                            <field name="prostor_id"/>
+                            <field name="name"/>
+                        </tree>
+                    
+                    </field>
+                    </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>
+                

@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_l10n_hr_porez_account_manager","l10n_hr_porez_account_manager","model_l10n_hr_porez","account.group_account_manager",1,1,1,1
+"access_l10n_hr_pdv_line_account_manager","l10n_hr_pdv_line_account_manager","model_l10n_hr_pdv_line","account.group_account_manager",1,1,1,1
+"access_l10n_hr_pdvs_line_account_manager","l10n_hr_pdvs_line_account_manager","model_l10n_hr_pdvs_line","account.group_account_manager",1,1,1,1
+"access_l10n_hr_pdvzp_line_account_manager","l10n_hr_pdvzp_line_account_manager","model_l10n_hr_pdvzp_line","account.group_account_manager",1,1,1,1

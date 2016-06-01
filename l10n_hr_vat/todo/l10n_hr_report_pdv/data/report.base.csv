@@ -1,0 +1,5 @@
+"id","name","code","parent_id/id","type","name_construct"
+"pdv","Obrazac PDV","PDV",,"root","desc"
+"pdvs","Obrazac PDV-S","PDV-S",,"root","desc"
+"zp","Obrazac ZP","ZP",,"root","desc"
+

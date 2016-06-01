@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"fiskal_prostor_full_access","fiskal_prostor_full_access","model_fiskal_prostor","account.group_account_manager","1","1","1","1"
+"fiskal_prostor_user_access","fiskal_prostor_user_access","model_fiskal_prostor","base.group_user","1","0","0","0"
+"fiskal_uredjaj_full_access","fiskal_uredjaj_full_access","model_fiskal_uredjaj","account.group_account_manager","1","1","1","1"
+"fiskal_uredjaj_user_access","fiskal_uredjaj_user_access","model_fiskal_uredjaj","base.group_user","1","0","0","0"
+"fiskal_log_user_access","fiskal_log_user_access","model_fiskal_log","base.group_user","1","0","0","0"

@@ -1,0 +1,22 @@
+id,name,code,country_id:id
+state_hr_1,Županija Zagrebačka,1,base.hr
+state_hr_2,Županija Krapinsko-Zagorska,2,base.hr
+state_hr_3,Županija Sisačko-Moslavačka,3,base.hr
+state_hr_4,Županija Karlovačka,4,base.hr
+state_hr_5,Županija Varaždinska,5,base.hr
+state_hr_6,Županija Koprivničko-Križevačka,6,base.hr
+state_hr_7,Županija Bjelovarsko-Bilogorska,7,base.hr
+state_hr_8,Županija Primorsko-Goranska,8,base.hr
+state_hr_9,Županija Ličko-Senjska,9,base.hr
+state_hr_10,Županija Virovitičko-Podravska,10,base.hr
+state_hr_11,Županija Požeško-Slavonska,11,base.hr
+state_hr_12,Županija Brodsko-Posavska,12,base.hr
+state_hr_13,Županija Osječko-Baranjska,13,base.hr
+state_hr_14,Županija Zadarska,13,base.hr
+state_hr_15,Županija Šibensko-Kninska,14,base.hr
+state_hr_16,Županija Vukovarsko-Srijemska,15,base.hr
+state_hr_17,Županija Splitsko-Dalmatinska,15,base.hr
+state_hr_18,Županija Istarska,16,base.hr
+state_hr_19,Županija Dubrovačko-Neretljanska,19,base.hr
+state_hr_20,Županija Međimurska,20,base.hr
+state_hr_21,Grad Zagreb,21,base.hr

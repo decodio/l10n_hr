@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report id="l10n_hr_pdv_form"
+                string="PDV obrazac"
+                model="l10n.hr.porez"
+                name="pdv"
+                rml="l10n_hr_report_pdv/report/pdv.rml"
+                auto="False"
+                header="False"
+        />
+        <report id="l10n_hr_pdvs_form"
+                string="PDV-S obrazac"
+                model="l10n.hr.porez"
+                name="pdvs"
+                rml="l10n_hr_report_pdv/report/pdvs.rml"
+                auto="False"
+                header="False"  
+        />
+        <report id="l10n_hr_pdvzp_form"
+                string="PDV-ZP obrazac"
+                model="l10n.hr.porez"
+                name="pdvzp"
+                rml="l10n_hr_report_pdv/report/pdvzp.rml"
+                auto="False"
+                header="False"  
+        />
+    </data>
+</openerp>

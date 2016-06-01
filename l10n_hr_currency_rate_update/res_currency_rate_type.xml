@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="res.currency.rate.type" id="res_currency_rate_type_ask">
+            <field name="name">Ask rate</field>
+            <field name="code">ask_rate</field>
+        </record>
+
+        <record model="res.currency.rate.type" id="res_currency_rate_type_bid">
+            <field name="name">Bid rate</field>
+            <field name="code">bid_rate</field>
+        </record>
+
+        <record model="res.currency.rate.type" id="res_currency_rate_type_middle">
+            <field name="name">Middle rate</field>
+            <field name="code">middle_rate</field>
+        </record>
+
+        <!--record forcecreate="True" id="decimal_currency_rate" model="decimal.precision">
+            <field name="name">Currency rate</field>
+            <field name="digits" eval="6"/>
+        </record-->
+
+    </data>
+</openerp>

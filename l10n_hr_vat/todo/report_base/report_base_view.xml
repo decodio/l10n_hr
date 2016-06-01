@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!-- HR REPORTI -->
+		<record id="report_base_tree_view" model="ir.ui.view">
+			<field name="name">Report overview</field>
+			<field name="model">report.base</field>
+			<field name="priority">16</field>
+			<field name="arch" type="xml">
+				<tree string="HR Izvjestaji" >	
+					<field name="name" />
+					<field name="code" />
+					<field name="type" />
+					<field name="parent_id"/>					
+				</tree>
+			</field>
+		</record>
+		<record id="report_base_form_view" model="ir.ui.view">
+			<field name="name">Report </field>
+			<field name="model">report.base</field>
+			<field name="priority">16</field>
+			<field name="arch" type="xml">
+				<form string="Reports" version="7.0" >
+					<group>
+					<field name="name" />
+					<field name="code" />
+					<field name="type" />				
+					<field name="parent_id" attrs="{'invisible':[('type','=','root')]}"/>
+					<field name="name_construct"/>				
+					</group>
+					<notebook>
+						<page string="Sub reports" attrs="{'invisible':[('child_ids','=',[])]}">
+							<field name="child_ids"/>
+						</page>
+						<page string="Lines" attrs="{'invisible':[('line_ids','=',[])]}">
+							<field name="line_ids"/>
+						</page>
+					</notebook>					
+				</form>
+			</field>
+		</record>
+		<record id="report_base_action" model="ir.actions.act_window">
+			<field name="name">HR Izvjestaji</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">report.base</field>
+			<field name="view_mode">tree,form</field>		
+			<field name="view_id" ref="report_base_tree_view"/>
+		</record>
+		<menuitem id="menu_report_base_menu"
+			  action="report_base_action"
+			  name="Reports base"
+			  parent="base.menu_res_company_global"
+			  sequence="66"/>
+    
+		<!-- REPORT LINES -->
+		<record id="report_base_line_tree_view" model="ir.ui.view">
+			<field name="name">report lines</field>
+			<field name="model">report.base.line</field>
+			<field name="priority">16</field>
+			<field name="arch" type="xml">
+				<tree string="Report lines" >
+					<field name="report_id" invisible="1"/>
+					<field name="sequence" invisible="1"/>
+					<field name="parent_id" invisible="1"/>
+					<field name="code" />
+					<field name="description"/>
+                    <field name="type" />
+                    <field name="special" />					
+				</tree>
+			</field>
+		</record>
+		<record id="report_base_line_form_view" model="ir.ui.view">
+			<field name="name">Report lines</field>
+			<field name="model">report.base.line</field>
+			<field name="priority">16</field>
+			<field name="arch" type="xml">
+				<form string="Report line" version="7.0" >
+					<group>
+					<field name="report_id"/>
+					<field name="parent_id"/>
+					<field name="code" />
+                    <field name="special" />
+					<field name="description"/>
+					<field name="help"/>
+					<field name="type" />
+					<field name="required"/>				
+					</group>
+					
+				</form>
+			</field>
+		</record>	
+
+	
+	</data>
+</openerp>

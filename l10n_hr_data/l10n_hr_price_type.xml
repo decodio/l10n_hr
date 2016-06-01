@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="product.list_price" model="product.price.type">
+            <field name="currency_id" ref="base.HRK"/>
+        </record>
+
+        <record model="product.price.type" id="product.standard_price">
+            <field name="currency_id" ref="base.HRK"/>
+        </record>
+
+    </data>
+</openerp>
+

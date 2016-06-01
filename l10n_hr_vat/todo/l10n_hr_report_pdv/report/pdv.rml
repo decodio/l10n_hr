@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<document filename="Obrazac_PDV.pdf">
+  <template title="PDV" author="DATACOM d.o.o." allowSplitting="20">
+    <pageTemplate id="first">
+      <!-- A4 = 21cm x 29,7cm -->
+      <frame id="first" x1="1cm" y1="0.5cm" width="19.5cm" height="29.2cm"/>
+    </pageTemplate>
+  </template>
+  
+  <stylesheet>
+    <blockTableStyle id="Zaglavlje">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockLeading value="7" />
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+   
+    <blockTableStyle id="Obrazac">
+      <blockFont name="Helvetica" />
+      <lineStyle kind="LINEBEFORE" colorName="black" start="0,0" stop="0,-1" /> <!--ljevi rub -->
+      <lineStyle kind="LINEAFTER" colorName="black" start="2,0" stop="2,-1" /> <!-- desni rub --> 
+      <blockValign value="TOP"/>
+      <blockBottomPadding lenght="10" />
+      <blockTopPadding lenght="10" />         
+    </blockTableStyle>
+    
+    <blockTableStyle id="ObrazacBold">
+      <blockFont name="Helvetica-Bold" />
+      <lineStyle kind="LINEBEFORE" colorName="black" start="0,0" stop="0,-1" /> <!--ljevi rub -->
+      <lineStyle kind="LINEAFTER" colorName="black" start="2,0" stop="2,-1" /> <!-- desni rub --> 
+      <lineStyle kind="LINEABOVE" colorName="black" start="0,0" stop="-1,0" />
+      <lineStyle kind="LINEBELOW" colorName="black" start="0,0" stop="-1,0" />     
+      <blockValign value="CENTER"/>
+      <blockBottomPadding lenght="10" />
+      <blockTopPadding lenght="10" />   
+    </blockTableStyle>
+    
+    <initialize>
+      <paraStyle name="all" fontName="Helvetica" alignment="LEFT"/>
+    </initialize>
+  
+    <paraStyle name="none" fontSize="2" /><!-- usage: repeatIn... -->
+    <paraStyle name="Bold_8_R" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="RIGHT" />
+    <paraStyle name="Bold_8_C" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" />
+    <paraStyle name="Bold_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" />     
+    <paraStyle name="Norm_8" fontSize="8.0" leading="9" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Norm_8_C" alignment="CENTER" fontSize="8.0" leading="9" spaceBefore="0.2" spaceAfter="0.2"/>  
+    <paraStyle name="Norm_8_R" alignment="RIGHT" fontSize="8.0" leading="9" spaceBefore="0.2" spaceAfter="0.2"/>
+    <paraStyle name="Odmaknuti_20" fontSize="8.0" leading="9" spaceBefore="20.0" spaceAfter="0.0" /> 
+  </stylesheet>
+  
+  <story>
+      <para style="none">[[ repeatIn(objects,'o') ]] </para>
+      <para style="none">[[ setLang('hr_HR')  ]]</para> 
+      
+      <para style="Bold_8_R"> Obrazac PDV </para>
+      
+      <blockTable colWidths="6.5cm,6.5cm,6.5cm" style="Zaglavlje">
+      <tr>
+        <td><para style="Norm_8_C">POREZNI OBVEZNIK</para></td>
+        <td><para style="Norm_8_C">POREZNI ZASTUPNIK</para></td>
+        <td><para style="Norm_8_C">NADLEŽNA ISPOSTAVA POREZNE UPRAVE</para></td>
+      </tr>
+      <tr>
+        <td><para style="Bold_8_C"> [[ company.partner_id.name ]] 
+                            <!--DB: moramo koristiti street2 jer u njega zapisujemo kućni broj - veza joppd !-->
+          				   [[ company.partner_id.street ]] [[ company.partner_id.street2 and company.partner_id.street2 or '' ]], 
+                           [[ company.partner_id.zip ]] [[ company.partner_id.city ]] 
+          				    </para></td>
+        <td><para style="Norm_8"></para></td>
+        <td><para style="Norm_8_C"><b>[[ company.porezna ]]
+                                </b>(šifra:[[ company.porezna_code ]])</para></td>
+      </tr>
+      <tr>
+        <td><para style="Norm_8_C">PDV IDENTIFIKACIJSKI BROJ/OIB</para></td>
+        <td><para style="Norm_8_C">PDV IDENTIFIKACIJSKI BROJ POREZNOG ZASTUPNIKA/OIB </para></td>
+        <td><para style="Norm_8_C">PRIJAVA PDV-A ZA RAZDOBLJE:</para></td>
+      </tr>
+      <tr>
+        <td><para style="Bold_8_C">[[ company.partner_id.vat ]]</para></td>
+        <td><para style="Norm_8"></para></td>
+        <td><para style="Bold_8_C">od [[ formatLang(o.date_start, date=True) ]] do [[ formatLang(o.date_stop, date=True) ]] </para></td>
+      </tr>
+    </blockTable>
+    
+    <blockTable colWidths="11.5cm,4cm,4cm" style="Zaglavlje">
+       <tr>
+        <td><para style="Norm_8_C">OPIS</para></td>
+        <td><para style="Norm_8_C">POREZNA OSNOVICA</para></td>
+        <td><para style="Norm_8_C">PDV PO STOPI 
+                                   5%, 13% i 25%</para></td>
+      </tr>
+  	</blockTable>
+  	
+  	<section>
+    <para style="none">[[repeatIn(o.pdv_lines,'p')]]</para>
+  	<blockTable colWidths="11.5cm,4cm,4cm" style="Obrazac">
+  	  <tr>            
+        <td><para style="none">
+          [[ p.position.code in ['o01','100','200','300','PDV_4','PDV_5','PDV_6','PDV_7'] and setTag('blockTable','blockTable',{'style':'ObrazacBold'}) or setTag('blockTable','blockTable',{'style':'Obrazac'}) ]]
+          [[ p.position.code in ['o01','100','200','300','PDV_4','PDV_5','PDV_6','PDV_7'] and setTag('para','para',{'style':'Bold_8'}) or setTag('para','para',{'style':'Norm_8'}) ]]
+          [[ p.position.description ]]</para></td>
+        <td><para style="none">
+          [[ p.position.code in ['o01','100','200','300','PDV_4','PDV_5','PDV_6','PDV_7'] and setTag('para','para',{'style':'Bold_8_R'}) or setTag('para','para',{'style':'Norm_8_R'}) ]]
+          [[ (p.position.code in ['315','PDV_4','PDV_5','PDV_6','PDV_7'] and 'X X X X X') or (p.osnovica and formatLang(p.osnovica) or '0,00' ) ]]</para></td>
+        <td><para style="none">
+          [[ p.position.code in ['o01','100','200','300','PDV_4','PDV_5','PDV_6','PDV_7'] and setTag('para','para',{'style':'Bold_8_R'}) or setTag('para','para',{'style':'Norm_8_R'}) ]]
+          [[ p.position.code in ['o01','100','101','102','103','104','105','106','107','108','109','110'] and 'X X X X X' or p.porez and p.position.code in ['PDV_4','PDV_5','PDV_6'] and p.porez &lt; 0 and formatLang(p.porez * -1) or p.porez and formatLang(p.porez) or '0,00' ]]</para></td>
+      </tr>
+  	</blockTable>
+  	</section>
+  	
+  	<para style='Odmaknuti_20'>  </para>
+  	<xpre style='Norm_8'>[_]__________________kn                                 [_]____________________kn                                  [_]______________________kn</xpre>
+    <xpre style='Norm_8'>        POVRAT                                                      PREDUJAM                                                        USTUP POVRATA     </xpre>
+    
+    <para style='Odmaknuti_20'> </para>
+    <xpre style='Norm_8'>OBRAČUN SASTAVIO:_____________________            KONTAKT:________________________                POTPIS:________________________
+                                 (ime, prezime i potpis)                           (tel./fax/mail)                                 </xpre>
+  </story>
+</document>

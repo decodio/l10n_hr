@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_cancel_vat_settlement" model="ir.ui.view">
+            <field name="name">Cancel Vat Settlement</field>
+            <field name="model">cancel.vat.settlement</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Taxes Report">
+                <separator string="Taxes Report" colspan="4"/>
+                <label colspan="4" nolabel="1" string="This menu prints a VAT Settlement report for selected period of the fiscal year and cancels VAT Setllement for given period. This process cannot be undone."/>
+                <newline/>
+                <field name="chart_tax_id" widget='selection'/>
+                <field name="fiscalyear_id"/>
+                <separator string="Periods"  colspan="4"/>
+                <field name="period_from"  string="For period" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+				<group  colspan="4">
+			    <separator string="VAT Settlement Accounts" colspan="4"/>
+				</group>
+				<field name="property_cancel_vat_close_journal"/>
+				<field name="closing_date" string = "Cancelation Posting Date"/>
+				<newline/>
+				<field name="property_cancel_vat_account_payable" colspan="1"/>
+				<field name="property_cancel_vat_account_receivable" colspan="1" />
+                <group col="3" colspan="6">
+					<button icon='gtk-cancel' special="cancel"  string="Cancel" />
+					<button name="cancel_vat_settlement" string="Close VAT Statement"  colspan="1" type="object" icon="gtk-ok" confirm="This will post cancelation of  VAT Settlement for given period. This action cannot be undone. Are you sure?"/>
+                </group>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_cancel_vat_settlement" model="ir.actions.act_window">
+            <field name="name">Cancel Vat Settlement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cancel.vat.settlement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+			<field name="view_id" ref="view_cancel_vat_settlement"/>
+            <field name="target">new</field>
+            <field name="help">This menu cancels a VAT settlement for one period of the fiscal year. When cancelation of VAT settlement is done it cannot be undone.</field>
+        </record>
+        
+		<menuitem name="Cancel VAT Settlement"
+            id="menu_action_cancel_vat_settlement"
+            parent="l10n_hr_vat.menu_action_taxes"        
+			action="action_cancel_vat_settlement" 
+			icon="STOCK_PRINT"
+        	sequence="30"/>  
+
+    </data>
+</openerp>

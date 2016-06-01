@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_company_pdv" model="ir.ui.view">
+            <field name="name">res.company.pdv</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="arch" type="xml">
+                <field name="company_registry" position="after">
+                    <field name="porezna" />
+                    <field name="porezna_code" />
+                </field>
+            </field>
+        </record>       
+        <record id="l10n_hr_pdv_tree_view" model="ir.ui.view">       
+            <field name="name">PDV izvještaj</field>
+            <field name="model">l10n.hr.porez</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <tree string="HR Porezni izvjestaji" >  
+                    <field name="state" />
+                    <field name="date" />
+                    <field name="period_start" />
+                    <field name="period_end" />                   
+                </tree>
+            </field>
+        </record>
+        <record id="l10n_hr_pdv_form_view" model="ir.ui.view">       
+            <field name="name">PDV izvještaj</field>
+            <field name="model">l10n.hr.porez</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="HR Porezni izvjestaji" version="7.0" >
+                    <header>
+                        <button string="Preuzmi podatke" name="button_get_new_data" type="object" attrs="{'invisible':[('pdv_lines','!=',[])]}" class="oe_highlight" />
+                        <button string="Preuzmi podatke" name="button_get_new_data" type="object" attrs="{'invisible':[('pdv_lines','=',[])]}" confirm="Svi postojeći podaci će biti poništeni! Želite li preuzeti nove podatke?"/>
+                        <button string="Ispiši obrasce" name="button_print" type="object" attrs="{'invisible':[('pdv_lines','=',[])]}"/>
+                        <button string="Kreiraj XML datoteke" name="button_create_xml" type="object" attrs="{'invisible':[('pdv_lines','=',[])]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <field name="company_id" invisible="1" />
+                        <group colspan="2" col="4">
+                            <field name="period_start" widget='many2one_selection' create="False" 
+                                on_change="onchange_period(period_start, period_end)" 
+                                domain="[('state','=','draft')]"/>
+                            <field name="period_end" widget='many2one_selection' create="False" 
+                                on_change="onchange_period(period_start, period_end)" 
+                                domain="[('state','=','draft')]"/>
+                            <field name="date_start" />
+                            <field name="date_stop" />
+                        </group>
+                        <!-- <label for="date" attrs="{'invisible':[('date','=',False)]}" /> -->
+                        <label string="Datum i vrijeme generianja XML-a " attrs="{'invisible':[('date','=',False)]}" />
+                        <field name="date" readonly="1" class="oe_inline"/>
+                        <notebook>
+                            <page string="PDV">
+                                <label for="uuid_pdvs" attrs="{'invisible':[('uuid_pdv','=',False)]}" />
+                                <field name="uuid_pdv" class="oe_inline" readonly="1"/>
+                                <button string="Ispiši PDV obrazac" name="button_print_pdv" type="object" attrs="{'invisible':[('pdv_lines','=',[])]}" class="oe_right"/>
+                                <field name="pdv_lines" nolabel="1" >
+                                    <tree name="lines" editable="top" delete="false" create="false">
+                                        <field name="obrazac" invisible="1"/>
+                                        <field name="position" readonly="1"/>
+                                        <field name="osnovica" />
+                                        <field name="porez" />
+                                    </tree>
+                                </field>
+                                <group col="5">
+                                    <field name="payment" />
+                                    <field name="payment_amm" />
+                                    <button string="Zbroji" name="pdv_summarize" type="object" class="oe_right"
+                                            help="Dozvoljen ručni upis u poziciju V. i zbrajanje nakon upisa"/>
+                                </group>
+                            </page>
+                            <page string="PDV-S" attrs="{'invisible':[('pdvs_lines','=',[])]}">
+                                <label for="uuid_pdvs" attrs="{'invisible':[('uuid_pdvs','=',False)]}"/>
+                                <field name="uuid_pdvs" class="oe_inline" readonly="1"/>
+                                <button string="Ispiši PDV-S obrazac" name="button_print_pdvs" type="object" class="oe_right"/>
+                                <field name="pdvs_lines" nolabel="1" >
+                                    <tree name="lines" editable="top" delete="false" create="false">
+                                        <field name="obrazac" invisible="1"/>
+                                        <field name="partner_id" readonly="1"/>
+                                        <field name="dobra" />
+                                        <field name="usluge" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="PDV-ZP" attrs="{'invisible':[('pdvzp_lines','=',[])]}">
+                                <label for="uuid_pdvs" attrs="{'invisible':[('uuid_pdvzp','=',False)]}"/>
+                                <field name="uuid_pdvzp" class="oe_inline" readonly="1"/>
+                                <button string="Ispiši PDV-ZP obrazac" name="button_print_pdvzp" type="object" class="oe_right"/>
+                                <field name="pdvzp_lines" nolabel="1" >
+                                    <tree name="lines" editable="top" delete="false" create="false">
+                                        <field name="obrazac" invisible="1"/>
+                                        <field name="partner_id" readonly="1"/>
+                                        <field name="dobra" />
+                                        <field name="dobra_4263" />
+                                        <field name="dobra_tro" />
+                                        <field name="usluge" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>                   
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_report_pdv" model="ir.actions.act_window">
+            <field name="name">Porezni izvjestaj</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">l10n.hr.porez</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+        
+        <menuitem id="menu_report_pdv"
+                  action="action_report_pdv"
+                  name="PDV izvjestaji"
+                  parent="account.menu_finance_reports"
+                  sequence="1"/>
+    </data>
+</openerp>

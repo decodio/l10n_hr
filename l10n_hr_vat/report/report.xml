@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="0">
+    <!-- Obrazac_PDV_S-->
+    <record id="aeroo_report_pdv_s" model="ir.actions.report.xml">
+        <field name="name">obrazac_pdv_s_odt</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">account.invoice</field>
+        <field name="report_name">obrazac_pdv_s_odt</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name="parser_loc">l10n_hr_vat/report/obrazac_pdv_s.py</field><!-- l10n_hr_vat/report/obrazac_pdv_s.py -->
+        <field name="report_rml">l10n_hr_vat/report/obrazac_pdv_s.odt</field>
+        <field name="parser_state">loc</field><!--loc-->
+        <field name="tml_source">file</field>
+    </record>
+
+    <record id="aeroo_report_pdv_zp" model="ir.actions.report.xml">
+        <field name="name">obrazac_pdv_zp_odt</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">account.invoice</field>
+        <field name="report_name">obrazac_pdv_zp_odt</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name="parser_loc">l10n_hr_vat/report/obrazac_pdv_zp.py</field><!-- l10n_hr_vat/report/obrazac_pdv_zp.py -->
+        <field name="report_rml">l10n_hr_vat/report/obrazac_pdv_zp.odt</field>
+        <field name="parser_state">loc</field><!--loc-->
+        <field name="tml_source">file</field>
+    </record>
+</data>
+</openerp>
+

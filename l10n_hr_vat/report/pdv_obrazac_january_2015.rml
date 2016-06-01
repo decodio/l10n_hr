@@ -1,0 +1,1049 @@
+<?xml version="1.0"?>
+<document filename="PDV_obrazac.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Tomislav Bosnjakovic" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="14.0" y1="14.0" width="567" height="814"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="3,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/> 
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="4,0" stop="4,-1"/>      
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="-1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,0"/>     
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,1" stop="-1,1"/>          
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,2" stop="-1,2"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,3" stop="-1,3"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,4" stop="-1,4"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,5" stop="-1,5"/>     
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,6" stop="-1,6"/>          
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,7" stop="-1,7"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,8" stop="-1,8"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,9" stop="-1,9"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,10" stop="-1,10"/>     
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,11" stop="-1,11"/>          
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,12" stop="-1,12"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,13" stop="-1,13"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,14" stop="-1,14"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,15" stop="-1,15"/>     
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,16" stop="-1,16"/>          
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,17" stop="-1,17"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,18" stop="-1,18"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,19" stop="-1,19"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,20" stop="-1,20"/>     
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,21" stop="-1,21"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,22" stop="-1,22"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,23" stop="-1,23"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,24" stop="-1,24"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,25" stop="-1,25"/>     
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,26" stop="-1,26"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,27" stop="-1,27"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,28" stop="-1,28"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,29" stop="-1,29"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,30" stop="-1,30"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,31" stop="-1,31"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,32" stop="-1,32"/>  
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,33" stop="-1,33"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,34" stop="-1,34"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,35" stop="-1,35"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,36" stop="-1,36"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,37" stop="-1,37"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,38" stop="-1,38"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,39" stop="-1,39"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,40" stop="-1,40"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,41" stop="-1,41"/>  
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,42" stop="-1,42"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,43" stop="-1,43"/>                                                                                                            
+    </blockTableStyle>
+    <blockTableStyle id="Table6">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,-1"/>  
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/> 
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="4,0" stop="4,-1"/>      
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="-1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,0"/>  
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,1" stop="-1,1"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,2" stop="-1,2"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,3" stop="-1,3"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,4" stop="-1,4"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,5" stop="-1,5"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,6" stop="-1,6"/> 
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,7" stop="-1,7"/>                                                                                                         
+    </blockTableStyle>   
+     
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>             
+    </blockTableStyle> 
+    <blockTableStyle id="Table4">
+      <blockAlignment value="CENTER"/>
+      <blockValign value="TOP"/>             
+    </blockTableStyle>    
+    <blockTableStyle id="Table5">
+      <blockAlignment value="CENTER"/>
+      <blockValign value="TOP"/>    
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>         
+    </blockTableStyle>          
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica-Bold" fontSize="11.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="7.0" leading="7"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="11.0" leading="11"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="11.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Helvetica-Bold" fontSize="9.0" leading="11"/>
+    <paraStyle name="P7" fontName="Helvetica-Bold" fontSize="9.0" leading="12" alignment="CENTER"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="8.0" leading="9"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="7.0" leading="8"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="7.0" leading="8" alignment="CENTER"/>
+    <paraStyle name="P11" fontName="Helvetica-Bold" fontSize="6.0" leading="8"/>
+    <paraStyle name="P12" fontName="Helvetica" fontSize="6.0" leading="7"/>
+    <paraStyle name="P13" fontName="Helvetica" fontSize="7.0" leading="8"/>
+    <paraStyle name="P14" fontName="Helvetica" fontSize="6.0" leading="7" alignment="RIGHT"/> 
+    <paraStyle name="P15" fontName="Helvetica" fontSize="6.0" leading="7" alignment="CENTER"/>  
+    <paraStyle name="P16" fontName="Helvetica-Bold" fontSize="7.0" leading="8" alignment="CENTER"/>  
+    <paraStyle name="P17" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="RIGHT"/>        
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER"/>
+    <images/>
+  </stylesheet>
+  <story>
+	<para style="P9">[[ setLang('hr_HR') ]]</para>  
+    <para style="P17">OBRAZAC PDV</para>
+    <blockTable colWidths="185.0,182.0,200.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P2">POREZNI OBVEZNIK</para>
+          <para style="P15">(naziv/ime i prezime i adresa: mjesto, ulica i</para>
+          <para style="P15">broj)</para>
+        </td>
+        <td>
+          <para style="P2">POREZNI ZASTUPNIK</para>
+          <para style="P15">(naziv/ime i prezime i adresa: mjesto, ulica i</para>
+          <para style="P15">broj)</para>
+        </td>        
+        <td>
+          <para style="P2">NADLEZNA ISPOSTAVA POREZNE UPRAVE</para>
+          <para style="P10">[[ get_company_ispostava(data) or '' ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P16">[[ get_company_name(data) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>        
+      </tr>
+    </blockTable>
+    <blockTable colWidths="185.0,182.0,200.0" style="Table2">      
+      <tr>
+        <td>
+          <para style="P10">PDV IDENTIFIKACIJSKI BROJ/OIB</para>
+        </td>
+        <td>
+          <para style="P10">PDV IDENTIFIKACIJSKI BROJ</para>
+          <para style="P10">POREZNOG ZASTUPNIKA/OIB</para>
+        </td>
+        <td>
+          <para style="P16">PRIJAVA POREZA NA DODANU</para>
+          <para style="P16">VRIJEDNOST ZA RAZDOBLJE</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">[[ get_company_oib(data) or '' ]]</para>
+        </td>
+        <td>
+          <para style="P10"></para>
+        </td>        
+        <td>
+          <para style="P10">OD [[ formatLang(get_start_date() or '',date=True) ]] DO [[ formatLang(get_end_date() or '',date=True) ]]</para>
+        </td>        
+      </tr>
+    </blockTable>
+    <blockTable colWidths="300.0,120.0,147.0" style="Table2">          
+      <tr>
+        <td>
+          <para style="P10">OPIS</para>
+        </td>
+        <td>
+          <para style="P10">VRIJEDNOST ISPORUKE</para>
+          <para style="P15">(iznos u kunama i lipama)</para>
+        </td>
+        <td>
+          <para style="P10">PDV PO STOPI 5%, 13% i 25%</para>
+          <para style="P15">(u kunama i lipama)</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">OBRACUN PDV-a U OBAVLJENIM TRANSAKCIJAMA</para>
+          <para style="P11">DOBARA I USLUGA - UKUPNO (I. + II.)</para>
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'A',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P17">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">I. TRANSAKCIJE KOJE NE PODLIJEZU OPOREZIVANJU I</para>
+          <para style="P11">OSLOBODJENE-UKUPNO (1.+2.+3.+4.+5.+6.+7.+8.+9.+10.)</para>
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'I',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P17">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">1. ISPORUKE U RH ZA KOJE PDVE OBRACUNAVA PRIMATELJ</para>
+          <para style="P12">(tuzemni prijenos porezne obveze)</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I1',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">2. ISPORUKE DOBARA OBAVLJENE U DRUGIM DRZAVAMA CLANICAMA</para>     
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I2',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">3. ISPORUKE DOBARA UNUTAR EU</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I3',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">4. OBAVLJENE USLUGE UNUTAR EU</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I4',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">5. OBAVLJENE USLUGE OSOBAMA BEZ SJEDISTA U RH</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I5',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">6. SASTAVLJANJE I POSTAVLJANJE DOBARA U DRUGOJ DRZAVI CLANICI EU</para>        
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I6',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">7. ISPORUKE NOVIH PRIJEVOZNIH SREDSTAVA U EU</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I7',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+     <tr>
+        <td>
+          <para style="P12">8. TUZEMNE ISPORUKE</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I8',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
+     <tr>
+        <td>
+          <para style="P12">9. IZVOZNE ISPORUKE</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I9',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr> 
+     <tr>
+        <td>
+          <para style="P12">10. OSTALA OSLOBODJENJA</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I10',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>                 
+      <tr>
+        <td>
+          <para style="P11">II. OPOREZIVE TRANSAKCIJE - UKUPNO</para>
+          <para style="P11">(1.+2.+3.+4.+5.+6.+7.+8.+9.+10.+11.+12.+13.+14.+15.)</para>          
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'II',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'II',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">1. ISPORUKE DOBARA I USLUGA U RH PO STOPI 5%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II1',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II1',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">2. ISPORUKE DOBARA I USLUGA U RH PO STOPI 13%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II2',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II2',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">3. ISPORUKE DOBARA I USLUGA U RH PO STOPI 25%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II3',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II3',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">4. PRIMLJENE ISPORUKE U RH ZA KOJE PDV OBRACUNAVA</para>
+          <para style="P12">PRIMATELJ (tuzemni prijenos porezne obveze)</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II4',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II4',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">5. STJECANJE DOBARA UNUTAR EU PO STOPI 5%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II5',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II5',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">6. STJECANJE DOBARA UNUTAR EU PO STOPI 13%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II6',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II6',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">7. STJECANJE DOBARA UNUTAR EU PO STOPI 25%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II7',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II7',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">8. PRIMLJENE USLUGE IZ EU PO STOPI 5%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II8',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II8',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">9. PRIMLJENE USLUGE IZ EU PO STOPI 13%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II9',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II9',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">10. PRIMLJENE USLUGE IZ EU PO STOPI 25%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II10',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II10',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">11. PRIMLJENE ISPORUKE DOBARA I USLUGA OD</para>
+          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH PO STOPI 5%</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II11',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II11',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">12. PRIMLJENE ISPORUKE DOBARA I USLUGA OD</para>
+          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH PO STOPI 13%</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II12',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II12',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">13. PRIMLJENE ISPORUKE DOBARA I USLUGA OD</para>
+          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH PO STOPI 25%</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II13',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II13',2) or 0.0) ]]</para>
+        </td>
+      </tr>      
+      <tr>
+        <td>
+          <para style="P12">14. NAKNADNO OSLOBODJENJE IZVOZA U OKVIRU OSOBNOG PUTNICKOG PROMETA</para>        
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II14',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II14',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">15. OBRACUNATI PDV PRI UVOZU</para>       
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II15',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'II15',2) or 0.0) ]]</para>
+        </td>
+      </tr>                                                   
+      <tr>
+        <td>
+          <para style="P11">III. OBRACUNANI PRETPOREZ - UKUPNO </para>
+          <para style="P11">(1.+2.+3.+4.+5.+6.+7.+8.+9.+10.+11+12-+13.+14.+15.)</para>          
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'III',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'III',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU po stopi 5%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III1',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III1',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">2. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU po stopi 13%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III2',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III2',2) or 0.0) ]]</para>
+        </td>
+      </tr>      
+      <tr>
+        <td>
+          <para style="P12">3. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU po stopi 25%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III3',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III3',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>      
+        <td>
+          <para style="P12">4. PRETPOREZ OD PRIMLJENIH ISPORUKA U RH ZA KOJE</para>
+          <para style="P12">PDV OBRACUNAVA PRIMATELJ (tuzemni prijenos porezne obveze)</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III4',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III4',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">5. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU po stopi 5%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III5',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III5',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">6. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU po stopi 13%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III6',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III6',2) or 0.0) ]]</para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P12">7. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU po stopi 25%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III7',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III7',2) or 0.0) ]]</para>
+        </td>
+      </tr>         
+      <tr>
+        <td>
+          <para style="P12">8. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU po stopi 5%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III8',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III8',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">9. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU po stopi 13%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III9',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III9',2) or 0.0) ]]</para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P12">10. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU po stopi 25%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III10',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III10',2) or 0.0) ]]</para>
+        </td>
+      </tr>           
+      <tr>
+        <td>
+          <para style="P12">11. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD </para>
+          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH po stopi 5%</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III11',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III11',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">12. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD </para>
+          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH po stopi 13%</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III12',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III12',2) or 0.0) ]]</para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P12">13. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD </para>
+          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH po stopi 25%</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III13',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III13',2) or 0.0) ]]</para>
+        </td>
+      </tr>           
+      <tr>
+        <td>
+          <para style="P12">14. PRETPOREZ PRI UVOZU</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III14',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III14',2) or 0.0) ]]</para>
+        </td>
+      </tr>  
+     <tr>
+        <td>
+          <para style="P12">15. ISPRAVCI PRETPOREZA </para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'III15',2) or 0.0) ]]</para>
+        </td>
+      </tr>                  
+    </blockTable>
+
+    <blockTable colWidths="300.0,120.0,147.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P11">IV. OBVEZA PDV-a U OBRACUNSKOM RAZDOBLJU:</para>
+          <para style="P11">ZA UPLATU (II.-III.) ILI ZA POVRAT (III.-II.)</para>        
+        </td>
+        <td>
+          <para style="P17">X X X X</para>
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'IV',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">V. PO PRETHODNOM OBRACUNU: NEUPLACENI PDV DO DANA</para>
+          <para style="P11">PODNOSENJA OVE PRIJAVE - VISE UPLACENO - POREZNI KREDIT</para>
+        </td>
+        <td>
+          <para style="P17">X X X X</para>
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'V',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">VI. UKUPNO RAZLIKA: ZA UPLATE/ZA POVRAT</para>
+        </td>
+        <td>
+          <para style="P17">X X X X</para>
+        </td>
+        <td>
+          <para style="P17">[[ formatLang(get_value(data,'VI',2) or 0.0) ]]</para>
+        </td>
+      </tr>
+      </blockTable>
+      <blockTable colWidths="300.0,120.0,147.0" style="Table6">
+      <tr>
+        <td>
+          <para style="P11">VII. IZNOS GODISNJEG RAZMJERNOG ODBITKA PRETPOREZA (%)</para>         
+        </td>
+        <td>
+          <para style="P17"></para>
+        </td>
+        <td>
+          <para style="P17"></para>
+        </td>
+      </tr>      
+    </blockTable>
+    <para style="P2">
+      <font color="white">.</font>
+    </para>
+     <blockTable colWidths="300.0,120.0,147.0" style="Table6">
+      <tr>
+        <td>
+          <para style="P12">OPIS</para>         
+        </td>
+        <td>
+          <para style="P12">VRIJEDNOST ISPORUKE U KUNAMA I LIPAMA</para>
+        </td>
+        <td>
+          <para style="P17"></para>
+        </td>
+      </tr>      
+    </blockTable>    
+     <blockTable colWidths="300.0,120.0,147.0" style="Table6">
+      <tr>
+        <td>
+          <para style="P11">VIII. OSTALI PODACI</para>         
+        </td>
+        <td>
+          <para style="P17"></para>
+        </td>
+        <td>
+          <para style="P17"></para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P11">ZA ISPRAVAK PRETPOREZA</para>
+          <para style="P11">(UKUPNO 1.1.+1.2.+1.3.+1.4.+1.5.)</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII1',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">  1.1 NABAVA NEKRETNINA</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII11',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>  
+      <tr>
+        <td>
+          <para style="P12">  1.2 NABAVA OSOBNIH AUTOMOBILA I DRUGIH SREDSTAVA ZA OSOBNI PRIJEVOZ</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII12',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P12">  1.3 PRODAJA OSOBNIH AUTOMOBILA I DRUGIH SREDSTAVA ZA OSOBNI PRIJEVOZ</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII13',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P12">  1.4 NABAVA DUGOTRAJNE IMOVINE</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII14',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>  
+      <tr>
+        <td>
+          <para style="P12">  1.5 PRODAJA DUGOTRAJNE IMOVINE</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII15',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P11">2. OTUDJENJE/STJECANJE GOSPODARSKE</para>
+          <para style="P11">CJELINE ILI POGONA</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII2',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">3. ISPORUKA NEKRETNINA</para>       
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII3',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>
+    </blockTable>    
+    <blockTable colWidths="300.0,120.0,80.0, 67.0" style="Table2">     
+      <tr>
+        <td>
+          <para style="P12">  3.1. ISPORUKE IZ CLANKA 40. STAVKA 1. I TOCAKA J) I K) ZAKONA</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII31',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P12"> BROJ NEKRETNINA</para>
+        </td>        
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII32',2) or 0) ]]</para>
+        </td>
+      </tr>  
+      <tr>
+        <td>
+          <para style="P12">  3.2 ISPORUKE IZ CLANKA 40. STAVKA 4. ZAKONA</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII32',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P12"> BROJ NEKRETNINA</para>
+        </td>         
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII32',2) or 0) ]]</para>
+        </td>
+      </tr> 
+      <tr>
+        <td>
+          <para style="P12">  3.3 ISPORUKA NEKRETNINA KOJE SU OPOREZIVE PDV-om</para>         
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII33',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P12"> BROJ NEKRETNINA</para>
+        </td>         
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII32',2) or 0) ]]</para>
+        </td>
+      </tr> 
+    </blockTable> 
+    <blockTable colWidths="300.0,120.0,147.0" style="Table6">        
+      <tr>
+        <td>
+          <para style="P11">4. UKUPNO PRIMLJENE USLUGE OD POREZNIH OBVEZNIKA BEZ</para>
+          <para style="P11">SJEDISTA U RH (EU + TRECE ZEMLJE)</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII4',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">5. UKUPNO OBAVLJENE USLUGE POREZNIM OBVEZNICIMA BEZ</para>
+          <para style="P11">SJEDISTA U RH (EU + TRECE ZEMLJE)</para>          
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII5',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>  
+      <tr>
+        <td>
+          <para style="P11">6. PRIMLJENA DOBRA IZ EU U OKVIRU TROSTRANOG POSLA</para>       
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII6',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">7. POSTUPAK OPOREZIVANJA PREMA NAPLAĆENIM NAKNADAMA</para>       
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'VIII7',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14"></para>
+        </td>
+      </tr>                                                                   
+    </blockTable>
+    <para style="P2">
+      <font color="white">.</font>
+    </para>
+    <para style="P2">
+      <font color="white">.</font>
+    </para>    
+    <blockTable colWidths="189.0,189.0,189.0" style="Table4">  
+      <tr>   
+        <td>
+          <para style="P15"> O ________________ kn </para>
+        </td>
+        <td>       
+          <para style="P15"> O ________________ kn </para>
+        </td>
+        <td>
+          <para style="P15"> O ________________ kn </para>
+        </td>
+      </tr>
+      <tr>   
+        <td>
+          <para style="P15"> POVRAT </para>
+        </td>
+        <td>       
+          <para style="P15"> PREDUJAM </para>
+        </td>
+        <td>
+          <para style="P15"> USTUP POVRATA </para>
+        </td>
+      </tr>      
+    </blockTable>
+    <para style="P3">
+      <font face="Helvetica"/>
+    </para>
+    <blockTable colWidths="80.0,100.0,80.0,100.0,80.0,100.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P15">OBRACUN SASTAVIO</para>
+          <para style="P15">(Ime, prezime i potpis)</para>
+        </td>
+        <td>
+          <para style="P15">
+            <font color="white"> </font>
+          </para>
+          <para style="P15">________________________</para>
+        </td>
+        <td>
+          <para style="P15">KONTAKT</para>
+          <para style="P15">(tel./fax/mail)</para>
+        </td>
+        <td>
+          <para style="P15">
+            <font color="white"> </font>
+          </para>
+          <para style="P15">________________________</para>
+        </td>
+       <td>
+          <para style="P15">POTPIS</para>
+        </td>
+        <td>
+          <para style="P15">
+            <font color="white"> </font>
+          </para>
+          <para style="P15">________________________</para>
+        </td>        
+      </tr>
+    </blockTable>
+    <para style="P2">
+      <font face="Helvetica"/>
+    </para>
+  </story>
+</document>
+

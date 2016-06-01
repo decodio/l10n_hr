@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_report_pdv_obrazac" model="ir.ui.view">
+            <field name="name">Obrazac PDV</field>
+            <field name="model">pdv.obrazac</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Postavke ispisa PDV obrasca">
+            	<field name="state" invisible="1"/>
+                <group states="choose">            	
+                	<separator string="Ispis obrasca" colspan="4"/>
+                	<field name="chart_tax_id" widget='selection'/>
+                	<field name="fiscalyear_id"/> 
+                	<field name="obrazac_id" widget='selection'/>                               
+                	<separator string="Periodi"  colspan="4"/>
+	                <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id)]" required="1" />
+	                <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id)]" required="1"/>
+<!--
+                	<field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id)]" attrs="{'readonly':[('filter','!=','filter_period')], 'required':[('filter', '=', 'filter_period')]}" />
+                	<field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id)]" attrs="{'readonly':[('filter','!=','filter_period')], 'required':[('filter', '=', 'filter_period')]}" />
+-->                
+                	<group col="2" colspan="4">
+                    	<button icon='gtk-cancel' special="cancel"  string="Odustani" />
+                    	<button name="create_vat" string="Ispiši" colspan="1" type="object" icon="gtk-ok"/>
+						<button name="export_vat" string="Izvezi" colspan="1" type="object" icon="gtk-ok"/>                	
+                	</group>
+                </group>
+                <group states="get">
+						<field name="name" invisible="1"/>
+						<field name="data" colspan="4" readonly="1" filename="name"/>
+						<button special="cancel" string="Zatvori" icon="gtk-cancel" colspan="2"/>
+				</group>
+            </form>                
+            </field>
+        </record>
+        
+        <record id="action_report_pdv_obrazac" model="ir.actions.act_window">
+            <field name="name">Obrazac PDV</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pdv.obrazac</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help">Ispis zakonski definiranog PDV obrasca. Ispis se vrši za zadano porezno stablo i zadano razdoblje. Za ispis cijele godine ostavite razdoblja praznima, a za ispis cijele povijesti ostavite prazna razdoblja i fiskalnu godinu.</field>
+        </record>
+        
+        <menuitem
+            name="Obrazac PDV"
+            parent="account.menu_tax_report"
+            action="action_report_pdv_obrazac"
+            id="menu_report_pdv_obrazac"
+            icon="STOCK_PRINT"/>
+    </data>
+</openerp>

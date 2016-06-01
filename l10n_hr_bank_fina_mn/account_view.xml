@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_bank_statement_form_import_" model="ir.ui.view">
+            <field name="name">account.bank.statement.form.import</field>
+            <field name="model">account.bank.statement</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                    <!-->
+                    <button name="find_partner_and_voucher"     string = "Find partner"                  type="object" icon="gtk-execute"/>
+                -->
+                <field name="currency" position="after">
+                    <field name="statement_file_id"/>
+                </field>
+                
+                <button name="button_journal_entries" position="after">
+                    <button name="add_bank_accounts_from_lines" string="Add bank accounts to partners" class="oe_inline oe_stat_button"
+                         confirm="Are you sure that you want to add the missing bank accounts to partners?"
+                          type="object" icon="fa-bars"
+                           attrs="{'invisible': ['|', ('state','=','confirm'), ('statement_file_id','=',False)]}"/>                
+                    <button name="update_partners_payments" string="Update lines" class="oe_inline oe_stat_button"
+                         confirm="Are you sure that you want to update partners and payments on the bank statement lines?"
+                          type="object" icon="fa-bars" attrs="{'invisible': [('state','=','confirm')]}"/>
+                </button>
+            </field>
+        </record>
+
+        <record id="view_account_statement_from_invoice_lines_mn" model="ir.ui.view">
+            <field name="name">account.statement.from.invoice.lines.form.mn</field>
+            <field name="model">account.statement.from.invoice.lines</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_account_statement_from_invoice_lines"/>
+            <field name="arch" type="xml">
+                <button name="populate_statement" position="replace"/>
+            </field>
+        </record>
+
+    </data>
+</openerp>

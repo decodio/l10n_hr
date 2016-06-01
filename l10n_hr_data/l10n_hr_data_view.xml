@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<openerp> <data>
+
+        <record id="view_l10n_hr_base_nkd_tree" model="ir.ui.view">
+            <field name="name">view.l10n.hr.base.nkd.tree</field>
+            <field name="model">l10n_hr_base.nkd</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="NKD - odabir" toolbar="1">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_res_bank_form_vbb" model="ir.ui.view">
+            <field name="name">res.bank.form.vbb</field>
+            <field name="model">res.bank</field>
+            <field name="inherit_id" ref="base.view_res_bank_form"/>
+            <field name="arch" type="xml">
+                <field name="bic" position="after">
+                    <field name="vbb_code"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_company_l10n_hr_data" model="ir.ui.view">
+            <field name="name">view.company.l10n.hr.data</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <page string="Configuration" position="after">
+                    <page string="Company data">
+                        <group string="Croatia"> <!--attrs="{'invisible':[('country_id.code','!=','HR')]}" -->
+                            <group>
+                                <field name="porezna_uprava"/>
+                                <field name="porezna_ispostava"/>
+                                <field name="br_obveze_mirovinsko"/>
+                                <field name="br_obveze_zdravstveno"/>
+                            </group>
+                            <group>
+                                <field name="maticni_broj"/>
+                                <field name="l10n_hr_base_nkd_id"/>
+                                <field name="temeljni_kapital"/>
+                                <field name="clanovi_uprave"/>
+                                <field name="trg_sud"/>
+                            </group>
+                            <group string = "Podaci za izvoz Obrazac PDV" colspan="4">
+                                <field name="responsible_fname"/>
+                                <field name="responsible_lname"/>
+                                <field name="responsible_tel"/>
+                                <field name="responsible_email"/>
+                                <field name="ispostava"/>
+                            </group>                              
+                        </group>
+                        <group colspan="4">
+                            <field name="zaglavlje_ispisa" colspan="4"/>
+                            <field name="podnozje_ispisa" colspan="4"/>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+</data>
+</openerp>
+

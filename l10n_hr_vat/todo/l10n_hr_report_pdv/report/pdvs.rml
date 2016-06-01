@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<document filename="PDV-S.pdf">
+    <!-- SVE DIMENZIJU U mm !!! -->
+  <template pageSize="(210mm,297mm)" title="Obrazac PDV-S" author="DATACOM Zagreb (info@datacom.hr)" allowSplitting="20"><!-- showBoundary="1" -->
+    <pageTemplate id="first">
+      <frame id="first" x1="10mm" y1="10mm" width="190mm" height="270mm"/>
+   <!--   
+      <pageGraphics>
+            <place x="279mm" y="0cm" height="105mm" width="190mm">
+                <para style="terp_default_6">Stranica: <pageNumber/> </para>
+            </place>
+      	</pageGraphics>
+    -->
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <!-- TABLE DEFINITIONS -->
+    <blockTableStyle id="standard">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBottomPadding lenght="10" />
+      <blockTopPadding lenght="10" />         
+    </blockTableStyle>
+    
+    <blockTableStyle id="tbl_header">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="black" start="0,0" stop="-1,0" />
+      <lineStyle kind="LINEBELOW" colorName="black" start="0,0" stop="-1,0" />     
+    </blockTableStyle>
+    
+    <blockTableStyle id="tbl_line">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="grey" start="0,0" stop="-1,0" />     
+    </blockTableStyle>
+    
+    <blockTableStyle id="potpis">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockSpan start="0,0" stop="1,0" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="0,0" stop="1,0" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="3,0" stop="4,0" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="0,1" stop="1,1" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="3,1" stop="4,1" />
+      <lineStyle kind="LINEBELOW" colorName="grey" start="0,1" stop="1,1" />
+      <lineStyle kind="LINEBELOW" colorName="grey" start="3,1" stop="4,1" />
+      <lineStyle kind="LINEBEFORE" colorName="grey" start="0,0" stop="-1,2" />
+      <lineStyle kind="LINEAFTER" colorName="grey" start="0,0" stop="-1,2" />
+    </blockTableStyle>
+    
+    <blockTableStyle id="zaglavlje">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+     <!--  -->
+      <lineStyle kind="LINEABOVE" colorName="grey" start="0,0" stop="1,0" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="3,0" stop="5,0" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="0,1" stop="1,1" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="3,1" stop="5,1" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="0,2" stop="1,2" />
+      <lineStyle kind="LINEABOVE" colorName="grey" start="3,2" stop="5,2" /> 
+      <lineStyle kind="LINEBELOW" colorName="grey" start="0,2" stop="1,2" />
+      <lineStyle kind="LINEBELOW" colorName="grey" start="3,2" stop="5,2" />        
+      
+      
+      <blockSpan start="0,0" stop="1,0" />    
+      <blockSpan start="4,1" stop="5,1" />
+      <blockSpan start="4,2" stop="5,2" />
+      <blockSpan start="4,3" stop="5,3" />
+          
+      <lineStyle kind="LINEBEFORE" colorName="grey" start="0,0" stop="-1,2" />
+      <lineStyle kind="LINEAFTER" colorName="grey" start="0,0" stop="-1,2" />
+      
+      <lineStyle kind="LINEBELOW" colorName="grey" start="3,3" stop="5,3" />
+      <lineStyle kind="LINEBEFORE" colorName="grey" start="3,3" stop="3,5" />
+      <lineStyle kind="LINEAFTER" colorName="grey" start="3,3" stop="3,5" /> 
+            
+    </blockTableStyle>
+    
+    <!-- PARA DEFINITIONS --> 
+    <initialize>
+      <paraStyle name="all" fontName="Helvetica" />
+    </initialize>
+    <paraStyle name="code" fontSize="2"/>
+    <paraStyle name="ST_8_L" alignment="LEFT" fontSize="8"/>
+    <paraStyle name="ST_8_R" alignment="RIGHT" fontSize="8"/>
+    <paraStyle name="ST_8_C" alignment="CENTER" fontSize="8"/>
+    <paraStyle name="odmak" alignment="CENTER" fontSize="8" spaceBefore="10" spaceAfter="10"/>
+  </stylesheet>
+  <story>
+    <para style="code">[[repeatIn(objects,'o')]] </para>
+    <para style="none">[[ setLang('hr_HR')  ]]</para> <!-- hardcoded lang HR -->
+      
+      <para style="ST_8_R"><b>Obrazac PDV-S</b></para>
+      <para style="odmak"> </para>
+      
+      <blockTable colWidths="40mm,40mm,15mm,40mm,10mm,35mm" style="zaglavlje">
+          <tr>
+            <td><para style="ST_8_L">POREZNA UPRAVA</para></td>
+            <td><para style="ST_8_L"></para></td>
+            <td><para style="ST_8_L"></para></td>
+            <td><para style="ST_8_L">PDV identifikacijski broj</para></td>
+            <td><para style="ST_8_L">HR</para></td>
+            <!-- PAZI!!! uvjek provjeriti u kojem je obliku upisan OIB na company!!! -->
+            <td><para style="ST_8_L"><b>[[ company.vat[:2]==company.country_id.code and company.vat[2:] or company.vat ]]</b></para></td>
+          </tr>
+          <tr>  
+            <td><para style="ST_8_L">PODRUČNI URED</para></td>
+            <td><para style="ST_8_L"><b>[[ company.porezna ]]</b></para></td>
+            <td><para style="ST_8_L"></para></td>
+            <td><para style="ST_8_L">Porezni obveznik
+                                     (naziv / ime i prezime)</para></td>
+            <td><para style="ST_8_L"><b>[[ company.partner_id.name ]]</b></para></td>                          
+            <td><para style="ST_8_L"></para></td>  
+          </tr>
+          <tr>  
+            <td><para style="ST_8_L">ISPOSTAVA</para></td>
+            <td><para style="ST_8_L"><b>sifra:[[ company.porezna_code and company.porezna_code or '' ]]</b></para></td>
+            <td><para style="ST_8_L"></para></td>
+            <td><para style="ST_8_L"></para>ADRESA</td>
+            <td><para style="ST_8_L"><b>[[ company.partner_id.street ]] [[ company.partner_id.street2 and company.partner_id.street2 or '' ]],</b> 
+                                     <b>[[ company.partner_id.zip ]] [[ company.partner_id.city ]]</b></para></td>
+            <!--DB: moramo koristiti street2 jer u njega zapisujemo kućnu broj - veza joppd !-->                          
+            <td><para style="ST_8_L"></para></td>  
+          </tr>
+          <tr>  
+            <td><para style="ST_8_L"></para></td>
+            <td><para style="ST_8_L"></para></td>
+            <td><para style="ST_8_L"></para></td>
+            <td><para style="ST_8_L"></para>PDV broj poreznog zastupnika</td>
+            <td><para style="ST_8_L"></para></td>                     
+            <td><para style="ST_8_L"></para></td>  
+          </tr>
+    </blockTable>
+    <para style="odmak"> </para>
+    <para style="ST_8_C">Prijava za stjecanje dobara i primljene usluge iz drugih članica Europske unije </para>
+    <para style="ST_8_C">za period od <b>[[ formatLang(o.date_start, date=True) ]]</b> do <b>[[ formatLang(o.date_stop, date=True) ]]</b> </para>
+    <para style="odmak"> </para>
+    <blockTable colWidths="20mm,25mm,40mm,45mm,45mm" style="tbl_header">
+        <tr>
+           <td><para style="ST_8_C">Red.br.</para></td>
+           <td><para style="ST_8_C">Kod države isporučitelja</para></td>
+           <td><para style="ST_8_C">PDV identifikacijski broj isporučitelja 
+                                    (bez koda države)</para></td>
+           <td><para style="ST_8_C">Vrijednost stečenih dobara</para></td>
+           <td><para style="ST_8_C">Vrijednost primljenih usluga</para></td>
+        </tr>
+    
+    </blockTable>
+    
+    <section>
+    <para style="none">[[repeatIn(o.pdvs_lines,'p')]]</para>
+    <blockTable colWidths="20mm,25mm,40mm,50mm,50mm" style="tbl_line">
+        <tr>
+           <td><para style="ST_8_L"></para></td>
+           <td><para style="ST_8_C">[[p.partner_id.country_id.code]]</para></td>
+           <td><para style="ST_8_C">[[ p.partner_id.vat[:2]==p.partner_id.country_id.code and p.partner_id.vat[2:] or p.partner_id.vat ]]</para></td>
+           <td><para style="ST_8_R">[[ formatLang(p.dobra)  ]]</para></td>
+           <td><para style="ST_8_R">[[ formatLang(p.usluge) ]]</para></td>
+        </tr>
+    
+    </blockTable>
+    </section>
+    <blockTable colWidths="20mm,65mm,50mm,50mm" style="tbl_header">
+        <tr>
+           <td><para style="ST_8_L"></para></td>
+           <td><para style="ST_8_C"><b>Ukupna Vrijednost : </b></para></td>
+           <td><para style="ST_8_R"><b>[[ formatLang(totals(o)['uk_dobra'])  ]]</b></para></td>
+           <td><para style="ST_8_R"><b>[[ formatLang(totals(o)['uk_usluge']) ]]</b></para></td>
+        </tr>
+    
+    </blockTable>
+    
+    <para style="odmak"> </para>
+    <para style="odmak"> </para>
+    
+    <blockTable colWidths="40mm,40mm,20mm,40mm,40mm" style="potpis">
+        <tr>
+          <td><para style="ST_8_L">Potvrđujem istinitost navedenih podataka</para></td>
+          <td><para style="ST_8_C"> </para></td>
+          <td><para style="ST_8_C"> </para></td>
+          <td><para style="ST_8_L">Potpis</para></td>
+          <td><para style="ST_8_C"> </para></td>
+        </tr>   
+        <tr>
+          <td><para style="ST_8_C">Obračun sastavio
+                               (ime i prezime)</para></td>
+          <td><para style="ST_8_C"> </para></td>
+          <td><para style="ST_8_C"> </para></td>
+          <td><para style="ST_8_L">Broj telefona/fax/e-mail</para></td>
+          <td><para style="ST_8_C"> </para></td>
+        </tr>   
+    </blockTable>
+   
+  </story>
+</document>

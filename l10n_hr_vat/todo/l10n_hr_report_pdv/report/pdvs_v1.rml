@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<document filename="Obrazac_PDV-S.pdf">
+  <template title="PDV-S" author="DATACOM d.o.o." allowSplitting="20">
+    <pageTemplate id="first">
+      <!-- A4 = 21cm x 29,7cm -->
+      <frame id="first" x1="10mm" y1="10mm" width="190mm" height="287mm"/>
+    </pageTemplate>
+  </template>
+  
+  <stylesheet>
+    
+   
+    <blockTableStyle id="Obrazac">
+      <blockFont name="Helvetica" />
+      <lineStyle kind="LINEBEFORE" colorName="black" start="0,0" stop="0,-1" /> <!--ljevi rub -->
+      <lineStyle kind="LINEAFTER" colorName="black" start="2,0" stop="2,-1" /> <!-- desni rub --> 
+      <blockValign value="TOP"/>
+      <blockBottomPadding lenght="10" />
+      <blockTopPadding lenght="10" />         
+    </blockTableStyle>
+    
+    <blockTableStyle id="ObrazacBold">
+      <blockFont name="Helvetica-Bold" />
+      <lineStyle kind="LINEBEFORE" colorName="black" start="0,0" stop="0,-1" /> <!--ljevi rub -->
+      <lineStyle kind="LINEAFTER" colorName="black" start="2,0" stop="2,-1" /> <!-- desni rub --> 
+      <lineStyle kind="LINEABOVE" colorName="black" start="0,0" stop="-1,0" />
+      <lineStyle kind="LINEBELOW" colorName="black" start="0,0" stop="-1,0" />     
+      <blockValign value="CENTER"/>
+      <blockBottomPadding lenght="10" />
+      <blockTopPadding lenght="10" />   
+    </blockTableStyle>
+    
+    <initialize>
+      <paraStyle name="all" fontName="Helvetica" alignment="LEFT"/>
+    </initialize>
+  
+    <paraStyle name="none" fontSize="2" /><!-- usage: repeatIn... -->
+    <paraStyle name="Bold_8_R" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="RIGHT" />
+    <paraStyle name="Bold_8_C" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" />
+    <paraStyle name="Bold_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" />     
+    <paraStyle name="Norm_8" fontSize="8.0" leading="9" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Norm_8_C" alignment="CENTER" fontSize="8.0" leading="9" spaceBefore="0.2" spaceAfter="0.2"/>  
+    <paraStyle name="Norm_8_R" alignment="RIGHT" fontSize="8.0" leading="9" spaceBefore="0.2" spaceAfter="0.2"/>
+    <paraStyle name="Odmaknuti_20" fontSize="8.0" leading="9" spaceBefore="20.0" spaceAfter="0.0" /> 
+  </stylesheet>
+  
+  <story>
+      <para style="none">[[ repeatIn(objects,'o') ]] </para>
+      <para style="none">[[ setLang('hr_HR')  ]]</para> 
+      
+      <para style="Bold_8_R"> Obrazac PDV-S </para>
+      <para style="Odmaknuti_20"> </para>
+      
+      <blockTable colWidths="3.5cm,3.5cm,1.5cm,4cm,1cm,3.5cm" >
+          <tr>
+            <td><para style="Norm_8">POREZNA UPRAVA
+                                       PODRUČNI URED</para></td>
+            <td><para style="Bold_8">[[ company.porezna ]]</para></td>
+            <td><para style="Norm_8"></para></td>
+            <td><para style="Norm_8">PDV identifikacijski broj</para></td>
+            <td><para style="Norm_8">HR</para></td>
+            <!-- PAZI!!! uvjek provjeriti u kojem je obliku upisan OIB na company!!! -->
+            <td><para style="Bold_8">[[ company.partner_id.vat[:2]==company.partner_id.country_id.code and company.partner_id.vat[2:] or company.partner_id.vat ]]</para></td>
+          </tr>
+          <tr>  
+            <td><para style="Norm_8">ISPOSTAVA</para></td>
+            <td><para style="Bold_8">šifra:[[ company.porezna_code ]]</para></td>
+            <td><para style="Norm_8"></para></td>
+            <td><para style="Norm_8">Porezni obveznik
+                                     (naziv / ime i prezime)</para></td>
+            <td><para style="Norm_8"></para></td>                          
+            <td><para style="Bold_8">[[ company.partner_id.name ]]</para></td>  
+          </tr>
+          <tr>  
+            <td><para style="Norm_8"></para></td>
+            <td><para style="Norm_8"></para></td>
+            <td><para style="Norm_8"></para></td>
+            <td><para style="Norm_8"></para>ADRESA</td>
+            <td><para style="Norm_8"></para></td>
+            <!--DB: moramo koristiti street2 jer u njega zapisujemo kućnu broj - veza joppd !-->                          
+            <td><para style="Bold_8">[[ company.partner_id.street ]] [[ company.partner_id.street2 and company.partner_id.street2 or '' ]], 
+                                     [[ company.partner_id.zip ]] [[ company.partner_id.city ]]</para></td>  
+          </tr>
+          <tr>  
+            <td><para style="Norm_8"></para></td>
+            <td><para style="Bold_8"></para></td>
+            <td><para style="Norm_8"></para></td>
+            <td><para style="Norm_8"></para>PDV broj poreznog zastupnika</td>
+            <td><para style="Norm_8"></para></td>                     
+            <td><para style="Norm_8"></para></td>  
+          </tr>
+    </blockTable>
+    
+    <para style="Odmaknuti_20"> </para>
+    <para style="Odmaknuti_20"> </para>
+    <blockTable colWidths="1.5cm,2cm,4cm,4cm,4cm">
+        <tr>
+           <td><para style="Norm_8_C">Red.br.</para></td>
+           <td><para style="Norm_8_C">Kod države isporučitelja</para></td>
+           <td><para style="Norm_8_C">PDV identifikacijski broj isporučitelja 
+                                    (bez koda države)</para></td>
+           <td><para style="Norm_8_C">Vrijednost stečenih dobara</para></td>
+           <td><para style="Norm_8_C">Vrijednost primljenih usluga</para></td>
+        </tr>
+    
+    </blockTable>
+    
+    <section>
+    <para style="none">[[repeatIn(o.pdvs_lines,'p')]]</para>
+    <blockTable colWidths="1.5cm,2cm,4cm,4cm,4cm">
+        <tr>
+           <td><para style="Norm_8_C"></para></td>
+           <td><para style="Norm_8_C">[[p.partner_id.country_id.code]]</para></td>
+           <td><para style="Norm_8_C">[[ p.partner_id.vat[:2]==p.partner_id.country_id.code and p.partner_id.vat[2:] or p.partner_id.vat ]]</para></td>
+           <td><para style="Norm_8_R">[[ p.dobra  ]]</para></td>
+           <td><para style="Norm_8_R">[[ p.usluge ]]</para></td>
+        </tr>
+    
+    </blockTable>
+    </section>
+    
+    
+   
+  </story>
+</document>

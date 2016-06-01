@@ -1,0 +1,859 @@
+id,zip,name,country_id:id,code,state_id:id
+city_hr_1,10000,Zagreb,base.hr,1333,state_hr_21
+city_hr_2,10010,Zagreb-Sloboština,base.hr,1333,state_hr_21
+city_hr_3,10020,Zagreb-Novi Zagreb,base.hr,1333,state_hr_21
+city_hr_4,10040,Zagreb-Dubrava,base.hr,1333,state_hr_21
+city_hr_5,10090,Zagreb-Susedgrad,base.hr,1333,state_hr_21
+city_hr_6,10110,Zagreb-Trešnjevka,base.hr,1333,state_hr_21
+city_hr_7,10250,Lučko,base.hr,,state_hr_1
+city_hr_8,10251,Hrvatski Leskovac,base.hr,,state_hr_1
+city_hr_9,10253,Donji Dragonožec,base.hr,,state_hr_1
+city_hr_10,10255,Gornji Stupnik,base.hr,,state_hr_1
+city_hr_11,10257,Brezovica,base.hr,,state_hr_1
+city_hr_12,10290,Zaprešić,base.hr,5436,state_hr_1
+city_hr_13,10291,Prigorje Brdovečko,base.hr,,state_hr_1
+city_hr_14,10292,Šenkovec,base.hr,6084,state_hr_1
+city_hr_15,10293,Dubravica,base.hr,5495,state_hr_1
+city_hr_16,10294,Donja Pušća,base.hr,,state_hr_1
+city_hr_17,10295,Kupljenovo,base.hr,,state_hr_1
+city_hr_18,10296,Luka,base.hr,5487,state_hr_1
+city_hr_19,10297,Jakovlje,base.hr,1635,state_hr_1
+city_hr_20,10298,Donja Bistra,base.hr,,state_hr_1
+city_hr_21,10299,Marija Gorica,base.hr,5398,state_hr_1
+city_hr_22,10310,Ivanić-Grad,base.hr,1589,state_hr_1
+city_hr_23,10312,Kloštar Ivanić,base.hr,1937,state_hr_1
+city_hr_24,10314,Križ,base.hr,2135,state_hr_1
+city_hr_25,10315,Novoselec,base.hr,,state_hr_1
+city_hr_26,10340,Vrbovec,base.hr,5088,state_hr_1
+city_hr_27,10341,Lonjica,base.hr,,state_hr_1
+city_hr_28,10342,Dubrava,base.hr,973,state_hr_1
+city_hr_29,10343,Nova Kapela,base.hr,2852,state_hr_1
+city_hr_30,10344,Farkaševac,base.hr,1147,state_hr_1
+city_hr_31,10345,Gradec,base.hr,1350,state_hr_1
+city_hr_32,10346,Preseka,base.hr,3565,state_hr_1
+city_hr_33,10347,Rakovec,base.hr,5363,state_hr_1
+city_hr_34,10360,Sesvete,base.hr,1333,state_hr_1
+city_hr_35,10361,Sesvete-Kraljevec,base.hr,1333,state_hr_1
+city_hr_36,10362,Kašina,base.hr,,state_hr_1
+city_hr_37,10363,Belovar,base.hr,,state_hr_1
+city_hr_38,10370,Dugo Selo,base.hr,1015,state_hr_1
+city_hr_39,10372,Oborovo,base.hr,,state_hr_1
+city_hr_40,10373,Ivanja Reka,base.hr,,state_hr_1
+city_hr_41,10380,Sveti Ivan Zelina,base.hr,4294,state_hr_1
+city_hr_42,10381,Bedenica,base.hr,5509,state_hr_1
+city_hr_43,10382,Donja Zelina,base.hr,,state_hr_1
+city_hr_44,10383,Komin,base.hr,,state_hr_1
+city_hr_45,10408,Velika Mlaka,base.hr,,state_hr_1
+city_hr_46,10410,Velika Gorica,base.hr,5410,state_hr_1
+city_hr_47,10411,Orle,base.hr,5428,state_hr_1
+city_hr_48,10412,Donja Lomnica,base.hr,,state_hr_1
+city_hr_49,10413,Kravarsko,base.hr,5452,state_hr_1
+city_hr_50,10414,Pokupsko,base.hr,5444,state_hr_1
+city_hr_51,10415,Novo Čiče,base.hr,,state_hr_1
+city_hr_52,10417,Buševec,base.hr,,state_hr_1
+city_hr_53,10418,Dubranec,base.hr,,state_hr_1
+city_hr_54,10419,Vukovina,base.hr,,state_hr_1
+city_hr_55,10430,Samobor,base.hr,3808,state_hr_1
+city_hr_56,10431,Sveta Nedelja,base.hr,,state_hr_1
+city_hr_57,10432,Bregana,base.hr,,state_hr_1
+city_hr_58,10434,Strmec,base.hr,,state_hr_1
+city_hr_59,10435,Sveti Martin pod Okićem,base.hr,,state_hr_1
+city_hr_60,10436,Rakov Potok,base.hr,,state_hr_1
+city_hr_61,10437,Bestovje,base.hr,,state_hr_1
+city_hr_62,10450,Jastrebarsko,base.hr,1694,state_hr_1
+city_hr_63,10451,Pisarovina,base.hr,3310,state_hr_1
+city_hr_64,10453,Gorica Svetojanska,base.hr,,state_hr_1
+city_hr_65,10454,Krašić,base.hr,5339,state_hr_1
+city_hr_66,10455,Kostanjevac,base.hr,,state_hr_1
+city_hr_67,20000,Dubrovnik,base.hr,981,state_hr_19
+city_hr_68,20205,Topolo,base.hr,,state_hr_19
+city_hr_69,20207,Mlini,base.hr,,state_hr_19
+city_hr_70,20210,Cavtat,base.hr,,state_hr_19
+city_hr_71,20213,Čilipi,base.hr,,state_hr_19
+city_hr_72,20215,Gruda,base.hr,,state_hr_19
+city_hr_73,20216,Dubravka,base.hr,,state_hr_19
+city_hr_74,20217,Pridvorje,base.hr,,state_hr_19
+city_hr_75,20218,Pločice,base.hr,,state_hr_19
+city_hr_76,20221,Koločep,base.hr,,state_hr_19
+city_hr_77,20222,Lopud,base.hr,,state_hr_19
+city_hr_78,20223,Šipanjska Luka,base.hr,,state_hr_19
+city_hr_79,20224,Maranovići,base.hr,,state_hr_19
+city_hr_80,20225,Babino Polje,base.hr,,state_hr_19
+city_hr_81,20226,Goveđari,base.hr,,state_hr_19
+city_hr_82,20230,Ston,base.hr,4197,state_hr_19
+city_hr_83,20231,Doli,base.hr,,state_hr_19
+city_hr_84,20232,Slano,base.hr,,state_hr_19
+city_hr_85,20233,Trsteno,base.hr,,state_hr_19
+city_hr_86,20234,Orašac,base.hr,,state_hr_19
+city_hr_87,20235,Zaton Veliki,base.hr,,state_hr_19
+city_hr_88,20236,Mokošica,base.hr,,state_hr_19
+city_hr_89,20240,Trpanj,base.hr,6017,state_hr_19
+city_hr_90,20242,Oskorušno,base.hr,,state_hr_19
+city_hr_91,20243,Kuna,base.hr,,state_hr_19
+city_hr_92,20244,Potomje,base.hr,,state_hr_19
+city_hr_93,20245,Trstenik,base.hr,,state_hr_19
+city_hr_94,20246,Janjina,base.hr,5991,state_hr_19
+city_hr_95,20247,Žuljana,base.hr,,state_hr_19
+city_hr_96,20248,Putniković,base.hr,,state_hr_19
+city_hr_97,20250,Orebić,base.hr,3085,state_hr_19
+city_hr_98,20260,Korčula,base.hr,2046,state_hr_19
+city_hr_99,20263,Lumbarda,base.hr,6009,state_hr_19
+city_hr_100,20264,Račišće,base.hr,,state_hr_19
+city_hr_101,20267,Kućište,base.hr,,state_hr_19
+city_hr_102,20269,Lovište,base.hr,,state_hr_19
+city_hr_103,20270,Vela Luka,base.hr,4740,state_hr_19
+city_hr_104,20271,Blato,base.hr,256,state_hr_19
+city_hr_105,20272,Smokvica,base.hr,4022,state_hr_19
+city_hr_106,20273,Čara,base.hr,,state_hr_19
+city_hr_107,20274,Pupnat,base.hr,,state_hr_19
+city_hr_108,20275,Žrnovo,base.hr,,state_hr_19
+city_hr_109,20278,Nova Sela,base.hr,,state_hr_19
+city_hr_110,20290,Lastovo,base.hr,2267,state_hr_19
+city_hr_111,20340,Ploče,base.hr,3352,state_hr_19
+city_hr_112,20341,Kula Norinska,base.hr,2194,state_hr_19
+city_hr_113,20342,Otrić Seoci,base.hr,,state_hr_19
+city_hr_114,20343,Rogotin,base.hr,,state_hr_19
+city_hr_115,20344,Komin (Dalma),base.hr,,state_hr_19
+city_hr_116,20345,Staševica,base.hr,,state_hr_19
+city_hr_117,20350,Metković,base.hr,2640,state_hr_19
+city_hr_118,20352,Vid,base.hr,,state_hr_19
+city_hr_119,20353,Mlinište,base.hr,,state_hr_19
+city_hr_120,20355,Opuzen,base.hr,3069,state_hr_19
+city_hr_121,20356,Klek,base.hr,,state_hr_19
+city_hr_122,20357,Blace,base.hr,,state_hr_19
+city_hr_123,21000,Split,base.hr,4090,state_hr_17
+city_hr_124,21201,Prgomet,base.hr,5894,state_hr_17
+city_hr_125,21202,Lećevica,base.hr,5860,state_hr_17
+city_hr_126,21203,Donji Muć,base.hr,,state_hr_17
+city_hr_127,21204,Dugopolje,base.hr,5851,state_hr_17
+city_hr_128,21205,Donji Dolac,base.hr,,state_hr_17
+city_hr_129,21206,Donje Ogorje,base.hr,,state_hr_17
+city_hr_130,21207,Kostanje,base.hr,,state_hr_17
+city_hr_131,21208,Kučiće,base.hr,,state_hr_17
+city_hr_132,21209,Mravince,base.hr,,state_hr_17
+city_hr_133,21210,Solin,base.hr,4065,state_hr_17
+city_hr_134,21212,Kaštel Sućurac,base.hr,,state_hr_17
+city_hr_135,21213,Kaštel Gomilica,base.hr,,state_hr_17
+city_hr_136,21214,Kaštel Kambelovac,base.hr,,state_hr_17
+city_hr_137,21215,Kaštel Lukšić,base.hr,,state_hr_17
+city_hr_138,21216,Kaštel Stari,base.hr,,state_hr_17
+city_hr_139,21217,Kaštel Štafilić,base.hr,,state_hr_17
+city_hr_140,21220,Trogir,base.hr,4634,state_hr_17
+city_hr_141,21222,Marina,base.hr,2585,state_hr_17
+city_hr_142,21223,Okrug Gornji,base.hr,,state_hr_17
+city_hr_143,21224,Slatine,base.hr,,state_hr_17
+city_hr_144,21225,Drvenik Veliki,base.hr,,state_hr_17
+city_hr_145,21226,Vinišće,base.hr,,state_hr_17
+city_hr_146,21228,Blizna Donja,base.hr,,state_hr_17
+city_hr_147,21229,Crivac,base.hr,,state_hr_17
+city_hr_148,21230,Sinj,base.hr,3891,state_hr_17
+city_hr_149,21231,Klis,base.hr,1929,state_hr_17
+city_hr_150,21232,Dicmo,base.hr,728,state_hr_17
+city_hr_151,21233,Hrvace,base.hr,1481,state_hr_17
+city_hr_152,21236,Vrlika,base.hr,5134,state_hr_17
+city_hr_153,21238,Otok (Dalmacija),base.hr,,state_hr_17
+city_hr_154,21240,Trilj,base.hr,4600,state_hr_17
+city_hr_155,21241,Obrovac Sinjski,base.hr,,state_hr_17
+city_hr_156,21242,Grab,base.hr,,state_hr_17
+city_hr_157,21243,Ugljane,base.hr,,state_hr_17
+city_hr_158,21244,Cista Velika,base.hr,,state_hr_17
+city_hr_159,21245,Tijarica,base.hr,,state_hr_17
+city_hr_160,21246,Aržano,base.hr,,state_hr_17
+city_hr_161,21247,Neorić,base.hr,,state_hr_17
+city_hr_162,21250,Šestanovac,base.hr,4430,state_hr_17
+city_hr_163,21251,Žrnovnica,base.hr,,state_hr_17
+city_hr_164,21252,Tugare,base.hr,,state_hr_17
+city_hr_165,21253,Gata,base.hr,,state_hr_17
+city_hr_166,21254,Blato na Cetini,base.hr,,state_hr_17
+city_hr_167,21255,Zadvarje,base.hr,5959,state_hr_17
+city_hr_168,21256,Cista Provo,base.hr,507,state_hr_17
+city_hr_169,21257,Lovreć,base.hr,2437,state_hr_17
+city_hr_170,21260,Imotski,base.hr,1554,state_hr_17
+city_hr_171,21261,Runović,base.hr,,state_hr_17
+city_hr_172,21262,Kamenmost,base.hr,,state_hr_17
+city_hr_173,21263,Krivodol,base.hr,,state_hr_17
+city_hr_174,21264,Donji Proložac,base.hr,,state_hr_17
+city_hr_175,21265,Studenci,base.hr,,state_hr_17
+city_hr_176,21266,Zmijavci,base.hr,5282,state_hr_17
+city_hr_177,21267,Ričice,base.hr,,state_hr_17
+city_hr_178,21270,Zagvozd,base.hr,5223,state_hr_17
+city_hr_179,21271,Grabovac,base.hr,,state_hr_17
+city_hr_180,21272,Slivno,base.hr,3999,state_hr_17
+city_hr_181,21273,Župa,base.hr,,state_hr_17
+city_hr_182,21275,Dragljane,base.hr,,state_hr_17
+city_hr_183,21276,Vrgorac,base.hr,5118,state_hr_17
+city_hr_184,21277,Veliki Prolog,base.hr,,state_hr_17
+city_hr_185,21292,Srinjine,base.hr,,state_hr_17
+city_hr_186,21300,Makarska,base.hr,2496,state_hr_17
+city_hr_187,21310,Omiš,base.hr,3000,state_hr_17
+city_hr_188,21311,Stobreč,base.hr,,state_hr_17
+city_hr_189,21312,Podstrana,base.hr,3417,state_hr_17
+city_hr_190,21314,Jesenice,base.hr,,state_hr_17
+city_hr_191,21315,Dugi Rat,base.hr,1007,state_hr_17
+city_hr_192,21317,Lokva Rogoznica,base.hr,,state_hr_17
+city_hr_193,21318,Mimice,base.hr,,state_hr_17
+city_hr_194,21320,Baška Voda,base.hr,94,state_hr_17
+city_hr_195,21322,Brela,base.hr,779,state_hr_17
+city_hr_196,21323,Promajna,base.hr,,state_hr_17
+city_hr_197,21325,Tučepi,base.hr,5932,state_hr_17
+city_hr_198,21327,Podgora,base.hr,3395,state_hr_17
+city_hr_199,21328,Drašnice,base.hr,,state_hr_17
+city_hr_200,21329,Igrane,base.hr,,state_hr_17
+city_hr_201,21330,Gradac,base.hr,1341,state_hr_17
+city_hr_202,21333,Drvenik,base.hr,,state_hr_17
+city_hr_203,21334,Zaostrog,base.hr,,state_hr_17
+city_hr_204,21335,Podaca,base.hr,,state_hr_17
+city_hr_205,21400,Supetar,base.hr,4278,state_hr_17
+city_hr_206,21403,Sutivan,base.hr,5924,state_hr_17
+city_hr_207,21404,Ložišća,base.hr,,state_hr_17
+city_hr_208,21405,Milna,base.hr,2674,state_hr_17
+city_hr_209,21410,Postira,base.hr,3506,state_hr_17
+city_hr_210,21412,Pučišća,base.hr,3581,state_hr_17
+city_hr_211,21413,Povlja,base.hr,,state_hr_17
+city_hr_212,21420,Bol,base.hr,272,state_hr_17
+city_hr_213,21423,Nerežišća,base.hr,2801,state_hr_17
+city_hr_214,21424,Pražnica,base.hr,,state_hr_17
+city_hr_215,21425,Selca,base.hr,3832,state_hr_17
+city_hr_216,21430,Grohote,base.hr,,state_hr_17
+city_hr_217,21432,Stomorska,base.hr,,state_hr_17
+city_hr_218,21450,Hvar,base.hr,1538,state_hr_17
+city_hr_219,21454,Brusje,base.hr,,state_hr_17
+city_hr_220,21460,Stari Grad,base.hr,4138,state_hr_17
+city_hr_221,21462,Vrbanj,base.hr,,state_hr_17
+city_hr_222,21463,Vrboska,base.hr,,state_hr_17
+city_hr_223,21465,Jelsa,base.hr,1716,state_hr_17
+city_hr_224,21466,Zastražišće,base.hr,,state_hr_17
+city_hr_225,21467,Gdinj,base.hr,,state_hr_17
+city_hr_226,21469,Sućuraj,base.hr,4235,state_hr_17
+city_hr_227,21480,Vis,base.hr,4928,state_hr_17
+city_hr_228,21483,Podšpilje,base.hr,,state_hr_17
+city_hr_229,21485,Komiža,base.hr,1970,state_hr_17
+city_hr_230,22000,Šibenik,base.hr,4448,state_hr_15
+city_hr_231,22030,Šibenik-Zablaće,base.hr,,state_hr_15
+city_hr_232,22202,Primošten,base.hr,3573,state_hr_15
+city_hr_233,22203,Rogoznica,base.hr,5827,state_hr_15
+city_hr_234,22204,Široke,base.hr,,state_hr_15
+city_hr_235,22205,Perković,base.hr,,state_hr_15
+city_hr_236,22211,Vodice,base.hr,5002,state_hr_15
+city_hr_237,22212,Tribunj,base.hr,6262,state_hr_15
+city_hr_238,22213,Pirovac,base.hr,5819,state_hr_15
+city_hr_239,22214,Čista Velika,base.hr,,state_hr_15
+city_hr_240,22215,Zaton,base.hr,,state_hr_15
+city_hr_241,22221,Lozovac,base.hr,,state_hr_15
+city_hr_242,22222,Skradin,base.hr,3948,state_hr_15
+city_hr_243,22232,Zlarin,base.hr,,state_hr_15
+city_hr_244,22233,Prvić Luka,base.hr,,state_hr_15
+city_hr_245,22234,Prvić Šepurine,base.hr,,state_hr_15
+city_hr_246,22235,Kaprije,base.hr,,state_hr_15
+city_hr_247,22236,Žirje,base.hr,,state_hr_15
+city_hr_248,22240,Tisno,base.hr,4545,state_hr_15
+city_hr_249,22242,Jezera,base.hr,,state_hr_15
+city_hr_250,22243,Murter,base.hr,,state_hr_15
+city_hr_251,22300,Knin,base.hr,1961,state_hr_15
+city_hr_252,22301,Golubić,base.hr,,state_hr_15
+city_hr_253,22303,Oklaj,base.hr,,state_hr_15
+city_hr_254,22305,Kistanje,base.hr,1848,state_hr_15
+city_hr_255,22310,Kijevo,base.hr,1830,state_hr_15
+city_hr_256,22320,Drniš,base.hr,957,state_hr_15
+city_hr_257,22321,Siverić,base.hr,,state_hr_15
+city_hr_258,22322,Ružić,base.hr,3778,state_hr_15
+city_hr_259,22323,Unešić,base.hr,4693,state_hr_15
+city_hr_260,22324,Drinovci,base.hr,,state_hr_15
+city_hr_261,23000,Zadar,base.hr,5207,state_hr_14
+city_hr_262,23205,Bibinje,base.hr,205,state_hr_14
+city_hr_263,23206,Sukošan,base.hr,4251,state_hr_14
+city_hr_264,23207,Sveti Filip i Jakov,base.hr,4286,state_hr_14
+city_hr_265,23210,Biograd na moru,base.hr,221,state_hr_14
+city_hr_266,23211,Pakoštane,base.hr,3174,state_hr_14
+city_hr_267,23212,Tkon,base.hr,5754,state_hr_14
+city_hr_268,23222,Zemunik,base.hr,,state_hr_14
+city_hr_269,23223,Škabrnja,base.hr,4456,state_hr_14
+city_hr_270,23226,Pridraga,base.hr,,state_hr_14
+city_hr_271,23231,Petrčane,base.hr,,state_hr_14
+city_hr_272,23232,Nin,base.hr,2828,state_hr_14
+city_hr_273,23233,Privlaka (Dalmacija),base.hr,,state_hr_14
+city_hr_274,23234,Vir,base.hr,4898,state_hr_14
+city_hr_275,23235,Vrsi,base.hr,6254,state_hr_14
+city_hr_276,23241,Poličnik,base.hr,3450,state_hr_14
+city_hr_277,23242,Posedarje,base.hr,3492,state_hr_14
+city_hr_278,23243,Jasenice,base.hr,1678,state_hr_14
+city_hr_279,23244,Starigrad Paklenica,base.hr,,state_hr_14
+city_hr_280,23245,Tribanj,base.hr,,state_hr_14
+city_hr_281,23248,Ražanac,base.hr,3719,state_hr_14
+city_hr_282,23249,Povljana,base.hr,5738,state_hr_14
+city_hr_283,23250,Pag,base.hr,3166,state_hr_14
+city_hr_284,23251,Kolan,base.hr,6220,state_hr_14
+city_hr_285,23262,Pašman,base.hr,3204,state_hr_14
+city_hr_286,23263,Ždrelac,base.hr,,state_hr_14
+city_hr_287,23264,Neviđane,base.hr,,state_hr_14
+city_hr_288,23271,Kukljica,base.hr,5720,state_hr_14
+city_hr_289,23272,Kali,base.hr,1732,state_hr_14
+city_hr_290,23273,Preko,base.hr,3549,state_hr_14
+city_hr_291,23274,Lukoran,base.hr,,state_hr_14
+city_hr_292,23275,Ugljan,base.hr,,state_hr_14
+city_hr_293,23281,Sali,base.hr,3794,state_hr_14
+city_hr_294,23282,Žman,base.hr,,state_hr_14
+city_hr_295,23283,Rava,base.hr,,state_hr_14
+city_hr_296,23284,Veli Iž,base.hr,,state_hr_14
+city_hr_297,23285,Brbinj,base.hr,,state_hr_14
+city_hr_298,23286,Božava,base.hr,,state_hr_14
+city_hr_299,23287,Veli Rat,base.hr,,state_hr_14
+city_hr_300,23291,Sestrunj,base.hr,,state_hr_14
+city_hr_301,23292,Molat,base.hr,,state_hr_14
+city_hr_302,23293,Ist,base.hr,,state_hr_14
+city_hr_303,23294,Premuda,base.hr,,state_hr_14
+city_hr_304,23295,Silba,base.hr,,state_hr_14
+city_hr_305,23296,Olib,base.hr,,state_hr_14
+city_hr_306,23312,Novigrad (Dalmacija),base.hr,,state_hr_14
+city_hr_307,23420,Benkovac,base.hr,175,state_hr_14
+city_hr_308,23422,Stankovci,base.hr,4111,state_hr_14
+city_hr_309,23423,Polača,base.hr,3441,state_hr_14
+city_hr_310,23440,Gračac,base.hr,1317,state_hr_14
+city_hr_311,23445,Srb,base.hr,,state_hr_14
+city_hr_312,23450,Obrovac,base.hr,2968,state_hr_14
+city_hr_313,23452,Karin,base.hr,,state_hr_14
+city_hr_314,31000,Osijek,base.hr,3123,state_hr_13
+city_hr_315,31204,Bijelo Brdo,base.hr,,state_hr_13
+city_hr_316,31205,Aljmaš,base.hr,,state_hr_13
+city_hr_317,31206,Erdut,base.hr,1104,state_hr_13
+city_hr_318,31207,Tenja,base.hr,,state_hr_13
+city_hr_319,31208,Petrijevci,base.hr,3271,state_hr_13
+city_hr_320,31214,Laslovo (Szentlászló),base.hr,,state_hr_13
+city_hr_321,31215,Ernestinovo,base.hr,1112,state_hr_13
+city_hr_322,31216,Antunovac,base.hr,27,state_hr_13
+city_hr_323,31220,Višnjevac,base.hr,,state_hr_13
+city_hr_324,31221,Josipovac,base.hr,,state_hr_13
+city_hr_325,31222,Bizovac,base.hr,230,state_hr_13
+city_hr_326,31223,Brođanci,base.hr,,state_hr_13
+city_hr_327,31224,Koška,base.hr,2054,state_hr_13
+city_hr_328,31225,Breznica Našička,base.hr,,state_hr_13
+city_hr_329,31226,Dalj,base.hr,,state_hr_13
+city_hr_330,31227,Zelčin,base.hr,,state_hr_13
+city_hr_331,31300,Beli Manastir,base.hr,132,state_hr_13
+city_hr_332,31301,Branjin Vrh,base.hr,,state_hr_13
+city_hr_333,31302,Kneževo,base.hr,,state_hr_13
+city_hr_334,31303,Popovac,base.hr,3468,state_hr_13
+city_hr_335,31304,Duboševica,base.hr,,state_hr_13
+city_hr_336,31305,Draž,base.hr,914,state_hr_13
+city_hr_337,31306,Batina,base.hr,,state_hr_13
+city_hr_338,31307,Zmajevac (Vörösmart),base.hr,,state_hr_13
+city_hr_339,31308,Suza (Csúza),base.hr,,state_hr_13
+city_hr_340,31309,Kneževi Vinogradi,base.hr,1953,state_hr_13
+city_hr_341,31315,Karanac,base.hr,,state_hr_13
+city_hr_342,31321,Petlovac,base.hr,3255,state_hr_13
+city_hr_343,31322,Baranjsko Petrovo Selo,base.hr,,state_hr_13
+city_hr_344,31323,Bolman,base.hr,,state_hr_13
+city_hr_345,31324,Jagodnjak,base.hr,6092,state_hr_13
+city_hr_346,31325,Čeminac,base.hr,647,state_hr_13
+city_hr_347,31326,Darda,base.hr,663,state_hr_13
+city_hr_348,31327,Bilje,base.hr,213,state_hr_13
+city_hr_349,31328,Lug (Laskó),base.hr,,state_hr_13
+city_hr_350,31400,Đakovo,base.hr,1031,state_hr_13
+city_hr_351,31401,Viškovci,base.hr,4944,state_hr_13
+city_hr_352,31402,Semeljci,base.hr,3867,state_hr_13
+city_hr_353,31403,Vuka,base.hr,5177,state_hr_13
+city_hr_354,31404,Vladislavci,base.hr,5797,state_hr_13
+city_hr_355,31410,Strizivojna,base.hr,4219,state_hr_13
+city_hr_356,31411,Trnava,base.hr,4618,state_hr_13
+city_hr_357,31415,Selci Đakovački,base.hr,,state_hr_13
+city_hr_358,31416,Levanjska Varoš,base.hr,2305,state_hr_13
+city_hr_359,31417,Piškorevci,base.hr,,state_hr_13
+city_hr_360,31418,Drenje,base.hr,949,state_hr_13
+city_hr_361,31421,Satnica Đakovačka,base.hr,3816,state_hr_13
+city_hr_362,31422,Gorjani,base.hr,1244,state_hr_13
+city_hr_363,31423,Bračevci,base.hr,,state_hr_13
+city_hr_364,31424,Punitovci,base.hr,3611,state_hr_13
+city_hr_365,31431,Čepin,base.hr,655,state_hr_13
+city_hr_366,31432,Budimci,base.hr,,state_hr_13
+city_hr_367,31433,Podgorač,base.hr,3409,state_hr_13
+city_hr_368,31500,Našice,base.hr,2780,state_hr_13
+city_hr_369,31511,Đurđenovac,base.hr,1066,state_hr_13
+city_hr_370,31512,Feričanci,base.hr,1163,state_hr_13
+city_hr_371,31513,Donja Motičina,base.hr,5762,state_hr_13
+city_hr_372,31530,Podravska Moslavina,base.hr,2712,state_hr_13
+city_hr_373,31531,Viljevo,base.hr,4855,state_hr_13
+city_hr_374,31540,Donji Miholjac,base.hr,868,state_hr_13
+city_hr_375,31542,Magadenovac,base.hr,5789,state_hr_13
+city_hr_376,31543,Miholjački Poreč,base.hr,,state_hr_13
+city_hr_377,31550,Valpovo,base.hr,4715,state_hr_13
+city_hr_378,31551,Belišće,base.hr,167,state_hr_13
+city_hr_379,31552,Podgajci Podravski,base.hr,,state_hr_13
+city_hr_380,31553,Črnkovci,base.hr,,state_hr_13
+city_hr_381,31554,Gat,base.hr,,state_hr_13
+city_hr_382,31555,Marijanci,base.hr,2577,state_hr_13
+city_hr_383,32000,Vukovar,base.hr,5185,state_hr_16
+city_hr_384,32010,Vukovar,base.hr,5185,state_hr_16
+city_hr_385,32100,Vinkovci,base.hr,4871,state_hr_16
+city_hr_386,32211,Ostrovo,base.hr,,state_hr_16
+city_hr_387,32212,Gaboš,base.hr,,state_hr_16
+city_hr_388,32213,Markušica,base.hr,6106,state_hr_16
+city_hr_389,32214,Tordinci,base.hr,4588,state_hr_16
+city_hr_390,32221,Nuštar,base.hr,2941,state_hr_16
+city_hr_391,32222,Bršadin,base.hr,,state_hr_16
+city_hr_392,32224,Trpinja,base.hr,4642,state_hr_16
+city_hr_393,32225,Bobota,base.hr,,state_hr_16
+city_hr_394,32227,Borovo,base.hr,299,state_hr_16
+city_hr_395,32229,Petrovci,base.hr,,state_hr_16
+city_hr_396,32232,Sotin,base.hr,,state_hr_16
+city_hr_397,32233,Opatovac,base.hr,,state_hr_16
+city_hr_398,32234,Šarengrad,base.hr,,state_hr_16
+city_hr_399,32235,Bapska,base.hr,,state_hr_16
+city_hr_400,32236,Ilok,base.hr,1546,state_hr_16
+city_hr_401,32237,Lovas,base.hr,2399,state_hr_16
+city_hr_402,32238,Čakovci,base.hr,,state_hr_16
+city_hr_403,32239,Negoslavci,base.hr,6122,state_hr_16
+city_hr_404,32241,Stari Jankovci,base.hr,4146,state_hr_16
+city_hr_405,32242,Slakovci,base.hr,,state_hr_16
+city_hr_406,32243,Orolik,base.hr,,state_hr_16
+city_hr_407,32244,Đeletovci,base.hr,,state_hr_16
+city_hr_408,32245,Nijemci,base.hr,2950,state_hr_16
+city_hr_409,32246,Lipovac,base.hr,,state_hr_16
+city_hr_410,32247,Banovci,base.hr,,state_hr_16
+city_hr_411,32248,Ilača,base.hr,,state_hr_16
+city_hr_412,32249,Tovarnik,base.hr,4596,state_hr_16
+city_hr_413,32251,Privlaka,base.hr,,state_hr_16
+city_hr_414,32252,Otok,base.hr,,state_hr_16
+city_hr_415,32253,Komletinci,base.hr,,state_hr_16
+city_hr_416,32254,Vrbanja,base.hr,5053,state_hr_16
+city_hr_417,32255,Soljani,base.hr,,state_hr_16
+city_hr_418,32256,Strošinci,base.hr,,state_hr_16
+city_hr_419,32257,Drenovci,base.hr,922,state_hr_16
+city_hr_420,32258,Posavski Podgajci,base.hr,,state_hr_16
+city_hr_421,32260,Gunja,base.hr,1414,state_hr_16
+city_hr_422,32261,Rajevo Selo,base.hr,,state_hr_16
+city_hr_423,32262,Račinovci,base.hr,,state_hr_16
+city_hr_424,32263,Đurići,base.hr,,state_hr_16
+city_hr_425,32270,Županja,base.hr,5347,state_hr_16
+city_hr_426,32271,Rokovci Andrijaševci,base.hr,,state_hr_16
+city_hr_427,32272,Cerna,base.hr,442,state_hr_16
+city_hr_428,32273,Gradište,base.hr,1376,state_hr_16
+city_hr_429,32274,Štitar,base.hr,6289,state_hr_16
+city_hr_430,32275,Bošnjaci,base.hr,329,state_hr_16
+city_hr_431,32276,Babina Greda,base.hr,35,state_hr_16
+city_hr_432,32280,Jarmina,base.hr,1660,state_hr_16
+city_hr_433,32281,Ivankovo,base.hr,1597,state_hr_16
+city_hr_434,32282,Retkovci,base.hr,,state_hr_16
+city_hr_435,32283,Vođinci,base.hr,5843,state_hr_16
+city_hr_436,32284,Stari Mikanovci,base.hr,4154,state_hr_16
+city_hr_437,33000,Virovitica,base.hr,4910,state_hr_10
+city_hr_438,33404,Špišić Bukovica,base.hr,4499,state_hr_10
+city_hr_439,33405,Pitomača,base.hr,3328,state_hr_10
+city_hr_440,33406,Lukač,base.hr,2453,state_hr_10
+city_hr_441,33407,Gornje Bazje,base.hr,,state_hr_10
+city_hr_442,33410,Suhopolje,base.hr,4243,state_hr_10
+city_hr_443,33411,Gradina,base.hr,1368,state_hr_10
+city_hr_444,33412,Cabuna,base.hr,,state_hr_10
+city_hr_445,33507,Crnac,base.hr,540,state_hr_10
+city_hr_446,33513,Zdenci,base.hr,5240,state_hr_10
+city_hr_447,33514,Čačinci,base.hr,566,state_hr_10
+city_hr_448,33515,Orahovica,base.hr,3077,state_hr_10
+city_hr_449,33517,Mikleuš,base.hr,2666,state_hr_10
+city_hr_450,33518,Nova Bukovica,base.hr,2836,state_hr_10
+city_hr_451,33520,Slatina,base.hr,3956,state_hr_10
+city_hr_452,33522,Voćin,base.hr,4995,state_hr_10
+city_hr_453,33523,Čađavica,base.hr,574,state_hr_10
+city_hr_454,33525,Sopje,base.hr,4073,state_hr_10
+city_hr_455,33533,Pivnica Slavonska,base.hr,,state_hr_10
+city_hr_456,34000,Požega,base.hr,3514,state_hr_11
+city_hr_457,34308,Jakšić,base.hr,1643,state_hr_11
+city_hr_458,34310,Pleternica,base.hr,3344,state_hr_11
+city_hr_459,34311,Kuzmica,base.hr,,state_hr_11
+city_hr_460,34312,Sesvete (kod Požege),base.hr,,state_hr_11
+city_hr_461,34315,Ratkovica,base.hr,,state_hr_11
+city_hr_462,34322,Brestovac,base.hr,353,state_hr_11
+city_hr_463,34330,Velika,base.hr,4758,state_hr_11
+city_hr_464,34334,Kaptol,base.hr,1775,state_hr_11
+city_hr_465,34335,Vetovo,base.hr,,state_hr_11
+city_hr_466,34340,Kutjevo,base.hr,2216,state_hr_11
+city_hr_467,34343,Bektež,base.hr,,state_hr_11
+city_hr_468,34350,Čaglin,base.hr,582,state_hr_11
+city_hr_469,34543,Poljana,base.hr,,state_hr_11
+city_hr_470,34550,Pakrac,base.hr,3182,state_hr_11
+city_hr_471,34551,Lipik,base.hr,2313,state_hr_11
+city_hr_472,34552,Badljevina,base.hr,,state_hr_11
+city_hr_473,35000,Slavonski Brod,base.hr,3964,state_hr_12
+city_hr_474,35105,Slavonski Brod,base.hr,3964,state_hr_12
+city_hr_475,35106,Slavonski Brod,base.hr,3964,state_hr_12
+city_hr_476,35107,Podvinje,base.hr,,state_hr_12
+city_hr_477,35201,Podcrkavlje,base.hr,3387,state_hr_12
+city_hr_478,35207,Gornja Vrba,base.hr,5690,state_hr_12
+city_hr_479,35208,Ruščica,base.hr,,state_hr_12
+city_hr_480,35209,Bukovlje,base.hr,5673,state_hr_12
+city_hr_481,35210,Vrpolje,base.hr,5142,state_hr_12
+city_hr_482,35211,Trnjani,base.hr,,state_hr_12
+city_hr_483,35212,Garčin,base.hr,1180,state_hr_12
+city_hr_484,35213,Oprisavci,base.hr,3034,state_hr_12
+city_hr_485,35214,Donji Andrijevci,base.hr,817,state_hr_12
+city_hr_486,35216,Prnjavor,base.hr,,state_hr_12
+city_hr_487,35220,Slavonski Šamac,base.hr,3972,state_hr_12
+city_hr_488,35221,Velika Kopanica,base.hr,4766,state_hr_12
+city_hr_489,35222,Gundinci,base.hr,1406,state_hr_12
+city_hr_490,35224,Sikirevci,base.hr,5703,state_hr_12
+city_hr_491,35250,Oriovac,base.hr,3093,state_hr_12
+city_hr_492,35252,Sibinj,base.hr,3883,state_hr_12
+city_hr_493,35253,Brodski Stupnik,base.hr,396,state_hr_12
+city_hr_494,35254,Bebrina,base.hr,108,state_hr_12
+city_hr_495,35255,Slavonski Kobaš,base.hr,,state_hr_12
+city_hr_496,35257,Lužani,base.hr,,state_hr_12
+city_hr_497,35400,Nova Gradiška,base.hr,2844,state_hr_12
+city_hr_498,35403,Rešetari,base.hr,3727,state_hr_12
+city_hr_499,35404,Cernik,base.hr,469,state_hr_12
+city_hr_500,35410,Nova Kapela,base.hr,2852,state_hr_12
+city_hr_501,35414,Vrbova,base.hr,,state_hr_12
+city_hr_502,35420,Staro Petrovo Selo,base.hr,4189,state_hr_12
+city_hr_503,35422,Zapolje,base.hr,,state_hr_12
+city_hr_504,35423,Vrbje,base.hr,5061,state_hr_12
+city_hr_505,35424,Orubica,base.hr,,state_hr_12
+city_hr_506,35425,Davor,base.hr,680,state_hr_12
+city_hr_507,35428,Dragalić,base.hr,5681,state_hr_12
+city_hr_508,35429,Gornji Bogićevci,base.hr,1279,state_hr_12
+city_hr_509,35430,Okučani,base.hr,2992,state_hr_12
+city_hr_510,35435,Stara Gradiška,base.hr,4120,state_hr_12
+city_hr_511,40000,Čakovec,base.hr,604,state_hr_20
+city_hr_512,40305,Nedelišće,base.hr,2798,state_hr_20
+city_hr_513,40306,Macinec,base.hr,,state_hr_20
+city_hr_514,40311,Lopatinec,base.hr,,state_hr_20
+city_hr_515,40312,Štrigova,base.hr,4529,state_hr_20
+city_hr_516,40313,Sveti Martin na Muri,base.hr,4413,state_hr_20
+city_hr_517,40314,Selnica,base.hr,3859,state_hr_20
+city_hr_518,40315,Mursko Središče,base.hr,,state_hr_20
+city_hr_519,40317,Podturen,base.hr,3425,state_hr_20
+city_hr_520,40318,Dekanovec,base.hr,6033,state_hr_20
+city_hr_521,40319,Belica,base.hr,159,state_hr_20
+city_hr_522,40320,Donji Kraljevec,base.hr,825,state_hr_20
+city_hr_523,40321,Mala Subotica,base.hr,2500,state_hr_20
+city_hr_524,40322,Orehovica,base.hr,6050,state_hr_20
+city_hr_525,40323,Prelog,base.hr,3557,state_hr_20
+city_hr_526,40324,Goričan,base.hr,1236,state_hr_20
+city_hr_527,40326,Sveta Marija,base.hr,6076,state_hr_20
+city_hr_528,40328,Donja Dubrava,base.hr,787,state_hr_20
+city_hr_529,40329,Kotoriba,base.hr,2062,state_hr_20
+city_hr_530,42000,Varaždin,base.hr,4723,state_hr_5
+city_hr_531,42202,Trnovec Bartolovečki,base.hr,4626,state_hr_5
+city_hr_532,42203,Jalžabet,base.hr,1651,state_hr_5
+city_hr_533,42204,Turčin,base.hr,,state_hr_5
+city_hr_534,42205,Vidovec,base.hr,4847,state_hr_5
+city_hr_535,42206,Petrijanec,base.hr,3263,state_hr_5
+city_hr_536,42207,Vinica,base.hr,4863,state_hr_5
+city_hr_537,42208,Cestica,base.hr,485,state_hr_5
+city_hr_538,42209,Sračinec,base.hr,4103,state_hr_5
+city_hr_539,42220,Novi Marof,base.hr,2895,state_hr_5
+city_hr_540,42222,Ljubeščica,base.hr,,state_hr_5
+city_hr_541,42223,Varaždinske Toplice,base.hr,4731,state_hr_5
+city_hr_542,42225,Breznički Hum,base.hr,1511,state_hr_5
+city_hr_543,42230,Ludbreg,base.hr,2445,state_hr_5
+city_hr_544,42231,Mali Bukovec,base.hr,2518,state_hr_5
+city_hr_545,42232,Donji Martijanec,base.hr,850,state_hr_5
+city_hr_546,42233,Sveti Đurđ,base.hr,4375,state_hr_5
+city_hr_547,42240,Ivanec,base.hr,1562,state_hr_5
+city_hr_548,42242,Radovan,base.hr,,state_hr_5
+city_hr_549,42243,Maruševec,base.hr,2607,state_hr_5
+city_hr_550,42244,Klenovnik,base.hr,1899,state_hr_5
+city_hr_551,42245,Donja Voća,base.hr,809,state_hr_5
+city_hr_552,42250,Lepoglava,base.hr,2291,state_hr_5
+city_hr_553,42253,Bednja,base.hr,124,state_hr_5
+city_hr_554,42254,Trakošćan,base.hr,,state_hr_5
+city_hr_555,42255,Donja Višnjica,base.hr,,state_hr_5
+city_hr_556,43000,Bjelovar,base.hr,248,state_hr_7
+city_hr_557,43202,Zrinski Topolovac,base.hr,5665,state_hr_7
+city_hr_558,43203,Kapela,base.hr,1767,state_hr_7
+city_hr_559,43211,Predavac,base.hr,,state_hr_7
+city_hr_560,43212,Rovišće,base.hr,3751,state_hr_7
+city_hr_561,43226,Veliko Trojstvo,base.hr,4839,state_hr_7
+city_hr_562,43227,Šandrovac,base.hr,5649,state_hr_7
+city_hr_563,43231,Ivanska,base.hr,1619,state_hr_7
+city_hr_564,43232,Berek,base.hr,183,state_hr_7
+city_hr_565,43233,Trnovitički Popovac,base.hr,,state_hr_7
+city_hr_566,43240,Čazma,base.hr,639,state_hr_7
+city_hr_567,43246,Štefanje,base.hr,4502,state_hr_7
+city_hr_568,43247,Narta,base.hr,,state_hr_7
+city_hr_569,43251,Gudovac,base.hr,,state_hr_7
+city_hr_570,43252,Prgomelje,base.hr,,state_hr_7
+city_hr_571,43270,Veliki Grđevac,base.hr,4804,state_hr_7
+city_hr_572,43272,Nova Rača,base.hr,2879,state_hr_7
+city_hr_573,43273,Bulinac,base.hr,,state_hr_7
+city_hr_574,43274,Severin,base.hr,5622,state_hr_7
+city_hr_575,43280,Garešnica,base.hr,1198,state_hr_7
+city_hr_576,43282,Veliko Vukovje,base.hr,,state_hr_7
+city_hr_577,43283,Kaniška Iva,base.hr,,state_hr_7
+city_hr_578,43284,Hercegovac,base.hr,1449,state_hr_7
+city_hr_579,43290,Grubišno Polje,base.hr,1392,state_hr_7
+city_hr_580,43293,Veliki Zdenci,base.hr,,state_hr_7
+city_hr_581,43500,Daruvar,base.hr,671,state_hr_7
+city_hr_582,43505,Končanica (Končenice),base.hr,,state_hr_7
+city_hr_583,43506,Dežanovac,base.hr,710,state_hr_7
+city_hr_584,43507,Uljanik,base.hr,,state_hr_7
+city_hr_585,43531,Veliki Bastaji,base.hr,,state_hr_7
+city_hr_586,43532,Đulovac,base.hr,1058,state_hr_7
+city_hr_587,43541,Sirač,base.hr,3905,state_hr_7
+city_hr_588,44000,Sisak,base.hr,3913,state_hr_3
+city_hr_589,44010,Sisak-Caprag,base.hr,,state_hr_3
+city_hr_590,44201,Martinska Ves,base.hr,2593,state_hr_3
+city_hr_591,44202,Topolovac,base.hr,,state_hr_3
+city_hr_592,44203,Gušće,base.hr,,state_hr_3
+city_hr_593,44213,Kratečko,base.hr,,state_hr_3
+city_hr_594,44204,Jabukovac,base.hr,,state_hr_3
+city_hr_595,44210,Sunja,base.hr,4260,state_hr_3
+city_hr_596,44211,Blinjski Kut,base.hr,,state_hr_3
+city_hr_597,44250,Petrinja,base.hr,3280,state_hr_3
+city_hr_598,44253,Mošćenica,base.hr,,state_hr_3
+city_hr_599,44272,Lekenik,base.hr,2283,state_hr_3
+city_hr_600,44273,Sela,base.hr,,state_hr_3
+city_hr_601,44316,Velika Ludina,base.hr,4774,state_hr_3
+city_hr_602,44317,Popovača,base.hr,3476,state_hr_3
+city_hr_603,44318,Voloder,base.hr,,state_hr_3
+city_hr_604,44320,Kutina,base.hr,2208,state_hr_3
+city_hr_605,44321,Banova Jaruga,base.hr,,state_hr_3
+city_hr_606,44322,Lipovljani,base.hr,2321,state_hr_3
+city_hr_607,44323,Rajić,base.hr,,state_hr_3
+city_hr_608,44324,Jasenovac,base.hr,1686,state_hr_3
+city_hr_609,44325,Krapje,base.hr,,state_hr_3
+city_hr_610,44330,Novska,base.hr,2933,state_hr_3
+city_hr_611,44400,Glina,base.hr,1210,state_hr_3
+city_hr_612,44410,Gvozd,base.hr,5100,state_hr_3
+city_hr_613,44415,Topusko,base.hr,4570,state_hr_3
+city_hr_614,44430,Hrvatska Kostajnica,base.hr,1503,state_hr_3
+city_hr_615,44440,Dvor,base.hr,1023,state_hr_3
+city_hr_616,44450,Hrvatska Dubica,base.hr,1490,state_hr_3
+city_hr_617,47000,Karlovac,base.hr,1791,state_hr_4
+city_hr_618,47201,Draganići,base.hr,,state_hr_4
+city_hr_619,47206,Lasinja,base.hr,2259,state_hr_4
+city_hr_620,47212,Skakavac,base.hr,,state_hr_4
+city_hr_621,47220,Vojnić,base.hr,5037,state_hr_4
+city_hr_622,47222,Cetingrad,base.hr,493,state_hr_4
+city_hr_623,47240,Slunj,base.hr,4006,state_hr_4
+city_hr_624,47241,Cerovac Vukmanički,base.hr,,state_hr_4
+city_hr_625,47242,Krnjak,base.hr,2160,state_hr_4
+city_hr_626,47245,Rakovica,base.hr,3654,state_hr_4
+city_hr_627,47246,Drežnik Grad,base.hr,,state_hr_4
+city_hr_628,47250,Duga Resa,base.hr,990,state_hr_4
+city_hr_629,47251,Bosiljevo,base.hr,302,state_hr_4
+city_hr_630,47252,Barilović,base.hr,78,state_hr_4
+city_hr_631,47261,Zvečaj,base.hr,,state_hr_4
+city_hr_632,47262,Generalski Stol,base.hr,1201,state_hr_4
+city_hr_633,47264,Tounj,base.hr,5576,state_hr_4
+city_hr_634,47271,Netretić,base.hr,2810,state_hr_4
+city_hr_635,47276,Žakanje,base.hr,5304,state_hr_4
+city_hr_636,47280,Ozalj,base.hr,3158,state_hr_4
+city_hr_637,47286,Mahično,base.hr,,state_hr_4
+city_hr_638,47300,Ogulin,base.hr,2976,state_hr_4
+city_hr_639,47303,Josipdol,base.hr,1724,state_hr_4
+city_hr_640,47304,Plaški,base.hr,3336,state_hr_4
+city_hr_641,47306,Saborsko,base.hr,3786,state_hr_4
+city_hr_642,47313,Drežnica,base.hr,,state_hr_4
+city_hr_643,48000,Koprivnica,base.hr,2011,state_hr_6
+city_hr_644,48214,Sveti Ivan Žabno,base.hr,4391,state_hr_6
+city_hr_645,48260,Križevci,base.hr,2143,state_hr_6
+city_hr_646,48264,Kloštar Vojakovački,base.hr,,state_hr_6
+city_hr_647,48267,Orehovec,base.hr,,state_hr_6
+city_hr_648,48268,Gornja Rijeka,base.hr,6181,state_hr_6
+city_hr_649,48269,Kalnik,base.hr,5606,state_hr_6
+city_hr_650,48306,Sokolovac,base.hr,4057,state_hr_6
+city_hr_651,48312,Rasinja,base.hr,3662,state_hr_6
+city_hr_652,48316,Đelekovec,base.hr,1040,state_hr_6
+city_hr_653,48317,Legrad,base.hr,2275,state_hr_6
+city_hr_654,48321,Peteranec,base.hr,3247,state_hr_6
+city_hr_655,48322,Drnje,base.hr,965,state_hr_6
+city_hr_656,48326,Virje,base.hr,4901,state_hr_6
+city_hr_657,48327,Molve,base.hr,2704,state_hr_6
+city_hr_658,48331,Gola,base.hr,1228,state_hr_6
+city_hr_659,48350,Đurđevac,base.hr,1074,state_hr_6
+city_hr_660,48356,Ferdinandovac,base.hr,1155,state_hr_6
+city_hr_661,48361,Kalinovac,base.hr,5592,state_hr_6
+city_hr_662,48363,Podravske Sesvete,base.hr,6165,state_hr_6
+city_hr_663,49000,Krapina,base.hr,2119,state_hr_2
+city_hr_664,49210,Zabok,base.hr,5193,state_hr_2
+city_hr_665,49214,Veliko Trgovišće,base.hr,4812,state_hr_2
+city_hr_666,49215,Tuhelj,base.hr,4669,state_hr_2
+city_hr_667,49216,Desinić,base.hr,701,state_hr_2
+city_hr_668,49217,Krapinske Toplice,base.hr,2127,state_hr_2
+city_hr_669,49218,Pregrada,base.hr,3522,state_hr_2
+city_hr_670,49221,Bedekovčina,base.hr,116,state_hr_2
+city_hr_671,49223,Sveti Križ Začretje,base.hr,4308,state_hr_2
+city_hr_672,49224,Lepajci,base.hr,,state_hr_2
+city_hr_673,49225,Đurmanec,base.hr,1082,state_hr_2
+city_hr_674,49231,Hum na Sutli,base.hr,1520,state_hr_2
+city_hr_675,49232,Radoboj,base.hr,3646,state_hr_2
+city_hr_676,49233,Gornje Jesenje,base.hr,,state_hr_2
+city_hr_677,49234,Petrovsko,base.hr,3298,state_hr_2
+city_hr_678,49240,Donja Stubica,base.hr,795,state_hr_2
+city_hr_679,49243,Oroslavje,base.hr,3115,state_hr_2
+city_hr_680,49245,Gornja Stubica,base.hr,1252,state_hr_2
+city_hr_681,49246,Marija Bistrica,base.hr,2569,state_hr_2
+city_hr_682,49247,Zlatar Bistrica,base.hr,5274,state_hr_2
+city_hr_683,49250,Zlatar,base.hr,5266,state_hr_2
+city_hr_684,49251,Mače,base.hr,2488,state_hr_2
+city_hr_685,49252,Mihovljan,base.hr,2658,state_hr_2
+city_hr_686,49253,Lobor,base.hr,2364,state_hr_2
+city_hr_687,49282,Konjščina,base.hr,2003,state_hr_2
+city_hr_688,49283,Hraščina-Trgovišće,base.hr,,state_hr_2
+city_hr_689,49284,Budinšćina,base.hr,,state_hr_2
+city_hr_690,49290,Klanjec,base.hr,1872,state_hr_2
+city_hr_691,49294,Kraljevec na Sutli,base.hr,2089,state_hr_2
+city_hr_692,49295,Kumrovec,base.hr,5533,state_hr_2
+city_hr_693,49296,Zagorska Sela,base.hr,5215,state_hr_2
+city_hr_694,51000,Rijeka,base.hr,3735,state_hr_8
+city_hr_695,51211,Matulji,base.hr,2615,state_hr_8
+city_hr_696,51212,Vele Mune,base.hr,,state_hr_8
+city_hr_697,51213,Jurdani,base.hr,,state_hr_8
+city_hr_698,51214,Šapjane,base.hr,,state_hr_8
+city_hr_699,51215,Kastav,base.hr,1805,state_hr_8
+city_hr_700,51216,Viškovo,base.hr,4952,state_hr_8
+city_hr_701,51217,Klana,base.hr,1864,state_hr_8
+city_hr_702,51218,Dražice,base.hr,,state_hr_8
+city_hr_703,51221,Kostrena,base.hr,5380,state_hr_8
+city_hr_704,51222,Bakar,base.hr,43,state_hr_8
+city_hr_705,51223,Škrljevo,base.hr,,state_hr_8
+city_hr_706,51224,Krasica,base.hr,,state_hr_8
+city_hr_707,51225,Praputnjak,base.hr,,state_hr_8
+city_hr_708,51226,Hreljin,base.hr,,state_hr_8
+city_hr_709,51227,Kukuljanovo,base.hr,,state_hr_8
+city_hr_710,51241,Križišće,base.hr,,state_hr_8
+city_hr_711,51242,Drivenik,base.hr,,state_hr_8
+city_hr_712,51243,Tribalj,base.hr,,state_hr_8
+city_hr_713,51244,Grižane,base.hr,,state_hr_8
+city_hr_714,51250,Novi Vinodolski,base.hr,2909,state_hr_8
+city_hr_715,51251,Ledenice,base.hr,,state_hr_8
+city_hr_716,51252,Klenovica,base.hr,,state_hr_8
+city_hr_717,51253,Bribir,base.hr,,state_hr_8
+city_hr_718,51260,Crikvenica,base.hr,531,state_hr_8
+city_hr_719,51261,Bakarac,base.hr,,state_hr_8
+city_hr_720,51262,Kraljevica,base.hr,2097,state_hr_8
+city_hr_721,51263,Šmrika,base.hr,,state_hr_8
+city_hr_722,51264,Jadranovo,base.hr,,state_hr_8
+city_hr_723,51280,Rab,base.hr,3638,state_hr_8
+city_hr_724,51281,Lopar,base.hr,6246,state_hr_8
+city_hr_725,51300,Delnice,base.hr,698,state_hr_8
+city_hr_726,51301,Brod na Kupi,base.hr,,state_hr_8
+city_hr_727,51302,Kuželj,base.hr,,state_hr_8
+city_hr_728,51303,Plešce,base.hr,,state_hr_8
+city_hr_729,51304,Gerovo,base.hr,,state_hr_8
+city_hr_730,51305,Tršće,base.hr,,state_hr_8
+city_hr_731,51306,Čabar,base.hr,558,state_hr_8
+city_hr_732,51307,Prezid,base.hr,,state_hr_8
+city_hr_733,51311,Skrad,base.hr,3930,state_hr_8
+city_hr_734,51312,Brod Moravice,base.hr,388,state_hr_8
+city_hr_735,51313,Kupjak,base.hr,,state_hr_8
+city_hr_736,51314,Ravna Gora,base.hr,3697,state_hr_8
+city_hr_737,51315,Mrkopalj,base.hr,2755,state_hr_8
+city_hr_738,51316,Lokve,base.hr,2372,state_hr_8
+city_hr_739,51317,Crni Lug,base.hr,,state_hr_8
+city_hr_740,51322,Fužine,base.hr,1171,state_hr_8
+city_hr_741,51323,Lič,base.hr,,state_hr_8
+city_hr_742,51324,Zlobin,base.hr,,state_hr_8
+city_hr_743,51325,Moravice,base.hr,,state_hr_8
+city_hr_744,51326,Vrbovsko,base.hr,5096,state_hr_8
+city_hr_745,51327,Gomirje,base.hr,,state_hr_8
+city_hr_746,51328,Lukovdol,base.hr,,state_hr_8
+city_hr_747,51329,Severin na Kupi,base.hr,,state_hr_8
+city_hr_748,51410,Opatija,base.hr,3026,state_hr_8
+city_hr_749,51414,Ičići,base.hr,,state_hr_8
+city_hr_750,51415,Lovran,base.hr,2429,state_hr_8
+city_hr_751,51417,Mošćenička Draga,base.hr,2739,state_hr_8
+city_hr_752,51418,Brseč,base.hr,,state_hr_8
+city_hr_753,51500,Krk,base.hr,2151,state_hr_8
+city_hr_754,51511,Malinska,base.hr,,state_hr_8
+city_hr_755,51513,Omišalj,base.hr,3018,state_hr_8
+city_hr_756,51515,Šilo,base.hr,,state_hr_8
+city_hr_757,51516,Vrbnik,base.hr,5070,state_hr_8
+city_hr_758,51517,Kornić,base.hr,,state_hr_8
+city_hr_759,51521,Punat,base.hr,3603,state_hr_8
+city_hr_760,51522,Draga Bašćanska,base.hr,,state_hr_8
+city_hr_761,51523,Baška,base.hr,86,state_hr_8
+city_hr_762,51550,Mali Lošinj,base.hr,2526,state_hr_8
+city_hr_763,51551,Veli Lošinj,base.hr,,state_hr_8
+city_hr_764,51552,Ilovik,base.hr,,state_hr_8
+city_hr_765,51554,Nerezine,base.hr,,state_hr_8
+city_hr_766,51555,Belej,base.hr,,state_hr_8
+city_hr_767,51556,Martinšćica,base.hr,,state_hr_8
+city_hr_768,51557,Cres,base.hr,523,state_hr_8
+city_hr_769,51559,Beli,base.hr,,state_hr_8
+city_hr_770,51561,Susak,base.hr,,state_hr_8
+city_hr_771,51562,Unije,base.hr,,state_hr_8
+city_hr_772,51564,Ćunski,base.hr,,state_hr_8
+city_hr_773,52000,Pazin,base.hr,3212,state_hr_18
+city_hr_774,52100,Pula (Pola),base.hr,3590,state_hr_18
+city_hr_775,52203,Medulin,base.hr,2631,state_hr_18
+city_hr_776,52204,Ližnjan (Lisignano),base.hr,2356,state_hr_18
+city_hr_777,52206,Marčana,base.hr,2542,state_hr_18
+city_hr_778,52207,Barban,base.hr,60,state_hr_18
+city_hr_779,52208,Krnica,base.hr,,state_hr_18
+city_hr_780,52210,Rovinj (Rovigno),base.hr,3743,state_hr_18
+city_hr_781,52211,Bale (Valle),base.hr,51,state_hr_18
+city_hr_782,52212,Fažana (Fasana),base.hr,6190,state_hr_18
+city_hr_783,52215,Vodnjan (Dignano),base.hr,5029,state_hr_18
+city_hr_784,52216,Galižana (Gallesano),base.hr,,state_hr_18
+city_hr_785,52220,Labin,base.hr,2224,state_hr_18
+city_hr_786,52221,Rabac,base.hr,,state_hr_18
+city_hr_787,52222,Koromačno,base.hr,,state_hr_18
+city_hr_788,52223,Raša,base.hr,3689,state_hr_18
+city_hr_789,52224,Trget,base.hr,,state_hr_18
+city_hr_790,52231,Nedešćina,base.hr,,state_hr_18
+city_hr_791,52232,Kršan,base.hr,2178,state_hr_18
+city_hr_792,52234,Plomin,base.hr,,state_hr_18
+city_hr_793,52332,Pićan,base.hr,3301,state_hr_18
+city_hr_794,52333,Podpićan,base.hr,,state_hr_18
+city_hr_795,52341,Žminj,base.hr,5312,state_hr_18
+city_hr_796,52342,Svetvinčenat,base.hr,4359,state_hr_18
+city_hr_797,52352,Kanfanar,base.hr,1759,state_hr_18
+city_hr_798,52402,Cerovlje,base.hr,477,state_hr_18
+city_hr_799,52403,Gračišće,base.hr,1325,state_hr_18
+city_hr_800,52404,Sveti Petar u šumi,base.hr,4332,state_hr_18
+city_hr_801,52420,Buzet,base.hr,434,state_hr_18
+city_hr_802,52422,Lanišće,base.hr,2232,state_hr_18
+city_hr_803,52423,Karojba,base.hr,5967,state_hr_18
+city_hr_804,52424,Motovun (Montana),base.hr,,state_hr_18
+city_hr_805,52425,Roč,base.hr,,state_hr_18
+city_hr_806,52426,Lupoglav,base.hr,2461,state_hr_18
+city_hr_807,52427,Livade (Levade),base.hr,,state_hr_18
+city_hr_808,52428,Oprtalj (Portole),base.hr,3042,state_hr_18
+city_hr_809,52429,Grožnjan (Grisignana),base.hr,1384,state_hr_18
+city_hr_810,52434,Boljun,base.hr,,state_hr_18
+city_hr_811,52440,Poreč (Parenzo),base.hr,3484,state_hr_18
+city_hr_812,52444,Tinjan,base.hr,4537,state_hr_18
+city_hr_813,52445,Baderna,base.hr,,state_hr_18
+city_hr_814,52446,Nova Vas,base.hr,,state_hr_18
+city_hr_815,52447,Vižinada (Visinada),base.hr,4987,state_hr_18
+city_hr_816,52448,Sveti Lovreč,base.hr,4316,state_hr_18
+city_hr_817,52449,Červar Porat,base.hr,,state_hr_18
+city_hr_818,52450,Vrsar (Orsera),base.hr,5169,state_hr_18
+city_hr_819,52452,Funtana (Fontane),base.hr,6297,state_hr_18
+city_hr_820,52460,Buje (Buie),base.hr,426,state_hr_18
+city_hr_821,52462,Momjan (Momiano),base.hr,,state_hr_18
+city_hr_822,52463,Višnjan (Visignano),base.hr,4979,state_hr_18
+city_hr_823,52464,Kaštelir (Castelliere),base.hr,,state_hr_18
+city_hr_824,52465,Tar (Torre),base.hr,,state_hr_18
+city_hr_825,52466,Novigrad (Cittanova),base.hr,2917,state_hr_18
+city_hr_826,52470,Umag (Umago),base.hr,4685,state_hr_18
+city_hr_827,52474,Brtonigla (Verteneglio),base.hr,400,state_hr_18
+city_hr_828,52475,Savudrija (Salvore),base.hr,,state_hr_18
+city_hr_829,53000,Gospić,base.hr,1309,state_hr_9
+city_hr_830,53201,Lički Osik,base.hr,,state_hr_9
+city_hr_831,53202,Perušić,base.hr,3239,state_hr_9
+city_hr_832,53203,Kosinj,base.hr,,state_hr_9
+city_hr_833,53212,Klanac,base.hr,,state_hr_9
+city_hr_834,53213,Donje Pazarište,base.hr,,state_hr_9
+city_hr_835,53220,Otočac,base.hr,3131,state_hr_9
+city_hr_836,53223,Vrhovine,base.hr,5126,state_hr_9
+city_hr_837,53224,Ličko Lešće,base.hr,,state_hr_9
+city_hr_838,53230,Korenica,base.hr,,state_hr_9
+city_hr_839,53231,Plitvička Jezera,base.hr,4553,state_hr_9
+city_hr_840,53233,Ličko Petrovo Selo,base.hr,,state_hr_9
+city_hr_841,53234,Udbina,base.hr,4677,state_hr_9
+city_hr_842,53236,Podlapača,base.hr,,state_hr_9
+city_hr_843,53244,Lovinac,base.hr,2402,state_hr_9
+city_hr_844,53250,Donji Lapac,base.hr,841,state_hr_9
+city_hr_845,53260,Brinje,base.hr,370,state_hr_9
+city_hr_846,53261,Križpolje,base.hr,,state_hr_9
+city_hr_847,53262,Jezerane,base.hr,,state_hr_9
+city_hr_848,53270,Senj,base.hr,3875,state_hr_9
+city_hr_849,53271,Krivi Put,base.hr,,state_hr_9
+city_hr_850,53273,Vratnik,base.hr,,state_hr_9
+city_hr_851,53274,Krasno,base.hr,,state_hr_9
+city_hr_852,53284,Sveti Juraj,base.hr,,state_hr_9
+city_hr_853,53287,Jablanac,base.hr,,state_hr_9
+city_hr_854,53288,Karlobag,base.hr,1783,state_hr_9
+city_hr_855,53289,Lukovo Šugarje,base.hr,,state_hr_9
+city_hr_856,53291,Novalja,base.hr,2887,state_hr_9
+city_hr_857,53294,Lun,base.hr,,state_hr_9
+city_hr_858,53296,Zubovići,base.hr,,state_hr_9

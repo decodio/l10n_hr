@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_bank_statement_import_form" model="ir.ui.view">
+            <field name="name">account.bank.statement.import.form</field>
+            <field name="model">account.bank.statement.imports</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">               
+                <form string="Bank Statement File">
+                <sheet>
+                    <div class="oe_right oe_button_box" name="import_buttons">
+                        <button name="%(action_import_bank_statement_wiz)d" 
+                            string="Import from file" type="action" 
+                            class="oe_inline oe_stat_button"
+                            icon="fa-upload"
+                            />
+                    </div>                     
+                    <group colspan="4" col="6">
+                        <field name="name"/>
+                        <field name="date_create"/>
+                        <field name="statement_file"/>
+                        <field name="bank_name"/>
+                        <field name="bank_code"/>
+                        <field name="bank_vat_number"/>
+                        <field name="user_id"/>
+                        <field name="import_date"/>
+                        <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Log">
+                           <field name="import_log" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Bank Statements">
+                            <field name="statement_ids" colspan="4" nolabel="1">
+                                <tree colors="red:balance_end_real!=balance_end and state=='draft';blue:state=='draft' and (balance_end_real==balance_end);black:state=='confirm'" string="Statement">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="period_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="balance_start"/>
+                                    <field name="balance_end_real"/>
+                                    <field name="balance_end" invisible="1"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_bank_statement_import_tree" model="ir.ui.view">
+            <field name="name">account.bank.statement.import.tree</field>
+            <field name="model">account.bank.statement.imports</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Bank Statement Files">
+                    <field name="date_create"/>
+                    <field name="import_date"/>
+                    <field name="bank_name"/>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_bank_statement_import_search" model="ir.ui.view">
+            <field name="name">account.bank.statement.import.search</field>
+            <field name="model">account.bank.statement.imports</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Bank Statement Files">
+                    <group>
+                        <field name="date_create"/>
+                        <field name="import_date"/>
+                        <field name="bank_name"/>
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="User" icon="terp-personal" domain="[]"  context="{'group_by': 'user_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Creation Date" icon="terp-go-month" domain="[]" context="{'group_by': 'date_create'}"/>
+                        <filter string="Import Date" icon="terp-go-month" domain="[]" context="{'group_by': 'import_date'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Company" icon="terp-go-home" domain="[]" groups="base.group_multi_company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_bank_statement_import" model="ir.actions.act_window">
+            <field name="name">Bank Statement Files</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.bank.statement.imports</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_bank_statement_import_search"/>
+        </record>
+
+        <menuitem id="menu_bank_statement_import" action="action_bank_statement_import" parent="account.menu_finance_bank_and_cash" sequence="5"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,498 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_hr_bank_fina_mn
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-21 21:21+0000\n"
+"PO-Revision-Date: 2014-05-21 21:21+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:224
+#, python-format
+msgid "Wizard in incorrect state. Please hit the Cancel button!"
+msgstr "Čarobnjak je u neispravnom statusu. Pritisnite gumb Odustani!"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+msgid "Log"
+msgstr "Log"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:648
+#, python-format
+msgid "\n"
+"System Error: "
+msgstr "\n"
+"Sistemska greška: "
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:427
+#, python-format
+msgid "You must define journal for company bank account number \"%s\"!"
+msgstr "Morate definirati dnevnik za bankovni račun poduzeća broj \"%s\"!"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:662
+#, python-format
+msgid "Import bank statement file result"
+msgstr "Rezultat uvoza datoteke bankovnog izvatka"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:371
+#, python-format
+msgid "Number of imported rows (%s) is different from number of rows in the file (%s)!"
+msgstr "Broj uvezenih redaka (%s) je različit od broja redaka u datoteci (%s)!"
+
+#. module: l10n_hr_bank_fina_mn
+#: constraint:res.company:0
+msgid "Error! You can not create recursive companies."
+msgstr "Pogreška! Ne možete kreirati rekurzivne organizacije."
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:657
+#, python-format
+msgid "File import failed!"
+msgstr "Uvoz datoteke nije uspio!"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:import.bank.statement.wiz,file_data:0
+msgid "File Data"
+msgstr "Podaci datoteke"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:651
+#, python-format
+msgid "\n"
+"Unknown Error: "
+msgstr "\n"
+"Nepoznata greška: "
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+msgid "Group By..."
+msgstr "Grupiraj po..."
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+#: field:account.bank.statement.imports,import_date:0
+msgid "Import Date"
+msgstr "Datum uvoza"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement,statement_file_id:0
+#: view:account.bank.statement.imports:0
+msgid "Bank Statement File"
+msgstr "Datoteka bankovnog izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "Import"
+msgstr "Uvoz"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement:0
+msgid "Add bank accounts to partners"
+msgstr "Dodjeli bank. račune partnerima"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:265
+#, python-format
+msgid "Incorrect row length.\n"
+"%s"
+msgstr "Neispravna dužina retka.\n"
+"%s"
+
+#. module: l10n_hr_bank_fina_mn
+#: sql_constraint:res.company:0
+msgid "The company name must be unique !"
+msgstr "Naziv organizacije mora biti jedinstven!"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+msgid "Bank Statements"
+msgstr "Bankovni izvodi"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:201
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:274
+#, python-format
+msgid "Unknown row type: %s!"
+msgstr "Nepoznati tip retka: %s!"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:188
+#, python-format
+msgid "There are no updates. All partners already have bank accounts."
+msgstr "Ažuriranje nije izvršeno. Svi partneri već imaju upisani bankovni račun."
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+#: model:ir.actions.act_window,name:l10n_hr_bank_fina_mn.action_import_bank_statement_wiz
+#: model:ir.actions.act_window,name:l10n_hr_bank_fina_mn.import_bank_statement_wiz
+msgid "Import Bank Statement File"
+msgstr "Uvoz datoteke bankovnog izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:185
+#, python-format
+msgid "Added bank account number \"%s\" for the partner \"%s\".\n"
+""
+msgstr "Dodan bankovni račun \"%s\" za partnera \"%s\".\n"
+""
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:331
+#, python-format
+msgid "\n"
+"File \"%s\" with Create Date \"%s\" has already been imported!"
+msgstr "\n"
+"Datoteka \"%s\" sa datumom kreiranja \"%s\"je već uvežena!"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+#: field:account.bank.statement.imports,company_id:0
+msgid "Company"
+msgstr "Poduzeće"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:import.bank.statement.wiz,payable_account_id:0
+#: field:res.company,payable_account_id:0
+msgid "Default Payable Account"
+msgstr "Predefinirani konto obveze"
+
+#. module: l10n_hr_bank_fina_mn
+#: sql_constraint:account.bank.statement.imports:0
+msgid "Another file with same name and date already exists!"
+msgstr "Već postoji datoteka s istim nazivom i datumom!"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement:0
+msgid "Import from file"
+msgstr "Uvoz iz datoteke"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "View Bank Statement File"
+msgstr "Pregled datoteke izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,bank_name:0
+msgid "Bank Name"
+msgstr "Naziv banke"
+
+#. module: l10n_hr_bank_fina_mn
+#: help:import.bank.statement.wiz,payable_account_id:0
+#: help:res.company,payable_account_id:0
+msgid "Set here the payable account that will be used, by default, if the partner is not found"
+msgstr "Postava predefiniranog konta obveze koji će se koristiti ako partner nije pronađen"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+#: field:account.bank.statement.imports,user_id:0
+msgid "User"
+msgstr "Korisnik"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,import_log:0
+#: field:import.bank.statement.wiz,import_log:0
+msgid "Import Log"
+msgstr "Log uvoza"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "Select file:"
+msgstr "Odabir datoteke:"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,bank_vat_number:0
+msgid "Source VAT no."
+msgstr "OIB izvora"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:442
+#, python-format
+msgid "You must define company bank account for account number \"%s\". \n"
+"Currency: %s"
+msgstr "Morate definirati bankovni račun za konto \"%s\". \n"
+"Valuta: %s"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:res.company:0
+msgid "Configuration"
+msgstr "Postava"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:412
+#, python-format
+msgid "You must define currency \"%s\"!"
+msgstr "Morate definirati valutu \"%s\"!"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:469
+#, python-format
+msgid "Bank statement \"%s\" already exists!"
+msgstr "Bankovni izvod \"%s\" već postoji!"
+
+#. module: l10n_hr_bank_fina_mn
+#: model:ir.model,name:l10n_hr_bank_fina_mn.model_import_bank_statement_wiz
+msgid "Import Bank Statement file"
+msgstr "Uvoz datoteke bankovnog izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement:0
+msgid "Update lines"
+msgstr "Ažuriraj plaćanja na linijama"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "Accounts:"
+msgstr "Konta:"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.line,bank_acc_number:0
+msgid "Bank Account Number"
+msgstr "Broj bankovnih računa"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+msgid "Statement"
+msgstr "Izvod"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+msgid "Creation Date"
+msgstr "Datum kreiranja"
+
+#. module: l10n_hr_bank_fina_mn
+#: model:ir.model,name:l10n_hr_bank_fina_mn.model_res_company
+msgid "Companies"
+msgstr "Tvrtke"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "Results:"
+msgstr "Rezultati:"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:195
+#, python-format
+msgid "Add partner bank accounts"
+msgstr "Dodjeli bank. račune partnerima"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:import.bank.statement.wiz,receivable_account_id:0
+#: field:res.company,receivable_account_id:0
+msgid "Default Receivable Account"
+msgstr "Predefinirani konto potraživanja"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,statement_ids:0
+msgid "Imported Bank Statements"
+msgstr "Uvezeni bank. izvatci"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.line,fina_branch_code:0
+msgid "FINA Branch Code"
+msgstr "Šifra podružnice FINA"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:645
+#, python-format
+msgid "\n"
+"Application Error: "
+msgstr "\n"
+"Greška u programu: "
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "View Bank Statement(s)"
+msgstr "Pregled izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: constraint:account.bank.statement.line:0
+msgid "The amount of the voucher must be the same amount as the one on the statement line"
+msgstr "Iznos plaćanja mora biti jednak iznosu stavke izvoda banke/blagajne."
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement:0
+msgid "Are you sure that you want to update partners and payments on the bank statement lines?"
+msgstr "Jeste li sigurni da želite ažurirati partnere i plaćanja u recima bankovnog izvoda?"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:435
+#, python-format
+msgid "BIC \"%s\" for company bank account \"%s\" is different from BIC \"%s\" in the file!"
+msgstr "BIC \"%s\" za bankovni račun poduzeća \"%s\" je različit od BIC \"%s\" u datoteci!"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:520
+#, python-format
+msgid "Unknown transaction type \"%s\"!"
+msgstr "Nepoznat tip transakcije \"%s\"!"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:164
+#, python-format
+msgid "Nonconformity. The bank account number \"%s\" is entered in the bank statement line \"%s\" for the partner \"%s\". This is the same bank account number already registered for the partner \"%s\".\n"
+""
+msgstr "Nesukladnost. Broj bankovnog računa \"%s\" je unesen u redak izvoda \"%s\" za partnera \"%s\". Međutim taj bankovni račun se već koristi za partnera \"%s\".\n"
+""
+
+#. module: l10n_hr_bank_fina_mn
+#: model:ir.model,name:l10n_hr_bank_fina_mn.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Redak bankovnog izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:71
+#, python-format
+msgid "You cannot delete bank statement file \"%s\" becouse \n"
+" bank statemnt lines exist for this line!"
+msgstr "Ne možete obrisati datoteku bankovnog izvoda \"%s\" jer \n"
+" postoje reci izvoda za taj redak!"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,bank_code:0
+msgid "Bank Code"
+msgstr "Šifra banke"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement:0
+msgid "Import Invoices"
+msgstr "Uvoz računa"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:70
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:201
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:210
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:224
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:269
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:278
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:285
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:291
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:298
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:310
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:337
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:365
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:375
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:389
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:416
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:431
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:440
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:446
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:473
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:524
+#, python-format
+msgid "Error!"
+msgstr "Greška!"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:281
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:287
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:294
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:306
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:385
+#, python-format
+msgid "Invalid file \"%s\"!"
+msgstr "Pogrešna datoteka \"%s\"!"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,name:0
+#: view:import.bank.statement.wiz:0
+#: field:import.bank.statement.wiz,file_name:0
+msgid "File Name"
+msgstr "Naziv datoteke"
+
+#. module: l10n_hr_bank_fina_mn
+#: help:import.bank.statement.wiz,receivable_account_id:0
+#: help:res.company,receivable_account_id:0
+msgid "Set here the receivable account that will be used, by default, if the partner is not found"
+msgstr "Ovdje postavite predefinirani konto potraživanja koji će se koristiti ukoliko nije pronađen partner"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:357
+#, python-format
+msgid "\n"
+"Nonconformity! This bank account is registered on more than one partner:"
+msgstr "\n"
+"Nesukladnost! Ovaj bankovni račun se koristi na više partnera:"
+
+#. module: l10n_hr_bank_fina_mn
+#: constraint:account.bank.statement:0
+msgid "The journal and period chosen have to belong to the same company."
+msgstr "Odabrani dnevnik i period mora pripadati istom poduzeću."
+
+#. module: l10n_hr_bank_fina_mn
+#: model:ir.model,name:l10n_hr_bank_fina_mn.model_account_bank_statement
+#: view:res.company:0
+msgid "Bank Statement"
+msgstr "Izvod banke"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:361
+#, python-format
+msgid "Number of imported groups (%s) is different from number of groups in the file (%s)!"
+msgstr "Broj uvezenih grupa (%s) je različit od broja grupa u datoteci (%s)!"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement.imports:0
+#: model:ir.actions.act_window,name:l10n_hr_bank_fina_mn.action_bank_statement_import
+#: model:ir.ui.menu,name:l10n_hr_bank_fina_mn.menu_bank_statement_import
+msgid "Bank Statement Files"
+msgstr "Datoteke bankovnog izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,date_create:0
+msgid "Create Date"
+msgstr "DAtum kreiranja"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/bank_statement_import.py:190
+#, python-format
+msgid "Warning!"
+msgstr "Upozorenje!"
+
+#. module: l10n_hr_bank_fina_mn
+#: field:account.bank.statement.imports,statement_file:0
+msgid "File"
+msgstr "Datoteka"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "Cancel"
+msgstr "Odustani"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:import.bank.statement.wiz:0
+msgid "Close"
+msgstr "Zatvori"
+
+#. module: l10n_hr_bank_fina_mn
+#: model:ir.model,name:l10n_hr_bank_fina_mn.model_account_bank_statement_imports
+msgid "Account bank Statement imports"
+msgstr "Uvoz bankovnih izvoda"
+
+#. module: l10n_hr_bank_fina_mn
+#: view:account.bank.statement:0
+msgid "Are you sure that you want to add the missing bank accounts to partners?"
+msgstr "Jeste li sigurni da želite dodjeliti bank. račune koji nedostaju partnerima?"
+
+#. module: l10n_hr_bank_fina_mn
+#: code:addons/l10n_hr_bank_fina_mn/wizard/import_bank_statement_wiz.py:210
+#, python-format
+msgid "Row: %d\n"
+"Row type: %s\n"
+"Missing data in the mandatory field %s \"%s\"."
+msgstr "Redak: %d\n"
+"Vrsta retka: %s\n"
+"Nedostaje obavezan podatak u polju %s \"%s\"."
+

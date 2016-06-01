@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_report_pdv_knjiga" model="ir.ui.view">
+            <field name="name">Porezna knjiga</field>
+            <field name="model">pdv.knjiga</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Postavke ispisa porezne knjige">
+                <separator string="Ispis obrasca" colspan="4"/>
+                <field name="chart_account_id" widget='selection' on_change="onchange_chart_id(chart_account_id, context)" colspan="4"/>
+                <field name="chart_tax_id" widget='selection' colspan="4"/>
+                <field name="knjiga_id" widget='selection'/> 
+                <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
+                <field name="company_id"/>                                                  
+                <separator string="Periodi"  colspan="4"/>
+
+                <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+                <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+<!--                
+                <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id)]" attrs="{'readonly':[('filter','!=','filter_period')], 'required':[('filter', '=', 'filter_period')]}" />
+                <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id)]" attrs="{'readonly':[('filter','!=','filter_period')], 'required':[('filter', '=', 'filter_period')]}" />
+-->
+                <separator string="Razdoblje računa"  colspan="4"/>
+                <field name="date_start" />
+                <field name="date_stop" />                
+                <group col="2" colspan="4">
+                    <button icon='gtk-cancel' special="cancel"  string="Odustani" />
+                    <button name="create_vat" string="Ispiši" colspan="1" type="object" icon="gtk-ok"/>
+                </group>
+            </form>
+            </field>
+        </record>
+        
+        <record id="action_report_pdv_knjiga" model="ir.actions.act_window">
+            <field name="name">Porezna knjiga</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pdv.knjiga</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help">Ispis zakonski definiranog obrasca za porezne knjige. Ispis se radi po periodima, razdbolju računa ili po oba uvjeta.</field>
+        </record>
+        
+        <menuitem
+            name="Porezna knjiga"
+            parent="account.menu_tax_report"
+            action="action_report_pdv_knjiga"
+            id="menu_report_pdv_knjiga"
+            icon="STOCK_PRINT"/>
+    </data>
+</openerp>

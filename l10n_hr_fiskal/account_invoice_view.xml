@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="account_invoice_form_fiskal" model="ir.ui.view">
+            <field name="name">account_invoice_form_fiskal</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Fiskalizacija (CRO)">
+                        <group>
+                            <group>
+                                <field name="jir" string="JIR" readonly="True"/>
+                                <field name="zki" string="ZKI" readonly="True"/>
+                                <button name="button_fiscalize" states="open,paid"
+                                        string="Fiskaliziraj" type="object" groups="base.group_user"/>
+                            </group>
+                            <group>
+                                <field name="fiskal_user_id" readonly="True"/>
+                                <field name="vrijeme_izdavanja" readonly="True"/>
+                                <field name="uredjaj_id" string="Prostor/Blagajna"/>
+                                <field name="nac_plac" required="False"/>                                
+                                <!--field name="vrijeme_txt" readonly="True" string="Vrijeme izdavanja"/-->
+                            </group>
+                        </group>
+                        <group colspan="4">
+                            <field name="fiskal_log_ids" nolabel="1" readonly="True"/>
+                        </group>
+                    </page>
+                </notebook>
+                <!--
+                <field name="journal_id" position="after">
+                    <field name="uredjaj_id" string="Prostor/Blagajna"/>
+                    <field name="nac_plac"/>
+                </field>
+                -->
+            </field>
+        </record>
+    </data>
+</openerp>

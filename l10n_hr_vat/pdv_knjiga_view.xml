@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_pdv_knjiga_tree" model="ir.ui.view">
+            <field name="name">view.pdv.knjiga.tree</field>
+            <field name="model">l10n_hr_pdv.knjiga</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Porezna knjiga" toolbar="1">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="based_on"/>
+              		<field name="company_id"/>
+              		<field name="sequence"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_pdv_knjiga_form" model="ir.ui.view">
+            <field name="name">view.pdv.knjiga.form</field>
+            <field name="model">l10n_hr_pdv.knjiga</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Porezna knjiga">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="based_on"/>
+                                <field name="company_id"/>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_pdv_knjiga" model="ir.actions.act_window">
+            <field name="name">Porezna knjiga</field>
+            <field name="res_model">l10n_hr_pdv.knjiga</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pdv_knjiga_tree"/>
+        </record>
+        <menuitem action="action_pdv_knjiga" 
+        	id="menu_action_pdv_knjiga" 
+        	parent="account.next_id_27" 
+        	sequence="21"/>
+        
+        <record id="view_pdv_knjiga_stavka_tree" model="ir.ui.view">
+            <field name="name">view.pdv.knjiga.stavka.tree</field>
+            <field name="model">l10n_hr_pdv.knjiga.stavka</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Stavke porezne knjige" toolbar="1">
+			        <field name="name"/>
+			        <field name="l10n_hr_pdv_knjiga_id"/>
+			        <field name="rbr"/>
+			        <field name="datum_upisa"/>
+			        <field name="invoice_id"/>
+			        <field name="move_id"/>
+			        <field name="move_date"/>
+			        <field name="period_id"/>
+			        <field name="company_id"/>
+			        <field name="invoice_number"/>
+			        <field name="invoice_date_invoice"/>
+			        <field name="invoice_partner_name"/>
+			        <field name="invoice_partner_oib"/>
+                </tree>
+            </field>
+        </record>
+		
+		<record id="search_pdv_knjiga_stavka_tree" model="ir.ui.view">
+            <field name="name">search.pdv.knjiga.stavka.tree</field>
+            <field name="model">l10n_hr_pdv.knjiga.stavka</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Stavke porezne knjige">
+                	<group col="10" colspan="4">
+				        <field name="name"/>
+				        <field name="period_id"/>
+				        <field name="company_id"/>
+				        <field name="invoice_partner_name"/>
+				        <field name="l10n_hr_pdv_knjiga_id"/>
+					</group>
+					<newline/>
+					<group expand="0" string="Group by...">
+						<filter string="Porezna knjiga" icon="terp-folder-orange" domain="[]" context="{'group_by':'l10n_hr_pdv_knjiga_id'}"/>
+						<filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period_id'}"/>
+						<filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'invoice_partner_name'}"/>
+					</group>
+                </search>
+            </field>
+        </record>
+		
+        <record id="view_pdv_knjiga_stavka_form" model="ir.ui.view">
+            <field name="name">view.pdv.knjiga.stavka.form</field>
+            <field name="model">l10n_hr_pdv.knjiga.stavka</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Stavke porezne knjige">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="l10n_hr_pdv_knjiga_id"/>
+                                <field name="rbr"/>
+                                <field name="datum_upisa"/>
+                                <field name="invoice_id"/>
+                                <field name="move_id"/>
+                                <field name="move_date"/>
+                                <field name="period_id"/>
+                            </group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="invoice_number"/>
+                                <field name="invoice_date_invoice"/>
+                                <field name="invoice_partner_name"/>
+                                <field name="invoice_partner_oib"/>
+                                <field name="invoice_partner_street"/>
+                                <field name="invoice_partner_city"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_pdv_knjiga_stavka" model="ir.actions.act_window">
+            <field name="name">Stavke porezne knjige</field>
+            <field name="res_model">l10n_hr_pdv.knjiga.stavka</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pdv_knjiga_stavka_tree"/>
+        </record>
+        
+        <menuitem name="Taxes"
+            id="menu_action_taxes"
+            parent="account.menu_finance_periodical_processing"/>        
+        <menuitem action="action_pdv_knjiga_stavka" 
+        	id="menu_action_pdv_knjiga_stavka" 
+        	parent="menu_action_taxes" 
+        	sequence="10"/>   
+        	
+        <report
+            auto="False"
+            id="report_knjiga_ira"
+            menu="False"
+            model="account.tax.code"
+            name="knjiga.ira"
+            rml="l10n_hr_vat/report/knjiga_ira.rml"
+            string="Knjiga IRA"/> 
+            
+        <report
+            auto="False"
+            id="report_knjiga_ura"
+            menu="False"
+            model="account.tax.code"
+            name="knjiga.ura"
+            rml="l10n_hr_vat/report/knjiga_ura.rml"
+            string="Knjiga URA"/>                     	 
+    </data>
+</openerp>

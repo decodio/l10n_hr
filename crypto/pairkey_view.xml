@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_pairkey_tree" model="ir.ui.view">
+        <field name="name">crypto.pairkey.tree</field>
+        <field name="model">crypto.pairkey</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Pair key">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="group_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+        <record id="view_pairkey_form" model="ir.ui.view">
+        <field name="name">crypto.pairkey.tree</field>
+        <field name="model">crypto.pairkey</field>
+        <field name="arch" type="xml">
+            <form string="Pair key">
+                <header>
+                    <button name="%(action_generate_pairkey_wizard)s" type="action" states="draft" string="Generate keys"/>
+                    <button name="action_validate" type="object" states="draft" string="Approve"/>
+                    <button name="action_cancel" type="object" states="draft,confirmed" string="Cancel"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet string="Pair key">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="pub" domain="[('user_id','=',user_id)]"/>
+                        </group>
+                        <group>
+                            <field name="group_id"/>
+                            <field name="key"/>
+                        </group>
+                    </group>
+                 </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pairkey_tree" model="ir.actions.act_window">
+            <field name="name">Pairkeys</field>
+            <field name="res_model">crypto.pairkey</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pairkey_tree"/>
+        </record>
+
+    <menuitem action="action_pairkey_tree" id="menu_action_pairkey_tree" parent="menu_crypto"/>
+
+    </data>
+</openerp>

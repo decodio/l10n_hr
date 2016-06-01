@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_journal_l10n_hr_pdv_knjiga" model="ir.ui.view">
+            <field name="name">view.journal.l10n.hr.pdv.knjiga</field>
+            <field name="model">account.journal</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Postavke poreza">
+                        <group>
+                            <group colspan="4">
+                                <field name="l10n_hr_pdv_knjiga_ids" nolabel="1" groups="account.group_account_manager"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="do_not_check_vat" groups="account.group_account_manager"/>
+                                <field name="pdv_eu" groups="account.group_account_manager"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+        
+        <record id="view_tax_code_form_inherit" model="ir.ui.view">
+            <field name="name">account.tax.code.form.inherit</field>
+            <field name="model">account.tax.code</field>
+            <field name="inherit_id" ref="account.view_tax_code_form"/>
+            <field name="arch" type="xml">
+                <field name="info" position="after">
+                    <separator string="Tax Exemptions" colspan="4"/>
+                    <field colspan="4" name="tax_exemption_ids" nolabel="1">
+                        <tree string="Tax Exemptions">
+                            <field name="name"/>
+                        </tree>
+                   </field>
+                </field>
+            </field>
+        </record>
+        
+        <record id="view_tax_exemption_tree" model="ir.ui.view">
+            <field name="name">view.tax.exemption.tree</field>
+            <field name="model">tax.exemption</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Tax Exemptions" editable="bottom">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_tax_exemption_form" model="ir.ui.view">
+            <field name="name">view.tax.exemption.form</field>
+            <field name="model">tax.exemption</field>
+            <field name="arch" type="xml">
+                <form string="Tax Exemptions">
+                    <field name="name"/>
+                    <field name="description"/>
+                </form>
+            </field>
+        </record>
+        <record id="action_tax_exemption" model="ir.actions.act_window">
+            <field name="name">Tax Exemption</field>
+            <field name="res_model">tax.exemption</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_tax_exemption_tree"/>
+        </record>
+        <menuitem action="action_tax_exemption" 
+            id="menu_tax_exemption" 
+            parent="account.next_id_27" 
+            sequence="50"/>
+
+      <record id="view_account_tax_vat_settlement_form" model="ir.ui.view">
+            <field name="name">account.tax.vat.settlement.form</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">          
+                    <field name="exclude_from_vat_settlement"/>
+                </field>
+            </field>
+        </record>
+            
+<!--TEMP SOLUTION TODO DELETE-->
+<!--
+         <record id="view_invoice_form_inherit_tax_exemption" model="ir.ui.view">
+            <field name="name">invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook" position="inside">
+                    <page string="Tax Exemptions">
+                    <separator string="Tax Exemptions" colspan="4"/>
+                    <field colspan="4" name="tax_exemption_ids" nolabel="1">
+                        <tree string="Tax Exemptions">
+                            <field name="name"/>
+                        </tree>
+                   </field>
+                   </page>
+                </xpath>
+            </field>
+        </record>
+-->
+    </data>
+</openerp>
+
