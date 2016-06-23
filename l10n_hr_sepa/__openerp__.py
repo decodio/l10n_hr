@@ -42,11 +42,11 @@ Authors:
     "category": "Accounting",
     "data": [
         #"security/import_bank_statement_security.xml", #TODO
-        "security/ir.model.access.csv",
-        "res_company_view.xml",
-        "wizard/import_bank_statement_wiz_view.xml",
-        "bank_statement_import_view.xml",
-        "account_view.xml",
+        #"security/ir.model.access.csv",
+        #"res_company_view.xml",
+        #"wizard/import_bank_statement_wiz_view.xml",
+        #bank_statement_import_view.xml",
+        #"account_view.xml",
        
     ],
     "init_xml": [],
