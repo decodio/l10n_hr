@@ -59,7 +59,6 @@ Izvori podataka:
                 'base_vat',
                 'base_iban',
                 'account_chart',
-#               'account_coda',
                 ],
     'data': [
                 'data/account.account.type.csv',
