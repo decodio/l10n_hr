@@ -61,7 +61,7 @@ Authors:
     "author": "Slobodni programi d.o.o.",
     "category": "Localisation/Croatia",
     "website": "http://www.slobodni-programi.hr",
-    'depends': ['base_vat','base_base'],
+    'depends': ['base_vat'],  #'base_base'
     'data':[
             'security/ir.model.access.csv',
             'data/res.bank.csv',
