@@ -270,7 +270,7 @@ class account_invoice(osv.Model):
             self.write(cr, uid, id, {'jir': 'PONOVITI SLANJE! ' + cert_type})
         return True
 
-    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None):
+    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None, context=None):
         # Where is the context, per invoice method?
         # This approach is slow, updating after creating, but maybe better than copy-paste whole method
         res = super(account_invoice, self).refund(cr, uid, ids, date=date, period_id=period_id, description=description, journal_id=journal_id)
