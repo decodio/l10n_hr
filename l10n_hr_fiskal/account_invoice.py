@@ -251,7 +251,8 @@ class account_invoice(osv.Model):
         a.racun.USustPdv = invoice.uredjaj_id.prostor_id.sustav_pdv and "true" or "false"
         if invoice.uredjaj_id.prostor_id.sustav_pdv:
             self.get_fiskal_taxes(cr, uid, invoice, a, context=context)
-        a.racun.IznosUkupno = fiskal_num2str(invoice.amount_total)
+        #a.racun.IznosUkupno = fiskal_num2str(invoice.amount_total)
+        a.racun.IznosUkupno = fiskal_num2str(invoice.lcy_amount_total)
         a.racun.NacinPlac = invoice.nac_plac
         a.racun.OibOper = invoice.fiskal_user_id.oib[2:]  # "57699704120"
         if not invoice.zki:
