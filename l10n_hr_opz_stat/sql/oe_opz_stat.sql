@@ -43,9 +43,9 @@ WITH inv_data AS (
                 ,inv.date_due
                 ,inv."id" as invoice_id
                 ,inv."number" as invoice_number
-                ,inv.lcy_amount_untaxed as invoice_amount
-                ,inv.lcy_amount_tax as invoice_amount_tax
-                ,inv.lcy_amount_total as invoice_amount_total
+                ,inv.amount_untaxed as invoice_amount
+                ,inv.amount_tax as invoice_amount_tax
+                ,inv.amount_total as invoice_amount_total
                 ,am.state as move_state
                 ,Coalesce( Nullif(aml.amount_currency, 0.0), aml.debit - aml.credit) as amount_currency
                 --,aml.debit - aml.credit as amount_lcy
@@ -83,17 +83,26 @@ WITH inv_data AS (
              --AND account_account.active
             -- AND (_partner_id = 0 OR coalesce(aml.partner_id, -1) = coalesce(_partner_id, -1) ) --speed
         )
-        SELECT oml.partner_id
+         SELECT oml.partner_id
                 ,par."name" as partner_name
                 ,par.vat as partner_vat_number
                 ,oml.date_invoice
                 ,oml.date_due
                 ,oml.invoice_id
                 ,oml.invoice_number
-                ,oml.invoice_amount
-                ,oml.invoice_amount_tax
-                ,oml.invoice_amount_total
-                ,(_date_to::date - oml.date_due) as overdue_days
+                ,ROUND((CASE WHEN oml.currency_rate != 0.0
+                    THEN oml.invoice_amount / oml.currency_rate
+                    ELSE oml.invoice_amount
+                 END::numeric),2) as lcy_invoice_amount
+                ,ROUND((CASE WHEN oml.currency_rate != 0.0
+                    THEN oml.invoice_amount_tax / oml.currency_rate
+                    ELSE oml.invoice_amount_tax
+                END::numeric),2) as lcy_invoice_amount_tax
+                ,ROUND((CASE WHEN oml.currency_rate != 0.0
+                    THEN oml.invoice_amount_total / oml.currency_rate
+                    ELSE oml.invoice_amount_total
+                END::numeric),2) as lcy_invoice_amount_total
+                ,('2016-12-31'::date - oml.date_due) as overdue_days
                --,oml.move_state::varchar
                --,oml.amount_currency::numeric
                --,oml.amount_lcy::numeric
@@ -117,10 +126,15 @@ INSERT INTO opz_stat_line(
        due_date  , partner_name  , invoice_id  , invoice_date  , opz_id , amount_tax          , unpaid          , amount
       ,partner_vat_number  , partner_vat_type, invoice_number  , partner_id  , amount_total          , overdue_days , paid
        ,create_uid, create_date          , write_date           , write_uid)
-SELECT d.date_due, d.partner_name, d.invoice_id, d.date_invoice, _opz_id, d.invoice_amount_tax, d.open_amount_lcy, d.invoice_amount
-      ,d.partner_vat_number, 'vat'             , d.invoice_number, d.partner_id, d.invoice_amount_total, d.overdue_days, d.invoice_amount_total - d.open_amount_lcy
+SELECT d.date_due, d.partner_name, d.invoice_id, d.date_invoice, _opz_id, d.lcy_invoice_amount_tax, d.open_amount_lcy, d.lcy_invoice_amount
+      ,d.partner_vat_number, 'vat'             , d.invoice_number, d.partner_id, d.lcy_invoice_amount_total, d.overdue_days, d.lcy_invoice_amount_total - d.open_amount_lcy
             ,1        , timezone('UTC', now()), timezone('UTC', now()), 1
-FROM inv_data d
+ FROM inv_data d
+WHERE d.open_amount_lcy > 0.0
+AND NOT EXISTS (SELECT 1 FROM opz_stat_line opzl WHERE opzl.partner_id = d.partner_id
+                                                     AND opzl.invoice_id = d.invoice_id
+                                                     AND opzl.opz_id =_opz_id
+                    )
 ;
 
 

@@ -100,7 +100,7 @@ class OpzStat(models.Model):
 
         Tijelo = objectify.Element("Tijelo")
         Kupci = objectify.SubElement(Tijelo, "Kupci")
-        Kupac = objectify.SubElement(Kupci, "Kupac")
+
 
         UkupanIznosRacunaObrasca = 0.0
         UkupanIznosPdvObrasca = 0.0
@@ -113,7 +113,7 @@ class OpzStat(models.Model):
         partners = self._get_partners()
         for partner in partners:
             lines = self._get_partner_lines(partner['partner_id'])
-
+            Kupac = objectify.SubElement(Kupci, "Kupac")
             Kupac.K1 = kupac_line_no # Redni broj
             Kupac.K2 = partner['partner_vat_type'] # Oznaka poreznog broja 1=OIB, 2=PDV ID, 3=ostali porezni brojevi
             Kupac.K3 = partner['partner_vat_number'] # porezni broj ovisno o vrijednosti K2
@@ -125,7 +125,7 @@ class OpzStat(models.Model):
             Kupac.K9 = partner['partner_unpaid']  # Neplaćeni iznos ukupno
 
             Racuni = objectify.SubElement(Kupac, "Racuni")
-            line_no = 0
+            line_no = 1
             for line in lines:
                 Racun = objectify.SubElement(Racuni, "Racun")
                 Racun.R1 = line_no # Redni broj
@@ -268,7 +268,7 @@ class OpzStatLine(models.Model):
         if self.partner_id:
             self.partner_name = self.partner_id.name
             if self.partner_vat_type == 'vat':
-                self.partner_vat_number = self.partner_id.vat[2:]
+                self.partner_vat_number = self.partner_id.vat and self.partner_id.vat[2:]
             else:
                 self.partner_vat_number = self.partner_id.vat
         else:
