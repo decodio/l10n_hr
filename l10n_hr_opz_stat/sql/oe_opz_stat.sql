@@ -85,7 +85,7 @@ WITH inv_data AS (
         )
          SELECT oml.partner_id
                 ,par."name" as partner_name
-                ,par.vat as partner_vat_number
+                ,COALESCE(par.vat, '-') as partner_vat_number
                 ,oml.date_invoice
                 ,oml.date_due
                 ,oml.invoice_id
