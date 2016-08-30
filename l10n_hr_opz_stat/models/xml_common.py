@@ -87,7 +87,7 @@ def create_xml_metadata(self, metadata):
     identifikator = uuid.uuid4()
     datum_vrijeme = get_zagreb_datetime()
 
-    MD = objectify.ElementMaker(annotate=False)
+    MD = objectify.ElementMaker(annotate=False, namespace="http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0")
     md = MD.Metapodaci(
             MD.Naslov(metadata['naslov'], dc="http://purl.org/dc/elements/1.1/title"),
             MD.Autor(metadata['autor'], dc="http://purl.org/dc/elements/1.1/creator"),
@@ -98,7 +98,6 @@ def create_xml_metadata(self, metadata):
             MD.Uskladjenost(metadata['uskladjenost'], dc="http://purl.org/dc/terms/conformsTo"),
             MD.Tip(metadata['tip'], dc="http://purl.org/dc/elements/1.1/type"),
             MD.Adresant(metadata['adresant']),
-            namespace = "http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0"
             )
 
     return md, identifikator
@@ -110,20 +109,20 @@ def create_xml_header(self, period, company, author):
                     EM.DatumOd(period['date_start']),
                     EM.DatumDo(period['date_stop'])),
                 EM.PorezniObveznik(
+                    EM.OIB(company['vat']),
                     EM.Naziv(company['name']),
                     EM.Adresa(
                         EM.Mjesto(company['city']),
                         EM.Ulica(company['ulica']),
-                        EM.Broj(company.get('kbr', False) and company['kbr'] or False),
-                        EM.Email(company.get('email', False) and company['email'] or False),
-                        EM.OIB(company['vat'])
-                        ),),
+                        EM.Broj(company.get('kbr', False) and company['kbr'] or ''),
+                        ),
+                EM.Email(company.get('email', False) and company['email'] or ''),),
                 EM.IzvjesceSastavio(
                     EM.Ime(author['fname']),
                     EM.Prezime(author['lname']),
-                    EM.Telefon(company.get('tel', False) and company['tel'] or False),
-                    EM.Fax(company.get('fax', False) and company['fax'] or False),
-                    EM.Email(company.get('email', False) and company['email'] or False)
+                    EM.Telefon(company.get('tel', False) and company['tel'] or ''),
+                    EM.Fax(company.get('fax', False) and company['fax'] or ''),
+                    EM.Email(company.get('email', False) and company['email'] or '')
                     )
                 )
 
@@ -141,7 +140,7 @@ def validate_xml(self, xml):
     xsd = StringIO(open(xsd_file,'r').read())
     xml_schema = etree.XMLSchema(etree.parse(xsd))
     try:
-        print xml['xml']  # test xml printout to console
+        #print xml['xml']  # test xml printout to console
         xml_schema.assert_(etree.parse(StringIO(xml['xml'])))
     except AssertionError as E:
         raise except_orm(u'Greška u podacima',E[0])

@@ -100,7 +100,7 @@ class OpzStat(models.Model):
 
         Tijelo = objectify.Element("Tijelo")
         Kupci = objectify.SubElement(Tijelo, "Kupci")
-        Kupac = objectify.SubElement(Kupci, "Kupac")
+
 
         UkupanIznosRacunaObrasca = 0.0
         UkupanIznosPdvObrasca = 0.0
@@ -113,7 +113,7 @@ class OpzStat(models.Model):
         partners = self._get_partners()
         for partner in partners:
             lines = self._get_partner_lines(partner['partner_id'])
-
+            Kupac = objectify.SubElement(Kupci, "Kupac")
             Kupac.K1 = kupac_line_no # Redni broj
             Kupac.K2 = partner['partner_vat_type'] # Oznaka poreznog broja 1=OIB, 2=PDV ID, 3=ostali porezni brojevi
             Kupac.K3 = partner['partner_vat_number'] # porezni broj ovisno o vrijednosti K2
@@ -125,7 +125,7 @@ class OpzStat(models.Model):
             Kupac.K9 = partner['partner_unpaid']  # Neplaćeni iznos ukupno
 
             Racuni = objectify.SubElement(Kupac, "Racuni")
-            line_no = 0
+            line_no = 1
             for line in lines:
                 Racun = objectify.SubElement(Racuni, "Racun")
                 Racun.R1 = line_no # Redni broj
@@ -168,17 +168,15 @@ class OpzStat(models.Model):
         xml_metadata, uuid = rc.create_xml_metadata(self, metadata)
         xml_header = rc.create_xml_header(self, period, company, author)
 
-        OBRAZACOPZ = objectify.ElementMaker(annotate=False)
-        obrazacopz_stat = OBRAZACOPZ.ObrazacOPZ(xml_metadata, xml_header, tijelo, verzijaSheme="1.0",
-                                namespace='http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0')
+        OBRAZACOPZ = objectify.ElementMaker(annotate=False, namespace='http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0')
+        obrazacopz_stat = OBRAZACOPZ.ObrazacOPZ(xml_metadata, xml_header, tijelo, verzijaSheme="1.0")
 
         xml = {'xml': rc.etree_tostring(self, obrazacopz_stat),
                'xsd_path': 'schema/opz_stat_xml_v1.0',
                'xsd_name': 'ObrazacOPZ-v1-0.xsd'}
         xml['path'] = os.path.dirname(os.path.abspath(__file__))
-
-        #validate = rc.validate_xml(self, xml)
-        validate = True
+        validate = rc.validate_xml(self, xml)
+        #validate = True
         if validate:
             filename = 'opz_stat_' + time.strftime('%Y-%m-%d') + '.xml'
             data64 = base64.encodestring(xml['xml'].encode('windows-1250'))
@@ -268,7 +266,7 @@ class OpzStatLine(models.Model):
         if self.partner_id:
             self.partner_name = self.partner_id.name
             if self.partner_vat_type == 'vat':
-                self.partner_vat_number = self.partner_id.vat[2:]
+                self.partner_vat_number = self.partner_id.vat and self.partner_id.vat[2:]
             else:
                 self.partner_vat_number = self.partner_id.vat
         else:
