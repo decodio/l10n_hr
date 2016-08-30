@@ -105,7 +105,7 @@ WITH inv_data AS (
                     THEN oml.invoice_amount_total / oml.currency_rate
                     ELSE oml.invoice_amount_total
                 END::numeric),2) as lcy_invoice_amount_total
-                ,('2016-12-31'::date - oml.date_due) as overdue_days
+                ,(_date_to::date - oml.date_due) as overdue_days
                --,oml.move_state::varchar
                --,oml.amount_currency::numeric
                --,oml.amount_lcy::numeric
