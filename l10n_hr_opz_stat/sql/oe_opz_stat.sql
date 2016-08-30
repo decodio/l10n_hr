@@ -85,7 +85,10 @@ WITH inv_data AS (
         )
          SELECT oml.partner_id
                 ,par."name" as partner_name
-                ,COALESCE(par.vat, '-') as partner_vat_number
+                ,COALESCE((CASE WHEN par.vat LIKE 'HR%' THEN SUBSTRING(par.vat, 3)
+                               ELSE par.vat END), '-') as partner_vat_number
+                 ,(CASE WHEN par.vat LIKE 'HR%' THEN 'vat'
+                               ELSE 'vatid' END) as partner_vat_type
                 ,oml.date_invoice
                 ,oml.date_due
                 ,oml.invoice_id
@@ -124,11 +127,11 @@ WITH inv_data AS (
         )
 INSERT INTO opz_stat_line(
        due_date  , partner_name  , invoice_id  , invoice_date  , opz_id , amount_tax          , unpaid          , amount
-      ,partner_vat_number  , partner_vat_type, invoice_number  , partner_id  , amount_total          , overdue_days , paid
+      ,partner_vat_number  , partner_vat_type , invoice_number  , partner_id  , amount_total          , overdue_days , paid
        ,create_uid, create_date          , write_date           , write_uid)
 SELECT d.date_due, d.partner_name, d.invoice_id, d.date_invoice, _opz_id, d.lcy_invoice_amount_tax, d.open_amount_lcy, d.lcy_invoice_amount
-      ,d.partner_vat_number, 'vat'             , d.invoice_number, d.partner_id, d.lcy_invoice_amount_total, d.overdue_days, d.lcy_invoice_amount_total - d.open_amount_lcy
-            ,1        , timezone('UTC', now()), timezone('UTC', now()), 1
+      ,d.partner_vat_number, d.partner_vat_type, d.invoice_number, d.partner_id, d.lcy_invoice_amount_total, d.overdue_days, d.lcy_invoice_amount_total - d.open_amount_lcy
+       ,1         , timezone('UTC', now()), timezone('UTC', now()), 1
  FROM inv_data d
 WHERE d.open_amount_lcy > 0.0
 AND NOT EXISTS (SELECT 1 FROM opz_stat_line opzl WHERE opzl.partner_id = d.partner_id

@@ -168,17 +168,15 @@ class OpzStat(models.Model):
         xml_metadata, uuid = rc.create_xml_metadata(self, metadata)
         xml_header = rc.create_xml_header(self, period, company, author)
 
-        OBRAZACOPZ = objectify.ElementMaker(annotate=False)
-        obrazacopz_stat = OBRAZACOPZ.ObrazacOPZ(xml_metadata, xml_header, tijelo, verzijaSheme="1.0",
-                                namespace='http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0')
+        OBRAZACOPZ = objectify.ElementMaker(annotate=False, namespace='http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0')
+        obrazacopz_stat = OBRAZACOPZ.ObrazacOPZ(xml_metadata, xml_header, tijelo, verzijaSheme="1.0")
 
         xml = {'xml': rc.etree_tostring(self, obrazacopz_stat),
                'xsd_path': 'schema/opz_stat_xml_v1.0',
                'xsd_name': 'ObrazacOPZ-v1-0.xsd'}
         xml['path'] = os.path.dirname(os.path.abspath(__file__))
-
-        #validate = rc.validate_xml(self, xml)
-        validate = True
+        validate = rc.validate_xml(self, xml)
+        #validate = True
         if validate:
             filename = 'opz_stat_' + time.strftime('%Y-%m-%d') + '.xml'
             data64 = base64.encodestring(xml['xml'].encode('windows-1250'))
