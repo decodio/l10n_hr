@@ -240,7 +240,7 @@ class OpzStatLine(models.Model):
     _description ="OPZ STAT report lines"
     _order = 'invoice_date'
 
-    opz_id = fields.Many2one('opz.stat', 'OPZ STAT', required=True)
+    opz_id = fields.Many2one('opz.stat', 'OPZ STAT', required=True, ondelete='cascade')
     partner_id = fields.Many2one('res.partner', 'Partner', domain="[('customer', '=', True)]")
     partner_name = fields.Char('Partner Name', required=True)
     partner_vat_type = fields.Selection([('vat', '1'),
