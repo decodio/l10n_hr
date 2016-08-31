@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2007 (http://www.altova.com) by Željko Mikic (Teched Consulting Ltd) -->
-<xsd:schema xmlns="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0" xmlns:meta="http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0" xmlns:ispostave="http://e-porezna.porezna-uprava.hr/sheme/temeljno/SifrarnikIspostave/v2-0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:temeljni="http://e-porezna.porezna-uprava.hr/sheme/TemeljniTipovi/v2-1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0" elementFormDefault="qualified" version="1.1" id="ObrazacOPZtipovi-v1-0" xml:lang="hr-HR">
+<xsd:schema xmlns="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0" xmlns:meta="http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0" xmlns:ispostave="http://e-porezna.porezna-uprava.hr/sheme/temeljno/SifrarnikIspostave/v2-0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:temeljni="http://e-porezna.porezna-uprava.hr/sheme/TemeljniTipovi/v2-1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacOPZ/v1-0" elementFormDefault="qualified" version="1.0" id="ObrazacOPZtipovi-v1-0" xml:lang="hr-HR">
   <xsd:annotation>
     <xsd:documentation>XML shema sadrži tipove koji definiraju sadržaj OPZ obrasca</xsd:documentation>
   </xsd:annotation>
@@ -343,7 +342,7 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-      <xsd:element name="R3" type="temeljni:tDatum">
+      <xsd:element name="R3" type="xsd:date">
 				<xsd:annotation>
 					<xsd:documentation>
 						DatumIzdanogRacuna - Datum izdavanja računa
@@ -351,7 +350,7 @@
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-      <xsd:element name="R4" type="temeljni:tDatum">
+      <xsd:element name="R4" type="xsd:date">
 				<xsd:annotation>
 					<xsd:documentation>
 						ValutaPlacanjaRacuna - Datum valute plaćanja računa
