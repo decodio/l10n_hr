@@ -3,6 +3,7 @@ import uuid
 import os
 import pytz
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from openerp import api, exceptions, _
 from openerp.exceptions import except_orm
 from lxml import objectify, etree
@@ -103,6 +104,7 @@ def create_xml_metadata(self, metadata):
     return md, identifikator
 
 def create_xml_header(self, period, company, author):
+    unpaid_to = (datetime.strptime(period['date_stop'], '%Y-%m-%d') + relativedelta(months=1)).strftime('%Y-%m-%d')
     EM = objectify.ElementMaker(annotate=False)
     header = EM.Zaglavlje(
                 EM.Razdoblje(
@@ -123,7 +125,9 @@ def create_xml_header(self, period, company, author):
                     EM.Telefon(company.get('tel', False) and company['tel'] or ''),
                     EM.Fax(company.get('fax', False) and company['fax'] or ''),
                     EM.Email(company.get('email', False) and company['email'] or '')
-                    )
+                    ),
+                EM.NaDan(period['date_stop']),
+                EM.NisuNaplaceniDo(unpaid_to),
                 )
 
     return header
