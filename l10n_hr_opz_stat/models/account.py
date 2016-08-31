@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2016 Slobodni Programi d.o.o. (<http://slobodni-programi.com>).
+#    Copyright (C) 2014- Slobodni programi d.o.o., Zagreb
+#    Contributions:
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,6 +20,9 @@
 #
 ##############################################################################
 
-from . import opz_stat
-from . import account
+from openerp import models, fields, api, _
 
+class account_account(models.Model):
+    _inherit = "account.account"
+
+    exclude_from_opz_stat = fields.Boolean('Exclude from OPZ-STAT', default = False)

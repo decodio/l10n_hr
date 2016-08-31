@@ -39,6 +39,7 @@ Croatian localisation.
                 ],
     'data': [
                 'views/opz_stat_view.xml',
+                'views/account_view.xml',
                 'security/ir.model.access.csv',
             ],
     "demo": [],
