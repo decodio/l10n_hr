@@ -21,6 +21,7 @@
 
 from openerp import models, fields, api, _
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from lxml import objectify
 import os
 import base64
@@ -288,3 +289,13 @@ class OpzStatLine(models.Model):
             #TODO residual must be computed
             self.paid = self.invoice_id.amount_total - self.invoice_id.residual
             self.unpaid = self.invoice_id.residual
+
+
+    @api.onchange('due_date')
+    def onchange_due_date(self):
+        if self.due_date:
+            overdue = (datetime.strptime(self.opz_id.date_to, '%Y-%m-%d').date() + relativedelta(months=1)) \
+                      - datetime.strptime(self.due_date, '%Y-%m-%d').date()
+            self.overdue_days = overdue.days
+        else:
+            self.overdue_days = False
