@@ -17,21 +17,21 @@
 			<DatumDo>2015-12-31</DatumDo>
 		</Razdoblje>
 		<PorezniObveznik>
+      <OIB>02994650199</OIB>
 			<Naziv>APIS IT d.o.o.</Naziv>
 			<Adresa>
 				<Mjesto>Zagreb</Mjesto>
 				<Ulica>Paljetkova</Ulica>
 				<Broj>18</Broj>
-				<Email>apis@apis-it.hr</Email>
-				<OIB>02994650199</OIB>
 			</Adresa>
+      <Email>apis@apis-it.hr</Email>
 		</PorezniObveznik>
 		<IzvjesceSastavio>
-			<Ime>Krešimir</Ime>
-			<Prezime>Kondža</Prezime>
-			<Telefon>01/123-456</Telefon>
-			<Fax>01/123-456</Fax>
-			<Email>netko@apis-it.hr</Email>
+			<Ime>Luka</Ime>
+			<Prezime>Horvat</Prezime>
+      <Telefon>+38514445555</Telefon>
+			<Fax>+38514445555</Fax>
+			<Email>netko@porezni-obveznik.hr</Email>
 		</IzvjesceSastavio>
 		<NaDan>2015-12-31</NaDan>
 		<NisuNaplaceniDo>2016-01-31</NisuNaplaceniDo>

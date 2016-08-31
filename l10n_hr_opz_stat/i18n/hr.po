@@ -286,3 +286,13 @@ msgstr "XML datoeka"
 msgid "XML File Name"
 msgstr "NAziv XML datoteke"
 
+#. module: l10n_hr_opz_stat
+#: field:account.account,exclude_from_opz_stat:0
+msgid "Exclude from OPZ-STAT"
+msgstr "Isključi iz OPZ-STAT"
+
+#. module: l10n_hr_opz_stat
+#: field:opz.stat.line,invoice_number:0
+msgid "Invoice Number"
+msgstr "Broj računa"
+
