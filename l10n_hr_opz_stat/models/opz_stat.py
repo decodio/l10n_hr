@@ -274,21 +274,11 @@ class OpzStatLine(models.Model):
             self.partner_name = False
             self.partner_vat_number = False
 
-    @api.onchange('due_date')
-    def onchange_due_date(self):
-        if self.due_date:
-            overdue =  (datetime.strptime(self.opz_id.date_to, '%Y-%m-%d').date() + relativedelta(months=1)) \
-                     - datetime.strptime(self.due_date, '%Y-%m-%d').date()
-            self.overdue_days = overdue.days
-        else:
-            self.overdue_days = False
-
-
     @api.onchange('invoice_id')
     def onchange_invoice_id(self):
         if self.invoice_id:
-            overdue = (datetime.strptime(self.opz_id.date_to, '%Y-%m-%d').date() + relativedelta(months=1)) \
-                      - datetime.strptime(self.invoice_id.date_due, '%Y-%m-%d').date()
+            overdue =  datetime.strptime(self.opz_id.date_to, '%Y-%m-%d').date() \
+                     - datetime.strptime(self.invoice_id.date_due, '%Y-%m-%d').date()
             self.invoice_number = self.invoice_id.number
             self.invoice_date = self.invoice_id.date_invoice
             self.due_date = self.invoice_id.date_due
@@ -296,6 +286,16 @@ class OpzStatLine(models.Model):
             self.amount_tax = self.invoice_id.amount_tax
             self.amount_total = self.invoice_id.amount_total
             self.overdue_days = overdue.days
-            # TODO residual must be computed
+            #TODO residual must be computed
             self.paid = self.invoice_id.amount_total - self.invoice_id.residual
             self.unpaid = self.invoice_id.residual
+
+
+    @api.onchange('due_date')
+    def onchange_due_date(self):
+        if self.due_date:
+            overdue = (datetime.strptime(self.opz_id.date_to, '%Y-%m-%d').date() + relativedelta(months=1)) \
+                      - datetime.strptime(self.due_date, '%Y-%m-%d').date()
+            self.overdue_days = overdue.days
+        else:
+            self.overdue_days = False

@@ -30,7 +30,7 @@ WITH inv_data AS (
                AND amrl.closing_amount !=0.0
                AND amrl.reconciliation_date  <= _date_to  + INTERVAL '1 month'
                AND amli."date" <= _date_to
-               AND amlp."date" <= _date_to
+               AND amlp."date" <= _date_to + INTERVAL '1 month'
            )
         ,ml_closed AS(
             SELECT rl.move_line_id, sum(rl.closing_amount) as closed_amount
@@ -40,7 +40,7 @@ WITH inv_data AS (
         ,open_move_line AS (
            SELECT aml.partner_id
                 ,coalesce(inv.date_invoice, aml."date") as date_invoice
-                ,coalesce(inv.date_due, aml.date_maturity) as date_due
+                ,coalesce(aml.date_maturity, inv.date_due) as date_due
                 ,inv."id" as invoice_id
                 ,coalesce(inv."number", aml."name") as invoice_number
                 ,coalesce(inv.amount_untaxed,0.0) as invoice_amount
@@ -79,7 +79,7 @@ WITH inv_data AS (
              AND (aa.exclude_from_opz_stat is NULL OR aa.exclude_from_opz_stat = False)
              AND coalesce(aml.curr_exch_difference,False)= False
              --AND aml."date" <= _date_from -- (_from_date)
-             AND aml.date_maturity <= _date_to  --+ INTERVAL '1 month'
+             AND coalesce(aml.date_maturity, inv.date_due) <= _date_to  --+ INTERVAL '1 month'
              AND am."state" = 'posted'
              --AND account_account.active
             -- AND (_partner_id = 0 OR coalesce(aml.partner_id, -1) = coalesce(_partner_id, -1) ) --speed
@@ -106,7 +106,7 @@ WITH inv_data AS (
                     THEN oml.invoice_amount_total / oml.currency_rate
                     ELSE oml.invoice_amount_total
                 END::numeric),2) as lcy_invoice_amount_total
-                ,((_date_to + INTERVAL '1 month')::date - oml.date_due) as overdue_days
+                ,(_date_to::date - oml.date_due) as overdue_days
                --,oml.move_state::varchar
                --,oml.amount_currency::numeric
                --,oml.amount_lcy::numeric
@@ -139,6 +139,7 @@ AND NOT EXISTS (SELECT 1 FROM opz_stat_line opzl WHERE opzl.partner_id = d.partn
                                                      AND (opzl.invoice_id IS nOT NULL AND opzl.invoice_id = d.invoice_id)
                                                      AND opzl.opz_id =_opz_id
                     )
+
 ;
 
 
