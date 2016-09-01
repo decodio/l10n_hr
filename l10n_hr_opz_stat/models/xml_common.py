@@ -104,7 +104,8 @@ def create_xml_metadata(self, metadata):
     return md, identifikator
 
 def create_xml_header(self, period, company, author):
-    unpaid_to = (datetime.strptime(period['date_stop'], '%Y-%m-%d') + relativedelta(months=1)).strftime('%Y-%m-%d')
+    unpaid_to = ((datetime.strptime(period['date_stop'], '%Y-%m-%d') + relativedelta(months=1)) + \
+                 relativedelta(day=1, months=+1, days=-1)).strftime('%Y-%m-%d')
     EM = objectify.ElementMaker(annotate=False)
     header = EM.Zaglavlje(
                 EM.Razdoblje(

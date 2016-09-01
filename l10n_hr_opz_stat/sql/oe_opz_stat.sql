@@ -28,9 +28,9 @@ WITH inv_data AS (
              WHERE amrl.reconciled_move_line_id is not null
                AND amrl.move_line_id is not null
                AND amrl.closing_amount !=0.0
-               AND amrl.reconciliation_date  <= _date_to  + INTERVAL '1 month'
+               AND amrl.reconciliation_date <= date_trunc('month', (_date_to::date  + INTERVAL '1 month'))::date + INTERVAL '1 month' - interval '1 day'
                AND amli."date" <= _date_to
-               AND amlp."date" <= _date_to + INTERVAL '1 month'
+               AND amlp."date" <= date_trunc('month', (_date_to::date  + INTERVAL '1 month'))::date + INTERVAL '1 month' - interval '1 day'
            )
         ,ml_closed AS(
             SELECT rl.move_line_id, sum(rl.closing_amount) as closed_amount
@@ -106,7 +106,8 @@ WITH inv_data AS (
                     THEN oml.invoice_amount_total / oml.currency_rate
                     ELSE oml.invoice_amount_total
                 END::numeric),2) as lcy_invoice_amount_total
-                ,(_date_to::date - oml.date_due) as overdue_days
+                ,((date_trunc('month', (_date_to::date  + INTERVAL '1 month'))::date + INTERVAL '1 month' - interval '1 day')::date - oml.date_due)
+                   as overdue_days
                --,oml.move_state::varchar
                --,oml.amount_currency::numeric
                --,oml.amount_lcy::numeric
