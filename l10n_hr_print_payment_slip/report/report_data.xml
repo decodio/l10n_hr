@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!-- VIRMAN-->
+	    <record id="report_virman" model="ir.actions.report.xml">
+	        <field name="name">VIRMAN</field>
+	        <field name="type">ir.actions.report.xml</field>
+	        <field name="model">sale.order</field>
+	        <field name="report_name">report.virman</field>
+	        <field name="report_type">aeroo</field>
+	        <field name="in_format">oo-odt</field>
+	        <field name="report_rml">l10n_hr_print_payment_slip/report/virman.odt</field>
+	        <field name="parser_state">default</field>
+	        <field name="parser_loc"></field> 
+	        <field name="tml_source">file</field>
+	        <field name="styles_mode">default</field>
+	    </record>
+	
+	    <ir_set>
+	        <field name="key" eval="'action'"/>
+	        <field name="key2" eval="'client_print_multi'"/>
+	        <field name="models" eval="['sale.order']" />
+	        <field name="name">VIRMAN</field>
+	        <field name="value" eval="'ir.actions.report.xml,'+str(report_virman)"/>
+	        <field name="isobject" eval="True" />
+	        <field name="replace" eval="True" />
+	    </ir_set>
+        
+	</data>
+</openerp>
