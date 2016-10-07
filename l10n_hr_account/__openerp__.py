@@ -45,7 +45,7 @@ Authors:
     "category": "Localisation/Croatia",
     "website": "http://www.slobodni-programi.hr",
 
-    'depends': ['account_base',],
+    'depends': ['account',],   # todo ref num
     'data': ['account_view.xml',
               'account_invoice_view.xml',
              ],

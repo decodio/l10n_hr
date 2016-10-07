@@ -7,6 +7,7 @@
 #                http://www.slobodni-programi.hr
 #    Contributions:
 #    Documentation: http://www.fina.hr/Default.aspx?sec=1266
+#    http://www.sepa.hr/wp-content/uploads/2016/04/Pregled-osnovnih-modela-poziva-na-broj_6.6.2016_2.pdf
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
