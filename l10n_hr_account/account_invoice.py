@@ -91,10 +91,11 @@ class account_invoice(models.Model):
 
     @api.multi
     def _convert_ref(self, ref):
-        ref = super(account_invoice, self)._convert_ref( ref)
+        #ref = super(account_invoice, self)._convert_ref( ref)
         res = ''
-        for ch in ref:
-            res = res + (ch.isdigit() and ch or '')
+        if ref:
+            for ch in ref:
+                res = res + (ch.isdigit() and ch or '')
         return res
 
     @api.multi
