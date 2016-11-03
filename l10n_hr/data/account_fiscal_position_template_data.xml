@@ -13,9 +13,14 @@
     <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
     <field name="name">HR</field>
 </record>
-
+<!--
 <record id="account_fiscal_position_template_non_eu" model="account.fiscal.position.template">
-    <field name="account_ids" eval="[(6, 0, [ref('account_fiscal_position_non_eu_1211')])]"/>
+    <field name="account_ids/account_dest_id" ref="kp_rrif2211"/>
+    <field name="account_ids/account_src_id" ref="kp_rrif2200"/>
+    <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
+</record>
+
+<record id="account_fiscal_position_template_non_eu1" model="account.fiscal.position.template">
     <field name="account_ids/account_dest_id" ref="kp_rrif1211"/>
     <field name="account_ids/account_src_id" ref="kp_rrif1200"/>
     <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
@@ -25,21 +30,14 @@
     <field name="tax_ids/tax_src_id" ref="rrif_pp_25"/>
 </record>
 
-<record id="account_fiscal_position_template_non_eu" model="account.fiscal.position.template">
-    <field name="account_ids" eval="[(6, 0, [ref('account_fiscal_position_non_eu_2211')])]"/>
-    <field name="account_ids/account_dest_id" ref="kp_rrif2211"/>
-    <field name="account_ids/account_src_id" ref="kp_rrif2200"/>
-    <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
-</record>
-
-<record id="account_fiscal_position_template_non_eu" model="account.fiscal.position.template">
-    <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
+<record id="account_fiscal_position_template_non_eu2" model="account.fiscal.position.template">
+    <field name="chart_template_id" ref="l10n_hr_ch2art_template_rrif"/>
     <field name="tax_ids" eval="[(6, 0, [ref('__export__.account_fiscal_position_tax_dobra_25_non_eu')])]"/>
     <field name="tax_ids/tax_dest_id" ref="rrif_0_izvoz"/>
     <field name="tax_ids/tax_src_id" ref="rrif_pdv_25_dobra"/>
 </record>
 
-<record id="account_fiscal_position_template_non_eu" model="account.fiscal.position.template">
+<record id="account_fiscal_position_template_non_eu3" model="account.fiscal.position.template">
     <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
     <field name="tax_ids" eval="[(6, 0, [ref('__export__.account_fiscal_position_tax_usluga_25_non_eu')])]"/>
     <field name="tax_ids/tax_dest_id" ref="rrif_0_izvoz"/>
@@ -47,7 +45,12 @@
 </record>
 
 <record id="account_fiscal_position_template_eu" model="account.fiscal.position.template">
-    <field name="account_ids" eval="[(6, 0, [ref('account_fiscal_position_non_eu_1210')])]"/>
+    <field name="account_ids/account_dest_id" ref="kp_rrif2210"/>
+    <field name="account_ids/account_src_id" ref="kp_rrif2200"/>
+    <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
+</record>
+
+<record id="account_fiscal_position_template_eu1" model="account.fiscal.position.template">
     <field name="account_ids/account_dest_id" ref="kp_rrif1210"/>
     <field name="account_ids/account_src_id" ref="kp_rrif1200"/>
     <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
@@ -57,27 +60,21 @@
     <field name="tax_ids/tax_src_id" ref="rrif_pdv_25_dobra"/>
 </record>
 
-<record id="account_fiscal_position_template_eu" model="account.fiscal.position.template">
-    <field name="account_ids" eval="[(6, 0, [ref('account_fiscal_position_non_eu_2210')])]"/>
-    <field name="account_ids/account_dest_id" ref="kp_rrif2210"/>
-    <field name="account_ids/account_src_id" ref="kp_rrif2200"/>
-    <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
-</record>
 
-<record id="account_fiscal_position_template_eu" model="account.fiscal.position.template">
+<record id="account_fiscal_position_template_eu2" model="account.fiscal.position.template">
     <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
     <field name="tax_ids" eval="[(6, 0, [ref('__export__.account_fiscal_position_tax_usluga_25_eu')])]"/>
     <field name="tax_ids/tax_dest_id" ref="rrif_usluge_25"/>
     <field name="tax_ids/tax_src_id" ref="rrif_usluge_25"/>
 </record>
 
-<record id="" model="account.fiscal.position.template">
+<record id="account_fiscal_position_template_eu3" model="account.fiscal.position.template">
     <field name="chart_template_id" ref="l10n_hr_chart_template_rrif"/>
     <field name="tax_ids" eval="[(6, 0, [ref('__export__.account_fiscal_position_stjecanje_eu')])]"/>
     <field name="tax_ids/tax_dest_id" ref="rrif_prijenos_25_dobra_eu"/>
     <field name="tax_ids/tax_src_id" ref="rrif_pp_25"/>
 </record>
 
-
+-->
     </data>
 </openerp>
