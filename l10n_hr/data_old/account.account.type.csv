@@ -1,0 +1,6 @@
+"name","code","close_method","id","report_type"
+"Ostalo","other","none","account.data_account_type_other","/"
+"Kapital i rezerve","kapital","balance","account.data_account_type_equity","liability"
+"Kratkotrajna imovina","kratkotrajna_imovina","balance","account.data_account_type_stock","asset"
+"Obveze za PDV","pdv","balance","account.data_account_type_payable_tax","liability"
+"Potraživanja za pretporez","pretporez","balance","account.data_account_type_receivable_tax","asset"
