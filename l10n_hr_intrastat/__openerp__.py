@@ -26,6 +26,7 @@
     'description': """
 Generates Intrastat XML report for declaration
 Based on invoices.
+Data retrived on 14.10.2016. from http://www.dzs.hr/Hrv/intrastat/intrastat.htm#sifre.
     """,
     'author': 'Odoo SA, Decodio',
     'depends': ['report_intrastat', 'sale_stock', 'account_accountant', 'l10n_hr'],
