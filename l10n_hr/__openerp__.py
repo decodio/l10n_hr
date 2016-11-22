@@ -72,6 +72,7 @@ Izvori podataka:
                 'l10n_hr_wizard.xml',
                 'data/account.tax.template.csv',
                 'data/account_fiscal_position_template_data.xml',
+                #'data/account.tax.csv',
                 #'data/fiscal_position.xml',
             ],
     "demo": [],
