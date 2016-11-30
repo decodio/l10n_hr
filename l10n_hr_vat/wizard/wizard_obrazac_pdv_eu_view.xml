@@ -10,7 +10,8 @@
                 <field name="state" invisible="1"/>
                 <group states="choose">
                     <separator string="Ispis obrasca" colspan="4"/>
-                    <field name="report_type"/>
+                    <!--<field name="report_type"/>-->
+                    <field name="obrazac_id" />
                     <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
                     <field name="company_id"/>    
                                                                   

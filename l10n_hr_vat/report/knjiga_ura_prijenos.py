@@ -21,14 +21,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 import time
 from openerp.report import report_sxw
 from openerp.tools.translate import _
 from vat_book_report_common import get_vat_book_report_common
 
-
 class Parser(report_sxw.rml_parse):
-
+       
     def set_context(self, objects, data, ids, report_type=None):
         new_ids = ids
         res = {}
@@ -42,10 +43,6 @@ class Parser(report_sxw.rml_parse):
                     
         if not self.period_ids:
             company_id = self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.id or False
-            '''
-            self.period_ids = period_obj.search(self.cr, self.uid, \
-                              [('fiscalyear_id', '=', res['fiscalyear']), ('company_id', '=', company_id), ('special', '=', False)])
-           '''
             if res.get('fiscalyear',False):
                 self.cr.execute ("select id from account_period where fiscalyear_id = %s AND company_id = %s",(res['fiscalyear'], company_id))
             else:
@@ -64,21 +61,22 @@ class Parser(report_sxw.rml_parse):
                 res['periods'] += ", "+ period['name']
                                                     
         return super(Parser, self).set_context(objects, data, new_ids, report_type=report_type)
-              
+            
     def __init__(self, cr, uid, name, context=None):
+        self.sums = {}
         super(Parser, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'get_lines': self._get_lines,   
-            'get_knjiga_name': self._get_knjiga_name,             
+            'get_knjiga_name': self._get_knjiga_name,
             'get_company_name': self._get_company_name,
             'get_company_address': self._get_company_address,
             'get_company_nkd': self._get_company_nkd,
-            'get_company_vat': self._get_company_vat,                     
-            'get_totals': self._get_totals,  
-            'get_header_data': self._get_header_data,        
-        })        
- 
+            'get_company_vat': self._get_company_vat,
+            'get_totals': self._get_totals,
+            'get_header_data': self._get_header_data,             
+        }) 
+
     def _get_header_data(self,data):
         period_obj = self.pool.get('account.period')
         header_data = []
@@ -116,14 +114,14 @@ class Parser(report_sxw.rml_parse):
             filter['filter'] +=  '-' + date_stop_formated
         header_data.append(filter)
         return header_data       
-           
+        
     def _get_company_name(self, data):
         name = self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.name or False
         return name
     
     def _get_company_address(self, data):
         name = (self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.city or '') \
-            + ', ' + (self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.street or '')
+            + ', ' + self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.street or ''
         return name
     
     def _get_company_nkd(self, data):
@@ -134,7 +132,7 @@ class Parser(report_sxw.rml_parse):
     def _get_company_vat(self, data):
         name = self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.vat and \
             self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.vat[2:] or \
-            self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.oib and \
+            self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['cchart_tax_id']).company_id.partner_id.oib and \
             self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.oib or False
         return name   
 
@@ -148,26 +146,23 @@ class Parser(report_sxw.rml_parse):
         return name
        
     def _get_lines(self, data):
-        stupci = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
-        row_start_values_sql = """rbr AS rbr, 
-            --invoice.number AS invoice_number, 
-            --invoice.date_invoice AS invoice_date,
-            --COALESCE(invoice_partner_name, ' ') || ', ' || COALESCE(invoice_partner_street, ' ') || ', ' || COALESCE(invoice_partner_city, ' ') AS partner_name,
-            --invoice_partner_oib AS partner_oib,
-            stavka.name AS invoice_number,
-            COALESCE(invoice_date_invoice, am.date) AS invoice_date, 
-            COALESCE(invoice_partner_name, p.name, ' ') || ', ' || COALESCE(invoice_partner_street, p.street ,' ') || ', ' || COALESCE(invoice_partner_city, p.city, ' ') AS partner_name,
-            SUBSTRING(COALESCE(invoice_partner_oib, p.vat, ' '), 3) AS partner_oib,        
-            """
-        return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql)
-        
+        stupci = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                
+        row_start_values_sql = """rbr AS rbr,
+         --invoice.supplier_invoice_number AS invoice_number,
+         --invoice.name AS invoice_number,
+         --invoice_date_invoice AS invoice_date,
+         --COALESCE(invoice_partner_name, ' ') || ', ' || COALESCE(invoice_partner_street, ' ') || ', ' || COALESCE(invoice_partner_city, ' ') AS partner_name,
+         --SUBSTRING(invoice_partner_oib, 3) AS partner_oib,    
+        COALESCE(invoice.number, stavka.name) AS invoice_number,
+        COALESCE(invoice_date_invoice, am.date) AS invoice_date, 
+        COALESCE(invoice_partner_name, p.name, ' ') || ', ' || COALESCE(invoice_partner_street, p.street ,' ') || ', ' || COALESCE(invoice_partner_city, p.city, ' ') AS partner_name,
+        SUBSTRING(COALESCE(invoice_partner_oib, p.vat, ' '), 3) AS partner_oib,
+         """
+
+        invoice_sql = """ LEFT JOIN account_invoice AS invoice ON (invoice.id=stavka.invoice_id) """
+
+        return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql, invoice_sql=invoice_sql)
+    
     def _get_totals(self):
         return self.sums
-'''
-report_sxw.report_sxw('report.knjiga.ira', 'account.tax.code',
-    'addons/l10n_hr_vat/report/knjiga_ira.rml', parser=knjiga_ira, header=False)
-
-report_sxw.report_sxw('report.knjiga.ira.eu.2014', 'account.tax.code',
-    'addons/l10n_hr_vat/report/knjiga_ira_eu_2014.rml', parser=knjiga_ira, header=False)
-'''
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

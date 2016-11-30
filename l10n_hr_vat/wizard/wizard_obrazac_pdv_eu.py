@@ -35,10 +35,11 @@ class obrazac_pdv_eu(orm.TransientModel):
     _inherit = 'account.common.report'
 
     _columns = {
-        'report_type': fields.selection([
-                                        ('pdv_s', 'Obrazac PDV-S'),
-                                        ('pdv_zp', 'Obrazac PDV-ZP'),
-                                        ], 'Ispis', select=True, required=True),
+        'chart_tax_id': fields.many2one('account.tax.code', 'Chart of Tax',
+                                        help='Select Charts of Taxes', required=True,
+                                        domain=[('parent_id', '=', False)]),
+        'obrazac_id': fields.many2one('l10n_hr_pdv.eu.obrazac', 'Obrazac EU',
+                                      help='Odaberite obrazac za ispis', required=True),
         'data': fields.binary('File', readonly=True),
         'name': fields.char('Filename', size=32, readonly=True),
         'state': fields.selection((('choose', 'choose'), ('get', 'get'), )),
@@ -54,6 +55,7 @@ class obrazac_pdv_eu(orm.TransientModel):
         return taxes and taxes[0] or False
 
     _defaults = {
+        'chart_tax_id': _get_tax
     }
 
     def _get_start_date(self, cr, uid, period_ids):
@@ -97,9 +99,10 @@ class obrazac_pdv_eu(orm.TransientModel):
 #            raise orm.except_orm(_('Krivo razdoblje!'),_("Potrebno je upisati oba datuma za ispis po datumima!"))
 
         report_name = None
-        if datas['form']['report_type'] == 'pdv_s':
+        obrazac = self.pool.get('l10n_hr_pdv.eu.obrazac').browse(cr, uid, datas['form']['obrazac_id'])
+        if obrazac.type == 'pdv_s':
             report_name = 'obrazac_pdv_s_odt'
-        if datas['form']['report_type'] == 'pdv_zp':
+        if obrazac.type == 'pdv_zp':
             report_name = 'obrazac_pdv_zp_odt'
         return {
             'type': 'ir.actions.report.xml',
