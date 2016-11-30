@@ -15,7 +15,7 @@
         <field name="parser_state">loc</field><!--loc-->
         <field name="tml_source">file</field>
     </record>
-
+    <!-- Obrazac_PDV_ZP-->
     <record id="aeroo_report_pdv_zp" model="ir.actions.report.xml">
         <field name="name">obrazac_pdv_zp_odt</field>
         <field name="type">ir.actions.report.xml</field>
@@ -29,6 +29,52 @@
         <field name="parser_state">loc</field><!--loc-->
         <field name="tml_source">file</field>
     </record>
+
+    <!-- Knjiga URA tuzemni prijenos i stjecanje EU -->
+    <record id="aeroo_report_knjiga_ura_prijenos" model="ir.actions.report.xml">
+        <field name="name">knjiga_ura_prijenos</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">account.invoice</field>
+        <field name="report_name">knjiga_ura_prijenos</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name="parser_loc">l10n_hr_vat/report/knjiga_ura_prijenos.py</field>
+        <field name="report_rml">l10n_hr_vat/report/knjiga_ura_prijenos.ods</field>
+        <field name="parser_state">loc</field><!--loc-->
+        <field name="tml_source">file</field>
+    </record>
+
+    <!-- Knjiga URA -->
+    <record id="aeroo_report_knjiga_ura" model="ir.actions.report.xml">
+        <field name="name">knjiga_ura_ods</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">account.invoice</field>
+        <field name="report_name">knjiga_ura_ods</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name="parser_loc">l10n_hr_vat/report/knjiga_ura.py</field>
+        <field name="report_rml">l10n_hr_vat/report/knjiga_ura.ods</field>
+        <field name="parser_state">loc</field><!--loc-->
+        <field name="tml_source">file</field>
+    </record>
+
+    <!-- Knjiga IRA -->
+    <record id="aeroo_report_knjiga_ira" model="ir.actions.report.xml">
+        <field name="name">knjiga_ira_ods</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">account.invoice</field>
+        <field name="report_name">knjiga_ira_ods</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name="parser_loc">l10n_hr_vat/report/knjiga_ira.py</field>
+        <field name="report_rml">l10n_hr_vat/report/knjiga_ira.ods</field>
+        <field name="parser_state">loc</field><!--loc-->
+        <field name="tml_source">file</field>
+    </record>
+
 </data>
 </openerp>
 

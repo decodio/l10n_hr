@@ -58,6 +58,7 @@ Authors:
                 'security/ir.model.access.csv',
                 'account_view.xml',
                 'pdv_knjiga_view.xml',
+                'pdv_obrazac_eu_view.xml',
                 'pdv_config_view.xml',
                 'wizard/wizard_pdv_obrazac_view.xml',
                 'wizard/wizard_pdv_knjiga_view.xml',

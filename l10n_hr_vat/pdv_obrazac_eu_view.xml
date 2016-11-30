@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_pdv_obrazac_eu_tree" model="ir.ui.view">
+            <field name="name">view.pdv.obrazac.eu.tree</field>
+            <field name="model">l10n_hr_pdv.eu.obrazac</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Obrazac EU" toolbar="1">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type"/>
+              		<field name="company_id"/>
+              		<field name="sequence"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_pdv_obrazac_eu_form" model="ir.ui.view">
+            <field name="name">view.pdv.obrazac.eu.form</field>
+            <field name="model">l10n_hr_pdv.eu.obrazac</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Obrazac EU">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="company_id"/>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <newline/>
+                    <notebook tabpos="up" colspan="4">
+                        <page string="Journals" name="journal_ids">
+                            <field name="journal_ids" colspan="4" nolabel="1"/>
+                        </page> 
+                    </notebook>              		       		
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_pdv_obrazac_eu" model="ir.actions.act_window">
+            <field name="name">Obrazac EU</field>
+            <field name="res_model">l10n_hr_pdv.eu.obrazac</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pdv_obrazac_eu_tree"/>
+        </record>
+        
+        <menuitem action="action_pdv_obrazac_eu" 
+        	id="menu_action_pdv_obrazac_eu" 
+        	parent="account.next_id_27" 
+        	sequence="34"/>
+                   	 
+    </data>
+</openerp>

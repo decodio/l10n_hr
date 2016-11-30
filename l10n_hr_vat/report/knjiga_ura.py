@@ -27,7 +27,7 @@ from openerp.report import report_sxw
 from openerp.tools.translate import _
 from vat_book_report_common import get_vat_book_report_common
 
-class knjiga_ura(report_sxw.rml_parse):
+class Parser(report_sxw.rml_parse):
           
     def set_context(self, objects, data, ids, report_type=None):
         new_ids = ids
@@ -59,11 +59,11 @@ class knjiga_ura(report_sxw.rml_parse):
             else:
                 res['periods'] += ", "+ period['name']
                                                     
-        return super(knjiga_ura, self).set_context(objects, data, new_ids, report_type=report_type)
+        return super(Parser, self).set_context(objects, data, new_ids, report_type=report_type)
               
     def __init__(self, cr, uid, name, context=None):
         self.sums = {}
-        super(knjiga_ura, self).__init__(cr, uid, name, context=context)
+        super(Parser, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'get_lines': self._get_lines,   
@@ -165,14 +165,14 @@ class knjiga_ura(report_sxw.rml_parse):
     
     def _get_totals(self):
         return self.sums
-    
+'''
 report_sxw.report_sxw('report.knjiga.ura', 'account.tax.code',
     'addons/l10n_hr_vat/report/knjiga_ura.rml', parser=knjiga_ura, header=False)
-'''
+
 report_sxw.report_sxw('report.knjiga.ura.eu', 'account.tax.code',
     'addons/l10n_hr_vat/report/knjiga_ura_eu.rml', parser=knjiga_ura, header=False)
-'''
+
 report_sxw.report_sxw('report.knjiga.ura.eu.2014', 'account.tax.code',
     'addons/l10n_hr_vat/report/knjiga_ura_eu_2014.rml', parser=knjiga_ura, header=False)
-
+'''
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -73,11 +73,15 @@ class pdv_knjiga(orm.TransientModel):
 
         report_name = None
         if knjiga_type == 'ira':
-            #report_name = 'knjiga.ira'
-            report_name = 'knjiga.ira.eu.2014'
-        else:
-            #report_name = 'knjiga.ura'
-            report_name = 'knjiga.ura.eu.2014'
+            # report_name = 'knjiga.ira'
+            # report_name = 'knjiga.ira.eu.2014'
+            report_name = 'knjiga_ira_ods'
+        elif knjiga_type in ('ura', 'ura_uvoz'):
+            # report_name = 'knjiga.ura'
+            # report_name = 'knjiga.ura.eu.2014'
+            report_name = 'knjiga_ura_ods'
+        elif knjiga_type in ('ura_tu', 'ura_st', 'ura_nerezident'):
+            report_name = 'knjiga_ura_prijenos'
 
         return {
             'type': 'ir.actions.report.xml',

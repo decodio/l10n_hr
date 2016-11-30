@@ -240,3 +240,42 @@ class l10n_hr_pdv_report_knjiga_stavka(osv.osv):
     _defaults = {
         'tax_code_koef': 1.0,
     }    
+
+class l10n_hr_pdv_report_eu_obrazac(osv.osv):
+    _name = 'l10n_hr_pdv.report.eu.obrazac'
+    _description = 'Postavke ispisa Obrazaca EU'
+    _rec_name = 'id'
+
+    _columns = {
+        'id': fields.integer('Id', readonly=True),
+        'obrazac_id': fields.many2one('l10n_hr_pdv.eu.obrazac', 'Obrazac EU', select=True, required=True),
+        'position': fields.selection([
+            ('11', 'Stupac 11'),
+            ('12', 'Stupac 12'),
+            ('13', 'Stupac 13'),
+            ('14', 'Stupac 14')
+            ], 'Pozicija', select=True, required=True),
+        'line_ids': fields.one2many('l10n_hr_pdv.eu.obrazac.stavka', 'obrazac_eu_id', 'Stavke obrazca EU'),
+    }
+
+    _sql_constraints = [
+        ('l10n_hr_pdv.report.eu.obrazac_uniq', 'unique (obrazac_id, position)',
+         'Isti redak se smije koristi samo jednom po ispisu !')
+    ]
+
+
+class l10n_hr_pdv_eu_obrazac_stavka(osv.osv):
+    _name = 'l10n_hr_pdv.eu.obrazac.stavka'
+    _description = 'Postavke ispisa Obrazaca EU'
+    _rec_name = 'tax_code_id'
+
+    _columns = {
+        'obrazac_eu_id': fields.many2one('l10n_hr_pdv.report.eu.obrazac', 'Obrazac EU', required=True),
+        'tax_code_id': fields.many2one('account.tax.code', 'Porez', required=True),
+        'tax_code_koef': fields.float('Stopa', required=True,
+            help="Stopa za izračun. Upisati stopu po kojoj se izračunava osnovica iz upisane šifre poreza."),
+    }
+
+    _defaults = {
+        'tax_code_koef': 1.0,
+    }

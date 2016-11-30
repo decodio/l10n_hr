@@ -43,83 +43,152 @@ class Parser(report_sxw.rml_parse):
             'get_company_data': self.get_company_data,
         })
         
-    def get_month_name(self, cr, uid, month, context=None):
-        _months = {1:_("siječanj"), 2:_("veljača"), 3:_("ožujak"), 4:_("travanj"), 5:_("svibanj"), 6:_("lipanj"), 7:_("srpanj"), 8:_("kolovoz"), 9:_("rujan"), 10:_("listopad"), 11:_("studeni"), 12:_("prosinac")}
+    def get_month_name(self, cr, uid, month):
+        _months = {1:_("siječanj"), 2:_("veljača"), 3:_("ožujak"), 4:_("travanj"), 5:_("svibanj"),
+                   6:_("lipanj"), 7:_("srpanj"), 8:_("kolovoz"), 9:_("rujan"), 10:_("listopad"),
+                   11:_("studeni"), 12:_("prosinac")}
         return _months[month]
 
-    def get_wizard_params(self, date_start, company_id, fiscal_year_id, period_from):
-        self.date_start = date_start
-        self.company_id = company_id
-        self.fiscal_year_id = fiscal_year_id
-        self.period_from = period_from
+    def get_wizard_params(self, data):
+        self.date_start = data['form'].get('date_start')
+        self.company_id = data['form'].get('company_id')
+        self.fiscal_year_id = data['form'].get('fiscal_year_id')
+        self.period_from = data['form'].get('period_from')
+        self.obrazac_id = data['form'].get('obrazac_id')
 
-    def get_lines(self):
+    def _get_report_taxes(self, data):
+        if not self.obrazac_id:
+            return False
+        columns = [11, 12]
+        all_taxes = {}
+        obrazac_stavka_obj = self.pool.get('l10n_hr_pdv.eu.obrazac.stavka')
+        for col in columns:
+            poz_id = self.pool.get('l10n_hr_pdv.report.eu.obrazac').search(self.cr,
+                                                                           self.uid,
+                                                                           [('obrazac_id', '=', self.obrazac_id),
+                                                                            ('position', '=', str(col))])
+            all_taxes[col] = None
+            if poz_id:
+                stavka_id = obrazac_stavka_obj.search(self.cr, self.uid,
+                                                      [('obrazac_eu_id', '=', poz_id[0])])
+                stavka = obrazac_stavka_obj.browse(self.cr, self.uid, stavka_id)
+                taxes = []
+                for st in stavka:
+                    if st.tax_code_id:
+                        taxes.append(st.tax_code_id.id)
+                all_taxes[col] = taxes
+
+        return all_taxes
+
+    def _get_report_journals(self, data):
+        if not self.obrazac_id:
+            return False
+        journals = []
+        obrazac = self.pool.get('l10n_hr_pdv.eu.obrazac').browse(self.cr, self.uid, self.obrazac_id)
+        for journal in obrazac.journal_ids:
+            journals.append(journal.id)
+
+        return journals
+
+    def get_lines(self, data):
         date_start = self.date_start
         period_from = self.period_from
         month = int(date_start.split('-')[1])
-        self.cr.execute('''
-            SELECT ROW_NUMBER() OVER (Order by aml.partner_id) as row_number
-                --,aml.partner_id
-                --,coalesce (rp.name, 'neupisan') as name
-                ,rc.code ccode
-                ,coalesce (rp.vat, 'xxneupisan') as vat
-                ,SUM(CASE WHEN aml.tax_code_id in (202) THEN aml.credit + aml.debit ELSE 0.00 END) as usluge
-                ,SUM(CASE WHEN aml.tax_code_id in (29401) THEN aml.credit + aml.debit ELSE 0.00 END) as dobra
-            FROM account_move_line aml
-                JOIN account_move am on am.id = aml.move_id
-                LEFT JOIN res_partner rp on rp.id = aml.partner_id
-            LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
-            --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id --v6
-            --LEFT JOIN res_country rc on rc.id = rpa.country_id --v6
-            WHERE 1=1
-              --AND rpa.type = 'default' --v6
-              AND am.state = 'posted'
-              AND aml.tax_code_id in (29401) -- TODO: konfiguracijska tablica kao za PDV obrazac i knjige
-              AND aml.period_id = %(period)s
-            GROUP BY
-                   aml.partner_id
-                   ,rp.name
-                   ,rp.vat
-                   ,rc.code'''
-            % {'period': period_from}
-                        )
+        self.all_taxes = self._get_report_taxes(data)
+        self.journals = self._get_report_journals(data)
+        sql = """
+              SELECT ROW_NUMBER() OVER (Order by aml.partner_id) as row_number
+                  --,aml.partner_id
+                  --,coalesce (rp.name, 'neupisan') as name
+                  ,rc.code ccode
+                  ,coalesce (rp.vat, 'xxneupisan') as vat
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col12)s
+                             AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1
+                            ELSE 0.00
+                        END) as usluge_refund
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col12)s
+                             AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit
+                            ELSE 0.00
+                        END) as usluge_invoice
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                             AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit)  * -1
+                            ELSE 0.00
+                        END) as dobra_refund
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                             AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit
+                            ELSE 0.00
+                        END) as dobra_invoice
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                     +
+                   SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END) as usluge
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                     +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END) as dobra
+              FROM account_move_line aml
+                  JOIN account_move am on am.id = aml.move_id
+                  LEFT JOIN res_partner rp on rp.id = aml.partner_id
+                  LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
+              WHERE 1=1
+                AND am.state = 'posted'
+                AND aml.tax_code_id in %(col11_12)s
+                AND aml.period_id = %(period)s
+              GROUP BY
+                     aml.partner_id
+                     ,rp.name
+                     ,rp.vat
+                     ,rc.code
+              """ % {'period': period_from,
+                     'journals': '(' + str(self.journals).strip('[]') + ')',
+                     'col11': '(' + str(self.all_taxes[11]).strip('[]') + ')',
+                     'col12': '(' + str(self.all_taxes[12]).strip('[]') + ')',
+                     'col11_12': '(' + str(self.all_taxes[11]).strip('[]') + ',' + str(self.all_taxes[12]).strip(
+                         '[]') + ')'
+                     }
+
+        self.cr.execute(sql)
         data = self.cr.dictfetchall()
         return data
 
     def get_totals(self):
         period_from = self.period_from
-        self.cr.execute('''
-            SELECT SUM(CASE WHEN aml.tax_code_id in (202) THEN aml.credit + aml.debit ELSE 0.00 END ) as sum_usluge
-                  ,SUM(CASE WHEN aml.tax_code_id in (29401) THEN aml.credit + aml.debit ELSE 0.00 END ) as sum_dobra
-            FROM account_move_line aml
-                JOIN account_move am on am.id = aml.move_id
-                LEFT JOIN res_partner rp on rp.id = aml.partner_id
-                LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
-                --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id --v6
-                --LEFT JOIN res_country rc on rc.id = rpa.country_id --v6
-            WHERE 1=1
-               -- AND rpa.type = 'default' --v6
-                AND am.state = 'posted'
-                AND aml.tax_code_id in (29401) -- TODO: konfiguracijska tablica kao za PDV obrazac i knjige
-                AND aml.period_id = %(period)s'''
-            % {'period': period_from}
-                        )
+        sql = """
+            SELECT SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END)
+                   as sum_usluge
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                           THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                           THEN aml.credit + aml.debit ELSE 0.00 END)
+                   as sum_dobra
+                FROM account_move_line aml
+                    JOIN account_move am on am.id = aml.move_id
+                    LEFT JOIN res_partner rp on rp.id = aml.partner_id
+                    LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
+                WHERE 1=1
+                    AND am.state = 'posted'
+                    AND aml.tax_code_id in %(col11_12)s
+                    AND aml.period_id = %(period)s
+            """ % {'period' : period_from,
+                   'journals': '(' + str(self.journals).strip('[]') + ')',
+                   'col11'  : '(' + str(self.all_taxes[11]).strip('[]') + ')',
+                   'col12'  : '(' + str(self.all_taxes[12]).strip('[]') + ')',
+                   'col11_12': '(' + str(self.all_taxes[11]).strip('[]') + ',' + str(self.all_taxes[12]).strip('[]') + ')'
+              }
+        self.cr.execute(sql)
         pdvs_sum = self.cr.dictfetchone()
         return pdvs_sum
-
-        """
-        res = self.get_lines()
-        totals = {'total_amount_service': 0.00, 'total_amount_product': 0.00,}
-        for i in res:
-            if not i['lcy_amount_service']:
-                i['lcy_amount_service'] = 0.00
-            if not i['lcy_amount_product']:
-                i['lcy_amount_product'] = 0.00
-            totals['total_amount_service'] += i['lcy_amount_service']
-            totals['total_amount_product'] += i['lcy_amount_product']
-        result = [totals]
-        return totals
-        """
 
     def get_company_data(self):
         data = {}
