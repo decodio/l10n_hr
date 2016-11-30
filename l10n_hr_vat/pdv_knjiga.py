@@ -38,7 +38,13 @@ class l10n_hr_pdv_knjiga(osv.osv):
     _columns = {
         'code': fields.char('Code', size=32,  ),
         'name': fields.char('Description', size=64,  ),
-        'type': fields.selection([('ira','Knjiga I-RA'),('ura' ,'Knjiga U-RA'),],'Type', required=True ),
+        'type': fields.selection([('ira','Knjiga I-RA')
+                                 , ('ura' ,'Knjiga U-RA')
+                                 , ('ura_tu', 'Knjiga U-RA Tuzemni prijenos')
+                                 , ('ura_st', 'Knjiga U-RA Stjecanje EU')
+                                 , ('ura_uvoz', 'Knjiga U-RA Uvoz')
+                                 , ('ura_nerezident', 'Knjiga U-RA Nerezidenti')
+                                 ],'Type', required=True ),
         'based_on': fields.selection([
                                           ('invoice','Periodu racuna'),
                                           ('payment','Periodu placanja'),

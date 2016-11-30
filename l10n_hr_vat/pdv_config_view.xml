@@ -265,6 +265,7 @@
                 </form>
             </field>
         </record>
+
         <record id="action_pdv_report_knjiga" model="ir.actions.act_window">
             <field name="name">Knjiga URA/IRA - postavke</field>
             <field name="res_model">l10n_hr_pdv.report.knjiga</field>
@@ -276,5 +277,94 @@
             id="menu_action_pdv_report_knjiga"
             parent="account.next_id_27"
             sequence="31"/>
+
+       <!-- Obrazac EU -->
+       <record id="view_pdv_report_obrazac_eu_stavka_tree" model="ir.ui.view">
+            <field name="name">view.pdv.report.obrazac.eu.stavka.tree</field>
+            <field name="model">l10n_hr_pdv.eu.obrazac.stavka</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Obrazac EU - postavke poreza" toolbar="1">
+                    <field name="tax_code_id"/>
+                    <field name="tax_code_koef"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_pdv_report_obrazac_eu_stavka_form" model="ir.ui.view">
+            <field name="name">view.pdv.report.obrazac.eu.stavka.form</field>
+            <field name="model">l10n_hr_pdv.eu.obrazac.stavka</field>
+            <field name="arch" type="xml">
+                <form string="Obrazac EU - postavke poreza">
+                    <field name="tax_code_id"/>
+                    <field name="tax_code_koef"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_pdv_report_obrazac_eu_tree" model="ir.ui.view">
+            <field name="name">view.pdv.report.obrazac_eu.tree</field>
+            <field name="model">l10n_hr_pdv.report.eu.obrazac</field>
+            <field name="arch" type="xml">
+                <tree string="Obrazac EU - postavke" toolbar="1">
+                    <field name="obrazac_id"/>
+                    <field name="position"/>
+                    <field name="line_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_pdv_report_obrazac_eu_form" model="ir.ui.view">
+            <field name="name">view.pdv.obrazac.eu.form</field>
+            <field name="model">l10n_hr_pdv.report.eu.obrazac</field>
+            <field name="arch" type="xml">
+                <form string="Obrazac EU - postavke">
+                     <sheet>
+                        <group>
+                            <group>
+                                 <field name="obrazac_id"/>
+                            </group>
+                            <group>
+                                 <field name="position"/>
+                            </group>
+                        </group>
+                           <group colspan="4">
+                            <field name="line_ids" colspan="4" nolabel="1" widget="one2many_list">
+                                <form string="Porezi">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="tax_code_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="tax_code_koef"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <tree string="Porezi">
+                                    <field name="tax_code_id"/>
+                                    <field name="tax_code_koef"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pdv_report_obrazac_eu" model="ir.actions.act_window">
+            <field name="name">Obrazac EU - postavke</field>
+            <field name="res_model">l10n_hr_pdv.report.eu.obrazac</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pdv_report_obrazac_eu_tree"/>
+        </record>
+
+        <menuitem action="action_pdv_report_obrazac_eu"
+            id="menu_action_pdv_report_obrazac_eu"
+            parent="account.next_id_27"
+            sequence="35"/>
+
     </data>
 </openerp>
