@@ -121,7 +121,7 @@ class Parser(report_sxw.rml_parse):
     
     def _get_company_address(self, data):
         name = (self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.city or '') \
-            + ', ' + self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.street or ''
+            + ', ' + (self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.street or '')
         return name
     
     def _get_company_nkd(self, data):
