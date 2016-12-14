@@ -37,6 +37,8 @@ class pdv_knjiga(orm.TransientModel):
                       help='Odaberite poreznu knjigu za ispis', required=True),
         'date_start': fields.date('Od datuma'),
         'date_stop': fields.date('Do datuma'),
+        'journal_ids': fields.many2many('account.journal', 'pdv_knjiga_journal_rel2', 'pdv_knjiga_id', 'journal_id',
+                                       'Journals')
     }
 
     def _get_tax(self, cr, uid, context=None):
