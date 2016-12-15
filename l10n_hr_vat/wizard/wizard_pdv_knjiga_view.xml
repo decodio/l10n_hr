@@ -14,12 +14,12 @@
                 <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
                 <field name="company_id"/>                                                  
                 <separator string="Periodi i razdoblje računa" colspan="4"/>
-                <group col="2" colspan="4">
-                    <group colspan="2">
+                <group col="4" colspan="4">
+                    <group col="2" colspan="2">
                         <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
                         <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
                     </group>
-                    <group colspan="2">
+                    <group col="2" colspan="2">
                         <field name="date_start" />
                         <field name="date_stop" />
                     </group>

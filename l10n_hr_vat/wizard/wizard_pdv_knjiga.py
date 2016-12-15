@@ -46,7 +46,8 @@ class pdv_knjiga(orm.TransientModel):
         return taxes and taxes[0] or False
 
     _defaults = {
-        'chart_tax_id': _get_tax
+        'chart_tax_id': _get_tax,
+        'journal_ids': []
     }
 
     def create_vat(self, cr, uid, ids, context=None):
@@ -55,6 +56,11 @@ class pdv_knjiga(orm.TransientModel):
 
         datas = {'ids': context.get('active_ids', [])}
         datas['form'] = self.read(cr, uid, ids)[0]
+        if not datas['form'].get('journal_ids', False):
+            sql = """SELECT id FROM account_journal"""
+            cr.execute(sql)
+            datas['form']['journal_ids'] = [a for (a,) in cr.fetchall()]
+
         for field in datas['form'].keys():
             if isinstance(datas['form'][field], tuple):
                 datas['form'][field] = datas['form'][field][0]
