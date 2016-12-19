@@ -96,7 +96,7 @@ class account_bank_statement(orm.Model):
                 line_ids.append(line.id)
                 partner_id = line.partner_id and line.partner_id.id or False
                 if not partner_id:
-                    vals = bank_st_line_obj.search_partner(cr, uid, {
+                    vals = bank_st_line_obj.search_partner(cr, uid, ids, {
                         'name': line.name,
                         'ref': line.ref,
                         'bank_acc_number': line.bank_acc_number,
@@ -289,7 +289,7 @@ class account_bank_statement_line(orm.Model):
 
         return move_line_ids
 
-    def search_partner(self, cr, uid, line, context=None):
+    def search_partner(self, cr, uid, ids, line, context=None):
         if line is None:
             line = {}
         if context is None:

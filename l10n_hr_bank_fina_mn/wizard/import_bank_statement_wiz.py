@@ -497,103 +497,16 @@ class import_bank_statement_wiz(orm.TransientModel):
             else:
                 statement_id = bank_st_obj.create(cr, uid, statement_vals, context=ctx)
             statement_ids.append(statement_id)
-
             for st_line in statement['st_lines']:
-                name = st_line['IZ905OPISPL']
-                if st_line['IZ905PNBPR'][:2] == 'HR' and len(st_line['IZ905PNBPR']) >= 4:
-                    ref = st_line['IZ905PNBPR'][:4] + ' ' + st_line['IZ905PNBPR'][4:]
-                else:
-                    ref = st_line['IZ905PNBPR']
-                partner_bank_acc_number = st_line['IZ905RNPRPL']
-                fina_branch_code = st_line['IZ905IDTRFINA'][7:12]
-                amount_original = str2float(st_line['IZ905IZNOS']) / 100.0
-                correction = st_line['IZ905PREDZN'] == '-'
-                if st_line['IZ905OZTRA'] in ['10', ]:
-                    note = 'NA TERET'
-                    type = 'supplier'
-                    debit = 0.0
-                    credit = amount_original
-                elif st_line['IZ905OZTRA'] in ['20', ]:
-                    note = 'U KORIST'
-                    if not partner_bank_acc_number or partner_bank_acc_number == '0000000000':
-                        type = 'general'
-                    else:
-                        type = 'customer'
-                    debit = amount_original
-                    credit = 0.0
-                else:
-                    err_string = _('Unknown transaction type "%s"!') % (st_line['IZ905OZTRA'],)
-                    err_code = 'E0015'
-                    if batch:
-                        return (err_code, err_string)
-                    raise orm.except_orm(_('Error!'), err_string)
-                #amount = debit - credit
-                amount = credit - debit
-
-                if currency_code != company_currency_code:
-                    if st_line['IZ905VLPL'] == company_currency_code:
-                        lcy_amount = str2float(st_line['IZ905IZNOSPPVALUTE']) / 100.0
-                    else:
-                        lcy_amount = 0.0
-                    if not lcy_amount:
-                        lcy_amount = currency_obj.compute(cr, uid, currency_id, 
-                                          company.currency_id.id, amount, round=True, context=ctx)
-                else:
-                    lcy_amount = amount
-                total_lcy_amount += lcy_amount
-
-                partner_res = bank_st_line_obj.search_partner(cr, uid, {
-                    'name': name,
-                    'ref': ref,
-                    'bank_acc_number': partner_bank_acc_number,
-                    'fina_branch_code': fina_branch_code,
-                    'type': type,
-                    'amount': amount_original,
-                    'force_account_id': journal.force_account and \
-                                        journal.force_account.id or False
-                }, context=context)
-                partner_id = partner_res['value'].get('partner_id')
-                account_id = partner_res['value'].get('account_id')
-                if not partner_id and account_id and partner_res['value'].get('type'):
-                    type = partner_res['value'].get('type')
-                warning = partner_res.get('warning')
-                if not account_id:
-                    account_id = (type == 'customer' and data.receivable_account_id.id) or \
-                      (type == 'supplier' and data.payable_account_id.id) or data.receivable_account_id.id
-
-                note += u'\nRačun primatelja-platitelja: ' + partner_bank_acc_number \
-                    + u'\nPartner: ' + st_line['IZ905NAZPRPL'] \
-                    + u'\nAdresa: ' + st_line['IZ905ADRPRPL'] \
-                    + u'\nSjedište: ' + st_line['IZ905SJPRPL'] \
-                    + u'\nPoziv na broj platitelja: ' + st_line['IZ905PNBPL'] \
-                    + u'\nPoziv na broj primatelja: ' + st_line['IZ905PNBPR'] \
-                    + u'\nŠifra namjene: ' + st_line['IZ905SIFNAM'] \
-                    + u'\nIdentifikator transakcije banke: ' + st_line['IZ905IDTRBAN']
-                if fina_branch_code:
-                    note += u'\nOznaka FINA poslovnice: ' + fina_branch_code
-
-                statement_line_id = bank_st_line_obj.create(cr, uid, {
-                    'name': name,
-                    'ref': ref,
-                    'date': str2date(st_line['IZ905DATIZVR']),
-                    'type': type,
-                    'partner_id': partner_id,
-                    'account_id': account_id,
-                    'statement_id': statement_id,
-                    'sequence': st_line['sequence'],
-                    'amount': amount,
-                    'debit': debit,
-                    'credit': credit,
-                    'lcy_amount': lcy_amount,
-                    'correction': correction,
-                    'note': note,
-                    'bank_acc_number': partner_bank_acc_number,
-                    'fina_branch_code': fina_branch_code,
-                }, context=ctx)
+                err_log = ''
+                line_vals = self._prepare_bank_statement_line_vals(cr, uid, ids, st_line, journal, currency_code,
+                                      company_currency_code, currency_id, batch, company, total_lcy_amount, data,
+                                      statement_id, context=ctx)
+                statement_line_id = bank_st_line_obj.create(cr, uid, line_vals, context=ctx)
                 statement_line_ids.append(statement_line_id)
 
-                if (not partner_id and type != 'general') or (type == 'general' and \
-                  account_id == data.receivable_account_id.id):
+                if (not line_vals.get('partner_id', False) and type != 'general') or (type == 'general' and \
+                  line_vals.get('account_id', False) == data.receivable_account_id.id):
                     err_no += 1
                     err_log += u'\n\nIzvadak: ' + statement['st_start']['IZ903RBIZV'] + '-' + \
                       statement['st_start']['IZ903PODBR'] \
@@ -604,16 +517,16 @@ class import_bank_statement_wiz(orm.TransientModel):
                         + u'\n    Sjedište: ' + st_line['IZ905SJPRPL'] \
                         + u'\n    Račun ' + ((type == 'supplier' and u'primatelja: ') or \
                          (type == 'customer' and u'platitelja: ') or u'primatelja-platitelja: ') + \
-                         partner_bank_acc_number \
+                         line_vals.get('partner_bank_acc_number', '') \
                         + u'\n    Poziv na broj platitelja: ' + format_reference(st_line['IZ905PNBPL']) \
                         + u'\n    Poziv na broj primatelja: ' + format_reference(st_line['IZ905PNBPR']) \
                         + u'\n    Šifra namjene: ' + st_line['IZ905SIFNAM'] \
-                        + u'\n    Iznos: ' + format_amount(amount_original) \
+                        + u'\n    Iznos: ' + format_amount(line_vals.get('amount_original', 0.0)) \
                         + u'\n    Identifikator transakcije banke: ' + st_line['IZ905IDTRBAN']
-                    if fina_branch_code:
-                        err_log += u'\n    Oznaka FINA poslovnice: ' + fina_branch_code
-                    if warning:
-                        err_log += warning
+                    if line_vals.get('fina_branch_code', False):
+                        err_log += u'\n    Oznaka FINA poslovnice: ' + line_vals.get('fina_branch_code')
+                    if line_vals.get('warning', False):
+                        err_log += line_vals.get('warning')
             # end for
 
             if statement_line_ids:
@@ -655,7 +568,7 @@ class import_bank_statement_wiz(orm.TransientModel):
         except Exception, e:
             cr.rollback()
             err_string = _('\nSystem Error: ') + str(e)
-        except:
+        except Exception, e:
             cr.rollback()
             err_string = _('\nUnknown Error: ') + str(e)
 
@@ -679,6 +592,103 @@ class import_bank_statement_wiz(orm.TransientModel):
             'context': context,
             'type': 'ir.actions.act_window',
         }
+
+    def _prepare_bank_statement_line_vals(self, cr, uid, ids, st_line, journal, currency_code, company_currency_code,
+                currency_id, batch, company, total_lcy_amount, data, statement_id, context=None):
+        bank_st_line_obj = self.pool.get('account.bank.statement.line')
+        currency_obj = self.pool.get('res.currency')
+        name = st_line['IZ905OPISPL']
+        if st_line['IZ905PNBPR'][:2] == 'HR' and len(st_line['IZ905PNBPR']) >= 4:
+            ref = st_line['IZ905PNBPR'][:4] + ' ' + st_line['IZ905PNBPR'][4:]
+        else:
+            ref = st_line['IZ905PNBPR']
+        partner_bank_acc_number = st_line['IZ905RNPRPL']
+        fina_branch_code = st_line['IZ905IDTRFINA'][7:12]
+        amount_original = str2float(st_line['IZ905IZNOS']) / 100.0
+        correction = st_line['IZ905PREDZN'] == '-'
+        if st_line['IZ905OZTRA'] in ['10', ]:
+            note = 'NA TERET'
+            type = 'supplier'
+            debit = 0.0
+            credit = amount_original
+        elif st_line['IZ905OZTRA'] in ['20', ]:
+            note = 'U KORIST'
+            if not partner_bank_acc_number or partner_bank_acc_number == '0000000000':
+                type = 'general'
+            else:
+                type = 'customer'
+            debit = amount_original
+            credit = 0.0
+        else:
+            err_string = _('Unknown transaction type "%s"!') % (st_line['IZ905OZTRA'],)
+            err_code = 'E0015'
+            if batch:
+                return (err_code, err_string)
+            raise orm.except_orm(_('Error!'), err_string)
+        # amount = debit - credit
+        amount = credit - debit
+
+        if currency_code != company_currency_code:
+            if st_line['IZ905VLPL'] == company_currency_code:
+                lcy_amount = str2float(st_line['IZ905IZNOSPPVALUTE']) / 100.0
+            else:
+                lcy_amount = 0.0
+            if not lcy_amount:
+                lcy_amount = currency_obj.compute(cr, uid, currency_id,
+                                                  company.currency_id.id, amount, round=True, context=context)
+        else:
+            lcy_amount = amount
+        total_lcy_amount += lcy_amount
+
+        partner_res = bank_st_line_obj.search_partner(cr, uid, ids, {
+            'name': name,
+            'ref': ref,
+            'bank_acc_number': partner_bank_acc_number,
+            'fina_branch_code': fina_branch_code,
+            'type': type,
+            'amount': amount_original,
+            'force_account_id': journal.force_account and \
+                                journal.force_account.id or False
+        }, context=context)
+        partner_id = partner_res['value'].get('partner_id')
+        account_id = partner_res['value'].get('account_id')
+        if not partner_id and account_id and partner_res['value'].get('type'):
+            type = partner_res['value'].get('type')
+        warning = partner_res.get('warning')
+        if not account_id:
+            account_id = (type == 'customer' and data.receivable_account_id.id) or \
+                         (type == 'supplier' and data.payable_account_id.id) or data.receivable_account_id.id
+
+        note += u'\nRačun primatelja-platitelja: ' + partner_bank_acc_number \
+                + u'\nPartner: ' + st_line['IZ905NAZPRPL'] \
+                + u'\nAdresa: ' + st_line['IZ905ADRPRPL'] \
+                + u'\nSjedište: ' + st_line['IZ905SJPRPL'] \
+                + u'\nPoziv na broj platitelja: ' + st_line['IZ905PNBPL'] \
+                + u'\nPoziv na broj primatelja: ' + st_line['IZ905PNBPR'] \
+                + u'\nŠifra namjene: ' + st_line['IZ905SIFNAM'] \
+                + u'\nIdentifikator transakcije banke: ' + st_line['IZ905IDTRBAN']
+        if fina_branch_code:
+            note += u'\nOznaka FINA poslovnice: ' + fina_branch_code
+
+        line_vals = {
+            'name': name,
+            'ref': ref,
+            'date': str2date(st_line['IZ905DATIZVR']),
+            'type': type,
+            'partner_id': partner_id,
+            'account_id': account_id,
+            'statement_id': statement_id,
+            'sequence': st_line['sequence'],
+            'amount': amount,
+            'debit': debit,
+            'credit': credit,
+            'lcy_amount': lcy_amount,
+            'correction': correction,
+            'note': note,
+            'bank_acc_number': partner_bank_acc_number,
+            'fina_branch_code': fina_branch_code,
+        }
+        return line_vals
 
     def action_open_bank_statement_file(self, cr, uid, ids, context=None):
         if context is None:
