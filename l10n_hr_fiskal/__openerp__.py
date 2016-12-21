@@ -38,6 +38,13 @@ Contributions: Hrvoje ThePython - Free Code!
                Goran Kliska @ Slobodni Programi
                Tomislav Bošnjaković @ Slobodni Programi
 
+
+TODO/WIP: - new API,
+ replace libs with
+ https://github.com/kodmasin/fiskpy
+ https://github.com/decodio/fiskpy
+
+
 Preduvjeti: 
     na serveru instalirati:
         python-dev, python-ms2crypto, libxmlsec1-dev
