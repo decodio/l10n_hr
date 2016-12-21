@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-15 12:31+0000\n"
-"PO-Revision-Date: 2016-12-15 12:31+0000\n"
+"POT-Creation-Date: 2016-11-29 22:06+0000\n"
+"PO-Revision-Date: 2016-11-29 22:06+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -101,8 +101,6 @@ msgid "5%"
 msgstr "5%"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 #: report:knjiga.ira:0
 #: report:knjiga.ura:0
@@ -130,7 +128,7 @@ msgstr "Porezna prijava"
 #. module: l10n_hr_vat
 #: model:ir.actions.act_window,name:l10n_hr_vat.action_account_vat_settlement
 msgid "Account Vat Settlement"
-msgstr "Zatvaranje PDV-a"
+msgstr "Account Vat Settlement"
 
 #. module: l10n_hr_vat
 #: field:l10n_hr_pdv.knjiga.stavka,invoice_partner_street:0
@@ -151,11 +149,9 @@ msgstr "Sve stavke"
 #: selection:pdv.knjiga,target_move:0
 #: selection:pdv.obrazac,target_move:0
 msgid "All Posted Entries"
-msgstr "Sve knjižene stavke"
+msgstr "Sve knjiženje stavke"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 #: report:knjiga.ira:0
 #: report:knjiga.ura:0
@@ -165,7 +161,7 @@ msgstr "BROJČANA OZNAKA (ŠIFRA) DJELATNOSTI:"
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,based_on:0
 msgid "Based on"
-msgstr "Na osnovi"
+msgstr "Based on"
 
 #. module: l10n_hr_vat
 #: report:knjiga.ira:0
@@ -189,7 +185,7 @@ msgstr "Odustani"
 #: field:pdv.knjiga,chart_account_id:0
 #: field:pdv.obrazac,chart_account_id:0
 msgid "Chart of Account"
-msgstr "Kontni plan"
+msgstr "Chart of Account"
 
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,chart_tax_id:0
@@ -203,30 +199,30 @@ msgstr "Stablo poreza"
 #: field:account.vat.declaration,close_vat:0
 #: field:cancel.vat.settlement,close_vat:0
 msgid "Close VAT"
-msgstr "Zatvori PDV"
+msgstr "Close VAT"
 
 #. module: l10n_hr_vat
 #: view:account.vat.declaration:l10n_hr_vat.view_account_vat_settlement
 msgid "Close VAT Statement"
-msgstr "Zatvori obračun PDV-a"
+msgstr "Close VAT Statement"
 
 #. module: l10n_hr_vat
 #: field:account.move.line,closed_vat:0
 msgid "Closed"
-msgstr "Zatvoreno"
+msgstr "Closed"
 
 #. module: l10n_hr_vat
 #: field:account.vat.declaration,closing_date:0
 #: field:cancel.vat.settlement,closing_date:0
 msgid "Closing Date"
-msgstr "Datum zatvaranja"
+msgstr "Closing Date"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/account_vat.py:73
 #: code:addons/l10n_hr_vat/wizard/cancel_account_vat_settlement.py:73
 #, python-format
 msgid "Closing Date is missing! Please enter one."
-msgstr "Nedostaje datum zatvaranja! Unesite datum."
+msgstr "Nedostaje datum zatvaranja! Molim unesite ga."
 
 #. module: l10n_hr_vat
 #: field:l10n_hr_pdv.eu.obrazac,code:0
@@ -251,11 +247,9 @@ msgstr "Tvrtka"
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,create_uid:0
 #: field:l10n_hr_pdv.eu.obrazac,create_uid:0
-#: field:l10n_hr_pdv.eu.obrazac.stavka,create_uid:0
 #: field:l10n_hr_pdv.knjiga,create_uid:0
 #: field:l10n_hr_pdv.knjiga.stavka,create_uid:0
 #: field:l10n_hr_pdv.obrazac,create_uid:0
-#: field:l10n_hr_pdv.report.eu.obrazac,create_uid:0
 #: field:l10n_hr_pdv.report.knjiga,create_uid:0
 #: field:l10n_hr_pdv.report.knjiga.stavka,create_uid:0
 #: field:l10n_hr_pdv.report.obrazac,create_uid:0
@@ -267,16 +261,14 @@ msgstr "Tvrtka"
 #: field:pdv.obrazac,create_uid:0
 #: field:tax.exemption,create_uid:0
 msgid "Created by"
-msgstr "Kreirao"
+msgstr "Created by"
 
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,create_date:0
 #: field:l10n_hr_pdv.eu.obrazac,create_date:0
-#: field:l10n_hr_pdv.eu.obrazac.stavka,create_date:0
 #: field:l10n_hr_pdv.knjiga,create_date:0
 #: field:l10n_hr_pdv.knjiga.stavka,create_date:0
 #: field:l10n_hr_pdv.obrazac,create_date:0
-#: field:l10n_hr_pdv.report.eu.obrazac,create_date:0
 #: field:l10n_hr_pdv.report.knjiga,create_date:0
 #: field:l10n_hr_pdv.report.knjiga.stavka,create_date:0
 #: field:l10n_hr_pdv.report.obrazac,create_date:0
@@ -288,7 +280,7 @@ msgstr "Kreirao"
 #: field:pdv.obrazac,create_date:0
 #: field:tax.exemption,create_date:0
 msgid "Created on"
-msgstr "Kreirano"
+msgstr "Created on"
 
 #. module: l10n_hr_vat
 #: report:knjiga.ura:0
@@ -299,7 +291,7 @@ msgstr "DOBAVLJAČ (ISPORUČITELJ DOBARA ILI USLUGA)"
 #: code:addons/l10n_hr_vat/wizard/xml_common.py:42
 #, python-format
 msgid "Data Error"
-msgstr "Greška u podacima"
+msgstr "Data Error"
 
 #. module: l10n_hr_vat
 #: selection:cancel.vat.settlement,filter:0
@@ -343,7 +335,7 @@ msgstr "Opis"
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,display_detail:0
 msgid "Display Detail"
-msgstr "Prikaži detalje"
+msgstr "Display Detail"
 
 #. module: l10n_hr_vat
 #: field:pdv.knjiga,date_stop:0
@@ -370,7 +362,7 @@ msgstr "Do datuma"
 #: field:pdv.knjiga,period_to:0
 #: field:pdv.obrazac,period_to:0
 msgid "End Period"
-msgstr "Završni period"
+msgstr "End Period"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/wizard_pdv_obrazac.py:459
@@ -399,29 +391,29 @@ msgstr "Greška !"
 #. module: l10n_hr_vat
 #: field:account.tax,exclude_from_vat_settlement:0
 msgid "Exclude from VAT Settlement"
-msgstr "Isključi iz zatvaranja PDV-a"
+msgstr "Exclude from VAT Settlement"
 
 #. module: l10n_hr_vat
 #: view:obrazac.pdv.eu:l10n_hr_vat.view_report_obrazac_pdv_eu
 msgid "Export"
-msgstr "Izvezi"
+msgstr "Izvoz"
 
 #. module: l10n_hr_vat
 #: field:obrazac.pdv.eu,data:0
 #: field:pdv.obrazac,data:0
 msgid "File"
-msgstr "Datoteka"
+msgstr "File"
 
 #. module: l10n_hr_vat
 #: field:obrazac.pdv.eu,name:0
 #: field:pdv.obrazac,name:0
 msgid "Filename"
-msgstr "Naziv datoreke"
+msgstr "Filename"
 
 #. module: l10n_hr_vat
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 msgid "Filtar:)"
-msgstr "Filtar:"
+msgstr "Filtar:)"
 
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,filter:0
@@ -429,7 +421,7 @@ msgstr "Filtar:"
 #: field:pdv.knjiga,filter:0
 #: field:pdv.obrazac,filter:0
 msgid "Filter by"
-msgstr "Filtriraj po"
+msgstr "Filter by"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/knjiga_ira.py:110
@@ -437,7 +429,7 @@ msgstr "Filtriraj po"
 #: code:addons/l10n_hr_vat/report/knjiga_ura_prijenos.py:108
 #, python-format
 msgid "Filter: "
-msgstr "Filtar: "
+msgstr "Filter: "
 
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,fiscalyear_id:0
@@ -445,7 +437,7 @@ msgstr "Filtar: "
 #: field:pdv.knjiga,fiscalyear_id:0
 #: field:pdv.obrazac,fiscalyear_id:0
 msgid "Fiscal Year"
-msgstr "Fiskalna godina"
+msgstr "Fiscal Year"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/knjiga_ira.py:114
@@ -461,12 +453,12 @@ msgstr "Za datum:"
 #: code:addons/l10n_hr_vat/report/knjiga_ura_prijenos.py:108
 #, python-format
 msgid "For Period:"
-msgstr "Za period:"
+msgstr " za period:"
 
 #. module: l10n_hr_vat
 #: view:account.vat.declaration:l10n_hr_vat.view_account_vat_settlement
 msgid "For period"
-msgstr "Za period"
+msgstr "For period"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/xml_common.py:35
@@ -477,16 +469,14 @@ msgstr "Greška formata"
 #. module: l10n_hr_vat
 #: view:l10n_hr_pdv.knjiga.stavka:l10n_hr_vat.search_pdv_knjiga_stavka_tree
 msgid "Group by..."
-msgstr "Grupiraj po..."
+msgstr "Grupiraj po"
 
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,id:0
 #: field:l10n_hr_pdv.eu.obrazac,id:0
-#: field:l10n_hr_pdv.eu.obrazac.stavka,id:0
 #: field:l10n_hr_pdv.knjiga,id:0
 #: field:l10n_hr_pdv.knjiga.stavka,id:0
 #: field:l10n_hr_pdv.obrazac,id:0
-#: field:l10n_hr_pdv.report.eu.obrazac,id:0
 #: field:l10n_hr_pdv.report.knjiga,id:0
 #: field:l10n_hr_pdv.report.knjiga.stavka,id:0
 #: field:l10n_hr_pdv.report.obrazac,id:0
@@ -501,8 +491,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 msgid "IZNOS U KUNAMA I LIPAMA"
 msgstr "IZNOS U KUNAMA I LIPAMA"
@@ -511,12 +499,12 @@ msgstr "IZNOS U KUNAMA I LIPAMA"
 #: help:account.vat.declaration,close_vat:0
 #: help:cancel.vat.settlement,close_vat:0
 msgid "If this field is True, VAT will be closed for given period."
-msgstr "Ukoliko je ova opcija uključena, PDV za zadano razdoblje će se zatvoriti."
+msgstr "Ako je ovo polje DA, PDV za razdoblje će se zatvoriti."
 
 #. module: l10n_hr_vat
 #: help:account.tax,exclude_from_vat_settlement:0
 msgid "If this field is checked this tax will not be included in VAT settlement process."
-msgstr "Ukoliko je uključen aova opcija ova porez neće biti uključen u proces zatvaranja PDV-a."
+msgstr "Ukoliko je odabrano ovo polje, ovaj porez neće biti uključen u proces zatvaranja PDV-a."
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/account.py:51
@@ -535,12 +523,12 @@ msgstr "Neispravni podaci!"
 #: model:ir.model,name:l10n_hr_vat.model_account_invoice
 #: field:l10n_hr_pdv.knjiga.stavka,invoice_id:0
 msgid "Invoice"
-msgstr "Račun"
+msgstr "Faktura"
 
 #. module: l10n_hr_vat
 #: selection:cancel.vat.settlement,based_on:0
 msgid "Invoices"
-msgstr "Računi"
+msgstr "Fakture"
 
 #. module: l10n_hr_vat
 #: field:l10n_hr_pdv.report.knjiga.stavka,report_knjiga_id:0
@@ -577,7 +565,6 @@ msgid "Isti redak se smije korisiti samo jednom za jednu tvrtku!"
 msgstr "Isti redak se smije korisiti samo jednom za jednu tvrtku!"
 
 #. module: l10n_hr_vat
-#: sql_constraint:l10n_hr_pdv.report.eu.obrazac:0
 #: sql_constraint:l10n_hr_pdv.report.knjiga:0
 msgid "Isti redak se smije koristi samo jednom po ispisu !"
 msgstr "Isti redak se smije koristi samo jednom po ispisu !"
@@ -610,27 +597,24 @@ msgstr "Dnevnik"
 #. module: l10n_hr_vat
 #: model:ir.model,name:l10n_hr_vat.model_account_move_line
 msgid "Journal Items"
-msgstr "Stavke glavne knjige"
+msgstr "Journal Items"
 
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,journal_ids:0
 #: view:l10n_hr_pdv.eu.obrazac:l10n_hr_vat.view_pdv_obrazac_eu_form
 #: field:l10n_hr_pdv.eu.obrazac,journal_ids:0
 #: field:obrazac.pdv.eu,journal_ids:0
-#: view:pdv.knjiga:l10n_hr_vat.view_report_pdv_knjiga
 #: field:pdv.knjiga,journal_ids:0
 #: field:pdv.obrazac,journal_ids:0
 msgid "Journals"
 msgstr "Dnevnici"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
 #: report:knjiga.ira:0
 msgid "KNJIGA IZDANIH (IZLAZNIH RACUNA)"
 msgstr "KNJIGA IZDANIH (IZLAZNIH RAČUNA)"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 #: report:knjiga.ura:0
 msgid "KNJIGA PRIMLJENIH (ULAZNIH RACUNA)"
@@ -704,13 +688,13 @@ msgid "Knjiga URA/IRA - postavke poreza"
 msgstr "Knjiga URA/IRA - postavke poreza"
 
 #. module: l10n_hr_vat
-#: code:addons/l10n_hr_vat/wizard/wizard_pdv_knjiga.py:72
+#: code:addons/l10n_hr_vat/wizard/wizard_pdv_knjiga.py:64
 #, python-format
 msgid "Knjiga je obavezan podatak kod ovog ispisa!"
 msgstr "Knjiga je obavezan podatak kod ovog ispisa!"
 
 #. module: l10n_hr_vat
-#: code:addons/l10n_hr_vat/wizard/wizard_pdv_knjiga.py:71
+#: code:addons/l10n_hr_vat/wizard/wizard_pdv_knjiga.py:63
 #, python-format
 msgid "Knjiga nije upisana!"
 msgstr "Knjiga nije upisana!"
@@ -718,11 +702,9 @@ msgstr "Knjiga nije upisana!"
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,write_uid:0
 #: field:l10n_hr_pdv.eu.obrazac,write_uid:0
-#: field:l10n_hr_pdv.eu.obrazac.stavka,write_uid:0
 #: field:l10n_hr_pdv.knjiga,write_uid:0
 #: field:l10n_hr_pdv.knjiga.stavka,write_uid:0
 #: field:l10n_hr_pdv.obrazac,write_uid:0
-#: field:l10n_hr_pdv.report.eu.obrazac,write_uid:0
 #: field:l10n_hr_pdv.report.knjiga,write_uid:0
 #: field:l10n_hr_pdv.report.knjiga.stavka,write_uid:0
 #: field:l10n_hr_pdv.report.obrazac,write_uid:0
@@ -734,16 +716,14 @@ msgstr "Knjiga nije upisana!"
 #: field:pdv.obrazac,write_uid:0
 #: field:tax.exemption,write_uid:0
 msgid "Last Updated by"
-msgstr "Zadnji ažurirao"
+msgstr "Last Updated by"
 
 #. module: l10n_hr_vat
 #: field:cancel.vat.settlement,write_date:0
 #: field:l10n_hr_pdv.eu.obrazac,write_date:0
-#: field:l10n_hr_pdv.eu.obrazac.stavka,write_date:0
 #: field:l10n_hr_pdv.knjiga,write_date:0
 #: field:l10n_hr_pdv.knjiga.stavka,write_date:0
 #: field:l10n_hr_pdv.obrazac,write_date:0
-#: field:l10n_hr_pdv.report.eu.obrazac,write_date:0
 #: field:l10n_hr_pdv.report.knjiga,write_date:0
 #: field:l10n_hr_pdv.report.knjiga.stavka,write_date:0
 #: field:l10n_hr_pdv.report.obrazac,write_date:0
@@ -755,12 +735,12 @@ msgstr "Zadnji ažurirao"
 #: field:pdv.obrazac,write_date:0
 #: field:tax.exemption,write_date:0
 msgid "Last Updated on"
-msgstr "ZAdnje ažuriranje"
+msgstr "Last Updated on"
 
 #. module: l10n_hr_vat
 #: help:account.move.line,closed_vat:0
 msgid "Mark if VAT is closed for given period!"
-msgstr "Oznaka da je PDV zatvoren za razdoblje!"
+msgstr "Označi ako je Porez zatvoren za period!"
 
 #. module: l10n_hr_vat
 #: report:knjiga.ira:0
@@ -771,7 +751,7 @@ msgstr "Međunarodni"
 #: code:addons/l10n_hr_vat/wizard/xml_common.py:42
 #, python-format
 msgid "Missing or misconfigured data : %s"
-msgstr "Nedostaju ili pogrešno konfigurirani podaci : %s"
+msgstr "Missing or misconfigured data : %s"
 
 #. module: l10n_hr_vat
 #: field:l10n_hr_pdv.knjiga.stavka,move_id:0
@@ -833,7 +813,7 @@ msgstr "Nepriznati porez"
 #: selection:pdv.knjiga,filter:0
 #: selection:pdv.obrazac,filter:0
 msgid "No Filters"
-msgstr "Bez filtra"
+msgstr "Bez filtera"
 
 #. module: l10n_hr_vat
 #: report:knjiga.ira:0
@@ -841,8 +821,6 @@ msgid "OIB"
 msgstr "OIB"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 #: report:knjiga.ira:0
 msgid "OIB:"
@@ -873,28 +851,11 @@ msgstr "Obrasci PDV"
 #: model:ir.ui.menu,name:l10n_hr_vat.menu_action_pdv_obrazac_eu
 #: view:l10n_hr_pdv.eu.obrazac:l10n_hr_vat.view_pdv_obrazac_eu_form
 #: view:l10n_hr_pdv.eu.obrazac:l10n_hr_vat.view_pdv_obrazac_eu_tree
-#: field:l10n_hr_pdv.eu.obrazac.stavka,obrazac_eu_id:0
-#: field:l10n_hr_pdv.report.eu.obrazac,obrazac_id:0
 #: field:obrazac.pdv.eu,obrazac_id:0
 msgid "Obrazac EU"
 msgstr "Obrazac EU"
 
 #. module: l10n_hr_vat
-#: model:ir.actions.act_window,name:l10n_hr_vat.action_pdv_report_obrazac_eu
-#: model:ir.ui.menu,name:l10n_hr_vat.menu_action_pdv_report_obrazac_eu
-#: view:l10n_hr_pdv.report.eu.obrazac:l10n_hr_vat.view_pdv_report_obrazac_eu_form
-#: view:l10n_hr_pdv.report.eu.obrazac:l10n_hr_vat.view_pdv_report_obrazac_eu_tree
-msgid "Obrazac EU - postavke"
-msgstr "Obrazac EU - postavke"
-
-#. module: l10n_hr_vat
-#: view:l10n_hr_pdv.eu.obrazac.stavka:l10n_hr_vat.view_pdv_report_obrazac_eu_stavka_form
-#: view:l10n_hr_pdv.eu.obrazac.stavka:l10n_hr_vat.view_pdv_report_obrazac_eu_stavka_tree
-msgid "Obrazac EU - postavke poreza"
-msgstr "Obrazac EU - postavke poreza"
-
-#. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
 #: report:knjiga.ira:0
 msgid "Obrazac I-RA"
 msgstr "Obrazac I-RA"
@@ -928,7 +889,6 @@ msgid "Obrazac PDV-ZP"
 msgstr "Obrazac PDV-ZP"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 #: report:knjiga.ura:0
 msgid "Obrazac U-RA"
@@ -1012,8 +972,6 @@ msgid "POREZNI OBVEZNIK (NAZIV/IME I PREZIME):"
 msgstr "POREZNI OBVEZNIK (NAZIV/IME I PREZIME):"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 msgid "POREZNI OBVEZNIK (NAZIV/IME I PREZIME):)"
 msgstr "POREZNI OBVEZNIK (NAZIV/IME I PREZIME):)"
@@ -1045,7 +1003,7 @@ msgstr "Partner (%s) nema oznaku države ili OIB!"
 #: code:addons/l10n_hr_vat/account.py:47
 #, python-format
 msgid "Partner is required for this type of posting!"
-msgstr "Partner ije obavezan za ovaj tip knjiženja!"
+msgstr "Partner je obavezan za ovu vrstu knjiženja!"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/account.py:47
@@ -1063,25 +1021,21 @@ msgstr "Plaćanja"
 #: field:l10n_hr_pdv.knjiga.stavka,period_id:0
 #: view:obrazac.pdv.eu:l10n_hr_vat.view_report_obrazac_pdv_eu
 msgid "Period"
-msgstr "Razdoblje"
+msgstr "Razdoblja"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/account_vat.py:62
 #: code:addons/l10n_hr_vat/wizard/cancel_account_vat_settlement.py:64
 #, python-format
 msgid "Period is missing! Please enter one."
-msgstr "Nedostaje razdoblje! Unesite ga."
+msgstr "Nedostaje period! Molim unesite ga."
 
 #. module: l10n_hr_vat
 #: view:obrazac.pdv.eu:l10n_hr_vat.view_report_obrazac_pdv_eu
+#: view:pdv.knjiga:l10n_hr_vat.view_report_pdv_knjiga
 #: view:pdv.obrazac:l10n_hr_vat.view_report_pdv_obrazac
 msgid "Periodi"
-msgstr "Razdoblja"
-
-#. module: l10n_hr_vat
-#: view:pdv.knjiga:l10n_hr_vat.view_report_pdv_knjiga
-msgid "Periodi i razdoblje računa"
-msgstr "Periodi i razdoblje računa"
+msgstr "Periodi"
 
 #. module: l10n_hr_vat
 #: view:account.vat.declaration:l10n_hr_vat.view_account_vat_settlement
@@ -1095,12 +1049,12 @@ msgstr "Razdoblja"
 #. module: l10n_hr_vat
 #: selection:l10n_hr_pdv.knjiga,based_on:0
 msgid "Periodu placanja"
-msgstr "Razdoblju plaćanja"
+msgstr "Periodu plaćanja"
 
 #. module: l10n_hr_vat
 #: selection:l10n_hr_pdv.knjiga,based_on:0
 msgid "Periodu racuna"
-msgstr "Razdoblju računa"
+msgstr "Periodu računa"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/wizard_pdv_obrazac.py:459
@@ -1128,7 +1082,6 @@ msgstr "Poredak obrasca u prikazu"
 
 #. module: l10n_hr_vat
 #: report:knjiga.ira:0
-#: field:l10n_hr_pdv.eu.obrazac.stavka,tax_code_id:0
 #: field:l10n_hr_pdv.report.knjiga.stavka,tax_code_id:0
 #: view:l10n_hr_pdv.report.obrazac:l10n_hr_vat.view_pdv_report_obrazac_form
 #: field:l10n_hr_pdv.report.obrazac,stavka_poreza_ids:0
@@ -1136,7 +1089,6 @@ msgid "Porez"
 msgstr "Porez"
 
 #. module: l10n_hr_vat
-#: view:l10n_hr_pdv.report.eu.obrazac:l10n_hr_vat.view_pdv_report_obrazac_eu_form
 #: view:l10n_hr_pdv.report.knjiga:l10n_hr_vat.view_pdv_report_knjiga_form
 msgid "Porezi"
 msgstr "Porezi"
@@ -1180,12 +1132,6 @@ msgstr "Porezni broj"
 #: field:l10n_hr_pdv.knjiga,based_on:0
 msgid "Porezni period prema"
 msgstr "Porezni period prema"
-
-#. module: l10n_hr_vat
-#: model:ir.model,name:l10n_hr_vat.model_l10n_hr_pdv_eu_obrazac_stavka
-#: model:ir.model,name:l10n_hr_vat.model_l10n_hr_pdv_report_eu_obrazac
-msgid "Postavke ispisa Obrazaca EU"
-msgstr "Postavke ispisa Obrazaca EU"
 
 #. module: l10n_hr_vat
 #: model:ir.model,name:l10n_hr_vat.model_l10n_hr_pdv_report_obrazac
@@ -1237,10 +1183,9 @@ msgstr "Postavke poreza"
 #: help:account.vat.declaration,closing_date:0
 #: help:cancel.vat.settlement,closing_date:0
 msgid "Posting date for posting of VAT Settlement."
-msgstr "Posting date for posting of VAT Settlement."
+msgstr "Datum knjiženja zatvaranja PDV-a."
 
 #. module: l10n_hr_vat
-#: field:l10n_hr_pdv.report.eu.obrazac,position:0
 #: field:l10n_hr_pdv.report.knjiga,position:0
 #: field:l10n_hr_pdv.report.obrazac,position:0
 msgid "Pozicija"
@@ -1261,6 +1206,11 @@ msgstr "Ispis porezne prijave"
 #: report:knjiga.ura:0
 msgid "RACUN"
 msgstr "RAČUN"
+
+#. module: l10n_hr_vat
+#: view:pdv.knjiga:l10n_hr_vat.view_report_pdv_knjiga
+msgid "Razdoblje računa"
+msgstr "Razdoblje računa"
 
 #. module: l10n_hr_vat
 #: field:l10n_hr_pdv.knjiga.stavka,reconcile_id:0
@@ -1592,18 +1542,13 @@ msgstr "Od datuma"
 #: field:pdv.knjiga,period_from:0
 #: field:pdv.obrazac,period_from:0
 msgid "Start Period"
-msgstr "Početni period"
+msgstr "Start Period"
 
 #. module: l10n_hr_vat
 #: view:l10n_hr_pdv.report.obrazac.nepriznati_porez.stavka:l10n_hr_vat.view_pdv_report_obrazac_nepriznati_porez_stavka_form
 #: view:l10n_hr_pdv.report.obrazac.nepriznati_porez.stavka:l10n_hr_vat.view_pdv_report_obrazac_nepriznati_porez_stavka_tree
 msgid "Stavke nepriznatog poreza"
 msgstr "Stavke nepriznatog poreza"
-
-#. module: l10n_hr_vat
-#: field:l10n_hr_pdv.report.eu.obrazac,line_ids:0
-msgid "Stavke obrazca EU"
-msgstr "Stavke obrazca EU"
 
 #. module: l10n_hr_vat
 #: view:l10n_hr_pdv.report.obrazac.osnovica.stavka:l10n_hr_vat.view_pdv_report_obrazac_osnovica_stavka_form
@@ -1629,7 +1574,6 @@ msgid "Stavke porezne knjige"
 msgstr "Stavke porezne knjige"
 
 #. module: l10n_hr_vat
-#: field:l10n_hr_pdv.eu.obrazac.stavka,tax_code_koef:0
 #: field:l10n_hr_pdv.report.knjiga.stavka,tax_code_koef:0
 #: field:l10n_hr_pdv.report.obrazac.nepriznati_porez.stavka,base_code_tax_koef:0
 #: field:l10n_hr_pdv.report.obrazac.osnovica.stavka,base_code_tax_koef:0
@@ -1643,7 +1587,6 @@ msgid "Stopa za izračun. Upisati stopu po kojoj se izračunava nepriznati porez
 msgstr "Stopa za izračun. Upisati stopu po kojoj se izračunava nepriznati porez."
 
 #. module: l10n_hr_vat
-#: help:l10n_hr_pdv.eu.obrazac.stavka,tax_code_koef:0
 #: help:l10n_hr_pdv.report.knjiga.stavka,tax_code_koef:0
 msgid "Stopa za izračun. Upisati stopu po kojoj se izračunava osnovica iz upisane šifre poreza."
 msgstr "Stopa za izračun. Upisati stopu po kojoj se izračunava osnovica iz upisane šifre poreza."
@@ -1664,25 +1607,21 @@ msgid "Stupac 10"
 msgstr "Stupac 10"
 
 #. module: l10n_hr_vat
-#: selection:l10n_hr_pdv.report.eu.obrazac,position:0
 #: selection:l10n_hr_pdv.report.knjiga,position:0
 msgid "Stupac 11"
 msgstr "Stupac 11"
 
 #. module: l10n_hr_vat
-#: selection:l10n_hr_pdv.report.eu.obrazac,position:0
 #: selection:l10n_hr_pdv.report.knjiga,position:0
 msgid "Stupac 12"
 msgstr "Stupac 12"
 
 #. module: l10n_hr_vat
-#: selection:l10n_hr_pdv.report.eu.obrazac,position:0
 #: selection:l10n_hr_pdv.report.knjiga,position:0
 msgid "Stupac 13"
 msgstr "Stupac 13"
 
 #. module: l10n_hr_vat
-#: selection:l10n_hr_pdv.report.eu.obrazac,position:0
 #: selection:l10n_hr_pdv.report.knjiga,position:0
 msgid "Stupac 14"
 msgstr "Stupac 14"
@@ -1753,7 +1692,7 @@ msgstr "Stupac 9"
 #: field:pdv.knjiga,target_move:0
 #: field:pdv.obrazac,target_move:0
 msgid "Target Moves"
-msgstr "Ciljana knjiženja"
+msgstr "Target Moves"
 
 #. module: l10n_hr_vat
 #: model:ir.model,name:l10n_hr_vat.model_account_tax
@@ -1769,14 +1708,14 @@ msgstr "Porezna grupa"
 #: model:ir.actions.act_window,name:l10n_hr_vat.action_tax_exemption
 #: model:ir.ui.menu,name:l10n_hr_vat.menu_tax_exemption
 msgid "Tax Exemption"
-msgstr "Porezni izuzetak"
+msgstr "Tax Exemption"
 
 #. module: l10n_hr_vat
 #: view:account.tax.code:l10n_hr_vat.view_tax_code_form_inherit
 #: view:tax.exemption:l10n_hr_vat.view_tax_exemption_form
 #: view:tax.exemption:l10n_hr_vat.view_tax_exemption_tree
 msgid "Tax Exemptions"
-msgstr "Porezni izuzeci"
+msgstr "Porezna oslobođenja"
 
 #. module: l10n_hr_vat
 #: model:ir.ui.menu,name:l10n_hr_vat.menu_action_taxes
@@ -1800,29 +1739,29 @@ msgstr "Ovaj konto će se koristiti za zatvaranje pretporeza"
 #: help:cancel.vat.settlement,property_cancel_vat_account_receivable:0
 #: help:cancel.vat.settlement,property_vat_account_receivable:0
 msgid "This account will be used for reconciliation of sale VAT"
-msgstr "Ovaj konto će se koristiti za zatvaranje poreza"
+msgstr "Ovaj konto će se koristiti za zatvaranje prodajnog PDV-a"
 
 #. module: l10n_hr_vat
 #: help:account.vat.declaration,property_vat_close_journal:0
 #: help:cancel.vat.settlement,property_cancel_vat_close_journal:0
 #: help:cancel.vat.settlement,property_vat_close_journal:0
 msgid "This journal will be used for posting VAT Settlement"
-msgstr "Ovaj dnevnik će se koristiti za knjiženje zatvaranja PDV-a"
+msgstr "Ovaj dnenvik će se koristiti za knjiženje zatvaranja poreza"
 
 #. module: l10n_hr_vat
 #: model:ir.actions.act_window,help:l10n_hr_vat.action_account_vat_settlement
 msgid "This menu print a VAT settlement for one period of the fiscal year. Information required for a tax declaration is automatically generated by OpenERP. This data is updated in real time. You can print VAT Sattlement several times but once VAT settlement is done it cannot be undone."
-msgstr "Ovaj izbornik ispisuje obračun PDV-a za zadano razdoblje fiskalne godine na osnovi provednih knjiženja. MOžete ispisati Obračun PDV-a više puta, ali jednom kad se PDV zatvori za neko razdoblje, on se ne može više ponovo otvoriti."
+msgstr "This menu print a VAT settlement for one period of the fiscal year. Information required for a tax declaration is automatically generated by OpenERP. This data is updated in real time. You can print VAT Sattlement several times but once VAT settlement is done it cannot be undone."
 
 #. module: l10n_hr_vat
 #: view:account.vat.declaration:l10n_hr_vat.view_account_vat_settlement
 msgid "This menu prints a VAT Settlement report for selected period of the fiscal year. This report can be printed only for purposes of controling, or it can also close VAT for this period and post reconciliation of VAT accounts in General Ledger if Close VAT field is checked. This process cannot be undone."
-msgstr "Ovaj izbornik ispisuje obračun PDV-a za zadano razdoblje fiskalne godine . Izvještaj se može ispisati u svrhu kontrolinga, ali se ujedno može i zatvoriti PDV za zadano razdoblje i proknjižiti zatvaranje konta PDV-a u Glavnoj knjizi, ako se označi polje 'Zatvori PDV'. Proces zatvaranja se ne može poništiti"
+msgstr "This menu prints a VAT Settlement report for selected period of the fiscal year. This report can be printed only for purposes of controling, or it can also close VAT for this period and post reconciliation of VAT accounts in General Ledger if Close VAT field is checked. This process cannot be undone."
 
 #. module: l10n_hr_vat
 #: view:account.vat.declaration:l10n_hr_vat.view_account_vat_settlement
 msgid "This will close VAT for given period. This action cannot be undone. Are you sure?"
-msgstr "Ova obradaa će zatvoriti PDV za zadano razdoblje. Akcije se ne može više poništiti. Želite li nastaviti?"
+msgstr "This will close VAT for given period. This action cannot be undone. Are you sure?"
 
 #. module: l10n_hr_vat
 #: field:l10n_hr_pdv.eu.obrazac,type:0
@@ -1836,8 +1775,6 @@ msgid "U tuzemstvu"
 msgstr "U tuzemstvu"
 
 #. module: l10n_hr_vat
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ira
-#: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_knjiga_ura_prijenos
 msgid "UKUPNO"
 msgstr "UKUPNO"
@@ -1860,33 +1797,33 @@ msgstr "Unešeni broj telefona/faxa : %s u postavkama tvrtke nije ispravan\n"
 #: field:cancel.vat.settlement,property_cancel_vat_account_payable:0
 #: field:cancel.vat.settlement,property_vat_account_payable:0
 msgid "VAT Account Payable"
-msgstr "Konto obveze PDV-a"
+msgstr "VAT Account Payable"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/account_vat.py:71
 #: code:addons/l10n_hr_vat/wizard/cancel_account_vat_settlement.py:71
 #, python-format
 msgid "VAT Account Payable is missing! Please enter one."
-msgstr "Nedostaje konto obveze PDV-a! Unesite ga."
+msgstr "Nedostaje konto obveze PDV-a! Molim unesite ga."
 
 #. module: l10n_hr_vat
 #: field:account.vat.declaration,property_vat_account_receivable:0
 #: field:cancel.vat.settlement,property_cancel_vat_account_receivable:0
 #: field:cancel.vat.settlement,property_vat_account_receivable:0
 msgid "VAT Account Receivable"
-msgstr "KOnto potraživanja PDV-a"
+msgstr "VAT Account Receivable"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/account_vat.py:69
 #: code:addons/l10n_hr_vat/wizard/cancel_account_vat_settlement.py:69
 #, python-format
 msgid "VAT Account Receivable is missing! Please enter one."
-msgstr "Nedostaje konto potraživanja PDV-a! Unesite ga."
+msgstr "Nedostaje konto potraživanja poreza! Molim unesite ga."
 
 #. module: l10n_hr_vat
 #: model:ir.ui.menu,name:l10n_hr_vat.menu_action_vat_settlement
 msgid "VAT Settlement"
-msgstr "Obračun PDV-a"
+msgstr "VAT Settlement"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/account_vat_settlement_report.py:270
@@ -1897,26 +1834,26 @@ msgstr "Obračun PDV-a"
 #: code:addons/l10n_hr_vat/report/cancel_vat_settlement_report.py:345
 #, python-format
 msgid "VAT Settlement "
-msgstr "Obračun PDV-a "
+msgstr "VAT Settlement "
 
 #. module: l10n_hr_vat
 #: view:account.vat.declaration:l10n_hr_vat.view_account_vat_settlement
 msgid "VAT Settlement Accounts"
-msgstr "Konta zatvaranja PDV-a"
+msgstr "VAT Settlement Accounts"
 
 #. module: l10n_hr_vat
 #: field:account.vat.declaration,property_vat_close_journal:0
 #: field:cancel.vat.settlement,property_cancel_vat_close_journal:0
 #: field:cancel.vat.settlement,property_vat_close_journal:0
 msgid "VAT Settlement Journal"
-msgstr "Dnevnik zatvaranja PDV-a"
+msgstr "VAT Settlement Journal"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/wizard/account_vat.py:67
 #: code:addons/l10n_hr_vat/wizard/cancel_account_vat_settlement.py:67
 #, python-format
 msgid "VAT closing journal is missing! Please enter one."
-msgstr "Nedostaje dnevnik zatvaranja PDV-a! Unesite ga."
+msgstr "Nedostaje dnevnik zatvaranja poreza! Molim unesite ga."
 
 #. module: l10n_hr_vat
 #: report:knjiga.ira:0
@@ -1974,7 +1911,7 @@ msgstr "knjiga_ura_prijenos"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:48
-#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:48
+#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:47
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_s
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_zp
 #, python-format
@@ -1983,7 +1920,7 @@ msgstr "kolovoz"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:48
-#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:48
+#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:47
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_s
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_zp
 #, python-format
@@ -1992,7 +1929,7 @@ msgstr "lipanj"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:48
-#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:48
+#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:47
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_s
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_zp
 #, python-format
@@ -2035,7 +1972,7 @@ msgstr "prijevoz"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:49
-#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:49
+#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:47
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_s
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_zp
 #, python-format
@@ -2049,7 +1986,7 @@ msgstr "računa"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:48
-#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:48
+#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:47
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_s
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_zp
 #, python-format
@@ -2083,7 +2020,7 @@ msgstr "sjedište"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:48
-#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:48
+#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:47
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_s
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_zp
 #, python-format
@@ -2092,7 +2029,7 @@ msgstr "srpanj"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:49
-#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:49
+#: code:addons/l10n_hr_vat/report/obrazac_pdv_zp.py:47
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_s
 #: report:ir.actions.report.xml:l10n_hr_vat.aeroo_report_pdv_zp
 #, python-format
@@ -2121,7 +2058,7 @@ msgstr "travanj"
 #: field:obrazac.pdv.eu,state:0
 #: field:pdv.obrazac,state:0
 msgid "unknown"
-msgstr "nepoznato"
+msgstr "unknown"
 
 #. module: l10n_hr_vat
 #: code:addons/l10n_hr_vat/report/obrazac_pdv_s.py:47
@@ -2131,3 +2068,4 @@ msgstr "nepoznato"
 #, python-format
 msgid "veljača"
 msgstr "veljača"
+
