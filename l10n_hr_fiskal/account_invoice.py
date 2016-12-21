@@ -251,7 +251,8 @@ class account_invoice(osv.Model):
         a.racun.USustPdv = invoice.uredjaj_id.prostor_id.sustav_pdv and "true" or "false"
         if invoice.uredjaj_id.prostor_id.sustav_pdv:
             self.get_fiskal_taxes(cr, uid, invoice, a, context=context)
-        a.racun.IznosUkupno = fiskal_num2str(invoice.amount_total)
+        #a.racun.IznosUkupno = fiskal_num2str(invoice.amount_total)
+        a.racun.IznosUkupno = fiskal_num2str(invoice.lcy_amount_total)
         a.racun.NacinPlac = invoice.nac_plac
         a.racun.OibOper = invoice.fiskal_user_id.oib[2:]  # "57699704120"
         if not invoice.zki:
@@ -270,7 +271,7 @@ class account_invoice(osv.Model):
             self.write(cr, uid, id, {'jir': 'PONOVITI SLANJE! ' + cert_type})
         return True
 
-    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None):
+    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None, context=None):
         # Where is the context, per invoice method?
         # This approach is slow, updating after creating, but maybe better than copy-paste whole method
         res = super(account_invoice, self).refund(cr, uid, ids, date=date, period_id=period_id, description=description, journal_id=journal_id)
