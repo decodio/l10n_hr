@@ -13,8 +13,10 @@ import uuid
 from fiskal import *
 import pytz
 
+
 class FiscalInvoiceMixin(models.AbstractModel):
     _name = "fiscal.invoice.mixin"
+
     def fiskaliziraj(self, cr, uid, id, context=None):
         """ Fiskalizira jedan izlazni racun ili point of sale račun
         """
@@ -42,7 +44,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
 
         # TODO - posebna funkcija za provjeru npr. invoice_fiskal_valid()
         if not invoice.fiskal_user_id.oib:
-            raise osv.except_osv(_('Error'), _('Neispravan OIB korisnika!'))
+            raise UserError(_('Error'), _('Neispravan OIB korisnika!'))
 
         wsdl, key, cert = prostor_obj.get_fiskal_data(cr, uid, company_id=invoice.company_id.id)
         if not wsdl:
@@ -71,7 +73,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
             tstamp.day, tstamp.month, tstamp.year, tstamp.hour, tstamp.minute, tstamp.second)
 
         if not invoice.company_id.fina_certifikat_id:
-            raise osv.except_osv(_('No certificate!'),
+            raise UserError(_('No certificate!'),
                                  _('No valid certificate found for fiscalization usage, Please provide one.'))
         if invoice.company_id.fina_certifikat_id.cert_type == 'fina_prod':
             a.racun.Oib = invoice.company_id.partner_id.vat[2:]  # pravi OIB company
@@ -125,13 +127,12 @@ class FiscalInvoiceMixin(models.AbstractModel):
             self.write(cr, uid, id, {'jir': 'PONOVITI SLANJE! ' + cert_type})
         return True
 
-    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None, context=None):
 
 class AccountInvoice(models.Model):
     _name = "account.invoice"
     _inherit = ["account.invoice", "fiscal.invoice.mixin"]
 
-    #debug vrijeme_izdavanja = fields.Datetime("Vrijeme", readonly=True)
+    vrijeme_izdavanja = fields.Datetime("Vrijeme", readonly=True)
 
     fiskal_user_id = fields.Many2one(
         'res.users',
@@ -155,11 +156,11 @@ class AccountInvoice(models.Model):
         'Logovi poruka',
         help="Logovi poslanih poruka prema poreznoj upravi")
     nac_plac = fields.Selection(
-        (('G','GOTOVINA'),
-         ('K','KARTICE'),
-         ('C','CEKOVI'),
-         ('T','TRANSAKCIJSKI RACUN'),
-         ('O','OSTALO')
+        (('G', 'GOTOVINA'),
+         ('K', 'KARTICE'),
+         ('C', 'CEKOVI'),
+         ('T', 'TRANSAKCIJSKI RACUN'),
+         ('O', 'OSTALO')
          ),
         'Nacin placanja',
         required=True,
@@ -186,9 +187,9 @@ class AccountInvoice(models.Model):
     def copy(self, id, default=None):
         default = default or {}
         default.update({
-            'vrijeme_izdavanja':False,
-            'fiskal_user_id':False,
-            'zki':False,
+            'vrijeme_izdavanja': False,
+            'fiskal_user_id': False,
+            'zki': False,
             'jir': False,
             'fiskal_log_ids': False,
             #'prostor_id': False,
@@ -204,14 +205,13 @@ class AccountInvoice(models.Model):
     @api.multi
     def button_fiscalize(self):
         for invoice in self:
-            if not(invoice.jir):
+            if not invoice.jir:
                 self.fiskaliziraj(invoice.id)
             elif len(invoice.jir) > 30: #BOLE: JIR je 32 znaka
-                raise osv.except_osv(_('FISKALIZIRANO!'), _('Nema potrebe ponavljati postupak fiskalizacije!.'))
-            elif invoice.jir=='PONOVITI SLANJE!':
-                raise osv.except_osv(_('Ovo nije doradjeno!'), _('Ukoliko vidite ovu poruku u problemu ste!.'))
+                raise UserError(_('FISKALIZIRANO!'), _('Nema potrebe ponavljati postupak fiskalizacije!.'))
+            elif invoice.jir == 'PONOVITI SLANJE!':
+                raise UserError(_('Ovo nije doradjeno!'), _('Ukoliko vidite ovu poruku u problemu ste!.'))
                 #TODO: uzeti ispravno vrijem od računa za ponovljeno slanje..
-
 
     def get_fiskal_taxes(self, invoice, a):
         res = []
@@ -271,10 +271,14 @@ class AccountInvoice(models.Model):
             raise UserError(_('Error'), _('Nije odabran naplatni uredjaj / Dokument !'))
         return True
 
-    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None):
+    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None, context=None):
         # Where is the context, per invoice method?
         # This approach is slow, updating after creating, but maybe better than copy-paste whole method
-        res = super(AccountInvoice, self).refund(cr, uid, ids, date=date, period_id=period_id, description=description, journal_id=journal_id)
+        res = super(AccountInvoice, self).refund(cr, uid, ids, date=date,
+                                                 period_id=period_id,
+                                                 description=description,
+                                                 journal_id=journal_id,
+                                                 context=context)
         source_invoice = self.browse(cr, uid, ids)[0]  # what if we get more then one?
         self.write(cr, uid, res,
                    {'uredjaj_id': source_invoice.uredjaj_id
