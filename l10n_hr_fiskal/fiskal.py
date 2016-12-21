@@ -25,10 +25,10 @@ try:
 except ImportError:
     RSA = None
 
-import logging
+#import logging
 
-from openerp.osv import fields, osv, orm
-from openerp.tools import config
+#from openerp.osv import fields, osv, orm
+#from openerp.tools import config
 from datetime import datetime
 from pytz import timezone
 
@@ -99,6 +99,7 @@ def zagreb_now():
 
 def fiskal_num2str(num):
     return "{:-.2f}".format(num)
+
 
 class DodajPotpis(MessagePlugin):
 
@@ -261,7 +262,7 @@ class Fiskalizacija():
         res=False
         try:
             odgovor=self.client2.service.poslovniProstor(self.zaglavlje, self.prostor)
-            self.poruka_zahtjev =  self.client2.last_sent()
+            self.poruka_zahtjev = self.client2.last_sent()
             self.poruka_odgovor = odgovor
             if odgovor[0] == 200:
                 res = True
@@ -278,12 +279,12 @@ class Fiskalizacija():
 
     def izracunaj_zastitni_kod(self):
         self.racun.ZastKod = self.get_zastitni_kod(self.racun.Oib,
-                                                  self.racun.DatVrijeme,
-                                                  str(self.racun.BrRac.BrOznRac),
-                                                  self.racun.BrRac.OznPosPr,
-                                                  self.racun.BrRac.OznNapUr,
-                                                  str(self.racun.IznosUkupno)
-                                                  )
+                                                   self.racun.DatVrijeme,
+                                                   str(self.racun.BrRac.BrOznRac),
+                                                   self.racun.BrRac.OznPosPr,
+                                                   self.racun.BrRac.OznNapUr,
+                                                   str(self.racun.IznosUkupno)
+                                                   )
 
     def get_zastitni_kod(self, Oib, DatVrijeme, BrOznRac, OznPosPr, OznNapUr, IznosUkupno):    
         medjurezultat = ''.join((Oib, DatVrijeme, BrOznRac, OznPosPr, OznNapUr, IznosUkupno)) 

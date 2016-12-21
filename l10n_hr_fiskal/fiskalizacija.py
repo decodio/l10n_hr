@@ -148,6 +148,23 @@ class fiskal_prostor(osv.Model):
         return wsdl_file, key_file, cert_file
         
     def button_test_echo(self, cr, uid, ids, fields, context=None):
+
+        import fisk
+        import lxml.etree as et
+
+        echo = fisk.EchoRequest("Proba echo poruke")
+
+        # send request and print server reply
+        echo_reply = echo.execute()
+        if (echo_reply != False):
+            print echo_reply
+        else:
+            errors = echo.get_last_error()
+            print "EchoRequest errors:"
+            for error in errors:
+                print error
+            return error
+        """
         if context is None:
             context ={}
         for prostor in self.browse(cr, uid, ids):
@@ -155,6 +172,7 @@ class fiskal_prostor(osv.Model):
             a = Fiskalizacija('echo', wsdl, key, cert, cr, uid, oe_obj = prostor)
             odgovor = a.echo()
         return odgovor
+        """
 
     def button_prijavi_prostor(self, cr, uid, ids, fields, context=None):
         if context is None:

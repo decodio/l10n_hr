@@ -48,7 +48,16 @@ TODO/WIP: - new API,
 Preduvjeti: 
     na serveru instalirati:
         python-dev, python-ms2crypto, libxmlsec1-dev
-        build/install pyxmlsec-0.3.2! 
+        build/install pyxmlsec-0.3.2!
+
+Preduvjeti fisk.py
+    signxml - pip install signxml (version 2 supported from fiskpy v0.8.1)
+    To install PyCrypto
+    Pull form:
+    https://github.com/decodio/pycrypto.git
+
+    To install the package under the site-packages directory of
+    your Python installation, run "python setup.py install".
 """,
     "version" : "1.02",
     "author" : "DAJ MI 5",
