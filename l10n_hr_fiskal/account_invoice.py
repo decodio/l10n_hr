@@ -105,7 +105,8 @@ class FiscalInvoiceMixin(models.AbstractModel):
         a.racun.USustPdv = invoice.uredjaj_id.prostor_id.sustav_pdv and "true" or "false"
         if invoice.uredjaj_id.prostor_id.sustav_pdv:
             self.get_fiskal_taxes(cr, uid, invoice, a, context=context)
-        a.racun.IznosUkupno = fiskal_num2str(invoice.amount_total)
+        #a.racun.IznosUkupno = fiskal_num2str(invoice.amount_total)
+        a.racun.IznosUkupno = fiskal_num2str(invoice.lcy_amount_total)
         a.racun.NacinPlac = invoice.nac_plac
         a.racun.OibOper = invoice.fiskal_user_id.oib[2:]  # "57699704120"
         if not invoice.zki:
@@ -124,6 +125,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
             self.write(cr, uid, id, {'jir': 'PONOVITI SLANJE! ' + cert_type})
         return True
 
+    def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None, context=None):
 
 class AccountInvoice(models.Model):
     _name = "account.invoice"
@@ -195,7 +197,7 @@ class AccountInvoice(models.Model):
         return super(AccountInvoice, self).copy(id, default)
 
     def prepare_fiskal_racun(self, id):
-        """ Validate invoice, write min. data 
+        """ Validate invoice, write min. data
         """
         return True
 
@@ -256,7 +258,7 @@ class AccountInvoice(models.Model):
                   'NazivN': tax.tax_code_id.name,
                  }
             res.append(val)
-            #TODO group and sum by fiskal_type and Stopa hmmm then send 1 by one into factory... 
+            #TODO group and sum by fiskal_type and Stopa hmmm then send 1 by one into factory...
             get_factory(val)
         return res
 
