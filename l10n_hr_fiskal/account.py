@@ -27,7 +27,7 @@ class AccountJournal(models.Model):
          ('T', 'TRANSAKCIJSKI RACUN'),
          ('O', 'OSTALO')
          ),
-        'Nacin placanja'),
+        'Nacin placanja')
     fiskal_uredjaj_ids = fields.Many2many(
         'fiskal.uredjaj',
         string='Dopusteni naplatni uredjaji')
