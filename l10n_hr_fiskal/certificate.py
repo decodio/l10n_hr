@@ -1,7 +1,7 @@
-import os, time
-from M2Crypto import BIO, Rand, SMIME, EVP, RSA, X509, ASN1
+#import os, time
+#from M2Crypto import BIO, Rand, SMIME, EVP, RSA, X509, ASN1
 from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
+#from openerp.tools.translate import _
 
 class certificate(osv.Model):
     _inherit = "crypto.certificate"
