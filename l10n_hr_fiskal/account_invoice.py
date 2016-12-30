@@ -184,7 +184,8 @@ class AccountInvoice(models.Model):
             result['domain'].update({'uredjaj_id': [('prostor_id', '=', prostor_id)]})
         return result
 
-    def copy(self, id, default=None):
+    @api.multi
+    def copy(self, default=None):
         default = default or {}
         default.update({
             'vrijeme_izdavanja': False,
@@ -195,7 +196,7 @@ class AccountInvoice(models.Model):
             #'prostor_id': False,
             #'nac_plac': False,
         })
-        return super(AccountInvoice, self).copy(id, default)
+        return super(AccountInvoice, self).copy(default)
 
     def prepare_fiskal_racun(self, id):
         """ Validate invoice, write min. data

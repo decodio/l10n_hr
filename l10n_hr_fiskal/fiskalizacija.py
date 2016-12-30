@@ -1,105 +1,124 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Module: l10n_hr_fiskal
-#    Author: Davor Bojkić
-#    mail:   bole@dajmi5.com
-#    Copyright (C) 2012- Daj Mi 5, 
-#                  http://www.dajmi5.com
-#    Contributions: Hrvoje ThePython - Free Code!
-#                   Goran Kliska (AT) Slobodni Programi
-#                    
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-import logging
-from openerp.osv import fields, osv, orm
+# -*- coding: utf-8 -*-
+# Odoo, Open Source Management Solution
+# Copyright (C) 2016 Decodio
+# Copyright (C) 2012- Daj Mi 5 Davor Bojkić bole@dajmi5.com
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
 import datetime
 import uuid
 from fiskal import *
-from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
-class res_users(osv.osv):
+
+class ResUsers(models.Model):
     _inherit = "res.users"
-    _columns = {
-        'oib': fields.related('partner_id','vat',type='char', string='OIB osobe',
-                              help='OIB osobe koja potvrdjuje racune za potrebe fiskalizacije'),
-    }
+
+    #oib= fields.related('partner_id','vat',type='char', string='OIB osobe',
+    #                      help='OIB osobe koja potvrdjuje racune za potrebe fiskalizacije'),
+    oib = fields.Char(
+        string='OIB osobe',
+        related='partner_id.vat',
+        help='OIB osobe koja potvrdjuje racune za potrebe fiskalizacije')
 
 
-class res_company(osv.osv):
+class ResCompany(models.Model):
     _inherit = "res.company"
-    _columns = {
-        'separator': fields.char('Separator',size=3, help='Use this as separator in invoice number'),
-        'fina_certifikat_id': fields.many2one('crypto.certificate', string="Fiskal certifikat",
-            domain="[('cert_type', 'in', ('fina_demo','fina_prod') )]", #todo company_id
-            help="Aktivni FINA certifikat za fiskalizaciju.",
-            ),    
-        'fiskal_prostor_ids': fields.one2many('fiskal.prostor','company_id', string="Poslovni prostori",
-            help="Poslovni prostori (fiskalizacija).",
-            ),    
-    }
+
+    separator = fields.Char(
+        'Separator',
+        size=3,
+        help='Use this as separator in invoice number')
+    fina_certifikat_id = fields.Many2one(
+        'crypto.certificate',
+        string="Fiskal certifikat",
+        domain="[('cert_type', 'in', ('fina_demo','fina_prod') )]", #todo company_id
+        help="Aktivni FINA certifikat za fiskalizaciju.",
+        )
+    fiskal_prostor_ids = fields.One2many(
+        'fiskal.prostor',
+        'company_id',
+        string="Poslovni prostori",
+        help="Poslovni prostori (fiskalizacija).",
+        )
 
 
-class fiskal_prostor(osv.Model):
+class FiskalProstor(models.Model):
     _name = 'fiskal.prostor'
     _description = 'Podaci o poslovnim prostorima za potrebe fiskalizacije'
     
-    _columns = {
-        'name': fields.char('Naziv poslovnog prostora', size=128 , select=1),
-        'company_id':fields.many2one('res.company','Tvrtka', required="True"),
-        'oznaka_prostor': fields.char('Oznaka poslovnog prostora', required="True", size=20),
-        'datum_primjene': fields.datetime('Datum', help ="Datum od kojeg vrijede navedeni podaci"),
-        'ulica': fields.char('Ulica', size=100),
-        'kbr': fields.char('Kucni broj', size=4),
-        'kbr_dodatak': fields.char('Dodatak kucnom broju', size=4),
-        'posta': fields.char('Posta', size=12),
-        'naselje': fields.char('Naselje', size=35),
-        'opcina'   :fields.char('Naziv opcine ili grada', size=35, required="True"),
-        'prostor_other':fields.char('Ostali tipovi adrese', size=100,
-                                    help="Ostali tipovi adresa, npr internet trgovina ili pokretna trgovina"),
 
-        'sustav_pdv':fields.boolean('U sustavu PDV-a'),
-        'radno_vrijeme' : fields.char('Radno Vrijeme', required="True", size=1000),
-        'sljed_racuna':fields.selection ((('N','Na nivou naplatnog uredjaja'),('P','Na nivou poslovnog prostora')),'Sljed racuna'),
-        'spec':fields.char('OIB Informaticke tvrtke', required="True", size=1000),
-        'uredjaj_ids': fields.one2many('fiskal.uredjaj','prostor_id','Uredjaji'),
-        'fiskal_log_ids':fields.one2many('fiskal.log','fiskal_prostor_id','Logovi poruka', help="Logovi poslanih poruka prema poreznoj upravi"),
-        'state':fields.selection (( ('draft','Upis')
-                                   ,('active','Aktivan')
-                                   ,('closed','Zatvoren')
-                                   )
-                                  ,'Status zatvaranja'),
-                }
+    name = fields.Char(
+        'Naziv poslovnog prostora',
+        select=1)
+    company_id = fields.Many2one(
+        'res.company',
+        'Tvrtka',
+        required=True,
+        default=lambda self, cr, uid, c: self.pool.get('res.company')._company_default_get(cr, uid, 'fiskal.prostor', context=c))
+    oznaka_prostor = fields.Char(
+        'Oznaka poslovnog prostora',
+        required=True)
+    datum_primjene = fields.Datetime(
+        'Datum',
+        help="Datum od kojeg vrijede navedeni podaci")
+    ulica = fields.Char('Ulica')
+    kbr = fields.Char('Kucni broj')
+    kbr_dodatak = fields.Char('Dodatak kucnom broju')
+    posta = fields.Char('Posta')
+    naselje = fields.Char('Naselje')
+    opcina = fields.Char(
+        'Naziv opcine ili grada',
+        required=True)
+    prostor_other = fields.Char(
+        'Ostali tipovi adrese',
+        help="Ostali tipovi adresa, npr internet trgovina ili pokretna trgovina")
+
+    sustav_pdv = fields.Boolean(
+        'U sustavu PDV-a',
+        default=True)
+    radno_vrijeme = fields.Char(
+        'Radno Vrijeme',
+        required=True)
+    sljed_racuna = fields.Selection(
+        (('N', 'Na nivou naplatnog uredjaja'),
+         ('P', 'Na nivou poslovnog prostora')),
+        'Sljed racuna',
+        default="P")
+    spec = fields.Char(
+        'OIB Informaticke tvrtke',
+        required=True)
+    uredjaj_ids = fields.One2many(
+        'fiskal.uredjaj',
+        'prostor_id',
+        'Uredjaji')
+    fiskal_log_ids = fields.One2many(
+        'fiskal.log',
+        'fiskal_prostor_id',
+        'Logovi poruka',
+        help="Logovi poslanih poruka prema poreznoj upravi")
+    state = fields.Selection(
+        (('draft', 'Upis'),
+         ('active', 'Aktivan'),
+         ('closed', 'Zatvoren')),
+        'Status zatvaranja')
+
 
     _defaults = {
-                 'sustav_pdv':"True",
-                 'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'fiskal.prostor', context=c),
-                 'sljed_racuna':"P",
+                 #'sustav_pdv':"True",
+                 #'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'fiskal.prostor', context=c),
+                 #'sljed_racuna':"P",
                  }
 
-    _constraints={}
-
-    def copy(self, cr, uid, id, default=None, context=None):
+    @api.multi
+    def copy(self, default=None):
         default = default or {}
         default.update({
-            'fiskal_log_ids':False,
-            'uredjaj_ids':False,
+            'fiskal_log_ids': False,
+            'uredjaj_ids': False,
         })
-        return super(fiskal_prostor, self).copy(cr, uid, id, default, context)
+        return super(FiskalProstor, self).copy(default)
     
     
     def validate(self,cr,uid,ids):
@@ -116,7 +135,7 @@ class fiskal_prostor(osv.Model):
         company = company_obj.browse(cr, uid, [company_id])[0]
         fina_cert = company.fina_certifikat_id
         if not fina_cert:
-            raise osv.except_osv(_('Error'), _('Neispravne postavke certifikata!'))
+            raise UserError(_('Error'), _('Neispravne postavke certifikata!'))
             return False
         cert_type = fina_cert.cert_type
         if not cert_type in ('fina_demo','fina_prod'):
@@ -127,7 +146,7 @@ class fiskal_prostor(osv.Model):
             file_name = "FiskalizacijaService.wsdl"
         wsdl_file = 'file://' + os.path.join(os.path.dirname(os.path.abspath(__file__)),'wsdl',file_name)
         
-        if not ( fina_cert.state=='confirmed' and fina_cert.csr and fina_cert.crt):
+        if not (fina_cert.state=='confirmed' and fina_cert.csr and fina_cert.crt):
             return False, False, False
 
         #radi ako je server pokrenut sa -c: path = os.path.join(os.path.dirname(os.path.abspath(config.parser.values.config)),'oe_fiskal')
@@ -136,7 +155,7 @@ class fiskal_prostor(osv.Model):
             os.mkdir(path,0777) #TODO 0660 or less
 
         key_file = os.path.join(path, "{0}_{1}_{2}_key.pem".format(cr.dbname, company_id, fina_cert.id) )         
-        cert_file= os.path.join(path, "{0}_{1}_{2}_crt.pem".format(cr.dbname, company_id, fina_cert.id) )
+        cert_file = os.path.join(path, "{0}_{1}_{2}_crt.pem".format(cr.dbname, company_id, fina_cert.id) )
 
         for file in (key_file, cert_file):
             if not os.path.exists(file):
@@ -146,7 +165,7 @@ class fiskal_prostor(osv.Model):
                     f.flush()
 
         return wsdl_file, key_file, cert_file
-        
+
     def button_test_echo(self, cr, uid, ids, fields, context=None):
 
         import fisk
@@ -156,7 +175,7 @@ class fiskal_prostor(osv.Model):
 
         # send request and print server reply
         echo_reply = echo.execute()
-        if (echo_reply != False):
+        if echo_reply != False:
             print echo_reply
         else:
             errors = echo.get_last_error()
@@ -177,22 +196,61 @@ class fiskal_prostor(osv.Model):
     def button_prijavi_prostor(self, cr, uid, ids, fields, context=None):
         if context is None:
             context ={}
-        self.posalji_prostor(cr, uid, ids, fields, 'prostor_prijava', context=context)
+        import fisk
+        import lxml.etree as et
+        from datetime import date, timedelta
+
+        # fiskpy initialization !!! must be used for PoslovniProstorZahtjev
+        fisk.FiskInit.init(
+            '/home/marko/development/fiskalizacija/SLOBODNI_DEMO_FISKAL_1.pem',
+            None,
+            '/home/marko/development/fiskalizacija/SLOBODNI_DEMO_FISKAL_1.pem',
+            production=False)
+        # For production environment
+        # fisk.FiskInit.init('/path/to/your/key.pem', "kaypassword", '/path/to/your/cert.pem', Ture)
+        # create addres
+        adresa = fisk.Adresa(data={"Ulica": "Proba", "KucniBroj": "1", "BrojPoste": "54321"})
+        # create poslovni prostor
+        pp = fisk.PoslovniProstor(data={"Oib": "55605027508",
+                                        "OznPoslProstora": "POS1",
+                                        "AdresniPodatak": fisk.AdresniPodatak(adresa),
+                                        "RadnoVrijeme": "PON-PET 9:00-17:00",
+                                        "DatumPocetkaPrimjene": (date.today() + timedelta(days=1)).strftime(
+                                            '%d.%m.%Y')})
+
+        # you can also access (set and get) attributes of fisk element classes as
+        pp.SpecNamj = "12345678901"
+        print pp.OznPoslProstora
+
+        # poslovni prostor request
+        ppz = fisk.PoslovniProstorZahtjev(pp)
+
+        ppz_reply = ppz.execute()
+        if (ppz_reply == True):
+            print "PoslovniProstorZahtjev seccessfuly sent!"
+        else:
+            errors = ppz.get_last_error()
+            print "PoslovniProstorZahtjev reply errors:"
+            for error in errors:
+                print error
+
+        # fiskpy deinitialization - maybe not needed but good for correct garbage cleaning
+        fisk.FiskInit.deinit()
+        #self.posalji_prostor(cr, uid, ids, fields, 'prostor_prijava', context=context)
 
     def button_odjavi_prostor(self, cr, uid, ids, fields, context=None):
         if context is None:
             context ={}
         self.posalji_prostor(cr, uid, ids, fields, 'prostor_odjava', context=context)
 
-
     def posalji_prostor(self, cr, uid, ids, fields, msgtype, context=None):
         prostor=self.browse(cr, uid, ids)[0]
         # Provjera adrese : mora biti jedan tip, ne oba i ne nijedan
         if (prostor.prostor_other and prostor.ulica):
-            raise osv.except_osv(_('Greška: Dupla adresa'),
+            raise UserError(_('Greška: Dupla adresa'),
                                  _('Nije moguće prijaviti dva tipa adrese za jedan poslovni prostor!'))
         elif not (prostor.prostor_other or prostor.ulica):
-            raise osv.except_osv(_('Greška: Nema adrese'),
+            raise UserError(_('Greška: Nema adrese'),
                                  _('Unesite adresne podatke ili opisnu adresu prostora!'))
 
         wsdl, key, cert = self.get_fiskal_data(cr, uid, company_id=prostor.company_id.id)
@@ -249,52 +307,87 @@ class fiskal_prostor(osv.Model):
             a.prostor.__delattr__('OznakaZatvaranja') 
         
         odgovor = a.posalji_prostor()
-        if odgovor[0]==200:
+        if odgovor[0] == 200:
             self.write(cr, uid, prostor.id, {'datum_primjene': datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT) })
         return True
     
 
-class fiskal_uredjaj(osv.Model):
+class FiskalUredjaj(models.Model):
     _name = 'fiskal.uredjaj'
     _description = 'Podaci o poslovnim prostorima za potrebe fiskalizacije'
 
     def name_get(self, cr, uid, ids, context=None):
         res = {}
         for u in self.browse(cr, uid, ids, context=context):
-            res[u.id] = ' / '.join( (u.prostor_id.name or '', u.name or '') )
+            res[u.id] = ' / '.join((u.prostor_id.name or '', u.name or ''))
         return res.items()
-    
-    _columns = {
-        'name': fields.char('Naziv naplatnog uredjaja', size=128 , select=1),
-        'prostor_id':fields.many2one('fiskal.prostor','Prostor',help='Prostor naplatnog uredjaja.'),
-        'oznaka_uredjaj': fields.integer('Oznaka naplatnog uredjaja', required="True" ),
-                }
+
+    name = fields.Char(
+        'Naziv naplatnog uredjaja',
+        select=1)
+    prostor_id = fields.Many2one(
+        'fiskal.prostor',
+        'Prostor',
+        help='Prostor naplatnog uredjaja.')
+    oznaka_uredjaj = fields.Integer(
+        'Oznaka naplatnog uredjaja',
+        required=True)
 
 
-class fiskal_log(osv.Model):
-    _name='fiskal.log'
-    _description='Fiskal log'    
+class FiskalLog(models.Model):
+    _name = 'fiskal.log'
+    _description = 'Fiskal log'
     
-    def _get_log_type(self,cursor,user_id, context=None):
-        return (('prostor_prijava','Prijava prostora'),
-                ('prostor_odjava','Odjava prostora'),
-                ('racun','Fiskalizacija racuna'),
-                ('racun_ponovo','Ponovljeno slanje racuna'),              
-                ('echo','Echo test poruka '),
-                ('other','Other types')
-               )
-        
-    _columns ={
-        'name': fields.char('Oznaka', size=64, help="Jedinstvena oznaka komunikacije", readonly=True),
-        'type': fields.selection (_get_log_type,'Vrsta poruke', readonly=True),
-        'invoice_id': fields.many2one('account.invoice', 'Racun', readonly=True, select=True),
-        'fiskal_prostor_id': fields.many2one('fiskal.prostor', 'Prostor', readonly=True),
-        'sadrzaj':fields.text('Poslana poruka', readonly=True),
-        'odgovor':fields.text('Odgovor', readonly=True),
-        'greska':fields.text('Greska', readonly=True),
-        'time_stamp':fields.datetime('Vrijeme', readonly=True),
-        'time_obr':fields.char('Vrijeme obrade',size=16, help='Vrijeme obrade podataka', readonly=True), #vrijeme obrade prmljeno_vrijeme-poslano_vrijem
-        'user_id': fields.many2one('res.users', 'Osoba', readonly=True),
-        'company_id':fields.many2one('res.company','Tvrtka', required=False),
-        'pos_order_id': fields.integer('MP Racun', readonly=True)
-    }
+    def _get_log_type(self):
+        return (('prostor_prijava', 'Prijava prostora'),
+                ('prostor_odjava', 'Odjava prostora'),
+                ('racun', 'Fiskalizacija racuna'),
+                ('racun_ponovo', 'Ponovljeno slanje racuna'),
+                ('echo', 'Echo test poruka '),
+                ('other', 'Other types'))
+
+    name = fields.Char(
+        'Oznaka',
+        help="Jedinstvena oznaka komunikacije",
+        readonly=True)
+    type = fields.Selection(
+        _get_log_type,
+        'Vrsta poruke',
+        readonly=True)
+    invoice_id = fields.Many2one(
+        'account.invoice',
+        'Racun',
+        readonly=True,
+        select=True)
+    fiskal_prostor_id = fields.Many2one(
+        'fiskal.prostor',
+        'Prostor',
+        readonly=True)
+    sadrzaj = fields.Text(
+        'Poslana poruka',
+        readonly=True)
+    odgovor = fields.Text(
+        'Odgovor',
+        readonly=True)
+    greska = fields.Text(
+        'Greska',
+        readonly=True)
+    time_stamp = fields.Datetime(
+        'Vrijeme',
+        readonly=True)
+    time_obr = fields.Char(
+        'Vrijeme obrade',
+        help='Vrijeme obrade podataka',
+        readonly=True) #vrijeme obrade prmljeno_vrijeme-poslano_vrijem
+    user_id = fields.Many2one(
+        'res.users',
+        'Osoba',
+        readonly=True)
+    company_id = fields.Many2one(
+        'res.company',
+        'Tvrtka',
+        required=False)
+    pos_order_id = fields.Integer(
+        'MP Racun',
+        readonly=True)
+
