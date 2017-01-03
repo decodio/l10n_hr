@@ -163,9 +163,9 @@ class AccountInvoice(models.Model):
          ('O', 'OSTALO')
          ),
         'Nacin placanja',
-        required=True,
+        #required=True,
         readonly=True,
-        default='G', # TODO : postaviti u bazi pitanje kaj da bude default!
+        #default='G', # TODO : postaviti u bazi pitanje kaj da bude default!
         states={'draft':[('readonly',False)]})
     #create_date = fields.Datetime('Creation Date' , readonly=True),
     #write_date = fields.Datetime('Update Date' , readonly=True),
