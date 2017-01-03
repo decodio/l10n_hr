@@ -51,15 +51,16 @@ class account_invoice(osv.Model):
                                              ('T','TRANSAKCIJSKI RACUN'),
                                              ('O','OSTALO')
                                              ),
-                                            'Nacin placanja', required=True, readonly=True, states={'draft':[('readonly',False)]}),
+                                            'Nacin placanja', readonly=True, states={'draft':[('readonly',False)]}),
                 #'create_date': fields.datetime('Creation Date' , readonly=True),
                 #'write_date': fields.datetime('Update Date' , readonly=True),
                }
+    '''
     _defaults = {
                  #'pprostor_id':'1',
-                 'nac_plac':'G' # TODO : postaviti u bazi pitanje kaj da bude default!
+                 'nac_plac':'T' # TODO : postaviti u bazi pitanje kaj da bude default!
                  }
-
+    '''
     def onchange_journal_id(self, cr, uid, ids, journal_id=False, context=None):
         result = super(account_invoice,self).onchange_journal_id(cr, uid, ids, journal_id=journal_id, context=context)
         if journal_id:
