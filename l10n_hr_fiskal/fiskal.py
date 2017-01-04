@@ -28,7 +28,7 @@ except ImportError:
 #import logging
 
 #from openerp.osv import fields, osv, orm
-#from openerp.tools import config
+from openerp.tools import config
 from datetime import datetime
 from pytz import timezone
 

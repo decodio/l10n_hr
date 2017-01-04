@@ -7,9 +7,13 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
 import datetime
+from datetime import date, timedelta
 import uuid
 from fiskal import *
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+
+import fisk
+import lxml.etree as et
 
 
 class ResUsers(models.Model):
@@ -128,6 +132,7 @@ class FiskalProstor(models.Model):
     
     def get_fiskal_data(self, cr, uid, company_id=False, context=None):
         fina_cert = False
+        production = False
         if not company_id:
             user_obj = self.pool.get('res.users')
             company_id = user_obj.browse(cr, uid, [uid])[0].company_id.id
@@ -142,12 +147,14 @@ class FiskalProstor(models.Model):
             return False
         if cert_type == 'fina_demo':
             file_name = "FiskalizacijaServiceTest.wsdl"
+            production = False
         elif cert_type == 'fina_prod':
             file_name = "FiskalizacijaService.wsdl"
+            production = True
         wsdl_file = 'file://' + os.path.join(os.path.dirname(os.path.abspath(__file__)),'wsdl',file_name)
         
-        if not (fina_cert.state=='confirmed' and fina_cert.csr and fina_cert.crt):
-            return False, False, False
+        if not (fina_cert.state == 'confirmed' and fina_cert.csr and fina_cert.crt):
+            return False, False, False, False
 
         #radi ako je server pokrenut sa -c: path = os.path.join(os.path.dirname(os.path.abspath(config.parser.values.config)),'oe_fiskal')
         path = os.path.join(os.path.dirname(os.path.abspath(config.rcfile)),'oe_fiskal')
@@ -164,7 +171,22 @@ class FiskalProstor(models.Model):
                     f.write(content)
                     f.flush()
 
-        return wsdl_file, key_file, cert_file
+        return production, wsdl_file, key_file, cert_file
+
+    def time_formated(self, tz=None):
+        tstamp = datetime.now(timezone('Europe/Zagreb'))
+        if tz:
+            tstamp = datetime.now(timezone(tz))
+        v_date = '%02d.%02d.%02d' % (tstamp.day, tstamp.month, tstamp.year)
+        v_datum_vrijeme = '%02d.%02d.%02dT%02d:%02d:%02d' % (
+            tstamp.day, tstamp.month, tstamp.year, tstamp.hour, tstamp.minute, tstamp.second)
+        v_datum_racun = '%02d.%02d.%02d %02d:%02d:%02d' % (
+            tstamp.day, tstamp.month, tstamp.year, tstamp.hour, tstamp.minute, tstamp.second)
+        vrijeme = {'datum': v_date,  # vrijeme SAD
+                   'datum_vrijeme': v_datum_vrijeme,  # format za zaglavlje XML poruke
+                   'datum_racun': v_datum_racun,  # format za ispis na računu
+                   'time_stamp': tstamp}  # timestamp, za zapis i izračun vremena obrade
+        return vrijeme
 
     def button_test_echo(self, cr, uid, ids, fields, context=None):
 
@@ -177,12 +199,12 @@ class FiskalProstor(models.Model):
         echo_reply = echo.execute()
         if echo_reply != False:
             print echo_reply
+            raise UserError(str(echo_reply))
         else:
             errors = echo.get_last_error()
             print "EchoRequest errors:"
             for error in errors:
                 print error
-            return error
         """
         if context is None:
             context ={}
@@ -193,40 +215,80 @@ class FiskalProstor(models.Model):
         return odgovor
         """
 
-    def button_prijavi_prostor(self, cr, uid, ids, fields, context=None):
-        if context is None:
-            context ={}
-        import fisk
-        import lxml.etree as et
-        from datetime import date, timedelta
+    @api.multi
+    def button_prijavi_prostor(self, fields):
+        res = self.posalji_prostor(self.id, 'prostor_prijava')
+        if res == True:
+            raise UserError("Zahtjev za PRIJAVU poslovnog prostora uspiješno poslan.")
 
+    @api.multi
+    def button_odjavi_prostor(self, fields):
+        res = self.posalji_prostor(self.id, 'prostor_odjava')
+        if res == True:
+            raise UserError("Zahtjev za ODJAVU poslovnog prostora uspiješno poslan.")
+
+    def posalji_prostor(self, ids, msgtype):
+        prostor=self.browse(ids)[0]
+        # Provjera adrese : mora biti jedan tip, ne oba i ne nijedan
+        if (prostor.prostor_other and prostor.ulica):
+            raise UserError(_('Greška: Dupla adresa'),
+                                 _('Nije moguće prijaviti dva tipa adrese za jedan poslovni prostor!'))
+        elif not (prostor.prostor_other or prostor.ulica):
+            raise UserError(_('Greška: Nema adrese'),
+                                 _('Unesite adresne podatke ili opisnu adresu prostora!'))
+
+        production, wsdl, key, cert = self.get_fiskal_data(company_id=prostor.company_id.id)
+        if not wsdl:
+            return False
         # fiskpy initialization !!! must be used for PoslovniProstorZahtjev
-        fisk.FiskInit.init(
-            '/home/marko/development/fiskalizacija/SLOBODNI_DEMO_FISKAL_1.pem',
-            None,
-            '/home/marko/development/fiskalizacija/SLOBODNI_DEMO_FISKAL_1.pem',
-            production=False)
+        fisk.FiskInit.init(key, None, cert, production=production)
         # For production environment
         # fisk.FiskInit.init('/path/to/your/key.pem', "kaypassword", '/path/to/your/cert.pem', Ture)
         # create addres
-        adresa = fisk.Adresa(data={"Ulica": "Proba", "KucniBroj": "1", "BrojPoste": "54321"})
+        adresa = fisk.Adresa(data={"Ulica": prostor.ulica or '',
+                                   "KucniBroj": prostor.kbr or '',
+                                   "BrojPoste": prostor.posta or ''})
         # create poslovni prostor
-        pp = fisk.PoslovniProstor(data={"Oib": "55605027508",
-                                        "OznPoslProstora": "POS1",
+        pp = fisk.PoslovniProstor(data={"Oib": prostor.company_id.partner_id.vat and prostor.company_id.partner_id.vat[2:] or False,
+                                        "OznPoslProstora": prostor.oznaka_prostor or '',
                                         "AdresniPodatak": fisk.AdresniPodatak(adresa),
-                                        "RadnoVrijeme": "PON-PET 9:00-17:00",
-                                        "DatumPocetkaPrimjene": (date.today() + timedelta(days=1)).strftime(
-                                            '%d.%m.%Y')})
+                                        "RadnoVrijeme": prostor.radno_vrijeme or '',
+                                        "DatumPocetkaPrimjene": self.time_formated('Europe/Zagreb').get('datum')})
 
-        # you can also access (set and get) attributes of fisk element classes as
-        pp.SpecNamj = "12345678901"
+        pp.SpecNamj = prostor.spec and prostor.spec[2:] or False  # OIB IT firme Mora odgovarati OIB-u sa Cert-a
         print pp.OznPoslProstora
+
+        if prostor.prostor_other:
+            pp.AdresniPodatak = prostor.prostor_other
+        else:
+            adresa = fisk.Adresa(data={"Ulica": prostor.ulica or '',
+                                       "KucniBroj": prostor.kbr or '',
+                                       "BrojPoste": prostor.posta or ''})
+            if prostor.kbr:
+                adresa.KucniBroj = prostor.kbr
+            if prostor.kbr_dodatak:
+                adresa.KucniBrojDodatak = prostor.kbr_dodatak
+            adresa.BrojPoste = prostor.posta
+            adresa.Naselje = prostor.naselje
+            adresa.Opcina = prostor.opcina
+
+            adresni_podatak = fisk.AdresniPodatak(adresa)
+            pp.AdresniPodatak = adresni_podatak
+
+        if prostor.company_id.fina_certifikat_id.cert_type == 'fina_prod':
+            pp.Oib = prostor.company_id.partner_id.vat[2:]  # pravi OIB company
+        elif prostor.company_id.fina_certifikat_id.cert_type == 'fina_demo':
+            pp.Oib = prostor.spec and prostor.spec[2:] or False  # OIB IT firme Mora odgovarati OIB-u sa Cert-a
+
+        if msgtype == 'prostor_odjava':
+            pp.OznakaZatvaranja = 'Z'
 
         # poslovni prostor request
         ppz = fisk.PoslovniProstorZahtjev(pp)
 
         ppz_reply = ppz.execute()
-        if (ppz_reply == True):
+        if ppz_reply == True:
+            prostor.write({'datum_primjene': datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)})
             print "PoslovniProstorZahtjev seccessfuly sent!"
         else:
             errors = ppz.get_last_error()
@@ -236,26 +298,12 @@ class FiskalProstor(models.Model):
 
         # fiskpy deinitialization - maybe not needed but good for correct garbage cleaning
         fisk.FiskInit.deinit()
-        #self.posalji_prostor(cr, uid, ids, fields, 'prostor_prijava', context=context)
 
-    def button_odjavi_prostor(self, cr, uid, ids, fields, context=None):
-        if context is None:
-            context ={}
-        self.posalji_prostor(cr, uid, ids, fields, 'prostor_odjava', context=context)
-
-    def posalji_prostor(self, cr, uid, ids, fields, msgtype, context=None):
-        prostor=self.browse(cr, uid, ids)[0]
-        # Provjera adrese : mora biti jedan tip, ne oba i ne nijedan
-        if (prostor.prostor_other and prostor.ulica):
-            raise UserError(_('Greška: Dupla adresa'),
-                                 _('Nije moguće prijaviti dva tipa adrese za jedan poslovni prostor!'))
-        elif not (prostor.prostor_other or prostor.ulica):
-            raise UserError(_('Greška: Nema adrese'),
-                                 _('Unesite adresne podatke ili opisnu adresu prostora!'))
-
-        wsdl, key, cert = self.get_fiskal_data(cr, uid, company_id=prostor.company_id.id)
-        if not wsdl:
+        if ppz_reply == True:
+            return True
+        else:
             return False
+        """
         a = Fiskalizacija(msgtype, wsdl, key, cert, cr, uid, oe_obj = prostor)
                 
         if not prostor.datum_primjene:
@@ -281,7 +329,7 @@ class FiskalProstor(models.Model):
         a.prostor.RadnoVrijeme=prostor.radno_vrijeme
         a.prostor.DatumPocetkaPrimjene=datum_danas #'08.02.2013' #datum_danas   e ak ovo stavim baci gresku.. treba dodat raise ili nekaj!!!
         a.prostor.SpecNamj =prostor.spec  #57699704120'
-        
+
         #Mogući su i "ostali" tipovi- internet trgovina ili pokretna trgovina..
         adresni_podatak = a.client2.factory.create('tns:AdresniPodatakType')
         if prostor.prostor_other:
@@ -310,6 +358,7 @@ class FiskalProstor(models.Model):
         if odgovor[0] == 200:
             self.write(cr, uid, prostor.id, {'datum_primjene': datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT) })
         return True
+        """
     
 
 class FiskalUredjaj(models.Model):
