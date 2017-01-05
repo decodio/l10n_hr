@@ -5,6 +5,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, fields, api, _
+from OpenSSL import crypto
+from openerp.exceptions import Warning as UserError
+import base64
 
 
 class Certificate(models.Model):
@@ -38,5 +41,20 @@ class Certificate(models.Model):
          'state': 'draft', # port to new api
     }
 
+    @api.onchange('pfx_certificate')
+    def on_certificate_change(self):
+        if self.pfx_certificate:
+            try:
+                p12 = crypto.load_pkcs12(base64.decodestring(self.pfx_certificate))
 
+                if p12:
+                    # PEM formatted private key
+                    self.csr = crypto.dump_privatekey(crypto.FILETYPE_PEM, p12.get_privatekey())
 
+                    # PEM formatted certificate
+                    self.crt = crypto.dump_certificate(crypto.FILETYPE_PEM, p12.get_certificate())
+            except Exception, e:
+                print 'Un supported certificate file format: %s' % e.message
+                raise UserError(_('Warning'), _('Un supported certificate file format'))
+        else:
+            pass

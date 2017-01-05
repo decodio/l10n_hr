@@ -127,8 +127,7 @@ class FiskalProstor(models.Model):
             'uredjaj_ids': False,
         })
         return super(FiskalProstor, self).copy(default)
-    
-    
+
     def validate(self,cr,uid,ids):
         #kbr must be numeric 
         #posta = zip (numeric)
