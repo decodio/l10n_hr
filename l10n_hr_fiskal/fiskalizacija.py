@@ -12,7 +12,11 @@ import uuid
 from fiskal import *
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
-import fisk
+try:
+   import fisk
+except:
+    pass
+
 import lxml.etree as et
 
 

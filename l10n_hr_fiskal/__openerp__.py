@@ -70,7 +70,7 @@ Preduvjeti fisk.py
                 'l10n_hr_account',
                 'crypto',
                 ],
-    'external_dependencies':{'python':['M2Crypto'#,'PyXMLSec'
+    'external_dependencies':{'python':['M2Crypto', 'fisk'#,'PyXMLSec'
                                        ],
                              #'bin':'libxmlsec-dev'
                              },
