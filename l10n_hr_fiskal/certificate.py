@@ -36,16 +36,20 @@ class Certificate(models.Model):
     pfx_certificate = fields.Binary(
         'Certificate',
         help='Original Pfx File.')
+    pfx_certificate_password = fields.Char(
+        'Certificate password',
+        help='Password for the Pfx File.')
 
     _defaults = {
          'state': 'draft', # port to new api
     }
 
-    @api.onchange('pfx_certificate')
+    @api.onchange('pfx_certificate', 'pfx_certificate_password')
     def on_certificate_change(self):
         if self.pfx_certificate:
             try:
-                p12 = crypto.load_pkcs12(base64.decodestring(self.pfx_certificate))
+                _password = self.pfx_certificate_password or ''
+                p12 = crypto.load_pkcs12(base64.decodestring(self.pfx_certificate), _password)
 
                 if p12:
                     # PEM formatted private key
@@ -55,6 +59,6 @@ class Certificate(models.Model):
                     self.crt = crypto.dump_certificate(crypto.FILETYPE_PEM, p12.get_certificate())
             except Exception, e:
                 print 'Un supported certificate file format: %s' % e.message
-                raise UserError(_('Warning'), _('Un supported certificate file format'))
+                raise UserError(_('Warning'), _('Un supported certificate file format, or invalid password'))
         else:
             pass
