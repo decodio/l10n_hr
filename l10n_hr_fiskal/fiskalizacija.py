@@ -148,19 +148,49 @@ class FiskalProstor(models.Model):
     _name = 'fiskal.prostor'
     _description = 'Podaci o poslovnim prostorima za potrebe fiskalizacije'
     
-    _columns = {
-        'name': fields.char('Naziv poslovnog prostora', size=128 , select=1),
-        'company_id':fields.many2one('res.company','Tvrtka', required="True"),
-        'oznaka_prostor': fields.char('Oznaka poslovnog prostora', required="True", size=20),
-        'datum_primjene': fields.datetime('Datum', help ="Datum od kojeg vrijede navedeni podaci"),
-        'ulica': fields.char('Ulica', size=100),
-        'kbr': fields.char('Kucni broj', size=4),
-        'kbr_dodatak': fields.char('Dodatak kucnom broju', size=4),
-        'posta': fields.char('Posta', size=12),
-        'naselje': fields.char('Naselje', size=35),
-        'opcina'   :fields.char('Naziv opcine ili grada', size=35, required="True"),
-        'prostor_other':fields.char('Ostali tipovi adrese', size=100,
-                                    help="Ostali tipovi adresa, npr internet trgovina ili pokretna trgovina"),
+    name = fields.Char(
+        'Naziv poslovnog prostora',
+        select=1)
+    company_id = fields.Many2one(
+        comodel_name='res.company', string='Tvrtka',
+        default=lambda self: self.env['res.company']._company_default_get(
+            'fiskal.prostor'),
+        required=True)
+    oznaka_prostor = fields.Char('Oznaka poslovnog prostora', required=True)
+    datum_primjene = fields.Datetime(
+        'Datum',
+        help="Datum od kojeg vrijede navedeni podaci")
+    ulica = fields.Char('Ulica')
+    kbr = fields.Char('Kucni broj')
+    kbr_dodatak = fields.Char('Dodatak kucnom broju')
+    posta = fields.Char('Posta')
+    naselje = fields.Char('Naselje')
+    opcina = fields.Char('Naziv opcine ili grada', required=True)
+    prostor_other = fields.Char(
+        'Ostali tipovi adrese',
+        help="Ostali tipovi adresa, npr. internet ili pokretna trgovina")
+    sustav_pdv = fields.Boolean('U sustavu PDV-a', default=True)
+    radno_vrijeme = fields.Char('Radno Vrijeme', required=True)
+    sljed_racuna = fields.Selection(
+        (('N', 'Na nivou naplatnog uredjaja'),
+         ('P', 'Na nivou poslovnog prostora')),
+        'Sljed racuna',
+        default="P")
+    spec = fields.Char('OIB Informaticke tvrtke', required=True)
+    uredjaj_ids = fields.One2many(
+        'fiskal.uredjaj',
+        'prostor_id',
+        'Uredjaji')
+    fiskal_log_ids = fields.One2many(
+        'fiskal.log',
+        'fiskal_prostor_id',
+        'Logovi poruka',
+        help="Logovi poslanih poruka prema poreznoj upravi")
+    state = fields.Selection(
+        (('draft', 'Upis'),
+         ('active', 'Aktivan'),
+         ('closed', 'Zatvoren')),
+        'Status zatvaranja')
 
     @api.multi
     def copy(self, default=None):
@@ -201,113 +231,138 @@ class FiskalProstor(models.Model):
     def posalji_prostor(self, msg_type):
         self.ensure_one()
         # Provjera adrese : mora biti jedan tip, ne oba i ne nijedan
-        if (prostor.prostor_other and prostor.ulica):
-            raise osv.except_osv(_('Greška: Dupla adresa'),
-                                 _('Nije moguće prijaviti dva tipa adrese za jedan poslovni prostor!'))
-        elif not (prostor.prostor_other or prostor.ulica):
-            raise osv.except_osv(_('Greška: Nema adrese'),
-                                 _('Unesite adresne podatke ili opisnu adresu prostora!'))
+        if (self.prostor_other and self.ulica):
+            raise UserError(
+                _('Greška: Dupla adresa'),
+                _('Nije moguće prijaviti dva tipa adrese za jedan poslovni prostor!'))
+        elif not (self.prostor_other or self.ulica):
+            raise UserError(
+                _('Greška: Nema adrese'),
+                _('Unesite adresne podatke ili opisnu adresu prostora!'))
 
-        wsdl, key, cert = self.get_fiskal_data(cr, uid, company_id=prostor.company_id.id)
-        if not wsdl:
+        production, key, cert = self.company_id._get_fiskal_key_cert()
+        if not key:
             return False
-        a = Fiskalizacija(msgtype, wsdl, key, cert, cr, uid, oe_obj = prostor)
-                
-        if not prostor.datum_primjene:
-            datum_danas=a.start_time['datum']
-        else: 
-            #  datum_danas = prostor.datum_primjene
-            datum_danas=a.start_time['datum']
+        # TODO: test with 2 different companies at the same time
+        fisk.FiskInit.init(key, None, cert, production=production)
+        adresa = fisk.Adresa(
+            data={"Ulica": self.ulica or '',
+                  "KucniBroj": self.kbr or '',
+                  "Opcina": self.opcina or '',
+                  })
+        if self.kbr_dodatak:
+            adresa.KucniBrojDodatak = self.kbr_dodatak
+        if self.naselje:
+            adresa.Naselje = self.naselje
+        if self.posta:
+            adresa.BrojPoste = self.posta
+        pp = fisk.PoslovniProstor(
+            data={"Oib": self.company_id.partner_id.vat[2:] or False,
+                  "OznPoslProstora": self.oznaka_prostor or '',
+                  "AdresniPodatak": fisk.AdresniPodatak(
+                      self.prostor_other or adresa),
+                  "RadnoVrijeme": self.radno_vrijeme or '',
+                  "DatumPocetkaPrimjene":
+                      self.company_id._fiskal_time_formated().get('datum'),
+                  # OIB IT firme Mora odgovarati OIB-u sa Cert-a
+                  "SpecNamj": self.spec and self.spec[2:] or False,
+                  })
+        if msg_type == 'prostor_odjava':
+            pp.OznakaZatvaranja = 'Z'
+        if self.company_id.fina_certifikat_id.cert_type == 'fina_prod':
+            pp.Oib = self.company_id.partner_id.vat[2:]  # pravi OIB company
+        elif self.company_id.fina_certifikat_id.cert_type == 'fina_demo':
+            # OIB IT firme Mora odgovarati OIB-u sa Cert-a
+            pp.Oib = self.spec and self.spec[2:] or False
+        ppz = fisk.PoslovniProstorZahtjev(pp)  # poslovni prostor request
+        start_time = self.company_id._fiskal_time_formated()
+        ppz_reply = ppz.execute()
+        if ppz_reply:
+            self.write({'datum_primjene': fields.Datetime.now() })
+        self.company_id._log_fiskal(msg_type, ppz, start_time, self.id)
+        # fiskpy deinit - maybe not needed but good for correct garbage cleaning
+        fisk.FiskInit.deinit()
+        #fiskal.deinit()
+        return ppz_reply
 
-        ##prvo punim zaglavlje
-        #a.t = start_time['datum']  # mislim da ovdje ide today ako je Zatvaranje !!!
-        a.zaglavlje.DatumVrijeme = a.start_time['datum_vrijeme']
-        a.zaglavlje.IdPoruke = str(uuid.uuid4())  
-        ## podaci o pos prostoru
-        #a.pp = a.client2.factory.create('tns:PoslovniProstor') 
-        #a.prostor.Oib= prostor.company_id.partner_id.vat[2:] #'57699704120' 
-        
-        if prostor.company_id.fina_certifikat_id.cert_type == 'fina_prod':
-            a.prostor.Oib = prostor.company_id.partner_id.vat[2:]  # pravi OIB company
-        elif prostor.company_id.fina_certifikat_id.cert_type == 'fina_demo':
-            a.prostor.Oib = prostor.spec[2:]  #OIB IT firme Mora odgovarati OIB-u sa Cert-a
-        
-        a.prostor.OznPoslProstora=prostor.oznaka_prostor
-        a.prostor.RadnoVrijeme=prostor.radno_vrijeme
-        a.prostor.DatumPocetkaPrimjene=datum_danas #'08.02.2013' #datum_danas   e ak ovo stavim baci gresku.. treba dodat raise ili nekaj!!!
-        a.prostor.SpecNamj =prostor.spec  #57699704120'
-        
-        #Mogući su i "ostali" tipovi- internet trgovina ili pokretna trgovina..
-        adresni_podatak = a.client2.factory.create('tns:AdresniPodatakType')
-        if prostor.prostor_other:
-            adresa=a.client2.factory.create('tns:OstaliTipoviPP')
-            adresni_podatak.OstaliTipoviPP=prostor.prostor_other
-            a.prostor.AdresniPodatak = adresni_podatak
-        else :
-            adresa = a.client2.factory.create('tns:Adresa')
-            adresa.Ulica= prostor.ulica
-            if prostor.kbr:
-                adresa.KucniBroj=prostor.kbr
-            if prostor.kbr_dodatak:
-                adresa.KucniBrojDodatak=prostor.kbr_dodatak
-            adresa.BrojPoste=prostor.posta
-            adresa.Naselje=prostor.naselje
-            adresa.Opcina= prostor.opcina
 
-            adresni_podatak.Adresa = adresa
-            a.prostor.AdresniPodatak = adresni_podatak
-
-        a.prostor.OznakaZatvaranja ='Z'
-        if not(msgtype == 'prostor_odjava'): 
-            a.prostor.__delattr__('OznakaZatvaranja') 
-        
-        odgovor = a.posalji_prostor()
-        if odgovor[0]==200:
-            self.write(cr, uid, prostor.id, {'datum_primjene': datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT) })
-        return True
-    
-
-class fiskal_uredjaj(osv.Model):
+class FiskalUredjaj(models.Model):
     _name = 'fiskal.uredjaj'
     _description = 'Podaci o poslovnim prostorima za potrebe fiskalizacije'
 
-    def name_get(self, cr, uid, ids, context=None):
-        res = {}
-        for u in self.browse(cr, uid, ids, context=context):
-            res[u.id] = ' / '.join( (u.prostor_id.name or '', u.name or '') )
-        return res.items()
-    
-    _columns = {
-        'name': fields.char('Naziv naplatnog uredjaja', size=128 , select=1),
-        'prostor_id':fields.many2one('fiskal.prostor','Prostor',help='Prostor naplatnog uredjaja.'),
-        'oznaka_uredjaj': fields.integer('Oznaka naplatnog uredjaja', required="True" ),
-                }
+    @api.multi
+    def name_get(self):
+        result = []
+        for u in self:
+            result.append(
+                (u.id, ' / '.join((u.prostor_id.name or '', u.name or ''))))
+        return result
+
+    name = fields.Char(
+        'Naziv naplatnog uredjaja',
+        select=1)
+    prostor_id = fields.Many2one(
+        'fiskal.prostor',
+        'Prostor',
+        help='Prostor naplatnog uredjaja.')
+    oznaka_uredjaj = fields.Integer(
+        'Oznaka naplatnog uredjaja',
+        required=True)
 
 
-class fiskal_log(osv.Model):
-    _name='fiskal.log'
-    _description='Fiskal log'    
+class FiskalLog(models.Model):
+    _name = 'fiskal.log'
+    _description = 'Fiskal log'
     
-    def _get_log_type(self,cursor,user_id, context=None):
-        return (('prostor_prijava','Prijava prostora'),
-                ('prostor_odjava','Odjava prostora'),
-                ('racun','Fiskalizacija racuna'),
-                ('racun_ponovo','Ponovljeno slanje racuna'),              
-                ('echo','Echo test poruka '),
-                ('other','Other types')
-               )
-        
-    _columns ={
-        'name': fields.char('Oznaka', size=64, help="Jedinstvena oznaka komunikacije", readonly=True),
-        'type': fields.selection (_get_log_type,'Vrsta poruke', readonly=True),
-        'invoice_id': fields.many2one('account.invoice', 'Racun', readonly=True, select=True),
-        'fiskal_prostor_id': fields.many2one('fiskal.prostor', 'Prostor', readonly=True),
-        'sadrzaj':fields.text('Poslana poruka', readonly=True),
-        'odgovor':fields.text('Odgovor', readonly=True),
-        'greska':fields.text('Greska', readonly=True),
-        'time_stamp':fields.datetime('Vrijeme', readonly=True),
-        'time_obr':fields.char('Vrijeme obrade',size=16, help='Vrijeme obrade podataka', readonly=True), #vrijeme obrade prmljeno_vrijeme-poslano_vrijem
-        'user_id': fields.many2one('res.users', 'Osoba', readonly=True),
-        'company_id':fields.many2one('res.company','Tvrtka', required=False),
-        'pos_order_id': fields.integer('MP Racun', readonly=True)
-    }
+    def _get_log_type(self):
+        return (('prostor_prijava', 'Prijava prostora'),
+                ('prostor_odjava', 'Odjava prostora'),
+                ('racun', 'Fiskalizacija racuna'),
+                ('racun_ponovo', 'Ponovljeno slanje racuna'),
+                ('echo', 'Echo test poruka '),
+                ('other', 'Other types'))
+
+    name = fields.Char(
+        'Oznaka',
+        help="Jedinstvena oznaka komunikacije",
+        readonly=True)
+    type = fields.Selection(
+        _get_log_type,
+        'Vrsta poruke',
+        readonly=True)
+    invoice_id = fields.Many2one(
+        'account.invoice',
+        'Racun',
+        readonly=True,
+        select=True)
+    fiskal_prostor_id = fields.Many2one(
+        'fiskal.prostor',
+        'Prostor',
+        readonly=True)
+    sadrzaj = fields.Text(
+        'Poslana poruka',
+        readonly=True)
+    odgovor = fields.Text(
+        'Odgovor',
+        readonly=True)
+    greska = fields.Text(
+        'Greska',
+        readonly=True)
+    time_stamp = fields.Datetime(
+        'Vrijeme',
+        readonly=True)
+    time_obr = fields.Char(
+        'Vrijeme obrade',
+        help='Vrijeme obrade podataka',
+        readonly=True) #vrijeme obrade prmljeno_vrijeme-poslano_vrijem
+    user_id = fields.Many2one(
+        'res.users',
+        'Osoba',
+        readonly=True)
+    company_id = fields.Many2one(
+        'res.company',
+        'Tvrtka',
+        required=False)
+    pos_order_id = fields.Integer(
+        'MP Racun',
+        readonly=True)
