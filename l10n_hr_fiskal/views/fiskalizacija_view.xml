@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- res.users OIB -->
+        <record id="view_users_form_fiskal_oib" model="ir.ui.view">
+            <field name="name">res.users.form_fiskal_oib</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="oib"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Fiskal Prostor -->
+        <record id="fiskal_prostor_tree_view" model="ir.ui.view">
+            <field name="name">fiskal_prostor_tree_view</field>
+            <field name="model">fiskal.prostor</field>
+            <field name="arch" type="xml">
+                <tree string="Poslovni prostor">
+                    <field name="company_id" />
+                    <field name="name" />
+                    <field name="oznaka_prostor" />
+                    <field name="ulica" />
+                    <field name="kbr" />
+                    <field name="posta" />
+                    <field name="naselje" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="fiskal_prostor_form_view" model="ir.ui.view">
+            <field name="name">fiskal.prostor.form.view</field>
+            <field name="model">fiskal.prostor</field>
+            <field name="arch" type="xml">
+                <form string="Fiskalizacija">
+                    <sheet>
+                        <div class="oe_title oe_left">
+                            <label for="name"/>
+                            <h3>
+                                <field name="name"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group>
+                                <field name='company_id'/>
+                                <field name='oznaka_prostor'/>
+                                <field name='datum_primjene' readonly="1"/>
+                                <field name='sustav_pdv'/>
+                            </group>
+                            <group>
+                                <button name="button_test_echo" colspan="2" string="TEST ECHO" type="object" />
+                                <button name="button_prijavi_prostor" colspan="2" class="oe_highlight" string="Prijava prostora" type="object" />
+                                <!--button name="button_odjavi_prostor" string="Odjava prostora" type="object" /-->
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Fizička Adresa">
+                                <group>
+                                    <group>
+                                        <field name="radno_vrijeme" />
+                                        <field name="spec" />
+                                        <field name="sljed_racuna" />
+                                    </group>
+                                    <group>
+                                    </group>
+                                </group>
+                                <notebook colspan="4">
+                                    <page string="Adresa prod.mj.">
+                                        <group>
+                                            <group>
+                                                <field name="ulica" />
+                                                <field name="kbr" />
+                                                <field name="kbr_dodatak" />
+                                            </group>
+                                            <group>
+                                                <field name="posta" />
+                                                <field name="naselje" />
+                                                <field name="opcina" />
+                                            </group>
+                                        </group>
+                                    </page>
+                                    <page string="Ostali tipovi adresa">
+                                        <label string="Slobodan unos opisne adrese za ostale vrste poslovnih prostora koji
+                                    nemaju fizičku adresu, npr: internet trgovine ili pokretne trgovine" />
+                                        <group>
+                                            <group>
+                                                <field name="prostor_other" />
+                                            </group>
+                                            <group>
+                                            </group>
+                                        </group>
+                                    </page>
+                                </notebook>
+                                <field name="uredjaj_ids" nolabel="1" colspan="4" />
+                            </page>
+    
+                            <page string="Komunikacija">
+                                <field name="fiskal_log_ids" nolabel="1" colspan="4" />
+                            </page>
+                            <page string="Odjava prostora">
+                                <label
+                                    string="Koristiti samo u slucaju kad se zatvara poslovni prostor.
+                                    Nakon zatvaranja poslovnog prostora ne smiju se vise prijavljivati racuni
+                                    sa oznakom ovog poslovnog prostora" />
+                                <newline />
+                                <button name="button_odjavi_prostor" string="Odjava prostora"
+                                    type="object" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="fiskal_prostor_tree_view" model="ir.ui.view">
+            <field name="name">fiskal.prostor.tree.view</field>
+            <field name="model">fiskal.prostor</field>
+            <field name="arch" type="xml">
+
+                <tree string="Fiskalizacija poslovnog prostora">
+                    <field name="name" />
+                    <field name="oznaka_prostor" />
+                    <field name="ulica" />
+                    <field name="kbr" />
+                    <field name="posta" />
+                    <field name="naselje" />
+                </tree>
+
+            </field>
+        </record>
+
+        <!--Fiskal Uredjaj-->
+        <record  id="fiskal_uredjaj_tree_view" model="ir.ui.view">
+            <field name="name">fiskal.uredjaj.tree.view</field>
+            <field name="model">fiskal.uredjaj</field>
+            <field name="arch" type="xml">
+                <tree string="Fiskalizacija naplatnog uredjaja">
+                    <field name="name"/>
+                    <field name="prostor_id"/>
+                    <field name="oznaka_uredjaj"/>
+                </tree>
+
+            </field>
+        </record>
+        <record id="fiskal_uredjaj_form_view" model="ir.ui.view" >
+            <field name="name">fiskal_uredjaj_form_view</field>
+            <field name="model">fiskal.uredjaj</field>
+            <field name="arch" type="xml">
+                <form string="Fiskalizacija">
+                    <sheet>
+                        <div class="oe_title oe_left">
+                            <label for="name"/>
+                            <h3>
+                                <field name="name"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <field name="prostor_id"/>
+                            <field name="oznaka_uredjaj"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- log view tree-->
+        <record id="fiskal_log_tree_view" model="ir.ui.view" >
+            <field name="name">fiskal_log_tree_view</field>
+            <field name="model">fiskal.log</field>
+            <field name="arch" type="xml">
+                <tree string="Poslane poruke">
+                    <field name="name" select="1" />
+                    <field name="type" />
+                    <field name="greska"/>
+                    <field name="time_stamp" />
+                    <field name="time_obr" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- log view FORM-->
+        <record id="fiskal_log_form_view" model="ir.ui.view" >
+            <field name="name">fiskal_log_form_view</field>
+            <field name="model">fiskal.log</field>
+            <field name="arch" type="xml">
+                <form string="Evidencija prometa">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="UUID poruke"/>
+                                <field name="type" />
+                                <field name="time_stamp"/>
+                            </group>
+                            <group>
+                                <field name="time_obr" />
+                                <field name="user_id"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <newline/>
+                        <notebook colspan="4">
+                            <page string="Poruka">
+                                <group>
+                                    <group>
+                                        <field name="invoice_id"/>
+                                        <field name="fiskal_prostor_id"/>
+                                    </group>
+                                </group>
+                                <group colspan="4">
+                                    <field name="greska" colspan="4"/>
+                                </group>
+                            </page>
+                            <page string="Poslana poruka">
+                                <group colspan="4">
+                                    <field name="sadrzaj" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Odgovor na poruku">
+                                <group colspan="4">
+                                    <field name="odgovor" nolabel="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--############################ ## ## ACTIONS ADD ## ############################## -->
+        <record id="fiskal_prostor_action" model="ir.actions.act_window" >
+            <field name="name">Fiskalizacija - Prostor</field>
+            <field name="res_model">fiskal.prostor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!--field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add new location.
+                </p>
+                <p>
+                    In order to send invoice data to Tax office, you need to
+                    enter
+                    some data about your sales office location, and some other info
+                </p>
+            </field-->
+
+        </record>
+        <record id="fiskal_uredjaj_action" model="ir.actions.act_window" >
+            <field name="name">Fiskalizacija - Uređaj</field>
+            <field name="res_model">fiskal.uredjaj</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="fiskal_log_win_action" model="ir.actions.act_window" >
+            <field name="name">Fiskalizacija - Log</field>
+            <field name="res_model">fiskal.log</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_fiskal_root" name="Fiskalizacija"
+            parent="base.menu_res_company_global" sequence="100" />
+        <menuitem id="menu_action_fiskal_prostor" name="Prijava Objekata"
+            action="fiskal_prostor_action" parent="menu_fiskal_root" sequence="100" />
+        <menuitem id="menu_action_fiskal_uredjaj" name="Prijava naplatnog uredjaja"
+            action="fiskal_uredjaj_action" parent="menu_fiskal_root" sequence="120" />
+        <menuitem id="menu_fiskal_log" name="Dnevnik komunikacije"
+            action="fiskal_log_win_action" parent="menu_fiskal_root" sequence="200" />
+
+
+
+        <!-- account.tax.code fiskal type & percent -->
+        <record id="account_view_tax_code_form_fiskal" model="ir.ui.view">
+            <field name="name">account_view_tax_code_form_fiskal</field>
+            <field name="model">account.tax.code</field>
+            <field name="inherit_id" ref="account.view_tax_code_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="fiskal_type"/>
+                    <field name="fiskal_percent" placeholder="npr: 25.00"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

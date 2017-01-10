@@ -47,30 +47,24 @@ class ResCompany(models.Model):
 
     @api.multi
     def _get_fiskal_key_cert(self):
-        """ returns production, key and cert file for a company"""
+        """ returns key_file, password, cert_file, production for a company"""
         self.ensure_one()
-        production = False
         fina_cert = self.fina_certifikat_id
         if not fina_cert:
             raise UserError(_('Error'), _('Neispravne postavke certifikata!'))
-            return False, False, False
         cert_type = fina_cert.cert_type
         if cert_type not in ('fina_demo', 'fina_prod'):
             raise UserError(_('Error'), _('Neispravne postavke certifikata!'))
-            return False, False, False
         if not (fina_cert.state == 'confirmed'
                 and fina_cert.csr and fina_cert.crt):
             raise UserError(_('Error'), _('Neispravne postavke certifikata!'))
-            return False, False, False
-        if cert_type == 'fina_prod':
-            production = True
+        production = (cert_type == 'fina_prod')
         # Key and cert files are stored in subfolder 'odoo_fiskal' relative to
         # odoo config file hoping that os user runing odoo have r/w rights.
         path = os.path.join(
             os.path.dirname(os.path.abspath(odoo_config.rcfile)), 'oe_fiskal')
         if not os.path.exists(path):
             os.mkdir(path, 0777)  # TODO 0660 or less
-
         key_file = os.path.join(
             path, "{0}_{1}_{2}_key.pem".format(
                 self.env.cr.dbname, self.id, fina_cert.id))
@@ -85,7 +79,9 @@ class ResCompany(models.Model):
                         '_key.pem') and fina_cert.csr or fina_cert.crt
                     f.write(content)
                     f.flush()
-        return production, key_file, cert_file
+        password = fina_cert.pfx_certificate_password or None
+        # TODO handle key file password in separate field
+        return key_file, password, cert_file, production
 
     def _zagreb_now(self):
         return datetime.now(timezone('Europe/Zagreb'))
@@ -175,7 +171,7 @@ class FiskalProstor(models.Model):
         (('N', 'Na nivou naplatnog uredjaja'),
          ('P', 'Na nivou poslovnog prostora')),
         'Sljed racuna',
-        default="P")
+        default="P", required=True)
     spec = fields.Char('OIB Informaticke tvrtke', required=True)
     uredjaj_ids = fields.One2many(
         'fiskal.uredjaj',
@@ -240,11 +236,11 @@ class FiskalProstor(models.Model):
                 _('Greška: Nema adrese'),
                 _('Unesite adresne podatke ili opisnu adresu prostora!'))
 
-        production, key, cert = self.company_id._get_fiskal_key_cert()
+        key, password, cert, production = self.company_id._get_fiskal_key_cert()
         if not key:
             return False
         # TODO: test with 2 different companies at the same time
-        fisk.FiskInit.init(key, None, cert, production=production)
+        fisk.FiskInit.init(key, password, cert, production=production)
         adresa = fisk.Adresa(
             data={"Ulica": self.ulica or '',
                   "KucniBroj": self.kbr or '',
