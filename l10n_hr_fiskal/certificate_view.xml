@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <field name="pairkey_id" position="before">
                     <field name="pfx_certificate"/>
+                    <field name="pfx_certificate_password" password="True"/>
                     <field name="group_id"/>
                 </field>
                 <field name="status" position="before">

@@ -1,22 +1,25 @@
+# -*- coding: utf-8 -*-
+# Odoo, Open Source Management Solution
+# Copyright (C) 2016 Decodio
+# Copyright (C) 2012- Daj Mi 5 Davor Bojkić bole@dajmi5.com
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import os, time
-from osv import fields, osv, orm
-from tools.translate import _
+from openerp import models, fields, api, _
 
 
-
-class res_company(osv.osv):
+class ResCompany(models.Model):
     _inherit = "res.company"
-    _columns = {
 
-        'fina_certifikat': fields.many2one('crypto.certificate', string="Fiskal certifikat",
-            domain="[('cert_type', 'in', ('fina_demo','fina_prod') )]", #todo company_id
-            help="Aktivni FINA certifikat za fiskalizaciju.",
-            ),
-        'fiskal_prostor': fields.one2many('fiskal.prostor','company_id', string="Poslovni prostori",
-            help="Poslovni prostori (fiskalizacija).",
-            ),
+    fina_certifikat = fields.Many2one(
+        'crypto.certificate',
+        string="Fiskal certifikat",
+        domain="[('cert_type', 'in', ('fina_demo','fina_prod'))]", #todo company_id
+        help="Aktivni FINA certifikat za fiskalizaciju.",
+        )
+    fiskal_prostor = fields.One2many(
+        'fiskal.prostor',
+        'company_id',
+        string="Poslovni prostori",
+        help="Poslovni prostori (fiskalizacija).",
+        )
 
-    }
-
-res_company()
