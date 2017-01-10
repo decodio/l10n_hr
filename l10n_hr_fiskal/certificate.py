@@ -41,24 +41,9 @@ class Certificate(models.Model):
         help='Password for the Pfx File.')
 
     _defaults = {
-         'state': 'draft', # port to new api
+         'state': 'draft',
+         'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'crypto.certificate', context=c),
     }
+    
 
-    @api.onchange('pfx_certificate', 'pfx_certificate_password')
-    def on_certificate_change(self):
-        if self.pfx_certificate:
-            try:
-                _password = self.pfx_certificate_password or ''
-                p12 = crypto.load_pkcs12(base64.decodestring(self.pfx_certificate), _password)
 
-                if p12:
-                    # PEM formatted private key
-                    self.csr = crypto.dump_privatekey(crypto.FILETYPE_PEM, p12.get_privatekey())
-
-                    # PEM formatted certificate
-                    self.crt = crypto.dump_certificate(crypto.FILETYPE_PEM, p12.get_certificate())
-            except Exception, e:
-                print 'Un supported certificate file format: %s' % e.message
-                raise UserError(_('Warning'), _('Un supported certificate file format, or invalid password'))
-        else:
-            pass
