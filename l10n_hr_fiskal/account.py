@@ -18,7 +18,6 @@ class AccountJournal(models.Model):
     prostor_id = fields.Many2one(
         'fiskal.prostor',
         'Prostor',
-        select=True,
         help='Prostor naplatnog uredjaja.')
     nac_plac = fields.Selection(
         (('G', 'GOTOVINA'),
@@ -62,30 +61,37 @@ class AccountMove(models.Model):
         res = super(AccountMove, self).post()
         if res:
             invoice = self._context.get('invoice', False)
-            if not invoice or not invoice.journal_id.fiskal_active: #orinvoice.nac_plac != 'T':
+            if not invoice or not invoice.journal_id.fiskal_active:
+                #  or invoice.nac_plac != 'T':
                 return res
-            if not invoice.type in ('out_invoice', 'out_refund'):  # samo izlazne racune  
-                return res
-            if not (invoice.company_id.country_id and invoice.company_id.country_id.code == 'HR' or False):
+            if invoice.type not in ('out_invoice', 'out_refund'):
+                return res  # samo izlazne racune
+            if not (invoice.company_id.country_id
+                    and invoice.company_id.country_id.code == 'HR' or False):
                 return res
             if not invoice.uredjaj_id:
-                raise UserError(_('Greška'), _('Nije odabran naplatni uredjaj!'))
+                raise UserError(_('Greška'),
+                                _('Nije odabran naplatni uredjaj!'))
             if not invoice.journal_id.fiskal_active and invoice.nac_plac != 'T':
-                raise UserError(_('Greška'), _('Nije aktivna fiskalizacija, moguci nacin placanje je samo Transakcijski racun!'))
+                raise UserError(
+                    _('Greška'),
+                    _('Nije aktivna fiskalizacija, moguci nacin placanja'
+                      ' je Transakcijski racun!'))
             if not invoice.uredjaj_id.prostor_id.oznaka_prostor:
-                raise UserError(_('Nije odabran prodajni prostor!'), _('Odaberite iz kojeg prostora vršite prodaju'))
-
-            fiskalni_sufiks = '/'.join((invoice.uredjaj_id.prostor_id.oznaka_prostor, str(invoice.uredjaj_id.oznaka_uredjaj)))
+                raise UserError(_('Nije odabran prodajni prostor!'),
+                                _('Odaberite iz kojeg prostora vršite prodaju'))
+            fiskalni_sufiks = '/'.join((
+                invoice.uredjaj_id.prostor_id.oznaka_prostor,
+                str(invoice.uredjaj_id.oznaka_uredjaj)))
             for move in self:
                 new_name = '/'.join((move.name, fiskalni_sufiks))
-                self.write([move.id], {'name': new_name})
+                move.write({'name': new_name})
                 if not invoice.company_id.fina_certifikat_id:
                     return res
                 if invoice.journal_id.fiskal_active:  # samo oznacene journale
-                    self.env['account.invoice'].fiskaliziraj(invoice.id)
+                    invoice.fiskaliziraj()
                 if invoice.company_id.separator:
                     separator = str(invoice.company_id.separator)
                     new_name = new_name.replace('/', separator)
-                self.write([move.id], {'name': new_name})
+                    move.write({'name': new_name})
         return res
-

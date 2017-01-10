@@ -50,7 +50,7 @@ class Certificate(models.Model):
             try:
                 _password = self.pfx_certificate_password or ''
                 p12 = crypto.load_pkcs12(base64.decodestring(self.pfx_certificate), _password)
-
+                #p12.export()
                 if p12:
                     # PEM formatted private key
                     self.csr = crypto.dump_privatekey(crypto.FILETYPE_PEM, p12.get_privatekey())
