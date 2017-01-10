@@ -38,10 +38,12 @@ Contributions: Hrvoje ThePython - Free Code!
                Goran Kliska @ Slobodni Programi
                Tomislav Bošnjaković @ Slobodni Programi
 
+Potrebni otvoreni TCP portovi prema CIS sustavu: 8449
+
+https://www.porezna-uprava.hr/HR_Fiskalizacija/Aktualnosti%20dokumenti/Fiskalizacija%20-%20Tehnicka%20specifikacija%20za%20korisnike_v1.1.pdf
 
 TODO/WIP: - new API,
  replace libs with
- https://github.com/kodmasin/fiskpy
  https://github.com/decodio/fiskpy
 
 
@@ -70,20 +72,17 @@ Preduvjeti fisk.py
                 'l10n_hr_account',
                 'crypto',
                 ],
-    'external_dependencies':{'python':['M2Crypto', 'fisk'#,'PyXMLSec'
-                                       ],
-                             #'bin':'libxmlsec-dev'
+    'external_dependencies': {'python':['fisk'],
                              },
     'data': [
-                   'certificate_view.xml',
-                   'fiskalizacija_view.xml',
-                   'security/ir.model.access.csv',
-                   'account_view.xml',
-                   'account_invoice_view.xml',
-                   'l10n_hr_fiskal_data.xml',
-                   'company_view.xml',
+         'views/certificate_view.xml',
+         'views/fiskalizacija_view.xml',
+         'views/account_view.xml',
+         'views/account_invoice_view.xml',
+         'views/company_view.xml',
+         'security/ir.model.access.csv',
+         'data/l10n_hr_fiskal_data.xml',
                    ],
     "active": False,
     "installable": True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
