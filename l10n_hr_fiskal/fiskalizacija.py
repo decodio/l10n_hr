@@ -79,7 +79,8 @@ class ResCompany(models.Model):
                         '_key.pem') and fina_cert.csr or fina_cert.crt
                     f.write(content)
                     f.flush()
-        password = fina_cert.pfx_certificate_password or None
+        password = (fina_cert.pfx_certificate_password and
+                    str(fina_cert.pfx_certificate_password) or None)
         # TODO handle key file password in separate field
         return key_file, password, cert_file, production
 
