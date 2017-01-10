@@ -208,7 +208,7 @@ class FiskalProstor(models.Model):
         # posta = zip (numeric)
         return True
     
-    @api.model
+    @api.multi
     def button_test_echo(self):
         echo = fisk.EchoRequest("Proba echo poruke")
         # send request and print server reply
