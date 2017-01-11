@@ -275,18 +275,15 @@ class AccountInvoice(models.Model):
         })
         return super(AccountInvoice, self).copy(default)
 
-    def onchange_journal_id(self, cr, uid, ids, journal_id=False, context=None):
-        result = super(AccountInvoice, self).onchange_journal_id(
-            cr, uid, ids, journal_id=journal_id, context=context)
-        if journal_id:
-            journal = self.pool.get('account.journal').browse(
-                cr, uid, journal_id, context=context)
-            prostor_id = journal.prostor_id and journal.prostor_id.id or False
-            nac_plac = journal.nac_plac or False
-            uredjaj_id = (journal.fiskal_uredjaj_ids and
-                          journal.fiskal_uredjaj_ids[0].id or False)
-            result['value'].update({'nac_plac': nac_plac,
-                                    'uredjaj_id': uredjaj_id, })
+    @api.onchange('journal_id')
+    def onchange_journal_id(self, journal_id=False):
+        result = super(AccountInvoice, self).onchange_journal_id(journal_id=self.journal_id.id)
+        if self.journal_id:
+            prostor_id = self.journal_id.prostor_id and self.journal_id.prostor_id.id or False
+            self.uredjaj_id = (self.journal_id.fiskal_uredjaj_ids and
+                          self.journal_id.fiskal_uredjaj_ids[0].id or False)
+            if self.journal_id.nac_plac:
+                self.nac_plac = self.journal_id.nac_plac
             result['domain'] = result.get('domain', {})
             result['domain'].update(
                 {'uredjaj_id': [('prostor_id', '=', prostor_id)]})
