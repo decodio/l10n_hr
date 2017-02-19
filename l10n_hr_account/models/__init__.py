@@ -2,11 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Module: l10n_hr_account
-#    Author: Goran Kliska
-#    mail:   gkliskaATgmail.com
-#    Copyright (C) 2011- Slobodni programi d.o.o., Zagreb
-#               http://www.slobodni-programi.hr
+#    Copyright (C) 2017 Decodio
 #    Contributions:
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,34 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name": "Croatian localization - taxes",
-    "description": """
-Croatian localisation
-======================
+import res_users
 
-Description:
--------------
-    * Model i Poziv na broj na izlaznim računima,
-    * Datum isporuke na izlaznim računima,
-
-Authors:
---------
-    * Goran Kliska @ Slobodni programi d.o.o.
-    * Dario Meniss @ Slobodni programi d.o.o.
-
-""",
-    "version": "8.14.12.1",
-    "author": "Slobodni programi d.o.o.",
-    "category": "Localisation/Croatia",
-    "website": "http://www.slobodni-programi.hr",
-
-    'depends': ['account',],   # todo ref num
-    'data': ['account_view.xml',
-             'account_invoice_view.xml',
-             'views/res_users_view.xml',
-             ],
-    "active": False,
-    "installable": True,
-}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
