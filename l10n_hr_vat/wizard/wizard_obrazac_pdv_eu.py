@@ -121,195 +121,479 @@ class obrazac_pdv_eu(orm.TransientModel):
                 datas['form'][field] = datas['form'][field][0]
 
         period = False
-        #Za sada samo jedan period.
-        #if datas['form']['period_from'] == datas['form']['period_to']:
+        # Za sada samo jedan period.
+        # if datas['form']['period_from'] == datas['form']['period_to']:
 
-        per = self.browse(cr, uid, ids[0]).period_from # date_start date_end
-        period = {'id':per.id,
-                  'date_start':per.date_start,
+        per = self.browse(cr, uid, ids[0]).period_from  # date_start date_end
+        period = {'id': per.id,
+                  'date_start': per.date_start,
                   'date_stop': per.date_stop}
-        #period = datas['form']['period_from']['id']
-
-        if period and datas['form']['report_type'] == 'pdv_s':
+        # period = datas['form']['period_from']['id']
+        obrazac = self.pool.get('l10n_hr_pdv.eu.obrazac').browse(cr, uid, datas['form']['obrazac_id'])
+        if period and obrazac.type == 'pdv_s':
             xml = self.generate_pdvs(cr, uid, datas, period, context)
-        if period and datas['form']['report_type'] == 'pdv_zp':
+        if period and obrazac.type == 'pdv_zp':
             xml = self.generate_pdvzp(cr, uid, datas, period, context)
 
         xml['path'] = os.path.dirname(os.path.abspath(__file__))
-        #VALIDACIJA preko xsd-a
+        # VALIDACIJA preko xsd-a
         validate = rc.validate_xml(self, xml)
         if validate:
             data64 = base64.encodestring(xml['xml'].encode('windows-1250'))
-            return self.write(cr, uid, ids, {'state': 'get', 'data': data64, 'name': datas['form']['report_type'] + '_export.xml'},
-                               context=context)
-        #BOLE TODO : KAMO S NJIM???
+            self.write(cr, uid, ids, {'state': 'get', 'data': data64, 'name': obrazac.name + '_export.xml'},
+                              context=context)
 
-    def generate_pdvzp(self, cr, uid, datas, period, context=None):
-        cr.execute("""
-        SELECT ROW_NUMBER() OVER (Order by aml.partner_id) as row_number
-            ,aml.partner_id
-            ,rc.code as ccode
-            ,coalesce (rp.name, 'neupisan') as partner_name
-            ,coalesce (rp.vat, NULL) as vat
-            ,SUM(CASE WHEN aml.tax_code_id in (97) THEN aml.credit + aml.debit ELSE 0.00 END) as usluge
-            ,0 as dob_4263  -- nemam definirano pa punim nule
-            ,0 as dob_tro   -- al nek stoji ako zatreba definiracemo
-            ,SUM(CASE WHEN aml.tax_code_id in (29404, 29397) THEN aml.credit + aml.debit ELSE 0.00 END) as dobra
-        FROM account_move_line aml
-         JOIN account_move am on am.id = aml.move_id
-         LEFT JOIN res_partner rp on rp.id = aml.partner_id
-        LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
-        --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id --v6
-        --LEFT JOIN res_country rc on rc.id = rpa.country_id --v6
-        WHERE am.state = 'posted'
-          --AND rpa.type = 'default' --v6
-          AND aml.tax_code_id in (29404, 29397,97) -- TODO: konfiguracijska tablica kao za PDV obrazac i knjige
-          AND aml.period_id = %(period)s
-        GROUP BY
-            aml.partner_id
-            ,rp.name
-            ,rp.vat
-            ,rc.code
-        """, {'period':period['id']})
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'obrazac.pdv.eu',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_id': ids[0],
+            'views': [(False, 'form')],
+            'target': 'new',
+        }
+
+
+    def _get_report_taxes(self, cr, uid, data, columns):
+        obrazac_id = data['form'].get('obrazac_id', False)
+        if not obrazac_id:
+            return False
+        all_taxes = {}
+        obrazac_stavka_obj = self.pool.get('l10n_hr_pdv.eu.obrazac.stavka')
+        for col in columns:
+            poz_id = self.pool.get('l10n_hr_pdv.report.eu.obrazac').search(cr, uid,
+                                                                           [('obrazac_id', '=', obrazac_id),
+                                                                            ('position', '=', str(col))])
+            all_taxes[col] = None
+            if poz_id:
+                stavka_id = obrazac_stavka_obj.search(cr, uid, [('obrazac_eu_id', '=', poz_id[0])])
+                stavka = obrazac_stavka_obj.browse(cr, uid, stavka_id)
+                taxes = []
+                for st in stavka:
+                    if st.tax_code_id:
+                        taxes.append(st.tax_code_id.id)
+                all_taxes[col] = taxes
+
+        return all_taxes
+
+    def _get_report_journals(self, cr, uid, data):
+        obrazac_id = data['form'].get('obrazac_id', False)
+        if not obrazac_id:
+            return False
+        journals = []
+        obrazac = self.pool.get('l10n_hr_pdv.eu.obrazac').browse(cr, uid, obrazac_id)
+        for journal in obrazac.journal_ids:
+            journals.append(journal.id)
+
+        return journals
+
+    def generate_pdvzp(self, cr, uid, data, period, context=None):
+        period_obj = self.pool.get('account.period')
+        period_id = period_obj.search(cr, uid,
+                                      [('id', '=', period['id']),
+                                       ('company_id', '=', data['form']['company_id']),
+                                       ('special', '=', False)])
+        date_start = self._get_start_date(cr, uid, period_id)
+        month = int(date_start.split('-')[1])
+        self.all_taxes = self._get_report_taxes(cr, uid, data, [11, 12, 13, 14])
+        journals = self._get_report_journals(cr, uid, data)
+        self.journals = '(' + str(journals).strip('[]') + ')'
+        self.sum_col = []
+        col11_sql = ' ,0.0 AS dobra_refund, 0.0 AS dobra_invoice '
+        sum_col11_sql = ' ,0.0 AS usluge '
+        col12_sql = ' ,0.0 AS dob_4263_refund, 0.0 AS dob_4263_invoice '
+        sum_col12_sql = ' ,0.0 AS dob_4263 '
+        col13_sql = ' ,0.0 AS dob_tro_refund, 0.0 AS dob_tro_invoice '
+        sum_col13_sql = ' ,0.0 AS dob_tro '
+        col14_sql = ' ,0.0 AS usluge_refund, 0.0 AS usluge_invoice '
+        sum_col14_sql = ' ,0.0 AS usluge '
+        if self.all_taxes[11]:
+            self.sum_col.append(str(self.all_taxes[11]).strip('[]'))
+            col11_sql = """
+                        ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                           AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1
+                          ELSE 0.00
+                        END) as dobra_refund
+                       ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                           AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit
+                          ELSE 0.00
+                      END) as dobra_invoice
+            """ % {'journals': self.journals,
+                   'col11': '(' + str(self.all_taxes[11]).strip('[]') + ')',
+                   }
+            sum_col11_sql = """
+                ,SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                 SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit ELSE 0.00 END) as dobra
+            """ % {'journals': self.journals,
+                   'col11': '(' + str(self.all_taxes[11]).strip('[]') + ')',
+                   }
+        if self.all_taxes[12]:
+            self.sum_col.append(str(self.all_taxes[12]).strip('[]'))
+            col12_sql = """
+                        ,SUM(CASE WHEN aml.tax_code_id in %(col12)s
+                           AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1
+                          ELSE 0.00
+                        END) as dob_4263_refund
+                       ,SUM(CASE WHEN aml.tax_code_id in %(col12)s
+                           AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit
+                          ELSE 0.00
+                      END) as dob_4263_invoice
+            """ % {'journals': self.journals,
+                   'col12': '(' + str(self.all_taxes[12]).strip('[]') + ')',
+                   }
+            sum_col12_sql = """
+                ,SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                 SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit ELSE 0.00 END) as dob_4263
+            """ % {'journals': self.journals,
+                   'col12': '(' + str(self.all_taxes[12]).strip('[]') + ')',
+                   }
+        if self.all_taxes[13]:
+            self.sum_col.append(str(self.all_taxes[13]).strip('[]'))
+            col13_sql = """
+                        ,SUM(CASE WHEN aml.tax_code_id in %(col13)s
+                           AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1
+                          ELSE 0.00
+                        END) as dob_tro_refund
+                       ,SUM(CASE WHEN aml.tax_code_id in %(col13)s
+                           AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit
+                          ELSE 0.00
+                      END) as dob_tro_invoice
+            """ % {'journals': self.journals,
+                   'col13': '(' + str(self.all_taxes[13]).strip('[]') + ')',
+                   }
+            sum_col13_sql = """
+                ,SUM(CASE WHEN aml.tax_code_id in %(col13)s AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                 SUM(CASE WHEN aml.tax_code_id in %(col13)s AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit ELSE 0.00 END) as dob_tro
+            """ % {'journals': self.journals,
+                   'col13': '(' + str(self.all_taxes[13]).strip('[]') + ')',
+                   }
+
+        if self.all_taxes[14]:
+            self.sum_col.append(str(self.all_taxes[14]).strip('[]'))
+            col14_sql = """
+                        ,SUM(CASE WHEN aml.tax_code_id in %(col14)s
+                           AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1
+                          ELSE 0.00
+                        END) as usluge_refund
+                       ,SUM(CASE WHEN aml.tax_code_id in %(col14)s
+                           AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit
+                          ELSE 0.00
+                      END) as usluge_invoice
+            """ % {'journals': self.journals,
+                   'col14': '(' + str(self.all_taxes[14]).strip('[]') + ')',
+                   }
+            sum_col14_sql = """
+                ,SUM(CASE WHEN aml.tax_code_id in %(col14)s AND am.journal_id in %(journals)s
+                          THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                 SUM(CASE WHEN aml.tax_code_id in %(col14)s AND am.journal_id not in %(journals)s
+                          THEN aml.credit + aml.debit ELSE 0.00 END) as usluge
+            """ % {'journals': self.journals,
+                   'col14': '(' + str(self.all_taxes[14]).strip('[]') + ')',
+                   }
+        sql = """
+            SELECT ROW_NUMBER() OVER (Order by aml.partner_id) as row_number
+                ,aml.partner_id
+                ,rc.code as ccode
+                ,coalesce (rp.name, 'neupisan') as partner_name
+                ,coalesce (rp.vat, 'xxneupisan') as vat
+                """ + col11_sql + col12_sql + col13_sql + col14_sql + \
+              sum_col11_sql + sum_col12_sql + sum_col13_sql + sum_col14_sql + """
+            FROM account_move_line aml
+             JOIN account_move am on am.id = aml.move_id
+             LEFT JOIN res_partner rp on rp.id = aml.partner_id
+             LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
+             --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id
+             --LEFT JOIN res_country rc on rc.id = rpa.country_id
+            WHERE am.state = 'posted'
+              --AND rpa.type = 'default'
+              AND aml.tax_code_id in %(sum_col)s
+              AND aml.period_id = %(period)s
+            GROUP BY
+                aml.partner_id
+                ,rp.name
+                ,rp.vat
+                ,rc.code
+            """ % {'period': period['id'],
+                   'sum_col': tuple(self.sum_col)
+                   }
+
+        cr.execute(sql)
         pdvzp_vals = cr.dictfetchall()
 
-        cr.execute("""
-        SELECT SUM(CASE WHEN aml.tax_code_id in (97) THEN aml.credit + aml.debit ELSE 0.00 END) as sum_usluge
-              ,SUM(CASE WHEN aml.tax_code_id in (929404, 29397) THEN aml.credit + aml.debit ELSE 0.00 END) as sum_dobra
-        FROM account_move_line aml
-         JOIN account_move am on am.id = aml.move_id
-         LEFT JOIN res_partner rp on rp.id = aml.partner_id
-        LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
-        --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id --v6
-        --LEFT JOIN res_country rc on rc.id = rpa.country_id --v6
-        WHERE am.state = 'posted'
-          --AND rpa.type = 'default' v6
-          AND aml.tax_code_id in (29404, 29397,97) -- TODO: konfiguracijska tablica kao za PDV obrazac i knjige
-          AND aml.period_id = %(period)s
-        """, {'period':period['id']})
+        total_col11_sql = ' , 0.0 AS sum_dobra '
+        total_col12_sql = ' , 0.0 AS sum_dob_4263 '
+        total_col13_sql = ' , 0.0 AS sum_dob_tro '
+        total_col14_sql = ' , 0.0 AS sum_usluge '
+        if self.all_taxes[11]:
+            total_col11_sql = """
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END) as sum_dobra
+            """ % {'journals': self.journals,
+                   'col11': '(' + str(self.all_taxes[11]).strip('[]') + ')',
+                   }
+        if self.all_taxes[12]:
+            total_col12_sql = """
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END) as sum_dob_4263
+            """ % {'journals': self.journals,
+                   'col12': '(' + str(self.all_taxes[12]).strip('[]') + ')',
+                   }
+        if self.all_taxes[13]:
+            total_col13_sql = """
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col13)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col13)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END) as sum_dob_tro
+            """ % {'journals': self.journals,
+                   'col13': '(' + str(self.all_taxes[13]).strip('[]') + ')',
+                   }
+        if self.all_taxes[14]:
+            total_col14_sql = """
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col14)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col14)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END) as sum_usluge
+            """ % {'journals': self.journals,
+                   'col14': '(' + str(self.all_taxes[14]).strip('[]') + ')',
+                   }
+
+        sql = """
+            SELECT 1
+                   """ + total_col11_sql + total_col12_sql + total_col13_sql + total_col14_sql + """
+            FROM account_move_line aml
+             JOIN account_move am on am.id = aml.move_id
+             LEFT JOIN res_partner rp on rp.id = aml.partner_id
+             LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
+             --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id
+             --LEFT JOIN res_country rc on rc.id = rpa.country_id
+            WHERE 1=1
+              AND am.state = 'posted'
+              --AND rpa.type = 'default'
+              AND aml.tax_code_id in %(sum_col)s
+              AND aml.period_id = %(period)s
+            """ % {'period': period['id'],
+                   'sum_col': tuple(self.sum_col)
+                   }
+
+        cr.execute(sql)
         pdvzp_sum = cr.dictfetchone()
 
         for l in pdvzp_vals:
             if (not l['ccode'] or not l['vat']) or (l['ccode'] is None or l['vat'] is None):
-                raise orm.except_orm(_('Invalid data!'),_("Partner (%s) does not have country code or vat number!") % l['partner_name'])
+                raise orm.except_orm(_('Invalid data!'),
+                                     _("Partner (%s) does not have country code or vat number!") % l['partner_name'])
 
         EM = objectify.ElementMaker(annotate=False)
-        zp_list = [ EM.Isporuka(
-                          EM.RedBr(l['row_number']),
-                          EM.KodDrzave(l['ccode']),
-                          EM.PDVID(l['vat'].startswith(l['ccode']) and l['vat'][2:].strip() or l['vat'].strip()),
-                          EM.I1(l['dobra']),
-                          EM.I2(l['dob_4263']),
-                          EM.I3(l['dob_tro']),
-                          EM.I4(l['usluge'])) for l in pdvzp_vals if l['ccode'] and l['vat']]
+        zp_list = [EM.Isporuka(
+            EM.RedBr(l['row_number']),
+            EM.KodDrzave(l['ccode']),
+            EM.PDVID(l['vat'].startswith(l['ccode']) and l['vat'][2:].strip() or l['vat'].strip()),
+            EM.I1(l['dobra']),
+            EM.I2(l['dob_4263']),
+            EM.I3(l['dob_tro']),
+            EM.I4(l['usluge'])) for l in pdvzp_vals if l['ccode'] and l['vat']]
 
         tijelo = EM.Tijelo(EM.Isporuke(EM.Isporuka),
                            EM.IsporukeUkupno(
-                              EM.I1(pdvzp_sum['sum_dobra']),
-                              EM.I2('0'),
-                              EM.I3('0'),
-                              EM.I4(pdvzp_sum['sum_usluge'])))
+                               EM.I1(pdvzp_sum['sum_dobra']),
+                               EM.I2('0'),
+                               EM.I3('0'),
+                               EM.I4(pdvzp_sum['sum_usluge'])))
 
         tijelo.Isporuke.Isporuka = zp_list
+        author, company, metadata = rc.get_common_data(self, cr, uid, data, context)
 
-        author, company, metadata = rc.get_common_data(self, cr, uid, datas, context)
-
-        metadata['naslov']= u"Zbirna prijavu za isporuke dobara i usluga u druge države članice Europske unije"   #template.xsd_id.title
-        metadata['uskladjenost'] = u"ObrazacZP-v1-0"              #template.xsd_id.name
+        metadata[
+            'naslov'] = u"Zbirna prijavu za isporuke dobara i usluga u druge države članice Europske unije"  # template.xsd_id.title
+        metadata['uskladjenost'] = u"ObrazacZP-v1-0"  # template.xsd_id.name
 
         xml_metadata, uuid = rc.create_xml_metadata(self, metadata)
         xml_header = rc.create_xml_header(self, period, company, author)
 
-        PDVZP = objectify.ElementMaker(annotate=False, namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacZP/v1-0")   #template.xsd_id.namespace)
-        pdvzp = PDVZP.ObrazacZP(xml_metadata, xml_header, tijelo, verzijaSheme="1.0" )   #template.xsd_id.version)
+        PDVZP = objectify.ElementMaker(annotate=False,
+                                       namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacZP/v1-0")  # template.xsd_id.namespace)
+        pdvzp = PDVZP.ObrazacZP(xml_metadata, xml_header, tijelo, verzijaSheme="1.0")  # template.xsd_id.version)
 
-        #return rc.attachment_values(self, template, pdvs, identifikator)
-        return {'xml':rc.etree_tostring(self, pdvzp),
-                'xsd_path':'shema/ZP',                # template data
-                'xsd_name':'ObrazacZP-v1-0.xsd'}
+        # return rc.attachment_values(self, template, pdvs, identifikator)
+        return {'xml': rc.etree_tostring(self, pdvzp),
+                'xsd_path': 'shema/ZP',  # template data
+                'xsd_name': 'ObrazacZP-v1-0.xsd'}
 
-    def generate_pdvs(self, cr, uid, datas, period, context=None):
-        #dohvat redaka
-        cr.execute("""
-        SELECT ROW_NUMBER() OVER (Order by aml.partner_id) as rbr
-            --,aml.partner_id
-            --,coalesce (rp.name, 'neupisan') as name
-            ,rc.code ccode
-            ,coalesce (rp.name, 'neupisan') as partner_name
-            ,coalesce (rp.vat, NULL) as vat
-            ,SUM(CASE WHEN aml.tax_code_id in (202) THEN aml.credit + aml.debit ELSE 0.00 END) as usluge
-            ,SUM(CASE WHEN aml.tax_code_id in (29401) THEN aml.credit + aml.debit ELSE 0.00 END) as dobra
-        FROM account_move_line aml
-            JOIN account_move am on am.id = aml.move_id
-            LEFT JOIN res_partner rp on rp.id = aml.partner_id
-            LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
-            --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id --v6
-            --LEFT JOIN res_country rc on rc.id = rpa.country_id --v6
-        WHERE 1=1
-          --AND rpa.type = 'default' --v6
-          AND am.state = 'posted'
-          AND aml.tax_code_id in (29401) -- TODO: konfiguracijska tablica kao za PDV obrazac i knjige
-          AND aml.period_id = %(period)s
-        GROUP BY
-                   aml.partner_id
-                   ,rp.name
-                   ,rp.vat
-                   ,rc.code
-        """, {'period':period['id']})
+    def generate_pdvs(self, cr, uid, data, period, context=None):
+        self.all_taxes = self._get_report_taxes(cr, uid, data, [11, 12])
+        self.journals = self._get_report_journals(cr, uid, data)
+        sql = """
+         SELECT ROW_NUMBER() OVER (Order by aml.partner_id) as rbr
+             --,aml.partner_id
+             --,coalesce (rp.name, 'neupisan') as name
+             ,rc.code ccode
+             ,coalesce (rp.vat, 'xxneupisan') as vat
+             ,SUM(CASE WHEN aml.tax_code_id in %(col12)s
+                        AND am.journal_id in %(journals)s
+                       THEN (aml.credit + aml.debit) * -1
+                       ELSE 0.00
+                   END) as usluge_refund
+             ,SUM(CASE WHEN aml.tax_code_id in %(col12)s
+                        AND am.journal_id not in %(journals)s
+                       THEN aml.credit + aml.debit
+                       ELSE 0.00
+                   END) as usluge_invoice
+             ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                        AND am.journal_id in %(journals)s
+                       THEN (aml.credit + aml.debit)  * -1
+                       ELSE 0.00
+                   END) as dobra_refund
+             ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                        AND am.journal_id not in %(journals)s
+                       THEN aml.credit + aml.debit
+                       ELSE 0.00
+                   END) as dobra_invoice
+             ,SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id in %(journals)s
+                       THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                +
+              SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id not in %(journals)s
+                       THEN aml.credit + aml.debit ELSE 0.00 END) as usluge
+             ,SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                       THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                +
+              SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                       THEN aml.credit + aml.debit ELSE 0.00 END) as dobra
+         FROM account_move_line aml
+             JOIN account_move am on am.id = aml.move_id
+             LEFT JOIN res_partner rp on rp.id = aml.partner_id
+             LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
+             --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id
+             /*
+            LEFT JOIN LATERAL (SELECT partner_id, street, city, country_id, type
+                 FROM res_partner_address
+                WHERE partner_id =rp.id AND type = 'default'
+                limit 1) rpa ON True
+             LEFT JOIN res_country rc on rc.id = rpa.country_id
+             */
+         WHERE 1=1
+           --AND rpa.type = 'default'
+           AND am.state = 'posted'
+           AND aml.tax_code_id in %(col11_12)s
+           AND aml.period_id = %(period)s
+         GROUP BY
+                aml.partner_id
+                ,rp.name
+                ,rp.vat
+                ,rc.code
+         """ % {'period': period['id'],
+                'journals': '(' + str(self.journals).strip('[]') + ')',
+                'col11': '(' + str(self.all_taxes[11]).strip('[]') + ')',
+                'col12': '(' + str(self.all_taxes[12]).strip('[]') + ')',
+                'col11_12': '(' + str(self.all_taxes[11]).strip('[]') + ',' + str(self.all_taxes[12]).strip('[]') + ')'
+                }
+
+        cr.execute(sql)
         pdvs_vals = cr.dictfetchall()
 
-        cr.execute("""
-        SELECT SUM(CASE WHEN aml.tax_code_id in (202) THEN aml.credit + aml.debit ELSE 0.00 END ) as sum_usluge
-              ,SUM(CASE WHEN aml.tax_code_id in (29401) THEN aml.credit + aml.debit ELSE 0.00 END ) as sum_dobra
-        FROM account_move_line aml
-            JOIN account_move am on am.id = aml.move_id
-            LEFT JOIN res_partner rp on rp.id = aml.partner_id
-            LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
-            --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id --v6
-            --LEFT JOIN res_country rc on rc.id = rpa.country_id --v6
-        WHERE 1=1
-            --AND rpa.type = 'default' --v6
-            AND am.state = 'posted'
-            AND aml.tax_code_id in (29401) -- TODO: konfiguracijska tablica kao za PDV obrazac i knjige
-            AND aml.period_id = %(period)s
-        """, {'period':period['id']})
+        sql = """
+            SELECT SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id in %(journals)s
+                            THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col12)s AND am.journal_id not in %(journals)s
+                            THEN aml.credit + aml.debit ELSE 0.00 END)
+                   as sum_usluge
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                           THEN (aml.credit + aml.debit) * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                           THEN aml.credit + aml.debit ELSE 0.00 END)
+                   as sum_dobra
+                FROM account_move_line aml
+                    JOIN account_move am on am.id = aml.move_id
+                    LEFT JOIN res_partner rp on rp.id = aml.partner_id
+                    LEFT JOIN res_country rc on rc.id = rp.country_id --v7,v8
+                    --LEFT JOIN res_partner_address rpa on rpa.partner_id = rp.id
+                    /*
+                   LEFT JOIN LATERAL (SELECT partner_id, street, city, country_id, type
+                        FROM res_partner_address
+                       WHERE partner_id =rp.id AND type = 'default'
+                       limit 1) rpa ON True
+                    LEFT JOIN res_country rc on rc.id = rpa.country_id
+                    */
+                WHERE 1=1
+                    --AND rpa.type = 'default'
+                    AND am.state = 'posted'
+                    AND aml.tax_code_id in %(col11_12)s
+                    AND aml.period_id = %(period)s
+            """ % {'period': period['id'],
+                   'journals': '(' + str(self.journals).strip('[]') + ')',
+                   'col11': '(' + str(self.all_taxes[11]).strip('[]') + ')',
+                   'col12': '(' + str(self.all_taxes[12]).strip('[]') + ')',
+                   'col11_12': '(' + str(self.all_taxes[11]).strip('[]') + ',' + str(self.all_taxes[12]).strip(
+                       '[]') + ')'
+                   }
+        cr.execute(sql)
         pdvs_sum = cr.dictfetchone()
 
         for l in pdvs_vals:
             if (not l['ccode'] or not l['vat']) or (l['ccode'] is None or l['vat'] is None):
-                raise orm.except_orm(_('Invalid data!'),_("Partner (%s) does not have country code or vat number!") % l['partner_name'])
-        #skucam retke u listu xml objekata
+                raise orm.except_orm(_('Invalid data!'),
+                                     _("Partner (%s) does not have country code or vat number!") % l['partner_name'])
+        # skucam retke u listu xml objekata
         EM = objectify.ElementMaker(annotate=False)
-        pdvs_list = [ EM.Isporuka(
-                         EM.RedBr(l['rbr']),
-                         EM.KodDrzave(l['ccode']),
-                         EM.PDVID(l['vat'].startswith(l['ccode']) and l['vat'][2:].strip() or l['vat'].strip()),
-                         EM.I1(l['dobra']),
-                         EM.I2(l['usluge'])) for l in pdvs_vals if l['ccode'] and l['vat']]
+        pdvs_list = [EM.Isporuka(
+            EM.RedBr(l['rbr']),
+            EM.KodDrzave(l['ccode']),
+            EM.PDVID(l['vat'].startswith(l['ccode']) and l['vat'][2:].strip() or l['vat'].strip()),
+            EM.I1(l['dobra']),
+            EM.I2(l['usluge'])) for l in pdvs_vals if l['ccode'] and l['vat']]
 
         # i sve to zgovnjam u report
         tijelo = EM.Tijelo(EM.Isporuke(EM.Isporuka),
                            EM.IsporukeUkupno(
-                              EM.I1(pdvs_sum['sum_dobra']),
-                              EM.I2(pdvs_sum['sum_usluge'])))
+                               EM.I1(pdvs_sum['sum_dobra']),
+                               EM.I2(pdvs_sum['sum_usluge'])))
 
         tijelo.Isporuke.Isporuka = pdvs_list
 
-        author, company, metadata = rc.get_common_data(self, cr, uid, datas, context)
+        author, company, metadata = rc.get_common_data(self, cr, uid, data, context)
 
-        metadata['naslov']= u"Prijava za stjecanje dobara i primljene usluge iz drugih država članica Europske unije"   #template.xsd_id.title
-        metadata['uskladjenost'] = u"ObrazacPDVS-v1-0"              #template.xsd_id.name
+        metadata[
+            'naslov'] = u"Prijava za stjecanje dobara i primljene usluge iz drugih država članica Europske unije"  # template.xsd_id.title
+        metadata['uskladjenost'] = u"ObrazacPDVS-v1-0"  # template.xsd_id.name
 
         xml_metadata, uuid = rc.create_xml_metadata(self, metadata)
         xml_header = rc.create_xml_header(self, period, company, author)
 
-        PDVS = objectify.ElementMaker(annotate=False, namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPDVS/v1-0")   #template.xsd_id.namespace)
-        pdvs = PDVS.ObrazacPDVS(xml_metadata, xml_header, tijelo, verzijaSheme="1.0" )   #template.xsd_id.version)
+        PDVS = objectify.ElementMaker(annotate=False,
+                                      namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPDVS/v1-0")  # template.xsd_id.namespace)
+        pdvs = PDVS.ObrazacPDVS(xml_metadata, xml_header, tijelo, verzijaSheme="1.0")  # template.xsd_id.version)
 
-        #return rc.attachment_values(self, template, pdvs, identifikator)
+        # return rc.attachment_values(self, template, pdvs, identifikator)
 
-        return {'xml':rc.etree_tostring(self, pdvs),
-                'xsd_path':'shema/PDV-S',                # template data
-                'xsd_name':'ObrazacPDVS-v1-0.xsd'}
+        return {'xml': rc.etree_tostring(self, pdvs),
+                'xsd_path': 'shema/PDV-S',  # template data
+                'xsd_name': 'ObrazacPDVS-v1-0.xsd'}
 
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
