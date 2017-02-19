@@ -55,6 +55,7 @@ class Parser(report_sxw.rml_parse):
         self.fiscal_year_id = data['form'].get('fiscal_year_id')
         self.period_from = data['form'].get('period_from')
         self.obrazac_id = data['form'].get('obrazac_id')
+        self.fiscalyear_id = data['form'].get('fiscalyear_id')
 
     def _get_report_taxes(self, data):
         if not self.obrazac_id:
@@ -195,7 +196,7 @@ class Parser(report_sxw.rml_parse):
         date_start = self.date_start
         month = int(date_start.split('-')[1])
         data['month_name'] = self.get_month_name(self.cr, self.uid, month)
-        fiscal_year_id = self.fiscal_year_id
+        fiscal_year_id = self.fiscalyear_id
         data['year'] = self.pool.get('account.fiscalyear').browse(self.cr, self.uid, fiscal_year_id).name
         company_id = self.company_id
         data['porezna_uprava'] = self.pool.get('res.company').browse(self.cr, self.uid, company_id).porezna_uprava
