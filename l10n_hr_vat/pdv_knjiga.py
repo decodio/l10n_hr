@@ -210,6 +210,7 @@ class account_move(osv.osv):
             line_obj = self.pool.get('l10n_hr_pdv.knjiga.stavka')
             invoice = context.get('invoice', False)
             for move in self.browse(cr, uid, ids):
+                '''
                 if move.journal_id.type not in JOURNAL_INVOICES:
                     invoice = False #Samo račune na post metodi?
                 if not invoice:
@@ -224,7 +225,10 @@ class account_move(osv.osv):
                                     break
                         if invoice:
                             break
-
+                '''
+                move_exist = line_obj.search(cr, uid, [('move_id', '=', move.id)])
+                if move_exist:
+                    continue
                 pdv_knjiga_ids = move.journal_id.l10n_hr_pdv_knjiga_ids
                 if pdv_knjiga_ids:
                     for pdv_knjiga_id in pdv_knjiga_ids:  
