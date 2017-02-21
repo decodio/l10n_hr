@@ -151,11 +151,11 @@ class OpzStat(models.Model):
 
             kupac_line_no += 1
 
-        Tijelo.UkupanIznosRacunaObrasca = UkupanIznosRacunaObrasca
-        Tijelo.UkupanIznosPdvObrasca = UkupanIznosPdvObrasca
-        Tijelo.UkupanIznosRacunaSPdvObrasca = UkupanIznosRacunaSPdvObrasca
-        Tijelo.UkupniPlaceniIznosRacunaObrasca = UkupniPlaceniIznosRacunaObrasca
-        Tijelo.NeplaceniIznosRacunaObrasca = NeplaceniIznosRacunaObrasca
+        Tijelo.UkupanIznosRacunaObrasca = round(UkupanIznosRacunaObrasca, 2)
+        Tijelo.UkupanIznosPdvObrasca = round(UkupanIznosPdvObrasca, 2)
+        Tijelo.UkupanIznosRacunaSPdvObrasca = round(UkupanIznosRacunaSPdvObrasca, 2)
+        Tijelo.UkupniPlaceniIznosRacunaObrasca = round(UkupniPlaceniIznosRacunaObrasca, 2)
+        Tijelo.NeplaceniIznosRacunaObrasca = round(NeplaceniIznosRacunaObrasca, 2)
         Tijelo.OPZUkupanIznosRacunaSPdv = OPZUkupanIznosRacunaSPdv
         Tijelo.OPZUkupanIznosPdv = OPZUkupanIznosPdv
 
