@@ -607,7 +607,7 @@ class obrazac_pdv_eu(orm.TransientModel):
         all_taxes = self._get_report_taxes(cr, uid, data, [11])
         journals = self._get_report_journals(cr, uid, data)
         grand_total = 0.0
-
+        isporuka = []
         period_from = period.get('id')
         first_data = self._calculate_lines(cr, uid, period_from, all_taxes, journals)
         first_total = self.calculate_totals(cr, uid, period_from, all_taxes, journals)
@@ -616,14 +616,24 @@ class obrazac_pdv_eu(orm.TransientModel):
             if not l['vat'] or l['vat'] is None:
                 raise orm.except_orm(_('Invalid data!'),
                                      _("Partner (%s) does not have vat number!") % l['partner_name'])
-        ppo_list = self._get_PPO_xml_lines(cr, uid, first_data, first_total, period_from)
+        isporuka.append(self._get_PPO_xml_lines(cr, uid, first_data, first_total, period_from))
 
-        tijelo = EM.Tijelo(EM.Isporuke(EM.Isporuka(EM.Podaci)),
-                           EM.Iznos(first_total['sum_isporuke']),
-                           EM.DatumOd(period.get('date_start')),
-                           EM.DatumDo(period.get('date_stop')))
-
-        tijelo.Isporuke.Isporuka.Podaci.Podatak = ppo_list
+        tijelo = EM.Tijelo(EM.Isporuke(
+                            EM.Isporuka(
+                              EM.Podaci(
+                                EM.Podatak(
+                                  EM.RedniBroj(),
+                                  EM.OIB(),
+                                  EM.Iznos()
+                                )
+                              ),
+                            EM.Iznos(),
+                            EM.DatumOd(),
+                            EM.DatumDo()
+                           )
+                          ),
+                          EM.Ukupno()
+                         )
 
         second_period = period_obj.next(cr, uid, period_obj.browse(cr, uid, period_from), 1, context=context)
         second_data = self._calculate_lines(cr, uid, second_period, all_taxes, journals)
@@ -633,13 +643,7 @@ class obrazac_pdv_eu(orm.TransientModel):
             if not l['vat'] or l['vat'] is None:
                 raise orm.except_orm(_('Invalid data!'),
                                      _("Partner (%s) does not have vat number!") % l['partner_name'])
-        second_ppo_list = self._get_PPO_xml_lines(cr, uid, second_data, second_total, second_period)
-        tijelo = EM.Tijelo(EM.Isporuke(EM.Isporuka(EM.Podaci)),
-                           EM.Iznos(first_total['sum_isporuke']),
-                           EM.DatumOd(period.get('date_start')),
-                           EM.DatumDo(period.get('date_stop')))
-
-        tijelo.Isporuke.Isporuka.Podaci.Podatak = second_ppo_list
+        isporuka.append(self._get_PPO_xml_lines(cr, uid, second_data, second_total, second_period))
 
         third_period = period_obj.next(cr, uid, period_obj.browse(cr, uid, second_period), 1, context=context)
         third_data = self._calculate_lines(cr, uid, third_period, all_taxes, journals)
@@ -649,13 +653,10 @@ class obrazac_pdv_eu(orm.TransientModel):
             if not l['vat'] or l['vat'] is None:
                 raise orm.except_orm(_('Invalid data!'),
                                      _("Partner (%s) does not have vat number!") % l['partner_name'])
-        third_ppo_list = self._get_PPO_xml_lines(cr, uid, third_data, third_total, third_period)
-        tijelo = EM.Tijelo(EM.Isporuke(EM.Isporuka(EM.Podaci)),
-                           EM.Iznos(first_total['sum_isporuke']),
-                           EM.DatumOd(period.get('date_start')),
-                           EM.DatumDo(period.get('date_stop')))
+        isporuka.append( self._get_PPO_xml_lines(cr, uid, third_data, third_total, third_period))
 
-        tijelo.Isporuke.Isporuka.Podaci.Podatak = third_ppo_list
+        tijelo.Isporuke.Isporuka = isporuka
+        tijelo.Ukupno = round(grand_total, 2)
 
         author, company, metadata = rc.get_common_data(self, cr, uid, data, context)
 
@@ -665,13 +666,17 @@ class obrazac_pdv_eu(orm.TransientModel):
 
         xml_metadata, uuid = rc.create_xml_metadata(self, metadata)
         xml_header = rc.create_xml_header(self, period, company, author)
+        kvartal = self._get_kvartal(cr, uid, period)
+        year = int(period.get('date_start').split('-')[0])
+        xml_header.Razdoblje.Tromjesecje = EM.Tromjesecje(kvartal)
+        xml_header.Razdoblje.Godina = EM.Godina(year)
 
         PPO = objectify.ElementMaker(annotate=False,
-                                      namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPPO/v1-0")  # template.xsd_id.namespace)
-        ppo = PPO.ObrazacPPO(xml_metadata, xml_header, tijelo, verzijaSheme="1.0")  # template.xsd_id.version)
+                                      namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPPO/v1-0")
+        ppo = PPO.ObrazacPPO(xml_metadata, xml_header, tijelo, verzijaSheme="1.0")
 
         return {'xml': rc.etree_tostring(self, ppo),
-                'xsd_path': 'shema/PPO',  # template data
+                'xsd_path': 'shema/PPO',
                 'xsd_name': 'ObrazacPPO-v1-0.xsd'}
 
     def _get_PPO_xml_lines(self, cr, uid, lines, total, period):
@@ -682,7 +687,20 @@ class obrazac_pdv_eu(orm.TransientModel):
             EM.OIB(l['vat'].startswith('HR') and l['vat'][2:].strip() or l['vat'].strip()),
             EM.Iznos(l['isporuke'])) for l in lines if l['vat']]
 
-        return ppo_list
+        isporuka = EM.Isporuka(
+                    EM.Podaci(
+                        EM.Podatak(
+                            EM.RedniBroj(),
+                            EM.OIB(),
+                            EM.Iznos()
+                        )),
+                    EM.Iznos(total['sum_isporuke']),
+                    EM.DatumOd(period_rec.date_start),
+                    EM.DatumDo(period_rec.date_stop))
+
+        isporuka.Podaci.Podatak = ppo_list
+
+        return isporuka
 
     def _calculate_lines(self, cr, uid, period_from, all_taxes, journals):
         sql = """
@@ -754,5 +772,17 @@ class obrazac_pdv_eu(orm.TransientModel):
         cr.execute(sql)
         pdvs_sum = cr.dictfetchone()
         return pdvs_sum
+
+    def _get_kvartal(self, cr, uid, period):
+        month = int(period.get('date_start').split('-')[1])
+        if month < 4:
+            kvartal = 1
+        elif month < 7:
+            kvartal = 2
+        elif month < 10:
+            kvartal = 3
+        else:
+            kvartal=4
+        return kvartal
 
 
