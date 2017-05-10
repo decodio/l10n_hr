@@ -167,9 +167,9 @@ class Parser(report_sxw.rml_parse):
                    'col11': '(' + str(self.all_taxes[11]).strip('[]') + ')'
                    }
         self.cr.execute(sql)
-        pdvs_sum = self.cr.dictfetchone()
-        self.grand_total += pdvs_sum.get('sum_isporuke', 0.0) or 0.0
-        return pdvs_sum
+        ppo_sum = self.cr.dictfetchone()
+        self.grand_total += ppo_sum.get('sum_isporuke', 0.0) or 0.0
+        return ppo_sum
 
     def get_grand_total(self):
         return self.grand_total
