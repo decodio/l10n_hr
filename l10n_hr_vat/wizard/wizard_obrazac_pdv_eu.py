@@ -104,6 +104,8 @@ class obrazac_pdv_eu(orm.TransientModel):
             report_name = 'obrazac_pdv_s_odt'
         if obrazac.type == 'pdv_zp':
             report_name = 'obrazac_pdv_zp_odt'
+        if obrazac.type == 'ppo':
+            report_name = 'obrazac_ppo_odt'
         return {
             'type': 'ir.actions.report.xml',
             'report_name': report_name,

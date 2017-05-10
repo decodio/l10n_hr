@@ -75,6 +75,21 @@
         <field name="tml_source">file</field>
     </record>
 
+    <!-- Obrazac_PPO-->
+    <record id="aeroo_report_ppo" model="ir.actions.report.xml">
+        <field name="name">obrazac_ppo_odt</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">account.invoice</field>
+        <field name="report_name">obrazac_ppo_odt</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name="parser_loc">l10n_hr_vat/report/obrazac_ppo.py</field>
+        <field name="report_rml">l10n_hr_vat/report/obrazac_ppo.odt</field>
+        <field name="parser_state">loc</field><!--loc-->
+        <field name="tml_source">file</field>
+    </record>
+
 </data>
 </openerp>
 
