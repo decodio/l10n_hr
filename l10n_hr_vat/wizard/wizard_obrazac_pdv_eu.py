@@ -738,6 +738,13 @@ class obrazac_pdv_eu(orm.TransientModel):
                      ,rp.name
                      ,rp.vat
                      ,rc.code
+              HAVING (SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                            --THEN (aml.credit - aml.debit) * -1 ELSE 0.00 END)
+                            THEN aml.tax_amount * -1 ELSE 0.00 END)
+                     +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                            --THEN aml.credit - aml.debit ELSE 0.00 END) as isporuke
+                            THEN aml.tax_amount ELSE 0.00 END)) != 0.0
               """ % {'period': period_from,
                      'journals': '(' + str(journals).strip('[]') + ')',
                      'col11': '(' + str(all_taxes[11]).strip('[]') + ')'
