@@ -104,6 +104,8 @@ class obrazac_pdv_eu(orm.TransientModel):
             report_name = 'obrazac_pdv_s_odt'
         if obrazac.type == 'pdv_zp':
             report_name = 'obrazac_pdv_zp_odt'
+        if obrazac.type == 'ppo':
+            report_name = 'obrazac_ppo_odt'
         return {
             'type': 'ir.actions.report.xml',
             'report_name': report_name,
@@ -134,6 +136,8 @@ class obrazac_pdv_eu(orm.TransientModel):
             xml = self.generate_pdvs(cr, uid, datas, period, context)
         if period and obrazac.type == 'pdv_zp':
             xml = self.generate_pdvzp(cr, uid, datas, period, context)
+        if period and obrazac.type == 'ppo':
+            xml = self.generate_ppo(cr, uid, datas, period, context)
 
         xml['path'] = os.path.dirname(os.path.abspath(__file__))
         # VALIDACIJA preko xsd-a
@@ -596,4 +600,196 @@ class obrazac_pdv_eu(orm.TransientModel):
                 'xsd_path': 'shema/PDV-S',  # template data
                 'xsd_name': 'ObrazacPDVS-v1-0.xsd'}
 
-#vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+    def generate_ppo(self, cr, uid, data, period, context=None):
+        EM = objectify.ElementMaker(annotate=False)
+        period_obj = self.pool.get('account.period')
+        all_taxes = self._get_report_taxes(cr, uid, data, [11])
+        journals = self._get_report_journals(cr, uid, data)
+        grand_total = 0.0
+        isporuka = []
+        period_from = period.get('id')
+        first_data = self._calculate_lines(cr, uid, period_from, all_taxes, journals)
+        first_total = self.calculate_totals(cr, uid, period_from, all_taxes, journals)
+        grand_total += first_total.get('sum_isporuke', 0.0) or 0.0
+        for l in first_data:
+            if not l['vat'] or l['vat'] is None:
+                raise orm.except_orm(_('Invalid data!'),
+                                     _("Partner (%s) does not have vat number!") % l['partner_name'])
+        isporuka.append(self._get_PPO_xml_lines(cr, uid, first_data, first_total, period_from))
+
+        tijelo = EM.Tijelo(EM.Isporuke(
+                            EM.Isporuka(
+                              EM.Podaci(
+                                EM.Podatak(
+                                  EM.RedniBroj(),
+                                  EM.OIB(),
+                                  EM.Iznos()
+                                )
+                              ),
+                            EM.Iznos(),
+                            EM.DatumOd(),
+                            EM.DatumDo()
+                           )
+                          ),
+                          EM.Ukupno()
+                         )
+
+        second_period = period_obj.next(cr, uid, period_obj.browse(cr, uid, period_from), 1, context=context)
+        second_data = self._calculate_lines(cr, uid, second_period, all_taxes, journals)
+        second_total = self.calculate_totals(cr, uid, second_period, all_taxes, journals)
+        grand_total += second_total.get('sum_isporuke', 0.0) or 0.0
+        for l in second_data:
+            if not l['vat'] or l['vat'] is None:
+                raise orm.except_orm(_('Invalid data!'),
+                                     _("Partner (%s) does not have vat number!") % l['partner_name'])
+        isporuka.append(self._get_PPO_xml_lines(cr, uid, second_data, second_total, second_period))
+
+        third_period = period_obj.next(cr, uid, period_obj.browse(cr, uid, second_period), 1, context=context)
+        third_data = self._calculate_lines(cr, uid, third_period, all_taxes, journals)
+        third_total = self.calculate_totals(cr, uid, third_period, all_taxes, journals)
+        grand_total += third_total.get('sum_isporuke', 0.0) or 0.0
+        for l in third_data:
+            if not l['vat'] or l['vat'] is None:
+                raise orm.except_orm(_('Invalid data!'),
+                                     _("Partner (%s) does not have vat number!") % l['partner_name'])
+        isporuka.append( self._get_PPO_xml_lines(cr, uid, third_data, third_total, third_period))
+
+        tijelo.Isporuke.Isporuka = isporuka
+        tijelo.Ukupno = round(grand_total, 2)
+
+        author, company, metadata = rc.get_common_data(self, cr, uid, data, context)
+
+        metadata[
+            'naslov'] = u"Prijava prijenosa porezne obveze"  # template.xsd_id.title
+        metadata['uskladjenost'] = u"ObrazacPPO-v1-0"  # template.xsd_id.name
+
+        xml_metadata, uuid = rc.create_xml_metadata(self, metadata)
+        xml_header = rc.create_xml_header(self, period, company, author)
+        kvartal = self._get_kvartal(cr, uid, period)
+        year = int(period.get('date_start').split('-')[0])
+        xml_header.Razdoblje.Tromjesecje = EM.Tromjesecje(kvartal)
+        xml_header.Razdoblje.Godina = EM.Godina(year)
+
+        PPO = objectify.ElementMaker(annotate=False,
+                                      namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPPO/v1-0")
+        ppo = PPO.ObrazacPPO(xml_metadata, xml_header, tijelo, verzijaSheme="1.0")
+
+        return {'xml': rc.etree_tostring(self, ppo),
+                'xsd_path': 'shema/PPO',
+                'xsd_name': 'ObrazacPPO-v1-0.xsd'}
+
+    def _get_PPO_xml_lines(self, cr, uid, lines, total, period):
+        period_rec = self.pool.get('account.period').browse(cr, uid, period)
+        EM = objectify.ElementMaker(annotate=False)
+        ppo_list = [EM.Podatak(
+            EM.RedniBroj(l['row_number']),
+            EM.OIB(l['vat'].startswith('HR') and l['vat'][2:].strip() or l['vat'].strip()),
+            EM.Iznos(l['isporuke'])) for l in lines if l['vat']]
+
+        isporuka = EM.Isporuka(
+                    EM.Podaci(
+                        EM.Podatak(
+                            EM.RedniBroj(),
+                            EM.OIB(),
+                            EM.Iznos()
+                        )),
+                    EM.Iznos(total['sum_isporuke']),
+                    EM.DatumOd(period_rec.date_start),
+                    EM.DatumDo(period_rec.date_stop))
+
+        isporuka.Podaci.Podatak = ppo_list
+
+        return isporuka
+
+    def _calculate_lines(self, cr, uid, period_from, all_taxes, journals):
+        sql = """
+              SELECT ROW_NUMBER() OVER (Order by aml.partner_id) as row_number
+                  ,coalesce (rp.vat, 'xxneupisan') as vat
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                             AND am.journal_id in %(journals)s
+                            --THEN (aml.credit - aml.debit)  * -1
+                            THEN aml.tax_amount  * -1
+                            ELSE 0.00
+                        END) as isporuke_refund
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s
+                             AND am.journal_id not in %(journals)s
+                            --THEN aml.credit - aml.debit
+                            THEN aml.tax_amount
+                            ELSE 0.00
+                        END) as isporuke_invoice
+                  ,SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                            --THEN (aml.credit - aml.debit) * -1 ELSE 0.00 END)
+                            THEN aml.tax_amount * -1 ELSE 0.00 END)
+                     +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                            --THEN aml.credit - aml.debit ELSE 0.00 END) as isporuke
+                            THEN aml.tax_amount ELSE 0.00 END) as isporuke
+              FROM account_move_line aml
+                  JOIN account_move am on am.id = aml.move_id
+                  LEFT JOIN res_partner rp on rp.id = aml.partner_id
+                  LEFT JOIN res_country rc on rc.id = rp.country_id
+              WHERE 1=1
+                AND am.state = 'posted'
+                AND aml.tax_code_id in %(col11)s
+                AND aml.period_id = %(period)s
+              GROUP BY
+                     aml.partner_id
+                     ,rp.name
+                     ,rp.vat
+                     ,rc.code
+              HAVING (SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                            --THEN (aml.credit - aml.debit) * -1 ELSE 0.00 END)
+                            THEN aml.tax_amount * -1 ELSE 0.00 END)
+                     +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                            --THEN aml.credit - aml.debit ELSE 0.00 END) as isporuke
+                            THEN aml.tax_amount ELSE 0.00 END)) != 0.0
+              """ % {'period': period_from,
+                     'journals': '(' + str(journals).strip('[]') + ')',
+                     'col11': '(' + str(all_taxes[11]).strip('[]') + ')'
+                     }
+        cr.execute(sql)
+        data = cr.dictfetchall()
+        return data
+
+
+    def calculate_totals(self, cr, uid, period_from, all_taxes, journals):
+        sql = """
+            SELECT SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+                           --THEN (aml.credit - aml.debit) * -1 ELSE 0.00 END)
+                             THEN aml.tax_amount * -1 ELSE 0.00 END)
+                   +
+                   SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
+                           --THEN aml.credit - aml.debit ELSE 0.00 END)
+                           THEN aml.tax_amount ELSE 0.00 END)
+                   as sum_isporuke
+                FROM account_move_line aml
+                    JOIN account_move am on am.id = aml.move_id
+                    LEFT JOIN res_partner rp on rp.id = aml.partner_id
+                    LEFT JOIN res_country rc on rc.id = rp.country_id
+                WHERE 1=1
+                    AND am.state = 'posted'
+                    AND aml.tax_code_id in %(col11)s
+                    AND aml.period_id = %(period)s
+            """ % {'period': period_from,
+                   'journals': '(' + str(journals).strip('[]') + ')',
+                   'col11': '(' + str(all_taxes[11]).strip('[]') + ')'
+                   }
+        cr.execute(sql)
+        pdvs_sum = cr.dictfetchone()
+        return pdvs_sum
+
+    def _get_kvartal(self, cr, uid, period):
+        month = int(period.get('date_start').split('-')[1])
+        if month < 4:
+            kvartal = 1
+        elif month < 7:
+            kvartal = 2
+        elif month < 10:
+            kvartal = 3
+        else:
+            kvartal=4
+        return kvartal
+
+

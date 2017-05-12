@@ -1,0 +1,86 @@
+<ObrazacPPO verzijaSheme="1.0" xmlns="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPPO/v1-0">
+  <Metapodaci xmlns="http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0">
+    <Naslov dc="http://purl.org/dc/elements/1.1/title">Prijava prijenosa porezne obveze</Naslov>
+    <Autor dc="http://purl.org/dc/elements/1.1/creator">Korisnik 16EP</Autor>
+    <Datum dc="http://purl.org/dc/elements/1.1/date">2015-03-24T12:50:34</Datum>
+    <Format dc="http://purl.org/dc/elements/1.1/format">text/xml</Format>
+    <Jezik dc="http://purl.org/dc/elements/1.1/language">hr-HR</Jezik>
+    <Identifikator dc="http://purl.org/dc/elements/1.1/identifier">c50733d4-d57b-4ad6-9ddf-33f81358f1eb</Identifikator>
+    <Uskladjenost dc="http://purl.org/dc/terms/conformsTo">ObrazacPPO-v1-0</Uskladjenost>
+    <Tip dc="http://purl.org/dc/elements/1.1/type">Elektronički obrazac</Tip>
+    <Adresant>Ministarstvo Financija, Porezna uprava, Zagreb</Adresant>
+  </Metapodaci>
+  <Zaglavlje>
+    <Razdoblje>
+      <DatumOd>2015-01-01</DatumOd>
+      <DatumDo>2015-03-31</DatumDo>
+      <Tromjesecje>1</Tromjesecje>
+      <Godina>2015</Godina>
+    </Razdoblje>
+    <Obveznik>
+      <Naziv> Tvrtka prošitena TS2 d.d.</Naziv>
+      <OIB>63285790380</OIB>
+      <Adresa>
+        <Mjesto>Zagreb</Mjesto>
+        <Ulica>Bogovićeva</Ulica>
+        <Broj>83/a</Broj>
+      </Adresa>
+    </Obveznik>
+    <ObracunSastavio>
+      <Ime>KORISNIK</Ime>
+      <Prezime>16EP</Prezime>
+    </ObracunSastavio>
+    <Ispostava>3402</Ispostava>
+  </Zaglavlje>
+  <Tijelo>
+    <Isporuke>
+      <Isporuka>
+        <Podaci>
+          <Podatak>
+            <RedniBroj>1</RedniBroj>
+            <OIB>61877856058</OIB>
+            <Iznos>2570.00</Iznos>
+          </Podatak>
+          <Podatak>
+            <RedniBroj>2</RedniBroj>
+            <OIB>89482564059</OIB>
+            <Iznos>-1210.00</Iznos>
+          </Podatak>
+          <Podatak>
+            <RedniBroj>3</RedniBroj>
+            <OIB>88858002102</OIB>
+            <Iznos>165.98</Iznos>
+          </Podatak>
+        </Podaci>
+        <Iznos>1525.98</Iznos>
+        <DatumOd>2015-01-01</DatumOd>
+        <DatumDo>2015-01-31</DatumDo>
+      </Isporuka>
+      <Isporuka>
+        <Podaci>
+          <Podatak>
+            <RedniBroj>1</RedniBroj>
+            <OIB>89482564059</OIB>
+            <Iznos>10000.00</Iznos>
+          </Podatak>
+        </Podaci>
+        <Iznos>10000.00</Iznos>
+        <DatumOd>2015-02-01</DatumOd>
+        <DatumDo>2015-02-28</DatumDo>
+      </Isporuka>
+      <Isporuka>
+        <Podaci>
+          <Podatak>
+            <RedniBroj>1</RedniBroj>
+            <OIB>61877856058</OIB>
+            <Iznos>-156.89</Iznos>
+          </Podatak>
+        </Podaci>
+        <Iznos>-156.89</Iznos>
+        <DatumOd>2015-03-01</DatumOd>
+        <DatumDo>2015-03-31</DatumDo>
+      </Isporuka>
+    </Isporuke>
+    <Ukupno>11369.09</Ukupno>
+  </Tijelo>
+</ObrazacPPO>
