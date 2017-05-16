@@ -40,7 +40,7 @@ Description:
     'website': 'https://launchpad.net/openobject-croatia',
 
     'depends': [
-                'sale',
+                'sale_base',
                 'l10n_hr_fiskal',
                 ],
 
