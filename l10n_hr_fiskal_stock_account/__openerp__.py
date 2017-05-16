@@ -39,7 +39,7 @@ Description:
     'category' : 'Localisation/Croatia',
     'website': 'https://launchpad.net/openobject-croatia',
 
-    'depends': [
+    'depends': ['stock_base',
                 'stock_account',
                 'l10n_hr_fiskal',
                 ],
