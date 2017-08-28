@@ -14,13 +14,14 @@ class SaleOrder(models.Model):
             self, grouped=False, states=None, date_invoice=False):
         invoice_id = super(SaleOrder, self).action_invoice_create(
             grouped=grouped, states=states, date_invoice=date_invoice)
-        if self.journal_id and self.journal_id.nac_plac:
-            uredjaj_id = self.journal_id .fiskal_uredjaj_ids and \
-                         self.journal_id.fiskal_uredjaj_ids[0].id or False
-            self.env['account.invoice'].browse(invoice_id).write(
-                {'nac_plac': self.journal_id.nac_plac,
-                 'journal_id': self.journal_id and self.journal_id.id or False,
-                 'uredjaj_id': uredjaj_id})
+        for invoice in self:
+            if invoice.journal_id and invoice.journal_id.nac_plac:
+                uredjaj_id = invoice.journal_id .fiskal_uredjaj_ids and \
+                             invoice.journal_id.fiskal_uredjaj_ids[0].id or False
+                self.env['account.invoice'].browse(invoice_id).write(
+                    {'nac_plac': invoice.journal_id.nac_plac,
+                     'journal_id': invoice.journal_id and invoice.journal_id.id or False,
+                     'uredjaj_id': uredjaj_id})
         return invoice_id
 
 
