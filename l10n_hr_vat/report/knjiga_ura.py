@@ -160,8 +160,42 @@ class Parser(report_sxw.rml_parse):
          """
          
         invoice_sql = """ LEFT JOIN account_invoice AS invoice ON (invoice.id=stavka.invoice_id) """
-         
-        return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql, invoice_sql=invoice_sql)
+        self.crete_temp_table()
+        insert_sql = 'INSERT INTO l10n_hr_vat_' + str(self.uid) +"""(
+            rbr, invoice_number, invoice_date, partner_name, partner_oib,
+            stupac6, stupac7, stupac8, stupac9, stupac10, stupac11, stupac12,
+            stupac13, stupac14, stupac15, stupac16, stupac17, stupac18) """
+        return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql, invoice_sql=invoice_sql, insert_sql=insert_sql)
+
+    def crete_temp_table(self):
+        sql = """CREATE TEMPORARY TABLE l10n_hr_vat_%(name_sufix)s
+                (
+                  rbr bigint,
+                  invoice_number character varying(64),
+                  invoice_date date,
+                  partner_name text,
+                  partner_oib text,
+                  stupac6 numeric,
+                  stupac7 numeric,
+                  stupac8 numeric,
+                  stupac9 numeric,
+                  stupac10 numeric,
+                  stupac11 numeric,
+                  stupac12 numeric,
+                  stupac13 numeric,
+                  stupac14 numeric,
+                  stupac15 numeric,
+                  stupac16 numeric,
+                  stupac17 numeric,
+                  stupac18 numeric
+                )
+                ON COMMIT DROP;
+
+        """ % {'name_sufix': str(self.uid)}
+
+        self.cr.execute(sql)
+        return False
+
     
     def _get_totals(self):
         return self.sums

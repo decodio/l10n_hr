@@ -159,7 +159,48 @@ class Parser(report_sxw.rml_parse):
             COALESCE(invoice_partner_name, p.name, ' ') || ', ' || COALESCE(invoice_partner_street, p.street ,' ') || ', ' || COALESCE(invoice_partner_city, p.city, ' ') AS partner_name,
             SUBSTRING(COALESCE(invoice_partner_oib, p.vat, ' '), 3) AS partner_oib,        
             """
-        return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql)
+        self.crete_temp_table()
+
+        insert_sql = 'INSERT INTO l10n_hr_vat_' + str(self.uid) +"""(
+            rbr, invoice_number, invoice_date, partner_name, partner_oib,
+            stupac6, stupac7, stupac8, stupac9, stupac10, stupac11, stupac12,
+            stupac13, stupac14, stupac15, stupac16, stupac17, stupac18, stupac19,
+            stupac20, stupac21, stupac22) """
+        return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql, invoice_sql='', insert_sql=insert_sql)
+
+
+    def crete_temp_table(self):
+        sql = """CREATE TEMPORARY TABLE l10n_hr_vat_%(name_sufix)s
+                (
+                  rbr bigint,
+                  invoice_number character varying(64),
+                  invoice_date date,
+                  partner_name text,
+                  partner_oib text,
+                  stupac6 numeric,
+                  stupac7 numeric,
+                  stupac8 numeric,
+                  stupac9 numeric,
+                  stupac10 numeric,
+                  stupac11 numeric,
+                  stupac12 numeric,
+                  stupac13 numeric,
+                  stupac14 numeric,
+                  stupac15 numeric,
+                  stupac16 numeric,
+                  stupac17 numeric,
+                  stupac18 numeric,
+                  stupac19 numeric,
+                  stupac20 numeric,
+                  stupac21 numeric,
+                  stupac22 numeric
+                )
+                ON COMMIT DROP;
+
+        """ % {'name_sufix': str(self.uid)}
+
+        self.cr.execute(sql)
+        return False
         
     def _get_totals(self):
         return self.sums
