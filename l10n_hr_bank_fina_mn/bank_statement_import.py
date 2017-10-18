@@ -254,6 +254,16 @@ class account_bank_statement_line(orm.Model):
                 ('reconcile_id', '=', False),
                 ('account_id.reconcile', '=', True)],
             context=context)
+        if len(move_line_ids) > 1:
+            sql = """
+            SELECT DISTINCT partner_id
+              FROM account_move_line
+             WHERE id IN %s
+            """
+            cr.execute(sql, tuple(move_line_ids))
+            partners = cr.fetchall()
+            if len(partners) > 1:
+                return []
         return move_line_ids
 
     def _get_open_move_line_ids(self, cr, uid, line, context=None):
@@ -262,7 +272,7 @@ class account_bank_statement_line(orm.Model):
         move_line_obj = self.pool.get('account.move.line')
         move_line_ids = []
         field_map = {'ref': 'payment_ref'}
-        if line.get('ref') and line.get('amount'):
+        if line.get('ref') and len(field_map.get('ref'))> 5 and line.get('amount'):
             # search by payment reference and exact amount
             move_line_ids = self._search_by_ref_exact_amount(cr, uid, line, move_line_obj, field_map, context=context)
 
