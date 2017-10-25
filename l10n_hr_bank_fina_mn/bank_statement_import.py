@@ -260,7 +260,7 @@ class account_bank_statement_line(orm.Model):
               FROM account_move_line
              WHERE id IN %s
             """
-            cr.execute(sql, tuple(move_line_ids))
+            cr.execute(sql, (tuple(move_line_ids),))
             partners = cr.fetchall()
             if len(partners) > 1:
                 return []
