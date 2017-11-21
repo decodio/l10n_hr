@@ -111,7 +111,7 @@ class Parser(report_sxw.rml_parse):
         if data['form']['period_to']:
             filter['filter'] += '- ' + period_to  
         if data['form']['date_start']:                    
-            filter['filter'] +=  ', ' + _('For Date:') + ' ' + date_start_formated  
+            filter['filter'] =  ', ' + _('For Date:') + ' ' + date_start_formated
         if data['form']['date_stop']:                    
             filter['filter'] +=  '-' + date_stop_formated
         header_data.append(filter)
