@@ -22,14 +22,13 @@
 #
 ##############################################################################
 
-
 import time
 from openerp.report import report_sxw
 from openerp.tools.translate import _
 from vat_book_report_common import get_vat_book_report_common
 
 class Parser(report_sxw.rml_parse):
-       
+
     def set_context(self, objects, data, ids, report_type=None):
         new_ids = ids
         res = {}
@@ -61,7 +60,7 @@ class Parser(report_sxw.rml_parse):
                 res['periods'] += ", "+ period['name']
                                                     
         return super(Parser, self).set_context(objects, data, new_ids, report_type=report_type)
-            
+
     def __init__(self, cr, uid, name, context=None):
         self.sums = {}
         super(Parser, self).__init__(cr, uid, name, context=context)
@@ -109,7 +108,7 @@ class Parser(report_sxw.rml_parse):
         if data['form']['period_to']:
             filter['filter'] += '- ' + period_to  
         if data['form']['date_start']:                    
-            filter['filter'] +=  ', ' + _('For Date:') + ' ' + date_start_formated  
+            filter['filter'] =  ', ' + _('For Date:') + ' ' + date_start_formated
         if data['form']['date_stop']:                    
             filter['filter'] +=  '-' + date_stop_formated
         header_data.append(filter)
@@ -132,7 +131,7 @@ class Parser(report_sxw.rml_parse):
     def _get_company_vat(self, data):
         name = self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.vat and \
             self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.vat[2:] or \
-            self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['cchart_tax_id']).company_id.partner_id.oib and \
+            self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.oib and \
             self.pool.get('account.tax.code').browse(self.cr, self.uid, data['form']['chart_tax_id']).company_id.partner_id.oib or False
         return name   
 
@@ -166,9 +165,7 @@ class Parser(report_sxw.rml_parse):
             rbr, invoice_number, invoice_date, partner_name, partner_oib,
             stupac6, stupac7, stupac8, stupac9, stupac10, stupac11, stupac12,
             stupac13, stupac14, stupac15, stupac16, stupac17, stupac18) """
-
         return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql, invoice_sql=invoice_sql, insert_sql=insert_sql)
-
 
     def crete_temp_table(self):
         sql = """CREATE TEMPORARY TABLE l10n_hr_vat_%(name_sufix)s
@@ -198,6 +195,7 @@ class Parser(report_sxw.rml_parse):
 
         self.cr.execute(sql)
         return False
-    
+
+
     def _get_totals(self):
         return self.sums
