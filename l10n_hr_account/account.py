@@ -57,6 +57,10 @@ class account_journal(models.Model):
     P3_pnbr = fields.Selection(_P1_P4_selection(), 'P3', default='delivery_ym', help='3. polje poziva na broj.')
     P4_pnbr = fields.Selection(_P1_P4_selection(), 'P4', default=False, help='4. polje poziva na broj.')
 
+    user_ids = fields.Many2many(comodel_name='res.users',
+                                relation='user_account_journal_rel', column1='user_id', column2='journal_id',
+                                string='Users allowed', help="Users allowed to post in this journal")
+
     def create_sequence(self, cr, uid, vals, context=None):
         """
         Create new entry sequence for every new Joural

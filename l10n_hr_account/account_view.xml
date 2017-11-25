@@ -20,6 +20,11 @@
                         </group>
                     </group>
                 </page>
+                <page string="Allowed Users">
+                    <group>
+                        <field name="user_ids" widget="many2many_tags"/>
+                    </group>
+                </page>
             </notebook>
         </field>
     </record>

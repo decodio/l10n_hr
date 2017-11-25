@@ -41,6 +41,7 @@ class l10n_hr_obrazac_eu_obrazac(models.Model):
     name = fields.Char('Description',)
     type =fields.Selection([('pdv_s', 'Obrazac PDV-S')
                             ,('pdv_zp', 'Obrazac PDV-ZP')
+                            ,('ppo', 'Obrazac PPO')
                             ],'Type', required=True )
     company_id = fields.Many2one('res.company', 'Company', required=True, default=_default_company)
     sequence = fields.Integer('Sequence', required=True, help="Poredak obrasca EU u prikazu", default=10)

@@ -4,7 +4,7 @@ from openerp.tools.translate import _
 
 class get_vat_book_report_common(object):         
 
-    def get_lines(self, report_object, data, stupci, row_start_values_sql, invoice_sql='', journal_sql= ''):
+    def get_lines(self, report_object, data, stupci, row_start_values_sql, invoice_sql='', insert_sql= '', journal_sql= ''):
          
         periods_ids = report_object.period_ids
         knjiga_id = data['form']['knjiga_id'] or False
@@ -41,10 +41,10 @@ class get_vat_book_report_common(object):
             line_query2 += stupacText + ' AS stupac' + str(stupac)
             if i < len(stupci):
                 line_query2 += ', '
-                sum_sql += ', '        
-                              
-        viewSQL = 'CREATE OR REPLACE VIEW l10n_hr_vat_' + str(report_object.uid) + ' AS '
-        line_query = 'SELECT ' + row_start_values_sql + line_query2 + """ FROM l10n_hr_pdv_knjiga_stavka AS stavka 
+                sum_sql += ', '
+
+        #viewSQL = 'CREATE OR REPLACE VIEW l10n_hr_vat_' + str(report_object.uid) + ' AS '
+        line_query = 'SELECT ' + row_start_values_sql + line_query2 + """ FROM l10n_hr_pdv_knjiga_stavka AS stavka
             """ + invoice_sql + """
             --LEFT JOIN account_invoice AS invoice ON (invoice_id=invoice.id)
                --LEFT JOIN res_users AS users ON (invoice.user_id=users.id)
@@ -61,7 +61,8 @@ class get_vat_book_report_common(object):
             linesSelect += " AND (invoice_date_invoice <= \'" + date_stop + "\')" 
         linesSelect += ')'
         
-        report_object.cr.execute(viewSQL + line_query + linesSelect)
+        #report_object.cr.execute(viewSQL + line_query + linesSelect)
+        report_object.cr.execute(insert_sql + line_query + linesSelect)
         
         select_sql = 'SELECT * FROM l10n_hr_vat_' + str(report_object.uid) + \
             ' WHERE (' + sum_all_stupci + ') <> 0 ORDER BY invoice_date, rbr'
@@ -70,7 +71,7 @@ class get_vat_book_report_common(object):
         self.set_rbr(data, report_object, res)
         report_object.cr.execute('SELECT ' + sum_sql + ' FROM l10n_hr_vat_' + str(report_object.uid))       
         report_object.sums = report_object.cr.dictfetchall()
-        report_object.cr.execute('DROP VIEW l10n_hr_vat_' + str(report_object.uid)) 
+        #report_object.cr.execute('DROP VIEW l10n_hr_vat_' + str(report_object.uid))
                
         return res
 
@@ -101,4 +102,4 @@ class get_vat_book_report_common(object):
         AND line.journal_id IN (' + str(journal_list).strip('[]') + ') \
         AND account.active '
         
-        return sql 
+        return sql
