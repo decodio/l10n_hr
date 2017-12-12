@@ -1,22 +1,22 @@
 id,name,code,close_method,note,report_type
-account.data_account_type_asset,Asset,asset,Balance,,Balance Sheet (Asset account)
-account.account_type_asset_view1,Asset View,asset,None,,Balance Sheet (Asset account)
-account.data_account_type_bank,Bank,bank,Balance,,Balance Sheet (Asset account)
-account.data_account_type_cash,Cash,cash,Balance,,Balance Sheet (Asset account)
-account.conf_account_type_chk,Check,check,Balance,,Balance Sheet (Asset account)
-account.conf_account_type_equity,Equity,equity,Balance,,Balance Sheet (Liability account)
-account.account_type_expense_view1,Expense View,expense,None,,Profit & Loss (Expense account)
-account.data_account_type_expense,Expense,expense,None,,Profit & Loss (Expense account)
-account.data_account_type_income,Income,income,None,,Profit & Loss (Income account)
-account.data_account_type_equity,Kapital i rezerve,kapital,Balance,,Balance Sheet (Liability account)
-account.data_account_type_stock,Kratkotrajna imovina,kratkotrajna_imovina,Balance,,Balance Sheet (Asset account)
-account.account_type_liability_view1,Liability View,liability,None,,Balance Sheet (Liability account)
-account.data_account_type_liability,Liability,liability,Unreconciled,,Balance Sheet (Liability account)
-account.data_account_type_other,Ostalo,other,None,,/
-account.data_account_type_payable,Payable,payable,Unreconciled,,Balance Sheet (Liability account)
-account.data_account_type_payable_tax,Obveze za PDV,pdv,Balance,,Balance Sheet (Liability account)
-account.data_account_type_receivable_tax,Potraživanja za pretporez,pretporez,Balance,,Balance Sheet (Asset account)
-account.data_account_type_receivable,Receivable,receivable,Unreconciled,,Balance Sheet (Asset account)
-account.conf_account_type_tax,Tax,tax,Unreconciled,,Profit & Loss (Expense account)
-account.account_type_income_view1,Income View,view,None,,Profit & Loss (Income account)
-account.data_account_type_view,Root/View,view,None,,/
+account.data_account_type_asset,Asset,asset,Balance,,asset
+account.account_type_asset_view1,Asset View,asset,None,,asset
+account.data_account_type_bank,Bank,bank,Balance,,asset
+account.data_account_type_cash,Cash,cash,Balance,,asset
+account.conf_account_type_chk,Check,check,Balance,,asset
+account.conf_account_type_equity,Equity,equity,Balance,,liability
+account.account_type_expense_view1,Expense View,expense,None,,expense
+account.data_account_type_expense,Expense,expense,None,,expense
+account.data_account_type_income,Income,income,None,,income
+account.data_account_type_equity,Kapital i rezerve,kapital,Balance,,liability
+account.data_account_type_stock,Kratkotrajna imovina,kratkotrajna_imovina,Balance,,asset
+account.account_type_liability_view1,Liability View,liability,None,,liability
+account.data_account_type_liability,Liability,liability,Unreconciled,,liability
+account.data_account_type_other,Ostalo,other,None,,none
+account.data_account_type_payable,Payable,payable,Unreconciled,,liability
+account.data_account_type_payable_tax,Obveze za PDV,pdv,Balance,,liability
+account.data_account_type_receivable_tax,Potraživanja za pretporez,pretporez,Balance,,asset
+account.data_account_type_receivable,Receivable,receivable,Unreconciled,,asset
+account.conf_account_type_tax,Tax,tax,Unreconciled,,expense
+account.account_type_income_view1,Income View,view,None,,income
+account.data_account_type_view,Root/View,view,None,,none
