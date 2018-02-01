@@ -1,0 +1,108 @@
+id,code,sign,name,parent_id:id,info
+pdv_code_porezi,,1.0,POREZI,,
+pdv_code_pdv,PDV,0,PDV,pdv_code_porezi,
+pdv_code_pdvob,PDVOB,0,OBRAZAC PDV,pdv_code_pdv,
+pdv_code_opdvob,oPDVOB,0,O S N O V I C A,pdv_code_pdvob,IV. UKUPNA POREZNA OBVEZA ZA POREZNO RAZDOBLJE:ZA UPLATU (II. - III.)
+pdv_code_ppdv_n,pPDV_N,1.0,V. PO PRETHODNOM OBRAČUNU : NEUPLAĆENI DIO PDV-A DO DANA PODNOŠE,pdv_code_opdvob,V. PO PRETHODNOM OBRAČUNU : NEUPLAĆENI DIO PDV-A DO DANA PODNOŠENJA OVE PRIJAVE – VIŠE UPLAĆENO – POREZNI KREDIT
+pdv_code_ppdv_o,pPDV_O,1.0,IV. OBVEZA PDV-a U OBRAČUNSKOM RAZDOBLJU ZA UPLATU (II.-III.) IL,pdv_code_pdvob,IV. OBVEZA PDV-a U OBRAČUNSKOM RAZDOBLJU ZA UPLATU (II.-III.) ILI ZA POVRAT (III.-II.)
+pdv_code_o1_2,o1+2,0,Obračun isporuka (I+II),pdv_code_opdvob,OBRAČUN PDV-a U OBAVLJENIM TRANSAKCIJAMA DOBARA I USLUGA – UKUPNO (I.+II.)
+pdv_code_neoporezivo,Neoporezivo,1.0,Neoporezivo,pdv_code_porezi,
+pdv_code_ppdv,pPDV,1.0,VI. UKUPNO RAZLIKA : ZA UPLATU / ZA POVRAT,pdv_code_opdvob,VI. UKUPNO RAZLIKA : ZA UPLATU / ZA POVRAT
+pdv_code_nepdv,NEPDV,1.0,"Ostali porezi, carine, trošarine i sl.",pdv_code_porezi,
+pdv_code_potrosnja,POTROSNJA,1.0,Porez na potrošnju,pdv_code_nepdv,Porez na potrošnju
+pdv_code_nepriznat_pp,z900,1.0,NEPRIZNATI PRETPOREZ,pdv_code_nepdv,
+pdv_code_o100,o100,1.0,I. Ne podlježe oporezivanju,pdv_code_o1_2,I. TRANSAKCIJE KOJE NE PODLJEŽU OPOREZIVANJU I OSLOBOĐENE – UKUPNO (1.+2.+3.+4.+5.+6.+7.+8.+9.+10.)
+pdv_code_o101,o101,1.0,I.1. tuzemni prijenos porezne obveze,pdv_code_o100,1. ISPORUKE U RH ZA KOJE PDV OBRAČUNAVA PRIMATELJ (tuzemni prijenos porezne obveze)
+pdv_code_o102,o102,1.0,I.2. Isporuke u druge drzave,pdv_code_o100,2. ISPORUKE DOBARA OBAVLJENE U DRUGIM DRŽAVAMA ČLANICAMA
+pdv_code_o103,o103,1.0,I.3. Isporuke dobara u EU,pdv_code_o100,3. ISPORUKE DOBARA UNUTAR EU
+pdv_code_o104,o104,1.0,I.4. Usluge EU,pdv_code_o100,4. OBAVLJENE USLUGE UNUTAR EU
+pdv_code_o105,o105,1.0,I.5. Usluge stranim osobama,pdv_code_o100,5. OBAVLJENE USLUGE OSOBAMA BEZ SJEDIŠTA U RH
+pdv_code_o106,o106,1.0,I.6. Sastavljanje i postavljanje dobara unutar EU,pdv_code_o100,6. SASTAVLJANJE I POSTAVLJANJE DOBARA U DRUGOJ DRŽAVI ČLANICI EU
+pdv_code_o107,o107,1.0,I.7. Isporuke prijevoznih sredstava unutar EU,pdv_code_o100,7. ISPORUKE NOVIH PRIJEVOZNIH SREDSTAVA U EU
+pdv_code_o108,o108,1.0,I.8. Tuzemne isporuke,pdv_code_o100,8. TUZEMNE ISPORUKE
+pdv_code_o109,o109,1.0,I.9. Izvozne isporuke,pdv_code_o100,9. IZVOZNE ISPORUKE
+pdv_code_o110,o110,1.0,I.10. Ostala oslobođenja,pdv_code_o100,10. OSTALE ISPORUKE – s pravom na odbitak pretporeza
+pdv_code_o200,o200,1.0,II. OPOREZIVE TRANSAKCIJE – UKUPNO,pdv_code_o1_2,II. OPOREZIVE TRANSAKCIJE – UKUPNO (1.+2.+3.+4.+5.+6.+7.+8.+9.+10.+11.+12.+13.+14.)
+pdv_code_o201,o201,1.0,II.1. Isporuke dobara i usluga  u RH – 5%,pdv_code_o200,II.1. ISPORUKE DOBARA I USLUGA U RH PO STOPI 5%
+pdv_code_o202,o202,1.0,II.2. Isporuke dobara i usluga  u RH – 10%,pdv_code_o200,II.1. ISPORUKE DOBARA I USLUGA U RH PO STOPI 10%
+pdv_code_o2021,o2021,1.0,II.2_1. Isporuke dobara i usluga  u RH – 13%,pdv_code_o200,II.2. ISPORUKE DOBARA I SULUGA U RH PO STOPI 13%
+pdv_code_o203,o203,1.0,II.3. Isporuke dobara i usluga  u RH – 25%,pdv_code_o200,II.3. ISPORUKE DOBARA I USLUGA U RH PO STOPI 25%
+pdv_code_o204,o204,1.0,II.4. Isporuke dobara i usluga  u RH – prijenos obveze,pdv_code_o200,II.4. PRIMLJENE ISPORUKE U RH ZA KOJE PDV OBRAČUNAVA PRIMATELJ (tuzemni prijnos porezne obveze)
+pdv_code_o205,o205,1.0,II.5. Stjecanje dobara unutar EU – 5%,pdv_code_o200,II.5. STJECANJE DOBARA UNUTAR EU PO STOPI OD 5%
+pdv_code_o206,o206,1.0,II.6. Stjecanje dobara unutar EU – 10%,pdv_code_o200,II.6. STJECANJE DOBARA UNUTAR EU PO STOPI OD 13%
+pdv_code_o2061,o2061,1.0,II.6_1. Stjecanje dobara unutar EU – 13%,pdv_code_o200,II.6. STJECANJE DOBARA UNUTAR EU PO STOPI OD 13%
+pdv_code_o207,o207,1.0,II.7. Stjecanje dobara unutar EU – 25%,pdv_code_o200,II.7. STJECANJE DOBARA UNUTAR EU PO STOPI OD 25%
+pdv_code_o208,o208,1.0,II.8. Primljene usluge unutar EU – 5%,pdv_code_o200,II.8. PRIMLJENE USLUGE IZ EU PO STOPI OD 5%
+pdv_code_o209,o209,1.0,II.9. Primljene usluge unutar EU – 13%,pdv_code_o200,II.9. PRIMLJENE USLUGE IZ EU PO STOPI OD 10%
+pdv_code_o210,o210,1.0,II.10. Primljene usluge unutar EU – 25%,pdv_code_o200,II.10. PRIMLJENE USLUGE IZ EU PO STOPI OD 25%
+pdv_code_o210_1,o210_1,1.0,II.11. Primljena dobra i usluga od stranaca – 5%,pdv_code_o200,II.11. PRIMLJENE ISPORUKE DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH PO STOPI OD 5%
+pdv_code_o211,o211,1.0,II.11. Primljena dobra i usluga od stranaca – 13%,pdv_code_o200,II.11. PRIMLJENE ISPORUKE DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH PO STOPI OD 10%
+pdv_code_o212,o212,1.0,II.11. Primljena dobra i usluga od stranaca – 25%,pdv_code_o200,II.12. PRIMLJENE ISPORUKE DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH PO STOPI OD 25%
+pdv_code_o213,o213,1.0,II.13. Oslobođenje izvoza – putnički promet,pdv_code_o200,II.13. NAKNADNO OSLOBOĐENJE IZVOZA U OKVIRU OSOBNOG PUTNIČKOG PROMETA
+pdv_code_o214,o214,1.0,II.14. Obračunati PDV pri uvozu,pdv_code_o200,II.14. OBRAČUNANI PDV PRI UVOZU
+pdv_code_o300,o300,1.0,III. OBRAČUNANI PRETPOREZ,pdv_code_opdvob,III. OBRAČUNANI PRETPOREZ UKUPNO (1.+2.+3.+4.+ 5.+6.+7+8+9.)
+pdv_code_o301,o301,1.0,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZ.,pdv_code_o300,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU
+pdv_code_o3010,o3010,1.0,III.1.1. Pretporez 5%,pdv_code_o301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 5%
+pdv_code_o3011,o3011,1.0,III.1.2. Pretporez 10%,pdv_code_o301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 10%
+pdv_code_o3012,o3012,1.0,III.1.3. Pretporez 13%,pdv_code_o301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 13%
+pdv_code_o3013,o3013,1.0,III.1.4. Pretporez 25%,pdv_code_o301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 25%
+pdv_code_o302,o302,1.0,III.2. Tuzemni prijenos porezne obveze,pdv_code_o300,III.2. PRETPOREZ OD PRIMLJENIH ISPORUKA U RH ZA KOJE PDV OBRAČUNAVA PRIMATELJ (tuzemni prijenos porezne obveze)
+pdv_code_o303,o303,1.0,III.3. Pretporez od stjecanja dobara unutar EU 5%,pdv_code_o300,III.3. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU - 5%
+pdv_code_o3031,o3031,1.0,III.3. Pretporez od stjecanja dobara unutar EU 13%,pdv_code_o300,III.3. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU - 13%
+pdv_code_o3032,o3032,1.0,III.3. Pretporez od stjecanja dobara unutar EU 25%,pdv_code_o300,III.3. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU - 25%
+pdv_code_o304,o304,1.0,III.4. Pretporez od primljenih usluga iz EU - 5%,pdv_code_o300,III.4. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU - 5%
+pdv_code_o3041,o3041,1.0,III.4. Pretporez od primljenih usluga iz EU - 13%,pdv_code_o300,III.4. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU - 13%
+pdv_code_o3042,o3042,1.0,III.4. Pretporez od primljenih usluga iz EU - 25%,pdv_code_o300,III.4. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU - 25%
+pdv_code_o305,o305,1.0,III.5. Pretporez od primljenih dobara i usluga - strani obveznici - 5%,pdv_code_o300,III.5. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH - 5%
+pdv_code_o3051,o3051,1.0,III.5. Pretporez od primljenih dobara i usluga - strani obveznici - 13%,pdv_code_o300,III.5. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH - 13%
+pdv_code_o3052,o3052,1.0,III.5. Pretporez od primljenih dobara i usluga - strani obveznici - 25%,pdv_code_o300,III.5. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH - 25%
+pdv_code_o306,o306,1.0,III.6. Pretporez pri uvozu,pdv_code_porezi,III.6. PRETPOREZ PRI UVOZU
+pdv_code_nepriznat_opp37,o910,1.0,NEPRIZNATI PRETPOREZ (osnovica 30 ili 70%),pdv_code_nepriznat_pp,
+pdv_code_nepriznat_opp0,o9100,1.0,Nepriznati pretporez 0% (o),pdv_code_nepriznat_opp37,NP.1. NEPRIZNATI PRETPOREZ U PRIMLJENIM RAČUNIMA po stopi od 0%
+pdv_code_nepriznat_opp5,o9101,1.0,Nepriznati pretporez 5% (o),pdv_code_nepriznat_opp37,
+pdv_code_nepriznat_opp3,o9102,1.0,Nepriznati pretporez 3% (o),pdv_code_nepriznat_opp37,
+pdv_code_nepriznat_opp13,o9103,1.0,Nepriznati pretporez 13% (o),pdv_code_nepriznat_opp37,
+pdv_code_nepriznat_opp25,o9104,1.0,Nepriznati pretporez 25% (o),pdv_code_nepriznat_opp37,
+pdv_code_p200,p200,1.0,II. POREZNA OBVEZA UKUPNA,pdv_code_ppdv_o,II. OPOREZIVE TRANSAKCIJE – UKUPNO (1.+2.+3.+4.+5.+6.+7.+8.+9.+10.+11.+12.+13.+14.)
+pdv_code_p201,p201,1.0,II.1. Isporuke dobara i usluga  u RH – 5%,pdv_code_p200,II.1. ISPORUKE DOBARA I USLUGA U RH PO STOPI 5%
+pdv_code_p202,p202,1.0,II.2. Isporuke dobara i usluga  u RH – 10%,pdv_code_p200,II.2. ISPORUKE DOBARA I SULUGA U RH PO STOPI 13%
+pdv_code_p2021,p2021,1.0,II.2_1. Isporuke dobara i usluga  u RH – 13%,pdv_code_p200,II.1. ISPORUKE DOBARA I USLUGA U RH PO STOPI 10%
+pdv_code_p203,p203,1.0,II.3. Isporuke dobara i usluga  u RH – 25%,pdv_code_p200,II.3. ISPORUKE DOBARA I USLUGA U RH PO STOPI 25%
+pdv_code_p204,p204,1.0,II.4. Isporuke dobara i usluga  u RH – prijenos obveze,pdv_code_p200,II.4. PRIMLJENE ISPORUKE U RH ZA KOJE PDV OBRAČUNAVA PRIMATELJ (tuzemni prijnos porezne obveze)
+pdv_code_p205,p205,1.0,II.5. Stjecanje dobara unutar EU – 5%,pdv_code_p200,II.5. STJECANJE DOBARA UNUTAR EU PO STOPI OD 5%
+pdv_code_p206,p206,1.0,II.6. Stjecanje dobara unutar EU – 10%,pdv_code_p200,II.6. STJECANJE DOBARA UNUTAR EU PO STOPI OD 13%
+pdv_code_p2061,p2061,1.0,II.6_1. Stjecanje dobara unutar EU – 13%,pdv_code_p200,II.6. STJECANJE DOBARA UNUTAR EU PO STOPI OD 13%
+pdv_code_p207,p207,1.0,II.7. Stjecanje dobara unutar EU – 25%,pdv_code_p200,II.7. STJECANJE DOBARA UNUTAR EU PO STOPI OD 25%
+pdv_code_p208,p208,1.0,II.8. Primljene usluge unutar EU – 5%,pdv_code_p200,II.8. PRIMLJENE USLUGE IZ EU PO STOPI OD 5%
+pdv_code_p209,p209,1.0,II.9. Primljene usluge unutar EU – 13%,pdv_code_p200,II.9. PRIMLJENE USLUGE IZ EU PO STOPI OD 10%
+pdv_code_p210,p210,1.0,II.10. Primljene usluge unutar EU – 25%,pdv_code_p200,II.10. PRIMLJENE USLUGE IZ EU PO STOPI OD 25%
+pdv_code_p210_1,p210_1,1.0,II.11. Primljena dobra i suluge od stranaca – 5%,pdv_code_p200,II.11. PRIMLJENE ISPORUKE DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH PO STOPI OD 5%
+pdv_code_p211,p211,1.0,II.11. Primljena dobra i suluge od stranaca – 13%,pdv_code_p200,II.11. PRIMLJENE ISPORUKE DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH PO STOPI OD 10%
+pdv_code_p212,p212,1.0,II.12. Primljena dobra i suluge od stranaca – 25%,pdv_code_p200,II.12. PRIMLJENE ISPORUKE DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH PO STOPI OD 25%
+pdv_code_p213,p213,1.0,II.13. Oslobođenje izvoza – putnički promet,pdv_code_p200,II.13. NAKNADNO OSLOBOĐENJE IZVOZA U OKVIRU OSOBNOG PUTNIČKOG PROMETA
+pdv_code_p214,p214,1.0,II.14. Obračunati PDV pri uvozu,pdv_code_p200,II.14. OBRAČUNANI PDV PRI UVOZU
+pdv_code_p300,p300,-1.0,III. OBRAČUNANI PRETPOREZ,pdv_code_ppdv_o,III. OBRAČUNANI PRETPOREZ UKUPNO (1.+2.+3.+4.+ 5.+6.+7.)
+pdv_code_p301,p301,1.0,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZ.,pdv_code_p300,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU PO STOPI OD 13%
+pdv_code_p3010,p3010,1.0,III.1.1. Pretporez 5%,pdv_code_p301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 5%
+pdv_code_p3011,p3011,1.0,III.1.2. Pretporez 10%,pdv_code_p301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 10%
+pdv_code_p3012,p3012,1.0,III.1.3. Pretporez 13%,pdv_code_p301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 13%
+pdv_code_p3013,p3013,1.0,III.1.4. Pretporez 25%,pdv_code_p301,III.1. PRETPOREZ OD PRIMLJENIH ISPORUKA U TUZEMSTVU - 25%
+pdv_code_p302,p302,1.0,III.2. Tuzemni prijenos porezne obveze,pdv_code_p300,III.2. PRETPOREZ OD PRIMLJENIH ISPORUKA U RH ZA KOJE PDV OBRAČUNAVA PRIMATELJ (tuzemni prijenos porezne obveze)
+pdv_code_p303,p303,1.0,III.3. Pretporez od stjecanja dobara unutar EU - 5%,pdv_code_p300,III.3. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU - 5%
+pdv_code_p3031,p3031,1.0,III.3. Pretporez od stjecanja dobara unutar EU - 13%,pdv_code_p300,III.3. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU - 13%
+pdv_code_p3032,p3032,1.0,III.3. Pretporez od stjecanja dobara unutar EU - 25%,pdv_code_p300,III.3. PRETPOREZ OD STJECANJA DOBARA UNUTAR EU - 25%
+pdv_code_p304,p304,1.0,III.4. Pretporez od primljenih usluga iz EU - 5%,pdv_code_p300,III.4. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU
+pdv_code_p3041,p3041,1.0,III.4. Pretporez od primljenih usluga iz EU - 13%,pdv_code_p300,III.4. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU - 13%
+pdv_code_p3042,p3042,1.0,III.4. Pretporez od primljenih usluga iz EU - 25%,pdv_code_p300,III.4. PRETPOREZ OD PRIMLJENIH USLUGA IZ EU - 25%
+pdv_code_p305,p305,1.0,III.5. Pretporez od primljenih dobara i usluga - strani obveznici - 5%,pdv_code_p300,III.5. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH - 5%
+pdv_code_p3051,p3051,1.0,III.5. Pretporez od primljenih dobara i usluga - strani obveznici - 13%,pdv_code_p300,III.5. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH - 13%
+pdv_code_p3052,p3052,1.0,III.5. Pretporez od primljenih dobara i usluga - strani obveznici - 25%,pdv_code_p300,III.5. PRETPOREZ OD PRIMLJENIH ISPORUKA DOBARA I USLUGA OD POREZNIH OBVEZNIKA BEZ SJEDIŠTA U RH - 25%
+pdv_code_p306,p306,1.0,III.6. Pretporez pri uvozu,pdv_code_porezi,III.6. PRETPOREZ PRI UVOZU
+pdv_code_p307,p307,1.0,III.7 Ispravci pretporeza,pdv_code_p300,III.7. ISPRAVCI PRETPOREZA
+pdv_code_nepriznat_ppp,p900,1.0,NEPRIZNATI PRETPOREZ (porez),pdv_code_nepriznat_pp,
+pdv_code_nepriznat_ppp37,p910,1.0,NEPRIZNATI PRETPOREZ (30 ili 70%),pdv_code_nepriznat_ppp,
+pdv_code_nepriznat_ppp0,p9100,1.0,Nepriznati pretporez 0% (p),pdv_code_nepriznat_ppp37,
+pdv_code_nepriznat_ppp5,p9101,1.0,Nepriznati pretporez 5% (p),pdv_code_nepriznat_ppp37,
+pdv_code_nepriznat_ppp3,p9102,1.0,Nepriznati pretporez 3% (p),pdv_code_nepriznat_ppp37,
+pdv_code_nepriznat_ppp13,p9103,1.0,Nepriznati pretporez 13% (p),pdv_code_nepriznat_ppp37,
+pdv_code_nepriznat_ppp25,p9104,1.0,Nepriznati pretporez 25% (p),pdv_code_nepriznat_ppp37,

@@ -275,9 +275,10 @@ class AccountInvoice(models.Model):
         })
         return super(AccountInvoice, self).copy(default)
 
+    @api.multi
     @api.onchange('journal_id')
     def onchange_journal_id(self, journal_id=False):
-        result = super(AccountInvoice, self).onchange_journal_id(journal_id=self.journal_id.id)
+        result = super(AccountInvoice, self).onchange_journal_id(journal_id=journal_id or self.journal_id.id)
         if self.journal_id:
             prostor_id = self.journal_id.prostor_id and self.journal_id.prostor_id.id or False
             self.uredjaj_id = (self.journal_id.fiskal_uredjaj_ids and

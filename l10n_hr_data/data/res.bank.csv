@@ -16,6 +16,7 @@
 "res_bank_hr_2380006","base.hr",2380006,"ISKBHR2X","ISTARSKA KREDITNA BANKA UMAG d.d. Umag",52470,"Umag","Ernesta Miloša 1"
 "res_bank_hr_2411006","base.hr",2411006,"JADRHR2X","JADRANSKA BANKA d.d. Šibenik",22000,"Šibenik","Ante Starčevića 4"
 "res_bank_hr_2400008","base.hr",2400008,"KALCHR2X","KARLOVAČKA BANKA d.d. Karlovac",47000,"Karlovac","I.G. Kovačića 1"
+"res_bank_hr_4124003","base.hr",4124003,"KENBHR22","KENTBANK d.d. Zagreb",,,
 "res_bank_hr_2481000","base.hr",2481000,"KREZHR2X","KREDITNA BANKA ZAGREB d.d. Zagreb",10000,"Zagreb","Ul. grada Vukovara 74"
 "res_bank_hr_2392007","base.hr",2392007,"MBCKHR2X","MEĐIMURSKA BANKA d.d. Čakovec",40000,"Čakovec","Valenta Morandinija 37"
 "res_bank_hr_2495009","base.hr",2495009,"NAVBHR22","NAVA BANKA d.d. Zagreb",10000,"Zagreb","Tratinska 27"
@@ -26,11 +27,11 @@
 "res_bank_hr_2340009","base.hr",2340009,"PBZGHR2X","PRIVREDNA BANKA ZAGREB d.d. Zagreb",10000,"Zagreb","Račkoga 6 / p.p. 1032"
 "res_bank_hr_2484008","base.hr",2484008,"RZBHHR2X","RAIFFEISENBANK AUSTRIA d.d. Zagreb",10000,"Zagreb","Petrinjska 59"
 "res_bank_hr_2403009","base.hr",2403009,"SMBRHR22","SAMOBORSKA BANKA d.d. Samobor",10430,"Samobor","Trg kralja Tomislava 8"
+"res_bank_hr_2503007","base.hr",2503007,"VBCRHR22","SBERBANK d.d. Zagreb",10000,"Zagreb","Varšavska 9"
 "res_bank_hr_2412009","base.hr",2412009,"SBSLHR2X","SLATINSKA BANKA d.d. Slatina",33520,"Slatina","Vladimira Nazora 2"
 "res_bank_hr_2330003","base.hr",2330003,"SOGEHR22","SOCIETE GENERALE- SPLITSKA BANKA d.d. Split",21000,"Split","Ruđera Boškovića 16"
 "res_bank_hr_2483005","base.hr",2483005,"STEDHR22","ŠTEDBANKA d.d. Zagreb",10000,"Zagreb","Slavonska avenija 3"
 "res_bank_hr_6717002","base.hr",6717002,"ASBZHR22","TESLA ŠTEDNA BANKA d.d. Zagreb",10000,"Zagreb",
 "res_bank_hr_2489004","base.hr",2489004,"VBVZHR22","VABA  d.d. BANKA Varaždin",42000,"Varaždin","Aleja kralja Zvonimira 1"
 "res_bank_hr_2381009","base.hr",2381009,"CCBZHR2X","VENETO BANKA d.d.. Zagreb",10000,"Zagreb","Draškovićeva 58"
-"res_bank_hr_2503007","base.hr",2503007,"VBCRHR22","VOLKSBANK d.d. Zagreb",10000,"Zagreb","Varšavska 9"
 "res_bank_hr_2360000","base.hr",2360000,"ZABAHR2X","ZAGREBAČKA BANKA d.d. Zagreb",10000,"Zagreb","Paromlinska 2"

@@ -47,7 +47,8 @@ Authors:
 
     'depends': ['account',],   # todo ref num
     'data': ['account_view.xml',
-              'account_invoice_view.xml',
+             'account_invoice_view.xml',
+             'views/res_users_view.xml',
              ],
     "active": False,
     "installable": True,
