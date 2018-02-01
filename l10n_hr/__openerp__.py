@@ -70,7 +70,7 @@ Izvori podataka:
                 #'data/account_tax_code_template_data.xml',
                 #'data/account_tax_code_data.xml',
                 'l10n_hr_wizard.xml',
-                #'data/account.tax.template.csv',
+                'data/account.tax.template.csv',
                 'data/account_fiscal_position_template_data.xml',
                 #'data/fiscal_position.xml',
             ],
