@@ -38,7 +38,7 @@
         <field name="report_name">knjiga_ura_prijenos</field>
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-ods</field>
-        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_xls_odt')"/>
         <field name="parser_loc">l10n_hr_vat/report/knjiga_ura_prijenos.py</field>
         <field name="report_rml">l10n_hr_vat/report/knjiga_ura_prijenos.ods</field>
         <field name="parser_state">loc</field><!--loc-->
@@ -53,7 +53,7 @@
         <field name="report_name">knjiga_ura_ods</field>
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-ods</field>
-        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_xls_odt')"/>
         <field name="parser_loc">l10n_hr_vat/report/knjiga_ura.py</field>
         <field name="report_rml">l10n_hr_vat/report/knjiga_ura.ods</field>
         <field name="parser_state">loc</field><!--loc-->
@@ -68,7 +68,7 @@
         <field name="report_name">knjiga_ira_ods</field>
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-ods</field>
-        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_doc_odt')"/>
+        <field name='out_format' eval="ref('report_aeroo.report_mimetypes_xls_odt')"/>
         <field name="parser_loc">l10n_hr_vat/report/knjiga_ira.py</field>
         <field name="report_rml">l10n_hr_vat/report/knjiga_ira.ods</field>
         <field name="parser_state">loc</field><!--loc-->
