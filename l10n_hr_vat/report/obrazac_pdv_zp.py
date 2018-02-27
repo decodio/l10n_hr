@@ -24,6 +24,7 @@
 
 
 import time
+from openerp.osv import orm, fields
 from openerp.report import report_sxw
 from datetime import datetime
 from openerp.tools.translate import _
@@ -234,6 +235,9 @@ class Parser(report_sxw.rml_parse):
 
         self.cr.execute(sql)
         data = self.cr.dictfetchall()
+        if not data:
+            raise orm.except_orm(_('Warning!'),
+                             _('Nothing to print!'))
         return data
 
     def get_totals(self):
