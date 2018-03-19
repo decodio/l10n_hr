@@ -141,26 +141,26 @@ class Parser(report_sxw.rml_parse):
 
     def get_totals_first(self):
         period_from = self.period_from
-        return self.calculate_totals(period_from)
+        return self.calculate_totals(period_from) or 0.0
 
     def get_totals_second(self):
         period_from = self.period_from + 1
-        return self.calculate_totals(period_from)
+        return self.calculate_totals(period_from) or 0.0
 
     def get_totals_third(self):
         period_from = self.period_from + 2
-        return self.calculate_totals(period_from)
+        return self.calculate_totals(period_from) or 0.0
 
     def calculate_totals(self, period_from):
         sql = """
-            SELECT SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
+            SELECT COALESCE(SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id in %(journals)s
                            --THEN (aml.credit - aml.debit) * -1 ELSE 0.00 END)
                              THEN aml.tax_amount * -1 ELSE 0.00 END)
                    +
                    SUM(CASE WHEN aml.tax_code_id in %(col11)s AND am.journal_id not in %(journals)s
                            --THEN aml.credit - aml.debit ELSE 0.00 END)
                            THEN aml.tax_amount ELSE 0.00 END)
-                   as sum_isporuke
+                   ,0.0) as sum_isporuke
                 FROM account_move_line aml
                     JOIN account_move am on am.id = aml.move_id
                     LEFT JOIN res_partner rp on rp.id = aml.partner_id
