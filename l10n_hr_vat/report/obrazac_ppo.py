@@ -141,15 +141,15 @@ class Parser(report_sxw.rml_parse):
 
     def get_totals_first(self):
         period_from = self.period_from
-        return self.calculate_totals(period_from)
+        return self.calculate_totals(period_from) or 0.0
 
     def get_totals_second(self):
         period_from = self.period_from + 1
-        return self.calculate_totals(period_from)
+        return self.calculate_totals(period_from) or 0.0
 
     def get_totals_third(self):
         period_from = self.period_from + 2
-        return self.calculate_totals(period_from)
+        return self.calculate_totals(period_from) or 0.0
 
     def calculate_totals(self, period_from):
         sql = """
