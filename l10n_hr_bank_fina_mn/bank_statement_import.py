@@ -279,10 +279,11 @@ class account_bank_statement_line(orm.Model):
             if not move_line_ids:
                 # search by payment reference and amount
                 move_line_ids = self._search_by_ref_amount(cr, line, move_line_ids, field_map, context=context)
-
+            """
             if not move_line_ids:
                 # search only by payment reference
                 move_line_ids = self._search_by_ref(cr, uid, line, move_line_obj, field_map, context=context)
+            """
 
             if not move_line_ids:
                 field_map = {'ref': 'ref'}
@@ -292,11 +293,11 @@ class account_bank_statement_line(orm.Model):
             if not move_line_ids:
                 # search by ref and amount
                 move_line_ids = self._search_by_ref_amount(cr, line, move_line_ids, field_map, context=context)
-
+            """
             if not move_line_ids:
                 # search by ref
                 move_line_ids = self._search_by_ref(cr, uid, line, move_line_obj, field_map, context=context)
-
+            """
         return move_line_ids
 
     def search_partner(self, cr, uid, ids, line, context=None):
