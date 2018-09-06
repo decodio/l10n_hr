@@ -79,7 +79,7 @@ class Parser(report_sxw.rml_parse):
     def _get_header_data(self,data):
         period_obj = self.pool.get('account.period')
         header_data = []
-        filter = {}
+        filter = {'filter': ''}
         period_from = ''
         period_to = ''
         
