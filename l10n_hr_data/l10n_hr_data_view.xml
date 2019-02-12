@@ -51,6 +51,11 @@
                                 <field name="responsible_tel"/>
                                 <field name="responsible_email"/>
                                 <field name="ispostava"/>
+                                <separator colspan="4"/>
+                                <field name="ulica"/>
+                                <field name="kbr"/>
+                                <field name="kbr_dodatak"/>
+                                <field name="podrucje_djelatnosti"/>
                             </group>                              
                         </group>
                         <group colspan="4">
