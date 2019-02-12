@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ObrazacURA verzijaSheme="1.0" xsi:schemaLocation="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacURA/v1-0 ObrazacURA-v1-0.xsd" xmlns="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacURA/v1-0" xmlns:meta="http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<meta:Metapodaci>
+		<meta:Naslov dc="http://purl.org/dc/elements/1.1/title">Knjiga primljenih (ulaznih) računa</meta:Naslov>
+		<meta:Autor dc="http://purl.org/dc/elements/1.1/creator">IVAN HORVAT</meta:Autor>
+		<meta:Datum dc="http://purl.org/dc/elements/1.1/date">2019-02-05T10:55:44</meta:Datum>
+		<meta:Format dc="http://purl.org/dc/elements/1.1/format">text/xml</meta:Format>
+		<meta:Jezik dc="http://purl.org/dc/elements/1.1/language">hr-HR</meta:Jezik>
+		<meta:Identifikator dc="http://purl.org/dc/elements/1.1/identifier">d7716e91-71cd-46cc-beff-d703bfa98295</meta:Identifikator>
+		<meta:Uskladjenost dc="http://purl.org/dc/terms/conformsTo">ObrazacURA-v1-0</meta:Uskladjenost>
+		<meta:Tip dc="http://purl.org/dc/elements/1.1/type">Elektronički obrazac</meta:Tip>
+		<meta:Adresant>Ministarstvo Financija, Porezna uprava, Zagreb</meta:Adresant>
+	</meta:Metapodaci>
+	<Zaglavlje>
+		<Razdoblje>
+			<DatumOd>2019-01-01</DatumOd>
+			<DatumDo>2019-01-31</DatumDo>
+		</Razdoblje>
+		<Obveznik>
+			<OIB>00000000001</OIB>
+			<Naziv>Dobra tvrtka d.o.o.</Naziv>
+			<Adresa>
+				<Mjesto>Zagreb</Mjesto>
+				<Ulica>Radnička</Ulica>
+				<Broj>1</Broj>
+				<DodatakKucnomBroju>a</DodatakKucnomBroju>
+			</Adresa>
+			<PodrucjeDjelatnosti>A</PodrucjeDjelatnosti>
+			<SifraDjelatnosti>0111</SifraDjelatnosti>
+		</Obveznik>
+		<ObracunSastavio>
+			<Ime>Ivan</Ime>
+			<Prezime>Horvat</Prezime>			
+		</ObracunSastavio>
+	</Zaglavlje>
+	<Tijelo>
+		<Racuni>
+			<R>
+				<R1>1</R1>
+				<R2>2354/1/1</R2>
+				<R3>2019-01-05</R3>
+				<R4>Ivan Horvat</R4>
+				<R5>Ilica 1, Zagreb</R5>
+				<R6>1</R6>
+				<R7>10000000000</R7>
+				<R8>0.00</R8>
+				<R9>0.00</R9>
+				<R10>0.00</R10>
+				<R11>0.00</R11>
+				<R12>0.00</R12>
+				<R13>0.00</R13>
+				<R14>0.00</R14>
+				<R15>0.00</R15>
+				<R16>0.00</R16>
+				<R17>0.00</R17>
+				<R18>0.00</R18>
+			</R>					
+		</Racuni>
+		<Ukupno>
+			<U8>0.00</U8>
+			<U9>0.00</U9>
+			<U10>0.00</U10>
+			<U11>0.00</U11>
+			<U12>0.00</U12>
+			<U13>0.00</U13>
+			<U14>0.00</U14>
+			<U15>0.00</U15>
+			<U16>0.00</U16>
+			<U17>0.00</U17>
+			<U18>0.00</U18>
+		</Ukupno>
+	</Tijelo>
+</ObrazacURA>

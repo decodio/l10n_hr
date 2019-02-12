@@ -7,32 +7,41 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
             <form string="Postavke ispisa porezne knjige">
-                <separator string="Ispis obrasca" colspan="4"/>
-                <field name="chart_account_id" widget='selection' on_change="onchange_chart_id(chart_account_id, context)" colspan="4"/>
-                <field name="chart_tax_id" widget='selection' colspan="4"/>
-                <field name="knjiga_id" widget='selection'/> 
-                <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
-                <field name="company_id"/>                                                  
-                <separator string="Periodi i razdoblje računa" colspan="4"/>
-                <group col="4" colspan="4">
-                    <group col="2" colspan="2">
-                        <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
-                        <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+                <field name="state" invisible="1"/>
+                 <group states="choose">
+                    <separator string="Ispis obrasca" colspan="4"/>
+                    <field name="chart_account_id" widget='selection' on_change="onchange_chart_id(chart_account_id, context)" colspan="4"/>
+                    <field name="chart_tax_id" widget='selection' colspan="4"/>
+                    <field name="knjiga_id" widget='selection'/>
+                    <field name="fiscalyear_id" domain="[('company_id','=',company_id)]"/>
+                    <field name="company_id"/>
+                    <separator string="Periodi i razdoblje računa" colspan="4"/>
+                    <group col="4" colspan="4">
+                        <group col="2" colspan="2">
+                            <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+                            <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id)]"/>
+                        </group>
+                        <group col="2" colspan="2">
+                            <field name="date_start" />
+                            <field name="date_stop" />
+                        </group>
                     </group>
-                    <group col="2" colspan="2">
-                        <field name="date_start" />
-                        <field name="date_stop" />
+                    <notebook>
+                        <page string="Journals" name="journal_ids">
+                            <field name="journal_ids" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+                    <group col="2" colspan="4">
+                        <button icon='gtk-cancel' special="cancel"  string="Odustani" />
+                        <button name="create_vat" string="Izvezi" colspan="1" type="object" icon="gtk-ok" context="{'xml':True}"/>
+                        <button name="create_vat" string="Ispiši" colspan="1" type="object" icon="gtk-ok"/>
                     </group>
-                </group>
-                <notebook>
-                    <page string="Journals" name="journal_ids">
-                        <field name="journal_ids" colspan="4" nolabel="1"/>
-                    </page>
-                </notebook>
-                <group col="2" colspan="4">
-                    <button icon='gtk-cancel' special="cancel"  string="Odustani" />
-                    <button name="create_vat" string="Ispiši" colspan="1" type="object" icon="gtk-ok"/>
-                </group>
+                 </group>
+                <group states="get">
+						<field name="name" invisible="1"/>
+						<field name="data" colspan="4" readonly="1" filename="name"/>
+						<button special="cancel" string="Zatvori" icon="gtk-cancel" colspan="2"/>
+				</group>
             </form>
             </field>
         </record>
