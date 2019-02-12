@@ -206,7 +206,7 @@ class pdv_knjiga(orm.TransientModel):
                 EM.R4(partner_r4),
                 EM.R5(partner_r5),
                 EM.R6('1'),  # TODO: TIP ID-broja isporučitelja ???
-                EM.R7(line['partner_oib']),
+                EM.R7(line['partner_oib'].strip()),
                 EM.R8(decimal_num(line['stupac6'])),
                 EM.R9(decimal_num(line['stupac7'])),
                 EM.R10(decimal_num(line['stupac8'])),
@@ -255,7 +255,7 @@ class pdv_knjiga(orm.TransientModel):
         }
         valid = xml_common.validate_xml(self, xml)
 
-        data64 = base64.encodestring()
+        data64 = base64.encodestring(pdv_xml)
         xml_name = 'PDV_Obrazac_%s_%s.XML' % (date_start.replace('-', ''),
                                               date_stop.replace('-',''))
         form.write({'state': 'get',
