@@ -120,5 +120,39 @@ class res_company(models.Model):
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
+    @api.multi
+    @api.depends('vat', 'country_id')
+    def _get_vat_type(self):
+        for partner in self:
+            if not partner.vat:
+                partner.vat_id_type = '0'
+                continue
+            pc = partner.vat[:2]
+            cc = partner.country_id and partner.country_id.code or False
+            if pc != 'HR':
+                partner.vat_id_type = '3'
+                continue
+            if cc and cc != pc:
+                partner.vat_id_type = '2'
+                continue
+            # DB: ali ako nema drzavu a vat ne pocinje sa HR??
+            partner.vat_id_type = '1'
+
+
     vat_ext = fields.Char('VAT Extension', size=3, default='')
+    vat_id_type = fields.Selection(
+        selection=[
+            ('0', '0 - NO VAT'),
+            ('1', '1 - OIB'),
+            ('2', '2 - VAT ID'),
+            ('3', '3 - VAT (Foreign)')
+        ], string="VAT Type",
+        compute=_get_vat_type,
+        store=True,
+        help="0 - partners without VAT number entered,"
+             "1 - OIB - partners from croatia with Croatia VAT number"
+             "2 - VAT ID - partners with Croatia VAT, without residence in Croatia"
+             "3 - Foreign partners"
+    )
+
 
