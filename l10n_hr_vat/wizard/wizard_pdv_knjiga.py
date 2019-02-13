@@ -118,6 +118,9 @@ class pdv_knjiga(orm.TransientModel):
 
     def create_xml(self, cr, uid, ids, context=None, datas=False, report_name=False):
         form = self.browse(cr, uid, ids)[0]
+        if not form.company_id.podrucje_djelatnosti:
+            raise Warning(_('Warning'),
+                          _('Please set company data : Area of activity'))
         if form.knjiga_id.type != 'ura':
             raise Warning(_('Warning'),
                           _('Only URA is for XML export!'))
@@ -179,11 +182,12 @@ class pdv_knjiga(orm.TransientModel):
                     EM.Naziv(form.company_id.name),
                     EM.Adresa(
                         EM.Mjesto(form.company_id.city),
-                        EM.Ulica(form.company_id.street),
-                        EM.Broj('2'),  # TODO: gdje cu ovo u
-                        # DodatakKucnomBroju
+                        EM.Ulica(form.company_id.ulica),
+                        EM.Broj(form.company_id.kbr),
+                        EM.DodatakKucnomBroju(form.company_id.kbr_dodatak and \
+                                              form.company_id.kbr_dodatak or '')
                         ),
-                    EM.PodrucjeDjelatnosti('A'),  # TODO: check out odkuda ovaj podatak??
+                    EM.PodrucjeDjelatnosti(form.company_id.podrucje_djelatnosti),
                     EM.SifraDjelatnosti(form.company_id.l10n_hr_base_nkd_id.code),),
                 EM.ObracunSastavio(
                     EM.Ime(form.company_id.responsible_fname),
@@ -205,8 +209,8 @@ class pdv_knjiga(orm.TransientModel):
                 EM.R3(line['invoice_date']),
                 EM.R4(partner_r4),
                 EM.R5(partner_r5),
-                EM.R6('1'),  # TODO: TIP ID-broja isporučitelja ???
-                EM.R7(line['partner_oib'].strip()),
+                EM.R6(line['vat_type']),
+                EM.R7(line['partner_oib'].lstrip().rstrip()),
                 EM.R8(decimal_num(line['stupac6'])),
                 EM.R9(decimal_num(line['stupac7'])),
                 EM.R10(decimal_num(line['stupac8'])),
@@ -277,4 +281,4 @@ class pdv_knjiga(orm.TransientModel):
             'target': 'new',
         }
 
-    #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -156,13 +156,14 @@ class Parser(report_sxw.rml_parse):
         COALESCE(invoice.number, stavka.name) AS invoice_number,
         COALESCE(invoice_date_invoice, am.date) AS invoice_date, 
         COALESCE(invoice_partner_name, p.name, ' ') || ', ' || COALESCE(invoice_partner_street, p.street ,' ') || ', ' || COALESCE(invoice_partner_city, p.city, ' ') AS partner_name,
-        SUBSTRING(COALESCE(invoice_partner_oib, p.vat, ' '), 3) AS partner_oib,                           
+        SUBSTRING(COALESCE(invoice_partner_oib, p.vat, ' '), 3) AS partner_oib, 
+        p.vat_id_type as vat_type,           --               
          """
          
         invoice_sql = """ LEFT JOIN account_invoice AS invoice ON (invoice.id=stavka.invoice_id) """
         self.crete_temp_table()
         insert_sql = 'INSERT INTO l10n_hr_vat_' + str(self.uid) +"""(
-            rbr, invoice_number, invoice_date, partner_name, partner_oib,
+            rbr, invoice_number, invoice_date, partner_name, partner_oib, vat_type,
             stupac6, stupac7, stupac8, stupac9, stupac10, stupac11, stupac12,
             stupac13, stupac14, stupac15, stupac16, stupac17, stupac18) """
         return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql, invoice_sql=invoice_sql, insert_sql=insert_sql)
@@ -175,6 +176,7 @@ class Parser(report_sxw.rml_parse):
                   invoice_date date,
                   partner_name text,
                   partner_oib text,
+                  vat_type text,
                   stupac6 numeric,
                   stupac7 numeric,
                   stupac8 numeric,

@@ -63,6 +63,35 @@ class res_company(models.Model):
     #deprec
     racun_obrazac = fields.Char('Vrsta racuna', size=32,
                                 help='Oznaka na ispisu računa. Bivši "R-1"/"R-2"')
+    #BOLE: dodana polja za URA u xml:
+    ulica = fields.Char('Ulica')
+    kbr = fields.Char('Kucni broj')
+    kbr_dodatak = fields.Char('Dodatak kucnom broju')
+    podrucje_djelatnosti = fields.Selection(
+        selection=[
+            ('A', 'A-POLJOPRIVREDA, ŠUMARSTVO I RIBARSTVO'),
+            ('B', 'B-RUDARSTVO I VAĐENJE'),
+            ('C', 'C-PRERAĐIVAČKA INDUSTRIJA'),
+            ('D', 'D-OPSKRBA ELEKTRIČNOM ENERGIJOM, PLINOM, PAROM I KLIMATIZACIJA'),
+            ('E', 'E-OPSKRBA VODOM, UKLANJANJE OTPADNIH VODA, GOSPODARENJE OTPADOM TE DJELATNOSTI SANACIJE OKOLIŠA'),
+            ('F', 'F-GRAĐEVINARSTVO'),
+            ('G', 'G-TRGOVINA NA VELIKO I NA MALO; POPRAVAK MOTORNIH VOZILA I MOTOCIKALA'),
+            ('H', 'H-PRIJEVOZ I SKLADIŠTENJE'),
+            ('I', 'I-DJELATNOSTI PRUŽANJA SMJEŠTAJA TE PRIPREME I USLUŽIVANJA HRANE'),
+            ('J', 'J-INFORMACIJE I KOMUNIKACIJE'),
+            ('K', 'K-FINANCIJSKE DJELATNOSTI I DJELATNOSTI OSIGURANJA'),
+            ('L', 'L-POSLOVANJE NEKRETNINAMA'),
+            ('M', 'M-STRUČNE, ZNANSTVENE I TEHNIČKE DJELATNOSTI'),
+            ('N', 'N-ADMINISTRATIVNE I POMOĆNE USLUŽNE DJELATNOSTI'),
+            ('O', 'O-JAVNA UPRAVA I OBRANA; OBVEZNO SOCIJALNO OSIGURANJE'),
+            ('P', 'P-OBRAZOVANJE'),
+            ('Q', 'Q-DJELATNOSTI ZDRAVSTVENE ZAŠTITE I SOCIJALNE SKRBI'),
+            ('R', 'R-UMJETNOST, ZABAVA I REKREACIJA'),
+            ('S', 'S-OSTALE USLUŽNE DJELATNOSTI'),
+            ('T', 'T-DJELATNOSTI KUĆANSTAVA KAO POSLODAVACA'),
+            ('U', 'U-DJELATNOSTI IZVANTERITORIJALNIH ORGANIZACIJA I TIJELA'),
+        ], string='Područje djelatnosti',
+    )
 
 
     @api.onchange('maticni_broj')
@@ -91,5 +120,40 @@ class res_company(models.Model):
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
+    @api.multi
+    @api.depends('vat', 'country_id')
+    def _get_vat_type(self):
+        for partner in self:
+            if not partner.vat:
+                partner.vat_id_type = '0'
+                continue
+            pc = partner.vat[:2]
+            cc = partner.country_id and partner.country_id.code or False
+            if pc != 'HR':
+                partner.vat_id_type = '3'
+                continue
+            if cc and cc != pc:
+                partner.vat_id_type = '2'
+                continue
+            # DB: ali ako nema drzavu a vat ne pocinje sa HR??
+            #     ili ima krivo upisanu drzavu??
+            partner.vat_id_type = '1'
+
+
     vat_ext = fields.Char('VAT Extension', size=3, default='')
+    vat_id_type = fields.Selection(
+        selection=[
+            ('0', '0 - NO VAT'),
+            ('1', '1 - OIB'),
+            ('2', '2 - VAT ID'),
+            ('3', '3 - VAT (Foreign)')
+        ], string="VAT Type",
+        compute=_get_vat_type,
+        store=True,
+        help="0 - partners without VAT number entered,"
+             "1 - OIB - partners from croatia with Croatia VAT number"
+             "2 - VAT ID - partners with Croatia VAT, without residence in Croatia"
+             "3 - Foreign partners"
+    )
+
 
