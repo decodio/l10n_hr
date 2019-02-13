@@ -270,7 +270,7 @@ class pdv_knjiga(orm.TransientModel):
             msg= "Errors\n"
             for e in errors:
                 msg += "%s - %s\n" % (e['rbr'], e['partner_name'])
-            #raise Warning('Nedostaje OIB', msg)
+            raise Warning('Nedostaje OIB', msg)
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'pdv.knjiga',

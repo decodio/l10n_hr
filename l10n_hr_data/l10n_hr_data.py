@@ -136,6 +136,7 @@ class res_partner(models.Model):
                 partner.vat_id_type = '2'
                 continue
             # DB: ali ako nema drzavu a vat ne pocinje sa HR??
+            #     ili ima krivo upisanu drzavu??
             partner.vat_id_type = '1'
 
 
