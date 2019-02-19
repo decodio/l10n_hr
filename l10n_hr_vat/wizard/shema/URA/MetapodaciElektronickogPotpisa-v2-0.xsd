@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0"
+            targetNamespace="http://e-porezna.porezna-uprava.hr/sheme/Metapodaci/v2-0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="2.0"
+            xml:lang="hr-HR"
+            id="MetapodaciElektronickogPotpisa-v2-0">
+  
+  <xsd:include schemaLocation="MetapodaciTipovi-v2-0.xsd"/>
+  <xsd:complexType name="sMetapodaciElektronickogPotpisa">
+    <xsd:sequence> 
+      <xsd:element name="Datum" type="sDatumTemeljni"/>
+      <xsd:element name="Identifikator" type="sIdentifikatorTemeljni"/>      
+    </xsd:sequence>
+  </xsd:complexType>
+ 
+  <xsd:element name="MetapodaciElektronickogPotpisa" type="sMetapodaciElektronickogPotpisa"/>
+</xsd:schema>

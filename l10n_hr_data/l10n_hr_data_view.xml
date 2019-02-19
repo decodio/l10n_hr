@@ -51,6 +51,11 @@
                                 <field name="responsible_tel"/>
                                 <field name="responsible_email"/>
                                 <field name="ispostava"/>
+                                <separator colspan="4"/>
+                                <field name="ulica"/>
+                                <field name="kbr"/>
+                                <field name="kbr_dodatak"/>
+                                <field name="podrucje_djelatnosti"/>
                             </group>                              
                         </group>
                         <group colspan="4">
@@ -61,6 +66,16 @@
                 </page>
             </field>
         </record>
+    <record id="view_partner_l10n_hr_data" model="ir.ui.view">
+        <field name="name">view.partner.l10n.hr.data</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base_vat.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat_subjected" position="after">
+                <field name="vat_id_type"/>
+            </field>
+        </field>
+    </record>
 
 </data>
 </openerp>
