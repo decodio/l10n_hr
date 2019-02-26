@@ -297,16 +297,31 @@ class ZABA_getter(Currency_getter_interface):  # class added according to Croati
             datas = {}
             rate_name = single_date.strftime("%Y-%m-%d")
             date = single_date.strftime('%d/%m/%Y')
-            url = 'http://www.zaba.hr/ZabaUtilsWeb/utils/tecaj/tecajna'
+            # url = 'http://www.zaba.hr/ZabaUtilsWeb/utils/tecaj/tecajna' url changed 26.02.2019
+            url = "https://www.zaba.hr/home/tecajna-filter"
             headers = {'Content-Type': 'application/json',
                        }
+            """ payload changed 26.02.2019
             payload = {"datumTecajne": date,
                        "brojTecajne": "",
                        "godinaTecajne": "",
                        }
-            response = requests.post(url, data=json.dumps(payload), headers=headers)
+            """
+            payload = {
+                ' self.logger.error(msg)g': str(single_date.year),
+                'm': str(single_date.month),
+                'd': str(single_date.day),
+            }
+            response = requests.get(url, params=json.dumps(payload), headers=headers) # request changed from post to get and data with params
             resp_data = json.loads(response.content)
-
+            try:
+                resp_data = resp_data['obj']
+            except Exception, e:
+                msg = _(
+                    "Invalide response for date '%(data)s' from url '%(url)s'") % {
+                          'data': rate_name, 'url': url, }
+                self.logger.error(msg)
+                continue
             # resp_data example:
             """
             {u'lista': {u'brojTecajneListe': 21,
