@@ -308,11 +308,11 @@ class ZABA_getter(Currency_getter_interface):  # class added according to Croati
                        }
             """
             payload = {
-                ' self.logger.error(msg)g': str(single_date.year),
+                'g': str(single_date.year),
                 'm': str(single_date.month),
                 'd': str(single_date.day),
             }
-            response = requests.get(url, params=json.dumps(payload), headers=headers) # request changed from post to get and data with params
+            response = requests.get(url, params=payload, headers=headers) # request changed from post to get and data with params
             resp_data = json.loads(response.content)
             try:
                 resp_data = resp_data['obj']
