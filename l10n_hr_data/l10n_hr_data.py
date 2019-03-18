@@ -117,7 +117,7 @@ class res_company(models.Model):
         self.podnozje_ispisa = ''.join(val)
 
 
-class res_partner(models.Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     @api.multi
@@ -149,6 +149,7 @@ class res_partner(models.Model):
             ('3', '3 - VAT (Foreign)')
         ], string="VAT Type",
         compute=_get_vat_type,
+        compute_sudo=True,
         store=True,
         help="0 - partners without VAT number entered,"
              "1 - OIB - partners from croatia with Croatia VAT number"
