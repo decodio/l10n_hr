@@ -16,10 +16,10 @@
                 </field>
                 
                 <button name="button_journal_entries" position="after">
-                    <button name="add_bank_accounts_from_lines" string="Add bank accounts to partners" class="oe_inline oe_stat_button"
+                    <!--<button name="add_bank_accounts_from_lines" string="Add bank accounts to partners" class="oe_inline oe_stat_button"
                          confirm="Are you sure that you want to add the missing bank accounts to partners?"
                           type="object" icon="fa-bars"
-                           attrs="{'invisible': ['|', ('state','=','confirm'), ('statement_file_id','=',False)]}"/>                
+                           attrs="{'invisible': ['|', ('state','=','confirm'), ('statement_file_id','=',False)]}"/>-->
                     <button name="update_partners_payments" string="Update lines" class="oe_inline oe_stat_button"
                          confirm="Are you sure that you want to update partners and payments on the bank statement lines?"
                           type="object" icon="fa-bars" attrs="{'invisible': [('state','=','confirm')]}"/>
