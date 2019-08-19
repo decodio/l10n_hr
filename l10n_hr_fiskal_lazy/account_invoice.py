@@ -5,9 +5,9 @@
 #    Module: l10n_hr_fiskal_lazy
 #    Author: Davor Bojkić
 #    mail:   bole@dajmi5.com
-#    Copyright (C) 2012- Daj Mi 5, 
+#    Copyright (C) 2012- Daj Mi 5,
 #                  http://www.dajmi5.com
-#                    
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -27,9 +27,9 @@ from openerp.osv import osv, fields
 
 class account_invoice(osv.Model):
     _inherit = "account.invoice"
-   
-    
-    
+
+
+
     def _get_fiskal_broj(self, cr, uid, ids, field_name, field_value, context=None):
         res={}
         for invoice in self.browse(cr, uid, ids):
@@ -37,14 +37,14 @@ class account_invoice(osv.Model):
                 PAZI!! [3:] samo ako je sequence prefiks  %(y)/
                 Ukoliko se koristi ova opcija onda ju se nesmije uninstalirati naknadno!  
             """
-            
-            res[invoice.id]=(invoice.type in ('out_invoice','out_refund')) and invoice.number and invoice.number[3:].lstrip('0') or False 
+
+            res[invoice.id]=(invoice.type in ('out_invoice','out_refund')) and invoice.number and invoice.number[3:].lstrip('0') or False
         return res
-        
+
     _columns = {
                 'fiskal_broj':fields.function(_get_fiskal_broj, type="char", string="Fiskalizirani broj", readonly=True , store=True)
                 }
-    
+
     def invoice_validate(self, cr, uid, ids, context=None):
         assert len(ids)==1,'Jedna po jedna molim lijepo'
         inv_check=self.browse(cr, uid, ids[0])
@@ -60,8 +60,7 @@ class account_invoice(osv.Model):
                 raise osv.except_osv('NIJE MOGUCE POTVRDITI!', 'Odabrani naplatni Prostor/Blagajana nisu Vam odobreni za koristenje!')
             if user.journals and inv_check.journal_id not in user.journals:
                 raise osv.except_osv('NIJE MOGUCE POTVRDITI!', 'Nemate prava pisanja u odabrani Dokument!')
-            
-            
-            
-        self.write(cr, uid, ids, {'state':'open'}, context=context)
-        return True
+
+
+        res = super(account_invoice, self).invoice_validate(cr, uid, ids, context=context)
+        return res
