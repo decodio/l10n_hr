@@ -3,8 +3,8 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Authors:  Goran Kliska @ Slobodni-programi.hr Milan Tribuson @Infokom.hr
-#    mail:   
-#    Copyright: 
+#    mail:
+#    Copyright:
 #    Contributions: Marko Carević @Infokom.hr
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -33,8 +33,8 @@ JOURNAL_PAYMENTS = ('cash','bank')
 class l10n_hr_pdv_knjiga(osv.osv):
     _name = 'l10n_hr_pdv.knjiga'
     _description = 'Porezne knjige'
-   
-   
+
+
     _columns = {
         'code': fields.char('Code', size=32,  ),
         'name': fields.char('Description', size=64,  ),
@@ -48,26 +48,26 @@ class l10n_hr_pdv_knjiga(osv.osv):
         'based_on': fields.selection([
                                           ('invoice','Periodu racuna'),
                                           ('payment','Periodu placanja'),
-                                        ], 
+                                        ],
                                                  'Porezni period prema',
                                                  required=True),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'sequence': fields.integer('Sequence', required=True, help="Poredak knjiga u prikazu"),
 #        'exclude_tax_code_ids': fields.many2many('account.tax.code', 'l10n_hr_pdv_knjiga_tax_exclude_rel',
-#                                      'pdv_knjiga_id','tax_code_id', 
+#                                      'pdv_knjiga_id','tax_code_id',
 #                                      'Iskljuci poreze iz ispisa',
 #                                      help="Ovdje navedene porezne grupe se nece uzimati u obzir prilikom ispisa."),
 
     }
     _order = "sequence"
-    
+
     def _default_company(self, cr, uid, context=None):
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         if user.company_id:
             return user.company_id.id
         return self.pool.get('res.company').search(cr, uid, [('parent_id', '=', False)])[0]
 
-    
+
     _defaults = {
         'based_on': 'invoice',
         'company_id': _default_company,
@@ -79,14 +79,14 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
     _name = 'l10n_hr_pdv.knjiga.stavka'
     _description = 'Stavke porezne knjige'
     _order = 'id desc'
-    
+
     def _get_totals_vat_base(self, cr, uid, ids, name, args, context=None):
         res = {}
         if context is None:
             context = {}
         # TODO IF needed
         return res
-            
+
 
     _columns = {
         'name': fields.char('Description', size=64, select=True, ),
@@ -106,7 +106,7 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
         'reconcile_move_id': fields.many2one('account.move', 'Preknjizavanje kod zatvaranja', select=1),
         'invoice_partner_street': fields.related('invoice_id','partner_id','street', type='char', readonly=True, size=64, relation='account.invoice', store=True, string='Adresa'),
         'invoice_partner_city': fields.related('invoice_id','partner_id','city', type='char', readonly=True, size=64, relation='account.invoice', store=True, string='Sjediste'),
-        
+
         #TO DO Sve u funkciju koja računa po move line-ovima a ne po računu osnovica prema porezima?
         # zadnj dogovor marko-Goran K: Sume retka ćemo zbrajati na reportu!
         #'invoice_amount_untaxed': fields.related('invoice_id','amount_untaxed', readonly=True, size=64, relation='account.invoice', store=True, string='Iznos racuna'),
@@ -115,11 +115,11 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
         #'invoice_amount_total'  : fields.related('invoice_id','amount_total'  , readonly=True, size=64, relation='account.invoice', store=True, string='Uk. iznos'),
         #'invoice_tax_line'      : fields.related('invoice_id','tax_line',type='one2many', readonly=True, relation='account.invoice.tax', string='Porezi' ),
 
-        #'vat_position_ids':fields.one2many( 'account.vat.position.by.invoice','invoice_id', 'PDVpozicije', readonly=True) 
+        #'vat_position_ids':fields.one2many( 'account.vat.position.by.invoice','invoice_id', 'PDVpozicije', readonly=True)
         #'vat_position_ids':fields.function( _get_vat_position_lines, 'invoice_id','id',relation='account.vat.position.by.invoice','invoice_id', string='PDVpozicije', readonly=True)
-         
+
         #'vat_position_ids':fields.function(_get_vat_position_lines, readonly=True, method=True,
-        #                                    type='one2many', relation='account.vat.position.by.invoice', string='PDVpozicije' ),          
+        #                                    type='one2many', relation='account.vat.position.by.invoice', string='PDVpozicije' ),
     }
 
 
@@ -135,15 +135,15 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
         res=[]    #raise osv.except_osv(_('No Analytic Journal !'),_("You must define an analytic journal of type '%s' !") % ("tt",))
         vals['rbr'] = self.next_knjiga_rbr(cr, uid, vals['period_id'], vals['l10n_hr_pdv_knjiga_id'])
         res.append( super(l10n_hr_pdv_knjiga_stavka, self).create(cr, uid, vals, context) )
-        
-        return res 
-       
-        
+
+        return res
+
+
         for val in vals:
             val['rbr'] = self.next_knjiga_rbr(cr, uid, val['period_id'], val['l10n_hr_pdv_knjiga_id'])
             res.append( super(l10n_hr_pdv_knjiga_stavka, self).create(cr, uid, val, context) )
         #self.update_knjiga_rbr(cr, uid, res, context)
-        return res 
+        return res
 
     def unlink(self, cr, uid, ids, context={}):
         res = super(l10n_hr_pdv_knjiga_stavka, self).unlink(cr, uid, ids, context)
@@ -153,7 +153,7 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
     def next_knjiga_rbr(self, cr, uid, period_id, pdv_knjiga_id):
         if not period_id:
             raise osv.except_osv(_('Ne postoji fiskalni period !'), _('Ne postoji otvoreni fiskalni period'))
-        
+
         cr.execute(' '\
                    'SELECT max(pks.rbr) + 1          '\
                    '  FROM l10n_hr_pdv_knjiga_stavka pks       '\
@@ -166,8 +166,8 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
         for r in cr.fetchall():
             res = r[0] or 1
         return res
-         
-    
+
+
     def update_knjiga_rbr(self, cr, uid, ids=[], context=None):
         fiscal_year_ids=[]
         pdv_knjiga_ids=[]
@@ -179,7 +179,7 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
                    '     ( SELECT  pks.id, '\
                    '               row_number() '\
                    '               OVER( PARTITION BY  p.fiscalyear_id, pks.l10n_hr_pdv_knjiga_id '\
-                   '                         ORDER BY pks.date_move,'
+                   '                         ORDER BY pks.move_date,'
                    '                               /* p.date_start, i.date,*/  pks.move_id  '\
                    '                               /*pocetak perioda, datum knjiženja, redoslijed knjiženja*/ '\
                    '                   ) '\
@@ -189,10 +189,10 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
                    '        WHERE  1=1 '\
                    '        ) a  '\
                    ' WHERE l10n_hr_pdv_knjiga_stavka.id = a.id  '\
-                   '   AND coalesce(l10n_hr_pdv_knjiga_stavka.rbr,-1) <> a.poredak  ' 
+                   '   AND coalesce(l10n_hr_pdv_knjiga_stavka.rbr,-1) <> a.poredak  '
                    ,)
         return True
-    
+
 
 #                   '          -- AND p.fiscalyear_id in %s '\
 #                   '          -- AND pks.l10n_hr_pdv_knjiga_id in %s '\
@@ -234,7 +234,7 @@ class account_move(osv.osv):
                     continue
                 pdv_knjiga_ids = move.journal_id.l10n_hr_pdv_knjiga_ids
                 if pdv_knjiga_ids:
-                    for pdv_knjiga_id in pdv_knjiga_ids:  
+                    for pdv_knjiga_id in pdv_knjiga_ids:
                         pdv_knjiga_line = {'name': move.name or '/',
                                            'l10n_hr_pdv_knjiga_id' : pdv_knjiga_id.id,
                                            'move_id': move.id,
@@ -259,7 +259,7 @@ class account_move(osv.osv):
                                      }
                         pdv_knjiga_line_id = line_obj.create(cr, uid, pdv_knjiga_line, context=context)
                 #TB-20140326 -   
-                '''               
+                '''
         return res
 
     def button_cancel(self, cr, uid, ids, context=None):
@@ -300,7 +300,7 @@ class account_move_line(osv.osv):
                                            'invoice_id': knjiga_stavka.invoice_id and knjiga_stavka.invoice_id.id,
                                            }
                         invoices_list.append(pdv_knjiga_line) #this invoice should go in some book
-                        break 
+                        break
             if (line.partner_id and line.journal_id.type in JOURNAL_PAYMENTS):
                 payments_list.append({'move_id': line.move_id.id,
                                       'period_id' : line.move_id.period_id.id ,
@@ -348,10 +348,10 @@ class account_move_line(osv.osv):
             rec_move_ids = obj_rec_move.search(cr, uid, [('reconcile_id','in', unlink_ids),
                                                          ('type','in', ['tax_payment',])
                                                           ])
-        
+
         #call super account_tax_payment - dependency!
         res = super(account_move_line, self)._remove_move_reconcile(cr, uid, move_ids, context)
-        
+
         #remove additional pdv_knjiga stavka (better to reverse them? if period is closed?)
         obj_pdv_knjiga_stavka = self.pool.get('l10n_hr_pdv.knjiga.stavka')
         for move_id in rec_move_ids:
@@ -378,7 +378,7 @@ class account_invoice(osv.osv):
             period_id = inv.period_id and inv.period_id.id or False
             # get first draft period
             if not period_id:
-                period_ids = self.pool.get('account.period').search(cr, uid, 
+                period_ids = self.pool.get('account.period').search(cr, uid,
                                                                     [ ('date_stop','>=',inv.date_invoice or time.strftime('%Y-%m-%d'))
                                                                      ,('state','=','draft')]
                                                                     , order = 'date_start'
