@@ -210,6 +210,7 @@ class account_bank_statement_line(orm.Model):
         ref_field = field_map.get('ref', False)
         if not ref_field:
             return []
+        move_line_ids = []
         if line.get('type') == 'customer':
             move_line_ids = move_line_obj.search(cr, uid,
                    [(ref_field, '=', line.get('ref')),
