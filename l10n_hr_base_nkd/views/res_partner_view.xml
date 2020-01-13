@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_nkd_form" model="ir.ui.view">
+        <field name="name">view_partner_nkd_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="industry_id" position="after">
+                <field name="nkd_id"
+                       attrs="{'invisible': [('is_company', '=', False)]}"
+                       options="{'no_create': True, 'no_open': True,}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_l10n_hr_nkd_tree" model="ir.ui.view">
+            <field name="name">view_l10n_hr_nkd_tree</field>
+            <field name="model">l10n.hr.nkd</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="NKD - pregled" editable="bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

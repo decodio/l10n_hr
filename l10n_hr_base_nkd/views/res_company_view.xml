@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_company_l10n_hr_base_nkd" model="ir.ui.view">
+            <field name="name">view_company_l10n_hr_base_nkd</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="l10n_hr_base.view_company_l10n_hr_base"/>
+            <field name="arch" type="xml">
+                <field name="nkd" position="replace">
+                    <field name="nkd_id" options="{'no_create': True, 'no_open': True,}"/>
+                    <field name="nkd" invisible="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
