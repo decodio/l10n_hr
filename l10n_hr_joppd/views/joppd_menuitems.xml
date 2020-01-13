@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+	<!-- i can move main menuitem anywhere from GUI -->
+	<menuitem name='JOPPD' id='menu_joppd' sequence='69'
+			  groups="l10n_hr_joppd.group_joppd_manager"/>
+</data>
+<data noupdate="0">
+    <menuitem name="JOPPD" id="submenu_joppd" parent="menu_joppd"/>
+	<menuitem id="menu_joppd_report" name="Obrazac"
+			  action="action_joppd" parent="submenu_joppd"
+			  sequence="67"/>
+</data>
+</odoo>
