@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_company_l10n_hr_base" model="ir.ui.view">
+            <field name="name">view.company.l10n.hr.base</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="country_id" position="after">
+                    <field name="croatia" invisible="1"/>
+                </field>
+                <notebook position="inside">
+                    <page string="Croatia Company data" attrs="{'invisible':[('croatia','=',False)]}">
+                        <group string="Legal data" col="4" name="l10n_hr_legal">
+                            <field name="mirovinsko"/>
+                            <field name="zdravstveno"/>
+                            <field name="maticni_broj"/>
+                            <field name="nkd"/>
+                            <field name="podrucje_djelatnosti"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>
+
