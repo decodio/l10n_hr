@@ -7,9 +7,9 @@
     "version": "12.0.1.0.0",
     "application": False,
 
-    "author": "Decodio",
-    "support": "support@odoo-hrvatska.org",
-    "website": "https://decod.io",
+    'author': "Decodio Application ltd.",
+    'website': "http://www.decod.io",
+    "support": "support@decod.io",
     "licence": "LGPL-3",
     #"price" : 20.00,   #-> only if module if sold!
     #"currency": "EUR",
