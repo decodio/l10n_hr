@@ -4,7 +4,7 @@
 {
     "name": "Croatia - Banking",
     "summary": "Croatia Banking localization",
-    "category": "Localisation / Croatia",
+    "category": "Croatia",
     "images": [],
     "version": "12.0.1.0.0",
     "application": False,

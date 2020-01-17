@@ -104,10 +104,12 @@ class CroatiaXMLMixin(models.AbstractModel):
         :return: False , or Error description if error occurs
         """
         os.chdir(xsd_path)
-        xsd = StringIO(open(os.path.join(xsd_path, xsd_file), 'r').read())
-        xml_schema = etree.XMLSchema(etree.parse(xsd))
+        xml_schema = etree.XMLSchema(
+            etree.parse(os.path.join(xsd_path, xsd_file)))
         try:
-            xml_schema.assert_(etree.parse(StringIO(xml_string.encode('utf-8'))))
+            xml_schema.validate(etree.XML(xml_string))
         except AssertionError as E:
             return E[0]
+        except Exception as E:
+            return E
         return False

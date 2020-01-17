@@ -3,7 +3,7 @@
 {
     "name": """Croatia - base""",
     "summary": """Croatia base localization data""",
-    "category": "Localisation / Croatia",
+    "category": "Croatia",
     "images": [],
     "version": "12.0.1.0.0",
     "application": False,
@@ -25,10 +25,10 @@
         "bin": []
     },
     "data": [
-        #"data/res_bank_data.xml",
+        #"data/res_bank_data.xml",  # -> moved to l10n_hr_bank
         "views/res_company_view.xml",
-
-        # NKD
+        "data/module_category_croatia.xml",
+        # moved to NKD
         #"views/l10n_hr_nkd_view.xml",
         #"data/localization_settings.xml",
         #"security/ir.model.access.csv",

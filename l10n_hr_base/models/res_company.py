@@ -35,6 +35,7 @@ class Company(models.Model):
         string='Zdravstveno',
         help='Broj obveze uplaćivanja zdravstvenog osiguranja')
     maticni_broj = fields.Char(string='Matični broj')
+    # BOLE: ovo se nalazi u OCA/business_requirements modulu !!
     podrucje_djelatnosti = fields.Selection(
         selection=[
             ('A', 'A-POLJOPRIVREDA, ŠUMARSTVO I RIBARSTVO'),

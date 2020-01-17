@@ -3,7 +3,7 @@
 {
     "name": """Croatia - NKD""",
     "summary": """Hrvatska - Nacionalna Klasifikacija Djelatnosti""",
-    "category": "Localisation / Croatia",
+    "category": "Croatia",
     "images": [],
     "version": "12.0.1.0.0",
     "application": False,

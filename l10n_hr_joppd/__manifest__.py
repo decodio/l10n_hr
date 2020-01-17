@@ -3,7 +3,7 @@
 {
     "name": """JOPPD obrazac""",
     "summary": """joppd obrazac osnova""",
-    "category": "Localization / Croatia",
+    "category": "Croatia",
     "images": [],
     "version": "1.1.0",
     "application": False,
@@ -26,8 +26,9 @@
     "data": [
         "security/joppd_security.xml",
         "security/ir.model.access.csv",
-        "views/joppd_views.xml",
         "views/joppd_menuitems.xml",
+        "views/joppd_views.xml",
+
     ],
     "qweb": [],
     "demo": [],

@@ -2,7 +2,7 @@
 {
     "name": """Croatia - City data""",
     "summary": """Adds location data for Croatia - Cities, post offices etc.""",
-    "category": "Localisation / Croatia",
+    "category": "Croatia",
     "images": [],
     "version": "12.0.1.0.0",
     "application": False,
