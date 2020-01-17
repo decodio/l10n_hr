@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--        <record id="view_invoice_tax_tree_inherit" model="ir.ui.view">-->
+<!--            <field name="name">view_invoice_tax_tree_inherit</field>-->
+<!--            <field name="model">account.invoice.tax</field>-->
+<!--            <field name="inherit_id" ref="account.view_invoice_tax_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="amount" position="before">-->
+<!--                    <field name="base"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="view_invoice_tax_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">view_invoice_tax_form_inherit</field>-->
+<!--            <field name="model">account.invoice.tax</field>-->
+<!--            <field name="inherit_id" ref="account.view_invoice_tax_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="amount" position="before">-->
+<!--                    <field name="base"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="account_invoice_l10n_hr_form" model="ir.ui.view">
+            <field name="name">account_invoice_l10n_hr_form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <!-- remove wrong cancel button -->
+<!--                <button name="action_invoice_cancel" position="attributes">-->
+<!--                    <attribute name="invisible">[('croatia','=',True)]</attribute>-->
+<!--                </button>-->
+                <field name="payment_term_id" position="after">
+                    <field name="fiskal_uredjaj_id" widget="selection"
+                           attrs="{'required':[('type','in',['out_invoice','out_refund'])],
+                                   'invisible':[('croatia','=',False)]}"/>
+                    <field name="nacin_placanja"
+                           attrs="{'required':[('type','in',['out_invoice','out_refund'])],
+                                   'invisible':[('croatia','=',False)]}"/>
+                </field>
+                <field name="date_invoice" position="before">
+                    <field name="date_delivery"/>
+                </field>
+                <xpath expr="//field[@name='number']/.." position="before">
+                    <div attrs="{'invisible': [('fiskalni_broj','=',False)]}">
+                        <label for="fiskalni_broj"  string="HR fiskal number : " />
+                        <field name="fiskalni_broj"  class="oe_inline" readonly="1"/>
+<!--                        <label string=" - internal number - " class="oe_inline"/>-->
+                    </div>
+                </xpath>
+                <notebook position="inside">
+                    <page string="Croatia data" name="croatia"
+                          attrs="{'invisible':[('croatia','=',False)]}">
+                        <group colspan="4" col="4">
+                            <field name="date_document" /> <!-- do i need it? -->
+                            <field name="vrijeme_izdavanja" readonly="1"/>
+<!--                            <field name="fiskalni_broj" readonly="1"/>-->
+                        </group>
+                        <field name="croatia" invisible="1"/>
+                    </page>
+                </notebook>
+                <xpath expr="//field[@name='tax_line_ids']/tree/field[@name='amount_total']" position="before">
+                    <field name="base"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_invoice_supplier_l10n_hr_form" model="ir.ui.view">
+            <field name="name">account_invoice_supplier_l10n_hr_form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+<!--
+                <field name="invoice_number" position="before">
+                    maybe this is not needed, but anyway...some invoices may not have fiskal number?
+                    <field name="fiskalni_broj"/>
+                </field>-->
+
+                <field name="payment_term_id" position="replace">-->
+                    <!-- removed: attrs="{'invisible': [('payment_term_id','=',False)]}" -->
+                    <field name="payment_term_id" options="{'no_create': True}"/>
+                    <!--DB: this may belog somwehere else one day... -->
+                </field>
+                <xpath expr="//field[@name='tax_line_ids']/tree/field[@name='amount_total']" position="before">
+                    <field name="base"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--<record id="account_invoice_supplier_l10n_hr_tree" model="ir.ui.view">-->
+            <!--<field name="name">account_invoice_supplier_l10n_hr_tree</field>-->
+            <!--<field name="model">account.invoice</field>-->
+            <!--<field name="inherit_id" ref="account.invoice_supplier_tree"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="name" position="after">-->
+                    <!--<field name="supplier_invoice_number"/>-->
+                <!--</field>-->
+                <!--&lt;!&ndash;<field name="date_due" position="before">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="date_document"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;</field>&ndash;&gt;-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="account_invoice_l10n_hr_search" model="ir.ui.view">-->
+            <!--<field name="name">account_invoice_supplier_l10n_hr_search</field>-->
+            <!--<field name="model">account.invoice</field>-->
+            <!--<field name="inherit_id" ref="account.view_account_invoice_filter"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="date" position="after">-->
+                    <!--<field name="date_document" string="Document Date"/>-->
+                <!--</field>-->
+                <!--<xpath expr="//search/group/filter[4]" position="before">-->
+                    <!--<filter string="Document Date" context="{'group_by':'date_document'}"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

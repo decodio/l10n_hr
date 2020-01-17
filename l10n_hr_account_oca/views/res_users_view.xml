@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_users_defaults_form_l10n_hr" model="ir.ui.view">
+            <field name="name">view_users_defaults_form_l10n_hr</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Croatia user defaults" >
+                        <group>
+                            <field name="prostor_ids" widget="many2many_tags" />
+                        </group>
+                        <!-- DB: TODO: remove notebook, group fiedls -->
+                        <notebook>
+                        <page string="Naplatni uređaji" attrs="{'invisible':[('prostor_ids','=',[])]}">
+                            <button string="Dohvati sve uređaje" type="object" name="get_all_uredjaj"/>
+                            <group>
+                                <field name="uredjaj_ids" widget="many2many_tags"/>
+                                <field name="default_uredjaj" widget="selection" /><!-- domain="[('id', 'in', uredjaj_ids[0][2])]" vidi dolje...-->
+                            </group>
+                        </page>
+                        </notebook>
+
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>
