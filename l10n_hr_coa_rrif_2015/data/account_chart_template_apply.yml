@@ -1,0 +1,5 @@
+-
+  Load chart template if none installed
+-
+  !python {model: account.chart.template, id: l10n_hr_coa_rrif_2015_template}: |
+    self[0].try_loading_for_current_company()

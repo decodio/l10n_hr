@@ -1,0 +1,8 @@
+id,name,sequence
+tax_group_pdv25,PDV 25%,1
+tax_group_pdv13,PDV 13%,2
+tax_group_pdv05,PDV 5%,3
+tax_group_ppdv25,PPDV 25%,4
+tax_group_ppdv13,PPDV 13%,5
+tax_group_ppdv05,PPDV 5%,6
+tax_group_osl,NO TAX,7

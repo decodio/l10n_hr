@@ -1,0 +1,30 @@
+New field Tax Group: defines where this tax is summed in the invoice footer. All the tax belonging to the same tax group will be grouped on the invoice footer.
+
+TODO: dodati grupe PDV25%, PDV 13%, PDV5% i nakačiti dobra i usluge na to.. testirati
+
+TODO: separate module for this...
+ - porezi na osiguranje vozila?
+   https://www.porezna-uprava.hr/HR_porezni_sustav/Stranice/porez_premije_osiguranja.aspx
+   https://narodne-novine.nn.hr/clanci/sluzbeni/2003_01_16_215.html
+    ​15% od ugovorene premije osiguranja od automobilske odgovornosti
+    10% od ugovorene premije kasko osiguranja cestovnih vozila
+
+
+TODO: 
+oslobođenja:
+
+- boravišna pristojba čl 33.st.3
+- osiguranje, JB naknada - čl 40.st 1
+- PPO ? čl 19.st2. t.2
+- kombi rent - čl 90. st1 i st2 -
+
+
+
+16.1.2020
+Promjena tipova konta hr u standardni odoo:
+
+account_type_obveze_dob	    ->      account.data_account_type_payable
+account_type_potraz_kup	    ->      account.data_account_type_receivable
+account_type_aktiv_razgran	->      account.data_account_type_prepayments
+account_type_kapital	    ->      account.data_account_type_equity
+account_type_kratk_obveze	->      account.data_account_type_current_liabilities

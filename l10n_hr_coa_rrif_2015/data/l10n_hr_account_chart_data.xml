@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <menuitem id="account_reports_rrif_2015_statements_menu"
+              name="Croatia"
+              parent="account.menu_finance_reports"
+              sequence="3"
+              groups="account.group_account_user"/>
+    
+    <data >
+        <record id="l10n_hr_coa_rrif_2015_template" model="account.chart.template">
+            <field name="name">RRIF-2015 računski plan za poduzetnike</field>
+            <field name="bank_account_code_prefix">1010</field>
+            <field name="cash_account_code_prefix">1020</field>
+            <field name="transfer_account_code_prefix">1009</field>
+            <field name="currency_id" ref="base.HRK"/>
+            <field name="code_digits">6</field>
+        </record>
+        <!-- Account Chart Template -->
+        <record id="transfer_account" model="account.account.template">
+            <field name="code">1009</field>
+            <field name="name">Žiro-račun prijelazni konto</field>
+            <field name="reconcile" eval='True'/>
+            <field name="user_type_id" ref="account.data_account_type_current_assets"/>
+        </record>
+    </data>
+</odoo>

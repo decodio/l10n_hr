@@ -1,0 +1,100 @@
+"id","sequence","name","description","tax_group_id/id","type_tax_use","amount_type","amount","account_id/id","refund_account_id/id","price_include","children_tax_ids/id","tag_ids/id","chart_template_id/id"
+"tax_tmpl_PDV25D",10,"PDV 25% na dobra RH","PDV 25% D","tax_group_pdv25","sale","percent",25,"kp_rrif_240012","kp_rrif_240012","FALSE",,"tax_tag_II_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PDV13D",15,"PDV 13% na dobra RH","PDV 13% D","tax_group_pdv13","sale","percent",13,"kp_rrif_240011","kp_rrif_240011","FALSE",,"tax_tag_II_2","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PDV5D",20,"PDV 5% na dobra RH","PDV 5% D","tax_group_pdv05","sale","percent",5,"kp_rrif_240010","kp_rrif_240010","FALSE",,"tax_tag_II_1","l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_PDV25U",11,"PDV 25% na usluge RH","PDV 25% U","tax_group_pdv25","sale","percent",25,"kp_rrif_240012","kp_rrif_240012","FALSE",,"tax_tag_II_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PDV13U",16,"PDV 13% na usluge RH","PDV 13% U","tax_group_pdv13","sale","percent",13,"kp_rrif_240011","kp_rrif_240011","FALSE",,"tax_tag_II_2","l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_PDV25A",11,"PDV 25% na prim. predujmove","PDV 25% A","tax_group_pdv25","sale","percent",25,"kp_rrif_240022","kp_rrif_240022","FALSE",,"tax_tag_II_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PDV13A",16,"PDV 13% na prim. predujmove","PDV 13% A","tax_group_pdv13","sale","percent",13,"kp_rrif_240021","kp_rrif_240021","FALSE",,"tax_tag_II_2","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PDV5A",21,"PDV 5% na prim. predujmove","PDV 5% A","tax_group_pdv05","sale","percent",5,"kp_rrif_240020","kp_rrif_240020","FALSE",,"tax_tag_II_1","l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_TPPO",100,"Prod.Osl.- tuzemni prijenos porezne obveze","TPPO","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_1","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PO-INO-D",101,"Prod.Osl.- isporuka dobara u treće zemlje","INO-D","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_2","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PO-INO-U",101,"Prod.Osl.- isporuka usluga u treće zemlje","INO-U","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_2","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PO-EU-D",102,"Prod.Osl.- isporuka dobara u EU","EU-D","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PO-EU-U",103,"Prod.Osl.- isporuka usluga u EU","EU-U","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_4","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PO-BS",104,"Prod.Osl.- isporuke osobama bez sjedista u RH","BS","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_5","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PO-EU-SIP",105,"Prod.Osl.- sastavljanje/postavljanje dobara u EU","EU-SIP","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_6","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PO-EU-PS",106,"Prod.Osl.- isporuka prijevoznih sredstava unutar EU","EU-PS","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_7","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_K-DA-OTI",107,"Prod.Osl.- tuzemne isporuke ","K-DA-OTI","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_8","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_K-INO-IZ",108,"Prodaja - izvozne isporuke","K-INO-IZ","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_9","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_K-DA-OS",109,"Prodaja - ostala oslobođenja ","K-DA-OS","tax_group_osl","sale","percent",0,,,"FALSE",,"tax_tag_I_10","l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_NEOP",1000,"Nabava ne podliježe oporezivanju","NEOP",,"purchase","fixed",0,,,"FALSE",,,"l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_IZVAN-PDV",900,"Nabva – društvo nije u sustavu PDV-a","IZVAN-PDV",,"purchase","fixed",0,,,"FALSE",,,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_PPDV25D",10,"PPDV 25% na dobra","PPDV 25% D","tax_group_ppdv25","purchase","percent",25,"kp_rrif_140012","kp_rrif_140012","FALSE",,"tax_tag_III_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PPDV13D",50,"PPDV 13% na dobra","PPDV 13% D","tax_group_ppdv13","purchase","percent",13,"kp_rrif_140011","kp_rrif_140011","FALSE",,"tax_tag_III_2","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PPDV5D",100,"PPDV 5% na dobra","PPDV  5% D",,"purchase","percent",5,"kp_rrif_140010","kp_rrif_140010","FALSE",,"tax_tag_III_1","l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_PPDV25U",11,"PPDV 25% na usluge","PPDV 25% U","tax_group_ppdv25","purchase","percent",25,"kp_rrif_140012","kp_rrif_140012","FALSE",,"tax_tag_III_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PPDV13U",51,"PPDV 13% na usluge","PPDV 13% U","tax_group_ppdv13","purchase","percent",13,"kp_rrif_140011","kp_rrif_140011","FALSE",,"tax_tag_III_2","l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_PPDV25A",12,"PPDV 25% dani predujmovi","PPDV 25% A","tax_group_ppdv25","purchase","percent",25,"kp_rrif_140022","kp_rrif_140022","FALSE",,"tax_tag_III_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PPDV13A",52,"PPDV 13% dani predujmovi","PPDV 13% A","tax_group_ppdv13","purchase","percent",13,"kp_rrif_140021","kp_rrif_140021","FALSE",,"tax_tag_III_2","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PPDV5A",102,"PPDV 5% dani predujmovi","PPDV 5% A",,"purchase","percent",5,"kp_rrif_140020","kp_rrif_140020","FALSE",,"tax_tag_III_1","l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_N-PPDV25D",13,"PPDV 25% dobra nepriznati","N-PPDV 25% D","tax_group_ppdv25","purchase","percent",25,"kp_rrif_14080","kp_rrif_14080","FALSE",,,"l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_N-PPDV13D",53,"PPDV 13% dobra nepriznati","N-PPDV 13% D","tax_group_ppdv13","purchase","percent",13,"kp_rrif_14080","kp_rrif_14080","FALSE",,,"l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_N-PPDV5D",103,"PPDV 5% dobra nepriznati","N-PPDV 5% D",,"purchase","percent",5,"kp_rrif_14080","kp_rrif_14080","FALSE",,,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_N-PPDV25U",13,"PPDV 25% usluge nepriznati","N-PPDV 25% U","tax_group_ppdv25","purchase","percent",25,"kp_rrif_14080","kp_rrif_14080","FALSE",,,"l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_N-PPDV13U",53,"PPDV 13% usluge nepriznati","N-PPDV 13% U","tax_group_ppdv13","purchase","percent",13,"kp_rrif_14080","kp_rrif_14080","FALSE",,,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-TPO-P-25",100,"Nabava – TPO pretporez 25%","D-TPO-P-25%",,"none","percent",25,"kp_rrif_14011","kp_rrif_14011","FALSE",,"tax_tag_II_4","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-TPO-O-25",100,"Nabava - TPO obveza 25%","D-TPO-O-25%",,"none","percent",-25,"kp_rrif_24011","kp_rrif_24011","FALSE",,"tax_tag_III_4","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-TPO25",150,"Nabava - tuzemni prijenos porez. Obveze","D-TPO 25%",,"purchase","group",,,,"FALSE","tax_tmpl_D-TPO-P-25,tax_tmpl_D-TPO-O-25",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-EU-P5",100,"D-EU Pretporez 5% roba","D-EU-P 5%",,"none","percent",5,"kp_rrif_14020","kp_rrif_14020","FALSE",,"tax_tag_III_5","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-EU-O5",100,"D-EU Obveza 5% roba","D-EU-O 5%",,"none","percent",-5,"kp_rrif_24020","kp_rrif_24020","FALSE",,"tax_tag_II_5","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_EU5D",105,"EU Stjecanje dobara 5%","EU 5%D",,"purchase","group",,,,"FALSE","tax_tmpl_D-EU-P5,tax_tmpl_D-EU-O5",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-EU-P13",100,"D-EU Pretporez 13% roba","D-EU-P 13%",,"none","percent",13,"kp_rrif_14021","kp_rrif_14021","FALSE",,"tax_tag_III_6","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-EU-O13",100,"D-EU Obveza 13% roba","D-EU-O 13%",,"none","percent",-13,"kp_rrif_24021","kp_rrif_24021","FALSE",,"tax_tag_II_6","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_EU13D",55,"EU Stjecanje dobara 13%","EU 13% D",,"purchase","group",,,,"FALSE","tax_tmpl_D-EU-P13,tax_tmpl_D-EU-O13",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-EU-P25",100,"D-EU Pretporez 25% roba","D-EU-P 25%",,"none","percent",25,"kp_rrif_14022","kp_rrif_14022","FALSE",,"tax_tag_III_7","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-EU-O25",100,"D-EU Obveza 25% roba","D-EU-O 25%",,"none","percent",-25,"kp_rrif_24022","kp_rrif_24022","FALSE",,"tax_tag_II_7","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_EU25D",15,"EU Stjecanje dobara 25%","EU 25% D",,"purchase","group",,,,"FALSE","tax_tmpl_D-EU-P25,tax_tmpl_D-EU-O25",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_U-EU-P5",100,"U-EU Pretporez 5% usluge","U-EU-P 5%",,"none","percent",5,"kp_rrif_14030","kp_rrif_14030","FALSE",,"tax_tag_III_8","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_U-EU-O5",100,"U-EU Obveza 5% usluge","U-EU-O 5%",,"none","percent",-5,"kp_rrif_24030","kp_rrif_24030","FALSE",,"tax_tag_II_8","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_EU5U",106,"EU Stjecanje usluge 5%","EU 5% U",,"purchase","group",,,,"FALSE","tax_tmpl_U-EU-P5,tax_tmpl_U-EU-O5",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_U-EU-P13",100,"U-EU Pretporez 13% usluge ","U-EU-P 13%",,"none","percent",13,"kp_rrif_14031","kp_rrif_14031","FALSE",,"tax_tag_III_9","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_U-EU-O13",100,"U-EU Obveza 13% usluge","U-EU-O 13%",,"none","percent",-13,"kp_rrif_24031","kp_rrif_24031","FALSE",,"tax_tag_II_9","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_EU13U",56,"EU Stjecanje usluge 13%","EU 13% U",,"purchase","group",,,,"FALSE","tax_tmpl_U-EU-P13,tax_tmpl_U-EU-O13",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_U-EU-P25",100,"D-EU Pretporez 25% usluge","U-EU-P 25%",,"none","percent",25,"kp_rrif_14031","kp_rrif_14032","FALSE",,"tax_tag_III_10","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_U-EU-O25",100,"D-EU Obveza 25% usluge","U-EU-O 25%",,"none","percent",-25,"kp_rrif_24032","kp_rrif_24032","FALSE",,"tax_tag_II_10","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_EU25U",16,"EU Stjecanje usluge 25%","EU 25% U",,"purchase","group",,,,"FALSE","tax_tmpl_U-EU-P25,tax_tmpl_U-EU-O25",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-INO-P5",100,"D-INO Preporez 5% dobra","D-INO-P 5%",,"none","percent",5,"kp_rrif_14050","kp_rrif_14050","FALSE",,"tax_tag_III_14","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-INO-O5",100,"D-INO Obveza PDV 5% dobra","D-INO-O 5%",,"none","percent",-5,"kp_rrif_2405","kp_rrif_2405","FALSE",,"tax_tag_II_15","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_INO5D",107,"INO Primljena dobra izvan EU – 5%","INO 5% D",,"purchase","group",,,,"FALSE","tax_tmpl_D-INO-P5,tax_tmpl_D-INO-O5",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_U-INO-P5",100,"D-INO Preporez 5% usluge","U-INO-P 5%",,"none","percent",5,"kp_rrif_14050","kp_rrif_14050","FALSE",,"tax_tag_III_14","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_U-INO-O5",100,"D-INO Obveza PDV 5% usluge","U-INO-O 5%",,"none","percent",-5,"kp_rrif_2405","kp_rrif_2405","FALSE",,"tax_tag_II_15","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_INO5U",107,"D-INO Primljene usluge izvan EU – 5%","INO 5% U",,"purchase","group",,,,"FALSE","tax_tmpl_U-INO-P5,tax_tmpl_U-INO-O5",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-INO-P13",100,"INO Preporez 13% dobra","D-INO-P 13%",,"none","percent",13,"kp_rrif_14051","kp_rrif_14051","FALSE",,"tax_tag_III_14","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-INO-O13",100,"INO Obveza PDV 13% dobra","D-INO-O 13%",,"none","percent",-13,"kp_rrif_2405","kp_rrif_2405","FALSE",,"tax_tag_II_15","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_INO13D",57,"Primljena dobra izvan EU – 13%","INO 13% D",,"purchase","group",,,,"FALSE","tax_tmpl_D-INO-P13,tax_tmpl_D-INO-O13",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_U-INO-P13",100,"INO Preporez 13% usluge","U-INO-P 13%",,"none","percent",13,"kp_rrif_14051","kp_rrif_14051","FALSE",,"tax_tag_III_14","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_U-INO-O13",100,"INO Obveza PDV 13% usluge","U-INO-O 13%",,"none","percent",-13,"kp_rrif_2405","kp_rrif_2405","FALSE",,"tax_tag_II_15","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_INO13U",57,"Primljene usluge izvan EU – 13%","INO 13% U",,"purchase","group",,,,"FALSE","tax_tmpl_U-INO-P13,tax_tmpl_U-INO-O13",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-INO-P25",100,"INO Preporez 25% dobra","D-INO-P 25%",,"none","percent",25,"kp_rrif_14052","kp_rrif_14052","FALSE",,"tax_tag_III_14","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-INO-O25",100,"INO Obveza PDV 25% dobra","D-INO-O 25%",,"none","percent",-25,"kp_rrif_2405","kp_rrif_2405","FALSE",,"tax_tag_II_15","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_INO25D",17,"Primljena dobra izvan EU - 25%","INO 25% D",,"purchase","group",,,,"FALSE","tax_tmpl_D-INO-P25,tax_tmpl_D-INO-O25",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_U-INO-P25",100,"INO Preporez 25% usluge","U-INO-P 25%",,"none","percent",25,"kp_rrif_14052","kp_rrif_14052","FALSE",,"tax_tag_III_14","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_U-INO-O25",100,"INO Obveza PDV 25% usluge","U-INO-O 25%",,"none","percent",-25,"kp_rrif_2405","kp_rrif_2405","FALSE",,"tax_tag_II_15","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_INO25U",17,"Primljene usluge izvan EU - 25%","INO 25% U",,"purchase","group",,,,"FALSE","tax_tmpl_U-INO-P25,tax_tmpl_U-INO-O25",,"l10n_hr_coa_rrif_2015_template"
+,,,,,,,,,,,,,
+"tax_tmpl_D-BS25",120,"D-BS Obveza 25% roba","D-BS 25%",,"purchase","percent",25,"kp_rrif_14040","kp_rrif_14040","FALSE",,"tax_tag_III_3","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-BS-P5",120,"D-BS dobra i usluge 5%","D-BS-P 5%",,"purchase","percent",5,"kp_rrif_14042","kp_rrif_14042","FALSE",,"tax_tag_III_1","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_D-BS-P13",120,"D-BS dobra i usluge 13%","D-BS-P 13%",,"purchase","percent",13,"kp_rrif_14041","kp_rrif_14041","FALSE",,"tax_tag_III_2","l10n_hr_coa_rrif_2015_template"
