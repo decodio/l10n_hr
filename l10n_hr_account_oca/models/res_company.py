@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import Warning, ValidationError
 
 
 class Company(models.Model):
@@ -114,6 +114,24 @@ class FiskalProstor(models.Model):
     @api.one
     def button_activate_prostor(self):
         self.state = 'active'
+        if self.sljed_racuna == 'P':
+            if not self.journal_ids:
+                raise Warning(
+                    _('Activate not possible : no journals assigned!'))
+            for journal in self.journal_ids:
+                if journal.sequence_id != self.sequence_id:
+                    msg = _("Sequence mismatch:")
+                    msg += "\n" + _("Premise sequence : %s") % \
+                           self.sequence_id.name
+                    msg += "\n" + _("Journal sequence : %s") % \
+                           journal.sequence_id.name
+                    raise Warning(_('Sequence mismatch '))
+        else:  # sljed_racuna == 'N'
+            if self.sequence_id:
+                self.sequence_id = False
+            for uredjaj in self.uredjaj_ids:
+                # TODO: provjera po uređaju!
+                pass
         if self.env.get('l10n_hr_account_fiskal'):
             return self._log_prijava_odjava('prijava')
 
@@ -129,6 +147,16 @@ class FiskalProstor(models.Model):
             if ured.lock:
                 raise ValidationError('Nije moguće brisati uređaj u kojem je izdan račun!')
         return super(FiskalProstor, self).unlink()
+
+    """
+    TODO: 
+    create i write - provjera:
+    
+    1. sljed_racuna == P
+       -  
+    
+    """
+
 
 
 

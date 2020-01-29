@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
+from odoo.exceptions import Warning, ValidationError
 
 
 class AccountJournal(models.Model):
@@ -46,4 +47,36 @@ class AccountJournal(models.Model):
     #         res += [(journal.id, name)]
     #     return res
 
+    @api.multi
+    def write(self, vals):
+        """
+        TODO: provjere validnosti
+            1 - prostor: izdavanje računa na nivou uređaja:
+                - samo jedan dozvoljeni uređaj
+            2 - prostor: izdavanje računa na nivou prostora:
+                - svi uređaji moraju biti iz istog prostora, i aktivni!
+                - provjeri da li ima sequence id, ako nema dodaj!
+            3. Sekvenca: Smije imati prefix,
+                trenutno jedino podržano od dinamickih: %(year)s i %(y)s
+                drugi prefiksi trebaju dopunu
 
+            -> preferirati : Koristi sekvence po razdobljima ali netreba kontrola!
+        """
+
+        if vals.get('prostor_id') or vals.get('fiskal_uredjaj_ids'):
+            self._check_write_vals(vals)
+        return super(AccountJournal, self).write(vals)
+
+    def _check_write_vals(self, vals):
+        prostor_id = vals.get('prostor_id', False)
+        if prostor_id:
+            prostor = prostor_id and \
+                      self.env['fiskal.prostor'].browse(prostor_id)
+            msg = "Prostor: %s, " % prostor.name
+            if prostor.sljed_racuna == 'P':
+                if not prostor.sequence_id:
+                    prostor.sequence_id = self.sequence_id
+                elif prostor.sequence_id != self.sequence_id:
+                    msg += "seqvenca: %s" % prostor.sequence_id.name
+                    msg += " razlikuje se od sekvence na dnevniku!"
+                    raise Warning(msg)

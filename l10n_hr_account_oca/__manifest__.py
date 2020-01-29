@@ -32,6 +32,7 @@
         "views/res_users_view.xml",
         "views/account_invoice_view.xml",
         "views/account_journal_view.xml",
+        "views/menuitems.xml",
     ],
     "qweb": [],
     "demo": [],

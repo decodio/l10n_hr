@@ -9,9 +9,9 @@
                 <notebook position="inside">
                     <page string="Croatia specific" name="croatia_page"
                           attrs="{'invisible':[('croatia','=',False)]}">
+                        <field name="croatia" invisible="1"/>
                         <group>
                             <!-- TODO: readonly za ulazne -->
-                            <field name="croatia" invisible="1"/>
                             <field name="default_nacin_placanja"
                                    attrs="{'invisible':[('type', '!=', 'sale')]}"/>
                             <field name="prostor_id"

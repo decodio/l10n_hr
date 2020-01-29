@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+		<menuitem id="menu_finance_config_croatia"
+				  name="Croatia specific settings"
+				  parent="account.menu_finance_configuration"/>
+		
+		
         <!-- Company cert, prostor-->
 		<record id="view_company_form_l10n_hr_account" model="ir.ui.view">
 			<field name="name">view.company.form.l10n_hr</field>
@@ -21,10 +26,6 @@
 			</field>
 		</record>
 		
-		<menuitem id="menu_finance_config_croatia"
-				  name="Croatia specific settings"
-				  parent="account.menu_finance_configuration"/>
-				  
 		<!-- Fiskal Prostor -->
 		<record id="view_fiskal_prostor_tree" model="ir.ui.view">
 			<field name="name">view_fiskal_prostor_tree</field>
@@ -58,30 +59,24 @@
 					</header>
 					<sheet>
 						<group colspan="4" col="4">
-							<field name='name' attrs="{'readonly':[('lock','=',True)]}"/>
-                            <field name='oznaka_prostor' attrs="{'readonly':[('lock','=',True)]}"/>
-                            <field name="sljed_racuna" attrs="{'readonly':[('lock','=',True)]}"/>
+							<field name='name'
+								   attrs="{'readonly':[('lock','=',True)]}"/>
+                            <field name='oznaka_prostor'
+								   attrs="{'readonly':[('lock','=',True)]}"/>
+                            <field name="sljed_racuna"
+								   attrs="{'readonly':[('lock','=',True)]}"/>
 							<field name="sequence_id"
 								   context="{}"
-								   attrs="{'required':[('sljed_racuna','=','P')],
-								           'invisible':['|̈́',('sljed_racuna','=','N'),
+								   attrs="{'invisible':['|̈́',('sljed_racuna','=','N'),
 								           					('oznaka_prostor','=','')
-								           ]}"/><!--readonly="1"-->
+								           ]}"/><!--'required':[('sljed_racuna','=','P')],-->
 							<field name="mjesto_izdavanja" attrs="{'readonly':[('lock','=',True)]}"/>
 							<field name='company_id' invisible="1"/>
 							<field name="lock" invisible="1"/>
 						</group>
 						<notebook name="hr_accounting" colspan="4">
 							<page string="Naplatni uređaji u prostoru" >
-								<field name="uredjaj_ids" nolabel="1" colspan="4" >
-									<!--<tree string="uredjaji" editable="top">-->
-										<!--<field name="name"/>-->
-										<!--<field name="prostor_id"/>-->
-										<!--<field name="oznaka_uredjaj"/>-->
-										<!--<field name="aktivan" />-->
-										<!--<field name="journal_ids" widget="many2many_tags"/>-->
-									<!--</tree>-->
-								</field>
+								<field name="uredjaj_ids" nolabel="1" colspan="4" />
 							</page>
 							<page string="Journals for this premise">
 								<field name="journal_ids" nolabel="1" colspan="4">
@@ -91,6 +86,11 @@
 										<field name="sequence_id"/>
 									</tree>
 								</field>
+							</page>
+							<page string="Allowed users">
+								<field name="user_ids" nolabel="1" colspan="4"
+								       widget="many2many_tags"
+									   options="{'no_create':True}"/>
 							</page>
 						</notebook>
 					</sheet>
@@ -107,7 +107,9 @@
 		</record>
 		<menuitem id="menu_action_fiskal_prostor"
 				  action="action_fiskal_prostor"
-				  parent="menu_finance_config_croatia"/>
+				  parent="menu_finance_config_croatia"
+				  sequence="1"
+		/>
 
 		<!--Fiskal Uredjaj-->
 		<record  id="view_fiskal_uredjaj_tree" model="ir.ui.view">
@@ -136,9 +138,12 @@
 						<field name="oznaka_uredjaj" attrs="{'readonly':[('lock','=',True)]}"/>
 						<field name="sequence_id"
 							   attrs="{'readonly':[('lock','=',True)],
-								  	   'required':[('sljed_racuna','=','N')],
-								       'invisible':[('sljed_racuna','=','P')]}"/>
+								  	   'invisible':[('sljed_racuna','=','P')]}"/>
+						<!--'required':[('sljed_racuna','=','N')],-->
 						<field name="journal_ids" widget="many2many_tags" attrs="{'readonly':[('lock','=',True)]}"/>
+						<field name="user_ids" nolabel="1" colspan="4"
+								       widget="many2many_tags"
+									   options="{'no_create':True}"/>
 						<field name="aktivan" attrs="{'readonly':[('lock','=',True)]}"/>
 					</group>
 				</form>
@@ -153,7 +158,9 @@
 		</record>
 		<menuitem id="menu_action_fiskal_uredjaj"
 		          action="action_fiskal_uredjaj"
-				  parent="menu_finance_config_croatia"/>
+				  parent="menu_finance_config_croatia"
+				  sequence="2"
+		/>
 		
 		
     </data>
