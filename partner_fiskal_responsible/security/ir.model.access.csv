@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"partner_fiskal_tag_full_access","partner_fiskal_tag_full_access","model_res_partner_fiskal_tag","partner_fiskal_responsible.group_fiskal_responsible_manager","1","1","1","1"
+"partner_fiskal_tag_read_access","partner_fiskal_tag_read_access","model_res_partner_fiskal_tag","base.group_user","1","0","0","0"

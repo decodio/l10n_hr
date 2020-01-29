@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+
+    <record id="group_fiskal_responsible_manager" model="res.groups">
+        <field name="name">Fiskal responsible manager</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_no_one'))]"/>
+    </record>
+</data>
+</odoo>
