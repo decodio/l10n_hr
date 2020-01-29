@@ -11,6 +11,7 @@ from odoo.exceptions import UserError, ValidationError
 
 class CroatiaXMLMixin(models.AbstractModel):
     _name = 'l10n.hr.xml.mixin'
+    _description = 'Abstract class for handling XML in Croatia'
     """
     Abstract model containing common xml methods for all sorts of XML reports
     so, no need to import etree, objectify and such modules everywhere 
