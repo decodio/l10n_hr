@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record id="_decodio.list" model="ir.ui.view" >
+      <field name="name">_decodio list</field>
+      <field name="model">_decodio</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record id="action_win_decodio" model="ir.actions.act_window" >
+      <field name="name">_decodio window</field>
+      <field name="res_model">_decodio</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record id="action_srv_decodio" model="ir.actions.server">
+      <field name="name">_decodio server</field>
+      <field name="model_id" ref="_decodio"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem id="menu_root"
+              name="menu_decodio" />
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem id="menu_1"
+              name="Menu 1"
+              parent="menu_root"/>
+    <menuitem id="menu_2"
+              name="Menu 2"
+              parent="menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem id="menu_1_list"
+              name="List"
+              parent="menu_1"
+              action="action_win_decodio"/>
+    <menuitem id="menu_2_list"
+              name="Server to list"
+              parent="menu_2"
+              action="action_srv_decodio"/>
+    -->
+  </data>
+</odoo>

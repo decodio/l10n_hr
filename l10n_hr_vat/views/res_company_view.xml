@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_company_l10n_hr_porezna_uprava" model="ir.ui.view">
+            <field name="name">view_company_l10n_hr_porezna_uprava</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="l10n_hr_base.view_company_l10n_hr_base"/>
+            <field name="arch" type="xml">
+                <field name="podrucje_djelatnosti" position="after">
+                    <field name="porezna_id" options="{'no_create': True, 'no_open': True,}"/>
+                    
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
