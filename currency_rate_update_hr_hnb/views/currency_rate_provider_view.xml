@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_currency_rate_provider_form_rate_type_view" model="ir.ui.view">
+        <field name="name">res.currency.rate.provider.rate.type.form</field>
+        <field name="model">res.currency.rate.provider</field>
+        <field name="inherit_id"
+               ref="currency_rate_update.res_currency_rate_provider_form_view"/>
+        <field name="arch" type="xml">
+<!--            <xpath expr=".//field[@'name'='currency_ids']/../group" position="after">-->
+<!--                <group>-->
+<!--                    <field name="rate_type"/>-->
+<!--                </group>-->
+<!--            </xpath>-->
+              <field name="currency_ids" position="after">
+                  <field name="rate_type"/>
+              </field>
+        </field>
+    </record>
+</odoo>
