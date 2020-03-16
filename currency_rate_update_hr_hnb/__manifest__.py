@@ -13,11 +13,10 @@
     'installable': True,
     'application': False,
     'depends': [
-        'currency_rate_update',
-        'currency_rate_inverted',
+        'currency_rate_extended',
     ],
     'data': [
-        'views/res_config_settings.xml',
-        'views/currency_rate_provider_view.xml',
+        #'views/res_config_settings.xml',
+        #'views/currency_rate_provider_view.xml',
     ],
 }

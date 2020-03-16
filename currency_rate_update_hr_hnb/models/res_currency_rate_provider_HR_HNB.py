@@ -15,13 +15,15 @@ class ResCurrencyRateProvider_HR_HNB(models.Model):
     service = fields.Selection(
         selection_add=[('HR-HNB', 'Croatia-HNB')],
     )
-    rate_type = fields.Selection(
-        selection=[
-            ('kupovni', 'Buy rate'),
-            ('srednji', 'Mid rate'),
-            ('prodajni', 'Sell rate')
-        ], string="Rate type", default='srednji'
-    )
+
+
+    @api.multi
+    def onchange_service(self):
+        if self.service != 'HR-HNB':
+            return super(ResCurrencyRateProvider_HR_HNB, self).onchange_service()
+        self.fetch_inverse = True
+        self.provide_rates = 'multi'
+
 
     @api.multi
     def _get_supported_currencies(self):
@@ -53,7 +55,6 @@ class ResCurrencyRateProvider_HR_HNB(models.Model):
                 continue
             rate_date = cd['datum_primjene']
 
-
             qty = cd['jedinica']
             rate = cd.get(self.rate_type + '_tecaj').replace(',', '.')
             try:
@@ -61,9 +62,9 @@ class ResCurrencyRateProvider_HR_HNB(models.Model):
             except:
                 continue
             if not result.get(rate_date):
-                result[rate_date] = {currency: rate}
+                result[rate_date] = {currency: 1 / (rate * qty)}
             else:
-                result[rate_date].update({currency: rate})
+                result[rate_date].update({currency: 1 / (rate * qty)})
 
         return result
 
