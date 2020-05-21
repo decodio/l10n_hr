@@ -128,6 +128,7 @@ class ResPartner(models.Model):
                 partner.vat_id_type = '0'
                 continue
             pc = partner.vat[:2]
+            # TODO: upper() --- hr1234567890 prepoznaje kao 3 foregn!!
             cc = partner.country_id and partner.country_id.code or False
             if pc != 'HR':
                 partner.vat_id_type = '3'
