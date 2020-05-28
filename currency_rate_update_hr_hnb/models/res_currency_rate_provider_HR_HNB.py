@@ -1,6 +1,7 @@
 # Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
 import json
 from datetime import timedelta
 import urllib.request as request
@@ -8,6 +9,7 @@ import urllib.request as request
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
+_logger = logging.getLogger(__name__)
 
 class ResCurrencyRateProvider_HR_HNB(models.Model):
     _inherit = 'res.currency.rate.provider'
@@ -16,14 +18,15 @@ class ResCurrencyRateProvider_HR_HNB(models.Model):
         selection_add=[('HR-HNB', 'Croatia-HNB')],
     )
 
-
-    @api.multi
+    @api.onchange('service')
     def onchange_service(self):
+        if not self.service:
+            return {}
         if self.service != 'HR-HNB':
             return super(ResCurrencyRateProvider_HR_HNB, self).onchange_service()
         self.fetch_inverse = True
         self.provide_rates = 'multi'
-
+        self.rate_type = 'mid'
 
     @api.multi
     def _get_supported_currencies(self):
@@ -37,6 +40,14 @@ class ResCurrencyRateProvider_HR_HNB(models.Model):
         # sve valute.. ali very low impact pa se ne mucim oko ovog
         return currencies
 
+    def get_l10n_hr_rate_string(self, rate_type):
+        # TODO: move to l10n_hr nekamo generalnije
+        rates = {
+            'buy': 'kupovni',
+            'mid': 'srednji',
+            'sell': 'prodajni'
+        }
+        return rates.get(rate_type)
 
     @api.multi
     def _obtain_rates(self, base_currency, currencies, date_from, date_to):
@@ -44,6 +55,7 @@ class ResCurrencyRateProvider_HR_HNB(models.Model):
         if self.service != 'HR-HNB':
             return super()._obtain_rates(base_currency, currencies, date_from,
                                          date_to)  # pragma: no cover
+
         result = {}
         currencies = [c.name for c in self.currency_ids]
         data = self._l10n_hr_hnb_urlopen(
@@ -56,16 +68,20 @@ class ResCurrencyRateProvider_HR_HNB(models.Model):
             rate_date = cd['datum_primjene']
 
             qty = cd['jedinica']
-            rate = cd.get(self.rate_type + '_tecaj').replace(',', '.')
+            rate_string = self.get_l10n_hr_rate_string(self.rate_type)
+            rate = cd.get(rate_string + '_tecaj').replace(',', '.')
             try:
                 rate = float(rate)
             except:
+                _logger.debug("HNB problem rate not float: ", str(cd))
                 continue
-            if not result.get(rate_date):
-                result[rate_date] = {currency: 1 / (rate * qty)}
-            else:
-                result[rate_date].update({currency: 1 / (rate * qty)})
 
+            # not directly dependant but have in mind
+
+            if not result.get(rate_date):
+                result[rate_date] = {currency: qty / rate}
+            else:
+                result[rate_date].update({currency: qty / rate})
         return result
 
 
