@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_journal_reference_form" model="ir.ui.view">
+            <field name="name">view_account_journal_reference_form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form" />
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Reference">
+                        <separator string="Reference model"/>
+                        <label for="model_pnbr"/>
+                        <field name="model_pnbr" groups="account.group_account_manager" class="oe_inline"/>
+                        <label for="country_prefix" groups="account.group_account_manager" class="oe_inline"/>
+                        <field name="country_prefix" groups="account.group_account_manager" class="oe_inline"/>
+<!--                        <separator string="Elements"/>-->
+<!--                        <label string="Select elements for reference costruct : P1-P2-P3-P4 - according to selected model"/>-->
+<!--                        <label string="NOTE: Payment reference can only contain numerical characters,-->
+<!--                                       if partner code is not numerical, use partner id, otherwise-->
+<!--                                       all non numerical characters will be removed from reference "/>-->
+                        <separator/>
+                        <field name="P1_pnbr" groups="account.group_account_manager" class="oe_inline"/>
+                        <field name="P2_pnbr" groups="account.group_account_manager" class="oe_inline"/>
+                        <field name="P3_pnbr" groups="account.group_account_manager" class="oe_inline"/>
+                        <field name="P4_pnbr" groups="account.group_account_manager" class="oe_inline"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>
