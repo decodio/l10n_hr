@@ -4,7 +4,7 @@
     "summary": """Add reference type: Poziv na broj""",
     "category": "Accounting",
     "images": [],
-    "version": "12.0.0.0.1",
+    "version": "12.0.1.0.0",
     "application": False,
 
     "author": "Decodio Applications ltd",
