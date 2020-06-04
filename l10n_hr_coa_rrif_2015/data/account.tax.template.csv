@@ -27,7 +27,7 @@
 ,,,,,,,,,,,,,
 "tax_tmpl_PPDV25D",10,"PPDV 25% dobra","PPDV 25% D","tax_group_ppdv25","purchase","percent",25,"kp_rrif_140012","kp_rrif_140012","FALSE",,"tax_tag_III_3","l10n_hr_coa_rrif_2015_template"
 "tax_tmpl_PPDV13D",50,"PPDV 13% dobra","PPDV 13% D","tax_group_ppdv13","purchase","percent",13,"kp_rrif_140011","kp_rrif_140011","FALSE",,"tax_tag_III_2","l10n_hr_coa_rrif_2015_template"
-"tax_tmpl_PPDV5D",100,"PPDV 5% dobra","PPDV  5% D",,"purchase","percent",5,"kp_rrif_140010","kp_rrif_140010","FALSE",,"tax_tag_III_1","l10n_hr_coa_rrif_2015_template"
+"tax_tmpl_PPDV5D",100,"PPDV 5% dobra","PPDV 5% D",,"purchase","percent",5,"kp_rrif_140010","kp_rrif_140010","FALSE",,"tax_tag_III_1","l10n_hr_coa_rrif_2015_template"
 ,,,,,,,,,,,,,
 "tax_tmpl_PPDV25U",11,"PPDV 25% usluge","PPDV 25% U","tax_group_ppdv25","purchase","percent",25,"kp_rrif_140012","kp_rrif_140012","FALSE",,"tax_tag_III_3","l10n_hr_coa_rrif_2015_template"
 "tax_tmpl_PPDV13U",51,"PPDV 13% usluge","PPDV 13% U","tax_group_ppdv13","purchase","percent",13,"kp_rrif_140011","kp_rrif_140011","FALSE",,"tax_tag_III_2","l10n_hr_coa_rrif_2015_template"
