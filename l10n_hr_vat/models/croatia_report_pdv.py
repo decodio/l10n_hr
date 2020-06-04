@@ -95,6 +95,10 @@ class PdvObrazac(models.Model):
                      for tl in self.pdv_template_id.line_ids]
         self.pdv_line_ids = existing + new_lines
 
+
+    def button_get_data(self):
+        return
+
 class PdvObrazacStavka(models.AbstractModel):
     _name = 'l10n.hr.pdv.obrazac.line'
     _description = "Common abstrac report line model"
