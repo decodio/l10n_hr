@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <!-- dodaje poziv na broj -->
+    <template id="report_invoice_payment_reference_layout" inherit_id="account.report_invoice_document" >
+        <xpath expr="//p[@t-if='o.comment']" position="before">
+            <t t-if="o.reference_type == 'pnbr' and o.state != 'paid' and o.partner_bank_id"
+               t-call="account_reference.payment_info" />
+        </xpath>
+    </template>
+    <template id="payment_info" >
+        <div class="row" style="page-break-inside: avoid;">
+            <div class="col-xs-8 text-left">
+                <strong>Invoice payment info</strong>
+                    <br/>
+                <span>Account number : </span>
+                    <strong><span t-field="o.partner_bank_id.acc_number"/></strong>
+                    <br/>
+                <span>Bank : </span>
+                    <span t-field="o.partner_bank_id.bank_id.name"/>
+                    <span> (</span>
+                    <span t-field="o.partner_bank_id.bank_id.bic" />
+                    <span>)</span>
+                    <br/>
+                <span>Reference : </span>
+                    <strong><span t-field="o.reference"/></strong>
+            </div>
+        </div>
+    </template>
+</data>
+</odoo>
