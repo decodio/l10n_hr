@@ -1,5 +1,5 @@
 ============================
-Currency Rate Update: XE.com
+Currency Rate Update: HNB.hr
 ============================
 
 .. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -67,7 +67,8 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
-This module is maintained by the OCA.
+OCA Candidate
+
 
 .. image:: https://odoo-community.org/logo.png
    :alt: Odoo Community Association
