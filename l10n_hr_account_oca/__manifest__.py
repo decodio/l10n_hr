@@ -13,7 +13,7 @@
     "licence": "LGPL-3",
     #"price" : 20.00,   #-> only if module if sold!
     #"currency": "EUR",
-
+    'conflicts': ['l10n_hr_account'], # UVID, app store... not yet published ( only v10)
     "depends": [
         "account",
        # "account_storno",
