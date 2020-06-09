@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_currency_rate_provider_tree_ext" model="ir.ui.view">
+        <field name="name">res_currency_rate_provider_tree_ext</field>
+        <field name="model">res.currency.rate.provider</field>
+        <field name="inherit_id" ref="currency_rate_update.res_currency_rate_provider_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="service" position="after">
+                <field name="rate_type"/>
+            </field>
+        </field>
+    </record>
+    <record id="res_currency_rate_provider_form_ext" model="ir.ui.view">
+        <field name="name">res.currency.rate.provider.form.extensions</field>
+        <field name="model">res.currency.rate.provider</field>
+        <field name="inherit_id" ref="currency_rate_update.res_currency_rate_provider_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr=".//field[@name='currency_ids']/.." position="after">
+                <group>
+                    <field name="cron_id"
+                           domain="[('model_id', '=', 'res.currency.rate.provider')]"/>
+                    <field name="fetch_inverse"/>
+                    <field name="provide_rates"/>
+                    <field name="rate_type"
+                           attrs="{'invisible':[('provide_rates','=','one')]}"/>
+                    
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

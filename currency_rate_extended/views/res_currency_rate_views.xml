@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_currency_rate_type_tree" model="ir.ui.view">
+        <field name="name">res.currency.rate.type.tree</field>
+        <field name="model">res.currency.rate</field>
+        <field name="inherit_id" ref="base.view_currency_rate_tree"/>
+        <field name="arch" type="xml">
+            <field name="rate" position="after">
+                <field name="rate_inverse"/>
+<!--                <field name="rate_type"/>-->
+                <field name="provider_id"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_currency_rate_type_form" model="ir.ui.view">
+        <field name="name">res.currency.rate.type.form</field>
+        <field name="model">res.currency.rate</field>
+        <field name="inherit_id" ref="base.view_currency_rate_form"/>
+        <field name="arch" type="xml">
+            <field name="rate" position="after">
+                <field name="rate_inverse"/>
+<!--                <field name="rate_type"/>-->
+                <field name="provider_id"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_currency_rate_search_ext" model="ir.ui.view">
+        <field name="name">res.currency.rate.search.extended</field>
+        <field name="model">res.currency.rate</field>
+        <field name="inherit_id" ref="base.view_currency_rate_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="company_id" groups="base.group_multi_company"/>
+                <group expand="0" string="Group By">
+<!--                    <filter string="Rate type" name="rate_type"-->
+<!--                            context="{'group_by': 'rate_type'}"/>-->
+                    <filter string="Provider" name="provider_id"
+                            context="{'group_by': 'provider_id'}"/>
+                    <filter string="Date" name="group_date"
+                            context="{'group_by': 'name'}"/>
+                </group>
+            </field>
+        </field>
+    </record>
+    
+    <record id="view_currency_tree_inverted" model="ir.ui.view">
+        <field name="name">view_currency_tree_rate_inverted</field>
+        <field name="model">res.currency</field>
+        <field name="inherit_id" ref="base.view_currency_tree"/>
+        <field name="arch" type="xml">
+            <field name="rate" position="after">
+                <field name="rate_inverse"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_currency_form_inverted" model="ir.ui.view">
+        <field name="name">view_currency_form_rate_inverted</field>
+        <field name="model">res.currency</field>
+        <field name="inherit_id" ref="base.view_currency_form"/>
+        <field name="arch" type="xml">
+            <field name="rate" position="after">
+                <field name="rate_inverse"/>
+            </field>
+        </field>
+    </record>
+</odoo>
