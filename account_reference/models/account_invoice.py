@@ -41,19 +41,12 @@ class AccountInvoice(models.Model):
         return ' '.join((model, res))
 
     @api.multi
-    def action_move_create(self):
-        """
-        Before creating moves, check for existance of reference
-        if no ref exist on invoice, generate one according to journal setup
-        :return:
-        """
-        res = super(AccountInvoice, self).action_move_create()
-        for invoice in self:
-            if invoice.reference:
-                #TODO: check if ref is valid? in_invoice!
-                pass
-            else:
-                if invoice.journal_id.model_pnbr:
-                    ref = invoice.pnbr_get()
-                    invoice.reference = ref
+    def _get_computed_reference(self):
+        self.ensure_one()
+        res = ''
+        if self.company_id.invoice_reference_type == 'per_journal':
+            if self.journal_id.model_pnbr:
+                res = self.pnbr_get()
+        else:
+            res = super(AccountInvoice, self)._get_computed_reference()
         return res
