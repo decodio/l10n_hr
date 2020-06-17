@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="crypto_generate_certificate_request_form" model="ir.ui.view">
+        <field name="name">crypto.generate.certificate.form</field>
+		<field name="model">crypto.generate.certificate.request</field>
+		<field name="arch" type="xml">
+	        <form string="Generate Certificate Request">
+		        <field name="company_id" options="{'no_create': True}"/>
+				<newline/>
+		        <group col="4" colspan="4" string='Owner X509 Fields Name'>
+<!--			    <label string='Update values when you change the Company' colspan="4"/>-->
+					<field name="name_c" required="1"/>
+					<field name="name_sp"/>
+					<field name="name_l"/>
+					<field name="name_o"/>
+					<field name="name_ou"/>
+					<field name="name_cn" />
+					<field name="name_gn"/>
+					<field name="name_sn" />
+					<field name="name_email"/>
+					<field name="name_serialnumber" />
+				</group>
+				<footer col="2" colspan="4">
+					<button string="Generate Cert Request" name="button_generate"
+							type="object" class="btn-primary"/>
+					<button string="Cancel" class="btn-secondary" special="cancel"/>
+				</footer>
+			</form>
+	    </field>
+	</record>
+
+	<act_window id="action_crypto_generate_certificate_request_wizard"
+		        name="Generate Certificate Request"
+		        src_model="crypto.pairkey"
+		        res_model="crypto.generate.certificate.request"
+		        view_mode="form" view_type="form"
+		        target="new"/>
+</odoo>

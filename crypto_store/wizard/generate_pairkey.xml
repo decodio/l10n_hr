@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="generate_pairkey_form" model="ir.ui.view">
+		<field name="name">crypto.generate.pairkey.form</field>
+		<field name="model">crypto.generate.pairkey</field>
+		<field name="arch" type="xml">
+			<form string="Generate Pairkeys">
+				<field name="name" invisible="1"/>
+				<field name="key_length"/>
+				<field name="update" invisible="1"/>
+				<footer>
+					<button string="Generate pairkey" name="button_generate"
+							type="object" class="btn-primary"/>
+					<button string="Cancel" class="btn-secondary" special="cancel"/>
+				</footer>
+			</form>
+	    </field>
+	</record>
+
+	<act_window id="action_crypto_generate_pairkey_wizard"
+		        name="Generate Pairkey"
+		        res_model="crypto.generate.pairkey"
+		        view_mode="form" view_type="form"
+		        target="new"/>
+</odoo>
