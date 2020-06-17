@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": """Account reference: Poziv na broj""",
     "summary": """Add reference type: Poziv na broj""",

@@ -2,7 +2,7 @@
 
 from datetime import datetime as dt
 from . import poziv_na_broj as pnbr
-from odoo import api, fields, models, _
+from odoo import api, models
 
 
 class AccountInvoice(models.Model):
