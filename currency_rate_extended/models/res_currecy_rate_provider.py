@@ -3,10 +3,11 @@
 
 
 import logging
-from odoo import models, fields, api
+from sys import exc_info
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
-from sys import exc_info
+
 
 _logger = logging.getLogger(__name__)
 
@@ -103,11 +104,11 @@ class ResCurrencyRateProvider(models.Model):
                         'Currency Rate Provider "%s" failed to obtain data'
                         ' since %s until %s:\n%s'
                     ) % (
-                             provider.name,
-                             date_from,
-                             date_to,
-                             str(e) if e else _('N/A'),
-                         ),
+                        provider.name,
+                        date_from,
+                        date_to,
+                        str(e) if e else _('N/A'),
+                    ),
                 )
                 continue
 
