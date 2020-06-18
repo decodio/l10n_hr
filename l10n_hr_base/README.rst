@@ -12,17 +12,17 @@ Podaci o poduzeću u raznim tijelima drzavne uprave:
 - Br. obveze zdravstveno
 - Maticni broj
 
-- dev note: dodana metoda za dohvaćanje lokalno formatiranog vremena (svi potrebni formati u dict)
+- dev note:
+res_company : dodana metoda 'get_l10n_hr_time_formatted '
+              za dohvaćanje lokalno formatiranog vremena
+              u svim formatima koji se koriste u HR bez obzira
+              koja je time zona postavljena na serveru
+res_partner: dodana metoda: 'get_oib' za dohvat oib-a partnera
 
 Šifrarnici i popisi:
 
-- NKD 2007
-- Banke u R.Hrvatskoj
-
-Banke:
-
-VBB - Vodeći broj banke
-Partner - partner koji predstavlja banku ( do we need ?)
+- NKD 2007 -> modul: l10n_hr_nkd
+- Banke u R.Hrvatskoj ->  modul: l10n_hr_bank
 
 Prijevod base modula sa hrvatskim specifičnostima,
 npr: state - status ili drzava, ovisno o polju
