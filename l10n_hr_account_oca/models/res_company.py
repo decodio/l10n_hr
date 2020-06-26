@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
 from odoo.exceptions import Warning, ValidationError
@@ -113,6 +112,10 @@ class FiskalProstor(models.Model):
 
     @api.one
     def button_activate_prostor(self):
+        if '-' in self.oznaka_prostor or '/' in self.oznaka_prostor:
+            raise Warning(
+                _('Fiscal code contains invalid characters (- or /)')
+            )
         self.state = 'active'
         if self.sljed_racuna == 'P':
             if not self.journal_ids:
@@ -132,8 +135,7 @@ class FiskalProstor(models.Model):
             for uredjaj in self.uredjaj_ids:
                 # TODO: provjera po uređaju!
                 pass
-        if self.env.get('l10n_hr_account_fiskal'):
-            return self._log_prijava_odjava('prijava')
+
 
     @api.one
     def button_deactivate_prostor(self):

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 {
     "name": "Croatia - Accounting base",
     "summary": "Croatia accounting localisation",
@@ -10,13 +10,10 @@
     'author': "Decodio Application ltd.",
     'website': "http://www.decod.io",
     "support": "support@decod.io",
-    "licence": "LGPL-3",
-    #"price" : 20.00,   #-> only if module if sold!
-    #"currency": "EUR",
-
+    "license": "LGPL-3",
     "depends": [
         "account",
-       # "account_storno",
+        # "account_storno",
         "base_vat",
         "base_iban",
         "l10n_hr_base",
@@ -40,5 +37,3 @@
     "auto_install": False,
     "installable": True,
 }
-
-

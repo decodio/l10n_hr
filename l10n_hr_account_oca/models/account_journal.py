@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-from odoo.exceptions import Warning, ValidationError
+from odoo.exceptions import Warning
 
 
 class AccountJournal(models.Model):
@@ -28,7 +27,8 @@ class AccountJournal(models.Model):
 
     # BOLE: ovo mozda kao config opciju?
     # @api.multi
-    # @api.depends('name', 'currency_id', 'company_id', 'company_id.currency_id', 'prostor_id')
+    # @api.depends('name', 'currency_id', 'company_id',
+    #              'company_id.currency_id', 'prostor_id')
     # def name_get(self):
     #     """
     #     dodajem i naziv poslovnog prostora u name get

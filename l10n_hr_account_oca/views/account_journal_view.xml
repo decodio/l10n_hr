@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record id="view_account_journal_l10n_hr_form" model="ir.ui.view">
-            <field name="name">view_account_journal_l10n_hr_form</field>
-            <field name="model">account.journal</field>
-            <field name="inherit_id" ref="account.view_account_journal_form" />
-            <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Croatia specific" name="croatia_page"
-                          attrs="{'invisible':[('croatia','=',False)]}">
-                        <field name="croatia" invisible="1"/>
-                        <group>
-                            <!-- TODO: readonly za ulazne -->
-                            <field name="default_nacin_placanja"
-                                   attrs="{'invisible':[('type', '!=', 'sale')]}"/>
-                            <field name="prostor_id"
-                                   attrs="{'invisible':[('type', '!=', 'sale')]}"/>
-                            <field name="fiskal_uredjaj_ids"
-                                   domain="[('prostor_id','=',prostor_id)]"
-                                   groups="account.group_account_manager"
-                                   attrs="{'invisible':[('prostor_id','=',False)]}"
-                                   widget="many2many_tags"/>
+    
+    <record id="view_account_journal_l10n_hr_form" model="ir.ui.view">
+        <field name="name">view_account_journal_l10n_hr_form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Croatia specific" name="croatia_page"
+                      attrs="{'invisible':[('croatia','=',False)]}">
+                    <field name="croatia" invisible="1"/>
+                    <group>
+                        <!-- TODO: readonly za ulazne -->
+                        <field name="default_nacin_placanja"
+                               attrs="{'invisible':[('type', '!=', 'sale')]}"/>
+                        <field name="prostor_id"
+                               attrs="{'invisible':[('type', '!=', 'sale')]}"/>
+                        <field name="fiskal_uredjaj_ids"
+                               domain="[('prostor_id','=',prostor_id)]"
+                               groups="account.group_account_manager"
+                               attrs="{'invisible':[('prostor_id','=',False)]}"
+                               widget="many2many_tags"/>
 
-                        </group>
-                    </page>
+                    </group>
+                </page>
 
-                </notebook>
-                <field name="code" position="replace">
-                    <!--DB: Maknuo readonly attrib - vidi: dev_doc/account.journal.doc -->
-                    <field name="code" attrs="{'required': [('type', 'not in', ['bank', 'cash'])]}"/>
-                </field>
-                <field name="sequence_id" position="replace">
-                    <!-- maknuo readonly sa dnevnika, oprezno sa ovim...-->
-                    <field name="sequence_id"/> <!-- todo: neka pametna kontrola just in case?-->
-                </field>
-                <!-- todo: check refund_sequence_id -->
+            </notebook>
+            <field name="code" position="replace">
+                <!--DB: Maknuo readonly attrib - vidi: dev_doc/account.journal.doc -->
+                <field name="code" attrs="{'required': [('type', 'not in', ['bank', 'cash'])]}"/>
             </field>
-        </record>
-    </data>
+            <field name="sequence_id" position="replace">
+                <!-- maknuo readonly sa dnevnika, oprezno sa ovim...-->
+                <field name="sequence_id"/> <!-- todo: neka pametna kontrola just in case?-->
+            </field>
+            <!-- todo: check refund_sequence_id -->
+        </field>
+    </record>
+
 </odoo>

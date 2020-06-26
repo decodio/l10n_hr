@@ -34,6 +34,7 @@ class AccountInvoice(models.Model):
     # DB: namjerno su nazivi polja na hrvatskom!
     # radi potencijalno drugih lokalizacija
     vrijeme_izdavanja = fields.Char(
+        # DB: namjerno kao char da izbjegnem timezone problem!
         string="Vrijeme izdavanja",
         help="Fiskal datetime value", copy=False,
         readonly=True, states={'draft': [('readonly', False)]})
@@ -178,7 +179,7 @@ class AccountInvoice(models.Model):
                 inv.date_invoice = fields.Date.context_today(self)
             if not inv.vrijeme_izdavanja:
                 # DB: treba li korisniku omogućiti odabir vremena izdavanja?
-                time_now =  self.company_id.get_l10n_hr_time_formatted()
+                time_now = self.company_id.get_l10n_hr_time_formatted()
                 inv.vrijeme_izdavanja = time_now['datum_racun']
             # DB: za sada nisu required, samo zapišem trenutni date ako su prazni!
             if not inv.date_document:
