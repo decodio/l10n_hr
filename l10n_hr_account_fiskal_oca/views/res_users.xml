@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_res_users_vat_form" model="ir.ui.view">
+        <field name="name">view_res_users_vat_form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id"
+               ref="l10n_hr_account_oca.view_users_defaults_form_l10n_hr"/>
+        <field name="arch" type="xml">
+            <field name="prostor_ids" position="before">
+                <field name="vat"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_res_users_simple_modif_vat_form" model="ir.ui.view">
+        <field name="name">view_res_users_simple_vat_form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="vat"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

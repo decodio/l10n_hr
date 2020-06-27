@@ -1,0 +1,8 @@
+﻿Datum verzije: 20.12.2019.
+verzija: 1.5
+
+Promjene:
+	- u WSDL-u dodane dvije metode 'prateciDokumenti' i 'racuniPD'
+	- u schemi dodani elementi 'PrateciDokumentiZahtjev', 'PrateciDokumentiOdgovor', 'RacunPDZahtjev', 'RacunPDOdgovor' i ostalo vezano za nove elemente. 
+
+----------------------------------------------------------------------------------------------------

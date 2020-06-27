@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"fiskal_log_user_access","fiskal_log_user_access","model_fiskal_log","base.group_user","1","0","1","0"
+"fiskal_prateci_dokument","fiskal_pd_user","model_account_invoice_fiscal_pd","base.group_user","1","1","1","0"
