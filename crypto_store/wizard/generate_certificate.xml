@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crypto_generate_certificate_form" model="ir.ui.view">
+		<field name="name">crypto.generate.certificate.form</field>
+		<field name="model">crypto.generate.certificate</field>
+		<field name="arch" type="xml">
+			<form string="Generate Certificate">
+				<group>
+					<field name="company_id" /><!--groups="base.group_multi_company"-->
+					<field name="date_begin"/>
+					<field name="date_end"/>
+					<field name="version"/>
+					<field name="serial_number"/>
+				</group>
+			
+		    <group col="4" colspan="4" string='Issuer X509 Fields Name'>
+<!--			    <label string='Update values when you change the Company' colspan="4"/>-->
+			    <field name="name_c"/>
+			    <field name="name_sp"/>
+			    <field name="name_l"/>
+			    <field name="name_o"/>
+			    <field name="name_ou"/>
+			    <field name="name_cn"/>
+			    <field name="name_gn"/>
+			    <field name="name_sn"/>
+			    <field name="name_email"/>
+			    <field name="name_serialnumber"/>
+		    </group>
+		    <footer >
+			    <button string="Generate Certificate" name="button_generate"
+						type="object" class="btn-primary"/>
+			    <button string="Cancel" class="btn-secondary" special="cancel" />
+		    </footer>
+	      </form>
+	    </field>
+	</record>
+
+	<act_window id="action_crypto_generate_certificate_wizard"
+		        name="Generate Certificate"
+		        src_model="crypto.certificate"
+		        res_model="crypto.generate.certificate"
+		        view_mode="form" view_type="form"
+		        target="new"/>
+</odoo>

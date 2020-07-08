@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+	<record id="view_crypto_certificate_tree" model="ir.ui.view">
+		<field name="name">crypto.certificate.tree</field>
+		<field name="model">crypto.certificate</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Pair key">
+				<field name="name"/>
+				<field name="status"/>
+				<field name="usage"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_crypto_certificate_form" model="ir.ui.view">
+		<field name="name">crypto.certificate.form</field>
+		<field name="model">crypto.certificate</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Pair key">
+				<header>
+					<button string="Generate cert request" type="action"
+							name="%(action_crypto_generate_certificate_request_wizard)s"
+							attrs="{'invisible':[('csr', '!=', False)]}"/>
+					<button string="Generate certifate" type="action"
+							name="%(action_crypto_generate_certificate_wizard)s"
+							attrs="{'invisible':['&amp;',('csr', '!=', False),('crt', '!=', False)]}"/>
+					<button string="Convert" type="object"
+							name="button_convert_p12"
+							attrs="{'invisible':[('state','!=','draft'),('cert_file','=',False),('crt','!=',False)]}"/>
+					<button string="Approve" type="object"
+							name="action_validate" states="draft,waiting"/>
+					<button string="Cancel" type="object"
+							name="action_cancel" states="draft,waiting,confirmed"/>
+
+					<field name="state" widget="statusbar"/>
+				</header>
+				<sheet>
+					<group>
+						<field name="name" />
+						<field name="type"/>
+					</group>
+					<notebook>
+						<page string="Cert info">
+							<group>
+								<field name="usage"/>
+								<field name="status"/>
+								<field name="pairkey_id"/>
+								<field name="date_expire"/>
+							</group>
+						</page>
+						<page string="PEM Certificate">
+							<group>
+								<field name="csr"/>
+								<field name="crt"/>
+							</group>
+						</page>
+						<page string="P12/PFX Certificate">
+							<group colspan="4" col="4">
+								<field name="cert_password"/>
+								<field name="cert_file" filename="cert_file_name"/>
+								<field name="cert_file_name" invisible="1" class="oe_inline oe_right"/>
+							</group>
+
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_crypto_certificate_tree" model="ir.actions.act_window">
+		<field name="name">Certificates</field>
+		<field name="res_model">crypto.certificate</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_crypto_certificate_tree"/>
+	</record>
+
+	<menuitem action="action_crypto_certificate_tree" id="menu_action_certificate_tree" parent="menu_crypto"/>
+
+ 
+</odoo>

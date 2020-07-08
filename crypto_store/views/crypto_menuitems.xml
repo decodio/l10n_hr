@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_crypto" name="Cryptography" parent="base.menu_custom" sequence="1"/>
+</odoo>
