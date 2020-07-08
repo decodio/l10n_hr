@@ -12,6 +12,7 @@
                     <field name="croatia" invisible="1"/>
                     <group>
                         <!-- TODO: readonly za ulazne -->
+                        <field name="fiskal_responsible_id"/>
                         <field name="default_nacin_placanja"
                                attrs="{'invisible':[('type', '!=', 'sale')]}"/>
                         <field name="prostor_id"

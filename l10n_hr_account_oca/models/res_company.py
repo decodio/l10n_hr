@@ -18,6 +18,12 @@ class Company(models.Model):
         default='/',  # required=True,    -> multicompany, move required to view
         help="Only '/' or '-' are legaly defined as allowed"
     )
+    fiskal_responsible_id = fields.Many2one(
+        comodel_name='res.users',
+        string="Default Fiskal responsible person",
+        help="Default company fiskal responsible person"
+             # BOLE: one more override per journal?
+    )
     # obracun_poreza = fields.Selection(
     #     selection=[
     #         ('none', 'Nije u sustavu PDV'),

@@ -17,10 +17,12 @@
 <!--					       attrs="{'required':[('croatia','=',True)]}"/>-->
 <!--				</field>-->
                 <group name="l10n_hr_legal" position="after">
-                    <group string="Fiscal data" name="l10n_hr_fiskal">
+                    <group string="Fiscal data" name="l10n_hr_fiskal" col="4">
                         <field name="fiskal_separator"
                                attrs="{'required':[('croatia','=',True)]}"/>
+                        <field name="fiskal_responsible_id"/>
                     </group>
+                    <label string="Business premisses" for="fiskal_prostor_ids"/>
                     <field name="fiskal_prostor_ids" colspan="4" nolabel="1"/>
                 </group>
             </field>

@@ -60,10 +60,7 @@ class Fiskalizacija():
         self.odoo_object = odoo_object
 
         xmldsig_plugin = soap.XmlDSigMessagePlugin(fiskal_data)
-            # key_path, cert_path=cert_path, ca_path=ca_path,
-            # cis_ca_paths=cis_ca_paths, cis_cert_cn=cis_cert_cn)
         xml_message_log_plugin = soap.XmlMessageLogPlugin()
-                    # sending_log_callback, received_log_callback)
         suds_options = {
             'cache': None,
             'prettyxml': True,

@@ -6,6 +6,10 @@ from ..fiskal import fiskal
 
 
 class FiskalZastitniKod(models.TransientModel):
+    """
+    generate ZKI with given data using current company certificate
+    or check if generated ZKI is valid
+    """
     _name = 'fiskal.zastitni.kod'
     _description = 'Calculator/Check for ZKI'
 

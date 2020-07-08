@@ -1,6 +1,3 @@
-# -*- encoding: utf-8 -*-
-
-
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -47,11 +44,18 @@ class AccountInvoice(models.Model):
         selection=[('T', 'TRANSAKCIJSKI RAČUN')],
         string="Način plaćanja", default="T",
         readonly=True, states={'draft': [('readonly', False)]})
+
     fiskal_uredjaj_id = fields.Many2one(
         comodel_name='fiskal.uredjaj',
         string="Naplatni uređaj",
         readonly=True, states={'draft': [('readonly', False)]},
         default=_default_uredjaj)
+
+    fiskal_responsible_id = fields.Many2one(
+        comodel_name='res.users',
+        string="Odgovorna osoba",
+        help="Odgovorna osoba za ovaj račun",
+        readonly=True, states={'draft': [('readonly', False)]})
 
     # TODO: + opcije : sifra, naziv, inicijali...
     #  negdje na company ili na accounting
@@ -124,6 +128,11 @@ class AccountInvoice(models.Model):
         #     res['domain'].update({
         #         'partner_id': [('property_account_position_id', 'in', fp_ids)]
         #     })
+            self.fiskal_responsible_id = self.journal_id.fiscal_responsible_id \
+                        and self.journal_id.fiscal_responsible_id.id \
+                        or self.journal_id.company_id.fiscal_responsible_id \
+                        and self.journal_id.company_id.fiscal_responsible_id.id \
+                        or False
         return res
 
     @api.onchange('fiskal_uredjaj_id')
@@ -158,9 +167,12 @@ class AccountInvoice(models.Model):
     def default_get(self, fields):
         res = super(AccountInvoice, self).default_get(fields)
         #DB: only check poslovni_prostor if company is from croatia!
-        company = res.get('company_id', False)
-        croatia = company and self.env['res.company'].browse(company).croatia
-        if croatia and res.get('journal_id', False) and \
+        company_id = res.get('company_id', False)
+        if not company_id:
+            company_id = self.env.context.get('company_id', False)
+        company = company_id and self.env['res.company'].browse(
+                    company_id) or False
+        if company and company.croatia and res.get('journal_id', False) and \
             res.get('type', 'out_invoice') in ('out_invoice', 'out_refund'):
             user = self.env.user
             if not user.prostor_ids:
@@ -169,6 +181,13 @@ class AccountInvoice(models.Model):
                       "naplatne uređaje na trenutnom korisniku"
                 raise UserError(msg)
             res['fiskal_uredjaj_id'] = self.env.user.default_uredjaj.id
+            journal = self.env['account.journal'].browse(res['journal_id'])
+            fiskal_responsinle = journal.fiskal_responsible_id and \
+                                 journal.fiskal_responsible_id.id or \
+                                 company.fiskal_responsible_id and \
+                                 company.fiskal_responsible_id.id or False
+            if fiskal_responsinle:
+                res['fiskal_responsible_id'] = fiskal_responsinle
         return res
 
     @api.multi

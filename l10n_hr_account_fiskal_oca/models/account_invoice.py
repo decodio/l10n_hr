@@ -312,8 +312,6 @@ class AccountInvoice(models.Model):
             #res = self.fiskaliziraj('provjera') # samo WSDL 1.4 ovog nema u 1.5 ?!
             raise UserError('Nema potrebe ponavljati postupak fiskalizacije!')
 
-
-
     def button_check_zki(self):
         self.ensure_one()
         zki_obj = self.env['fiskal.zastitni.kod']
@@ -356,6 +354,7 @@ class AccountInvoice(models.Model):
             'view_mode': 'form',
             'view_type': 'form',
         }
+
 
 class AccountInvoicePD(models.Model):
     _inehrit = 'fiscal.mixin'

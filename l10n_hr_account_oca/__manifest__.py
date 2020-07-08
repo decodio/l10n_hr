@@ -13,11 +13,14 @@
     "license": "LGPL-3",
     "depends": [
         "account",
-        # "account_storno",
+        "account_storno",
         "base_vat",
         "base_iban",
         "l10n_hr_base",
+        "account_invoice_tax_note",  # BOLE: testirati
+        "account_product_fiscal_classification", # BOLE: tetsirati postavke
     ],
+    "excludes": ["l10n_hr_account"],
     "external_dependencies": {
         "python": [],
         "bin": []
