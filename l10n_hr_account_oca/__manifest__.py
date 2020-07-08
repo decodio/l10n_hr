@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 {
     "name": "Croatia - Accounting base",
     "summary": "Croatia accounting localisation",
@@ -10,17 +10,17 @@
     'author': "Decodio Application ltd.",
     'website': "http://www.decod.io",
     "support": "support@decod.io",
-    "licence": "LGPL-3",
-    #"price" : 20.00,   #-> only if module if sold!
-    #"currency": "EUR",
-    'conflicts': ['l10n_hr_account'], # UVID, app store... not yet published ( only v10)
+    "license": "LGPL-3",
     "depends": [
         "account",
-       # "account_storno",
+        "account_storno",
         "base_vat",
         "base_iban",
         "l10n_hr_base",
+        "account_invoice_tax_note",  # BOLE: testirati
+        "account_product_fiscal_classification", # BOLE: tetsirati postavke
     ],
+    "excludes": ["l10n_hr_account"],
     "external_dependencies": {
         "python": [],
         "bin": []
@@ -40,5 +40,3 @@
     "auto_install": False,
     "installable": True,
 }
-
-

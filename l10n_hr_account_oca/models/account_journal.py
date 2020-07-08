@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-from odoo.exceptions import Warning, ValidationError
+from odoo.exceptions import Warning
 
 
 class AccountJournal(models.Model):
@@ -20,15 +19,24 @@ class AccountJournal(models.Model):
         relation='fiskal_uredjaj_account_journal_rel',
         column1='journal_id', column2='uredjaj_id',
         string='Dopusteni naplatni uredjaji')
+    fiskal_responsible_id = fields.Many2one(
+        comodel_name='res.users',
+        string="Responsible person",
+        help="Default fiskal responsible person for this journal",
+        # default=lambda self: self.env.company.fiskal_resbonsible_id or False
+    )
     default_nacin_placanja = fields.Selection(
         selection=[('T', 'TRANSAKCIJSKI RAČUN')],
         string="Default fiskal payment method",
         default="T")
     croatia = fields.Boolean(related="company_id.croatia")
 
+
+
     # BOLE: ovo mozda kao config opciju?
     # @api.multi
-    # @api.depends('name', 'currency_id', 'company_id', 'company_id.currency_id', 'prostor_id')
+    # @api.depends('name', 'currency_id', 'company_id',
+    #              'company_id.currency_id', 'prostor_id')
     # def name_get(self):
     #     """
     #     dodajem i naziv poslovnog prostora u name get

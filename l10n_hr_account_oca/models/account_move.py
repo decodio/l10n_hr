@@ -10,7 +10,8 @@ class AccountMove(models.Model):
     def _gen_fiskal_number(self, invoice, move):
         prostor = invoice.fiskal_uredjaj_id.prostor_id.oznaka_prostor
         uredjaj = str(invoice.fiskal_uredjaj_id.oznaka_uredjaj)
-        # DB: Refund sequence je isti kao i main seq osim ako nije drugačije zadano!
+        # DB: Refund sequence je isti kao i main seq
+        #     osim ako nije drugačije zadano!
         separator = invoice.company_id.fiskal_separator
         sequence = move.journal_id.sequence_id
         pref, suff = sequence.prefix, sequence.suffix
@@ -27,16 +28,15 @@ class AccountMove(models.Model):
             if len(broj) < blen:
                 blen = len(broj)
             else:
-                raise ValidationError('Prefix ili sufix brojevnog kruga nije podržan!')
+                raise Warning('Prefix ili sufix brojevnog kruga nije podržan!')
         fiskalni_broj = separator.join((str(int(broj)), prostor, uredjaj))
-        # original line:
-        # invoice.fiskalni_broj = fiskalni_broj
         # imported invoice with fiskal number, do not touch
         if not invoice.fiskalni_broj:
             invoice.fiskalni_broj = fiskalni_broj
         else:
-            invoice.comment = invoice.comment and invoice.comment + '\n' or '' + \
-                              ' Prilikom potvrđivanja računa korišten je importirani broj računa'
+            invoice.comment = invoice.comment and invoice.comment + '\n' or \
+                              'Prilikom potvrđivanja računa korišten je '\
+                              'importirani broj računa'
 
 
     @api.multi
@@ -61,13 +61,3 @@ class AccountMove(models.Model):
                 if not invoice.fiskal_uredjaj_id.prostor_id.lock:
                     invoice.fiskal_uredjaj_id.prostor_id.lock = True
         return res
-
-
-# class AccountMoveLine(models.Model):
-#     _inherit = 'account.move.line'
-#
-#     _sql_constraints = [
-#         ('amount_currency', 'CHECK (amount_currency * (debit - credit) >= 0.0)',
-#             'Wrong amount currency value in accounting entry! Check the sign.'),
-#     ]
-

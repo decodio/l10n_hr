@@ -1,0 +1,5 @@
+Odoo 12.0
+v 0.0.2
+- dodana polja
+  - fiskal_responsible_id - odgovorna osoba, default na company
+- dependency : account_storno ( revrite v12!)

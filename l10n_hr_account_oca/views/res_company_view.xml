@@ -1,167 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-		<menuitem id="menu_finance_config_croatia"
-				  name="Croatia specific settings"
-				  parent="account.menu_finance_configuration"/>
-		
-		
+        <menuitem id="menu_finance_config_croatia"
+                  name="Croatia specific settings"
+                  parent="account.menu_finance_configuration"/>
+        
+        
         <!-- Company cert, prostor-->
-		<record id="view_company_form_l10n_hr_account" model="ir.ui.view">
-			<field name="name">view.company.form.l10n_hr</field>
-			<field name="model">res.company</field>
-			<field name="inherit_id" ref="l10n_hr_base.view_company_l10n_hr_base"/>
-			<field name="arch" type="xml">
+        <record id="view_company_form_l10n_hr_account" model="ir.ui.view">
+            <field name="name">view.company.form.l10n_hr</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="l10n_hr_base.view_company_l10n_hr_base"/>
+            <field name="arch" type="xml">
 <!--				<field name="nkd" position="after">-->
 <!--					<field name="obracun_poreza"-->
 <!--					       attrs="{'required':[('croatia','=',True)]}"/>-->
 <!--				</field>-->
-				<group name="l10n_hr_legal" position="after">
-					<group string="Fiscal data" name="l10n_hr_fiskal">
-						<field name="fiskal_separator"
-							   attrs="{'required':[('croatia','=',True)]}"/>
-					</group>
-					<field name="fiskal_prostor_ids" colspan="4" nolabel="1"/>
-				</group>
-			</field>
-		</record>
-		
-		<!-- Fiskal Prostor -->
-		<record id="view_fiskal_prostor_tree" model="ir.ui.view">
-			<field name="name">view_fiskal_prostor_tree</field>
-			<field name="model">fiskal.prostor</field>
-			<field name="arch" type="xml">
-			<tree string="Poslovni prostor">
-				<field name="company_id" invisible="1"/>
-				<field name="name" />
-				<field name="oznaka_prostor" />
-				<field name="state"/>
-				<field name="lock" />
-			</tree>
-		</field>
-		</record>
-		<record id="view_fiskal_prostor_form" model="ir.ui.view">
-			<field name="name">view_fiskal_prostor_form</field>
-			<field name="model">fiskal.prostor</field>
-			<field name="arch" type="xml">
-				<form string="Poslovni prostor">
-					<header>
-						<button name="button_activate_prostor" string="Aktiviraj prostor" type="object"
-								attrs="{'invisible':[('state','=','active')]}"
+                <group name="l10n_hr_legal" position="after">
+                    <group string="Fiscal data" name="l10n_hr_fiskal" col="4">
+                        <field name="fiskal_separator"
+                               attrs="{'required':[('croatia','=',True)]}"/>
+                        <field name="fiskal_responsible_id"/>
+                    </group>
+                    <label string="Business premisses" for="fiskal_prostor_ids"/>
+                    <field name="fiskal_prostor_ids" colspan="4" nolabel="1"/>
+                </group>
+            </field>
+        </record>
+        
+        <!-- Fiskal Prostor -->
+        <record id="view_fiskal_prostor_tree" model="ir.ui.view">
+            <field name="name">view_fiskal_prostor_tree</field>
+            <field name="model">fiskal.prostor</field>
+            <field name="arch" type="xml">
+                <tree ><!--string="Poslovni prostor"-->
+                    <field name="company_id" invisible="1"/>
+                    <field name="name" />
+                    <field name="oznaka_prostor" />
+                    <field name="state"/>
+                    <field name="lock" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_fiskal_prostor_form" model="ir.ui.view">
+            <field name="name">view_fiskal_prostor_form</field>
+            <field name="model">fiskal.prostor</field>
+            <field name="arch" type="xml">
+                <form><!-- string="Poslovni prostor" -->
+                    <header>
+                        <button name="button_activate_prostor" string="Aktiviraj prostor" type="object"
+                                attrs="{'invisible':[('state','=','active')]}"
                                 groups="account.group_account_manager"/>
-						<button name="button_deactivate_prostor" string="Deaktiviraj prostor" type="object"
-								attrs="{'invisible':[('state','!=','active')]}"
-								help="Koristiti samo u slucaju kad se zatvara poslovni prostor.
-									  Nakon zatvaranja poslovnog prostora ne smiju se vise prijavljivati racuni
-									  sa oznakom ovog poslovnog prostora"
+                        <button name="button_deactivate_prostor" string="Deaktiviraj prostor" type="object"
+                                attrs="{'invisible':[('state','!=','active')]}"
+                                help="Koristiti samo u slucaju kad se zatvara poslovni prostor.
+                                      Nakon zatvaranja poslovnog prostora ne smiju se vise prijavljivati racuni
+                                      sa oznakom ovog poslovnog prostora"
                                 groups="account.group_account_manager"/>
-						<field name="state" widget="statusbar"/>
-					</header>
-					<sheet>
-						<group colspan="4" col="4">
-							<field name='name'
-								   attrs="{'readonly':[('lock','=',True)]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group colspan="4" col="4">
+                            <field name='name'
+                                   attrs="{'readonly':[('lock','=',True)]}"/>
                             <field name='oznaka_prostor'
-								   attrs="{'readonly':[('lock','=',True)]}"/>
+                                   attrs="{'readonly':[('lock','=',True)]}"/>
                             <field name="sljed_racuna"
-								   attrs="{'readonly':[('lock','=',True)]}"/>
-							<field name="sequence_id"
-								   context="{}"
-								   attrs="{'invisible':['|̈́',('sljed_racuna','=','N'),
-								           					('oznaka_prostor','=','')
-								           ]}"/><!--'required':[('sljed_racuna','=','P')],-->
-							<field name="mjesto_izdavanja" attrs="{'readonly':[('lock','=',True)]}"/>
-							<field name='company_id' invisible="1"/>
-							<field name="lock" invisible="1"/>
-						</group>
-						<notebook name="hr_accounting" colspan="4">
-							<page string="Naplatni uređaji u prostoru" >
-								<field name="uredjaj_ids" nolabel="1" colspan="4" />
-							</page>
-							<page string="Journals for this premise">
-								<field name="journal_ids" nolabel="1" colspan="4">
-									<tree string="journal_ids" editable="top">
-										<field name="name"/>
-										<field name="code"/>
-										<field name="sequence_id"/>
-									</tree>
-								</field>
-							</page>
-							<page string="Allowed users">
-								<field name="user_ids" nolabel="1" colspan="4"
-								       widget="many2many_tags"
-									   options="{'no_create':True}"/>
-							</page>
-						</notebook>
-					</sheet>
-				</form>
-			</field>
-		</record>
-		<record id="action_fiskal_prostor" model="ir.actions.act_window">
-			<field name="name">Business premisses</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">fiskal.prostor</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<!--field name="domain">[('id','=',active_id)]</field>-->
-		</record>
-		<menuitem id="menu_action_fiskal_prostor"
-				  action="action_fiskal_prostor"
-				  parent="menu_finance_config_croatia"
-				  sequence="1"
-		/>
+                                   attrs="{'readonly':[('lock','=',True)]}"/>
+                            <field name="sequence_id"
+                                   context="{}"
+                                   attrs="{'invisible':['|̈́',('sljed_racuna','=','N'),
+                                                            ('oznaka_prostor','=','')
+                                           ]}"/><!--'required':[('sljed_racuna','=','P')],-->
+                            <field name="mjesto_izdavanja" attrs="{'readonly':[('lock','=',True)]}"/>
+                            <field name='company_id' invisible="1"/>
+                            <field name="lock" invisible="1"/>
+                        </group>
+                        <notebook name="hr_accounting" colspan="4">
+                            <page string="Naplatni uređaji u prostoru" >
+                                <field name="uredjaj_ids" nolabel="1" colspan="4" />
+                            </page>
+                            <page string="Journals for this premise">
+                                <field name="journal_ids" nolabel="1" colspan="4">
+                                    <tree string="journal_ids" editable="top">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="sequence_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Allowed users">
+                                <field name="user_ids" nolabel="1" colspan="4"
+                                       widget="many2many_tags"
+                                       options="{'no_create':True}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_fiskal_prostor" model="ir.actions.act_window">
+            <field name="name">Business premisses</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fiskal.prostor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!--field name="domain">[('id','=',active_id)]</field>-->
+        </record>
+        <menuitem id="menu_action_fiskal_prostor"
+                  action="action_fiskal_prostor"
+                  parent="menu_finance_config_croatia"
+                  sequence="1"
+        />
 
-		<!--Fiskal Uredjaj-->
-		<record  id="view_fiskal_uredjaj_tree" model="ir.ui.view">
-			<field name="name">view_fiskal_uredjaj_tree</field>
-			<field name="model">fiskal.uredjaj</field>
-			<field name="arch" type="xml">
-				<tree string="Naplatni uređaji" >
-				    <field name="name"/>
-			  		<field name="prostor_id"/>
-			  		<field name="oznaka_uredjaj"/>
-				  	<field name="aktivan" />
-					<field name="lock"/>
-				</tree>
-			</field>
-		</record>
-		<record id="view_fiskal_uredjaj_form" model="ir.ui.view" >
-			<field name="name">view_fiskal_uredjaj_form</field>
-			<field name="model">fiskal.uredjaj</field>
-			<field name="arch" type="xml">
-				<form string="Fiskalizacija - uređaji">
-					<group>
-						<field name="prostor_id" attrs="{'readonly':[('lock','=',True)]}"/>
-						<field name="name" attrs="{'readonly':[('lock','=',True)]}"/>
-						<field name="lock" readonly="1" invisible="1"/>
-						<field name="sljed_racuna" readonly="1" invisible="1"/>
-						<field name="oznaka_uredjaj" attrs="{'readonly':[('lock','=',True)]}"/>
-						<field name="sequence_id"
-							   attrs="{'readonly':[('lock','=',True)],
-								  	   'invisible':[('sljed_racuna','=','P')]}"/>
-						<!--'required':[('sljed_racuna','=','N')],-->
-						<field name="journal_ids" widget="many2many_tags" attrs="{'readonly':[('lock','=',True)]}"/>
-						<field name="user_ids" nolabel="1" colspan="4"
-								       widget="many2many_tags"
-									   options="{'no_create':True}"/>
-						<field name="aktivan" attrs="{'readonly':[('lock','=',True)]}"/>
-					</group>
-				</form>
-			</field>
-		</record>
-		<record id="action_fiskal_uredjaj" model="ir.actions.act_window">
-			<field name="name">Payment registers</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">fiskal.uredjaj</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
-		<menuitem id="menu_action_fiskal_uredjaj"
-		          action="action_fiskal_uredjaj"
-				  parent="menu_finance_config_croatia"
-				  sequence="2"
-		/>
-		
-		
+        <!--Fiskal Uredjaj-->
+        <record  id="view_fiskal_uredjaj_tree" model="ir.ui.view">
+            <field name="name">view_fiskal_uredjaj_tree</field>
+            <field name="model">fiskal.uredjaj</field>
+            <field name="arch" type="xml">
+                <tree><!--string="Naplatni uređaji" -->
+                    <field name="name"/>
+                    <field name="prostor_id"/>
+                    <field name="oznaka_uredjaj"/>
+                    <field name="aktivan" />
+                    <field name="lock"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_fiskal_uredjaj_form" model="ir.ui.view" >
+            <field name="name">view_fiskal_uredjaj_form</field>
+            <field name="model">fiskal.uredjaj</field>
+            <field name="arch" type="xml">
+                <form><!--string="Fiskalizacija - uređaji"-->
+                    <group>
+                        <field name="prostor_id" attrs="{'readonly':[('lock','=',True)]}"/>
+                        <field name="name" attrs="{'readonly':[('lock','=',True)]}"/>
+                        <field name="lock" readonly="1" invisible="1"/>
+                        <field name="sljed_racuna" readonly="1" invisible="1"/>
+                        <field name="oznaka_uredjaj" attrs="{'readonly':[('lock','=',True)]}"/>
+                        <field name="sequence_id"
+                               attrs="{'readonly':[('lock','=',True)],
+                                       'invisible':[('sljed_racuna','=','P')]}"/>
+                        <!--'required':[('sljed_racuna','=','N')],-->
+                        <field name="journal_ids" widget="many2many_tags" attrs="{'readonly':[('lock','=',True)]}"/>
+                        <field name="user_ids" nolabel="1" colspan="4"
+                                       widget="many2many_tags"
+                                       options="{'no_create':True}"/>
+                        <field name="aktivan" attrs="{'readonly':[('lock','=',True)]}"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="action_fiskal_uredjaj" model="ir.actions.act_window">
+            <field name="name">Payment registers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fiskal.uredjaj</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_action_fiskal_uredjaj"
+                  action="action_fiskal_uredjaj"
+                  parent="menu_finance_config_croatia"
+                  sequence="2"
+        />
+        
+        
     </data>
 </odoo>
