@@ -12,8 +12,7 @@
     'website': "http://www.decod.io",
     "support": "support@decod.io",
     "licence": "LGPL-3",
-    #"price" : 20.00,   #-> only if module if sold!
-    #"currency": "EUR",
+    "excludes": ["partner_firstname"],  # oca!
 
     "depends": [
         'base'

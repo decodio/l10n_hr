@@ -6,8 +6,9 @@
 Partner fiscal responsible
 =======================
 
-Technical base module extendig partner model for persons ( non company partner)
-
+Technical base module extendig partner model for persons (non company partner)
+introducing firstname and lastname fields for storing apropriate data
+field name is used for company data, and personal names are recomputed during create/write methods
 
  
 opciju za one koji su označeni kao osobe (is_company=False) da im se omogući fiskalna odgovornost na dokumentima

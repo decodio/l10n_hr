@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 class FiskalResponsibleMixIn(models.AbstractModel):
     """
     Abstract class holding data fields for responsible person,
-    Inherit in any report that need XML cretation, and responsible person usage
+    Inherit in any report that need XML creation, and responsible person usage
     """
     _name = 'fiskal.responsible.mixin'
     #_table = False
@@ -22,7 +22,7 @@ class PartnerFiskalTag(models.Model):
     _name = 'res.partner.fiskal.tag'
 
     """
-    To be used for domain to select on documents, (PDV, JOPPD...)
+    To be used for domain to select on documents, (INVOICE, PDV, JOPPD...)
     """
 
     name = fields.Char(string='Name')
@@ -32,18 +32,21 @@ class PartnerFiskalTag(models.Model):
         column1='tag_id', column2='partner_id',
         string='Persons'
     )
+    required_field_ids = fields.One2many(
+        comodel_name='ir.model_fields'
+    )
 
 
 class Partner(models.Model):
     _inherit = 'res.partner'
 
-    # FIeld names are in croatian, so they would not conflict with other
-    # modules bringnig simmilar purpose fields like: first_name, last_name
-    osoba_ime = fields.Char('First name')
-    osoba_prezime = fields.Char('Last name')
-    fiskal_responsible = fields.Boolean(
+    # OCA/partner_firstname_ uses same fieldsnames- excluded in manifest
+    firstname = fields.Char('First name')
+    lastname = fields.Char('Last name')
+    fiskal_responsible_user_id = fields.Boolean(
         string='Fiscal responsible', default=False,
-        help="Check if person is fiscal responsible and can be used as such on documents"
+        help="Check if person is fiscal responsible, "
+             "and can be used as such on documents"
     )
     tag_ids = fields.Many2many(
         comodel_name='res.partner.fiskal.tag',
@@ -59,10 +62,10 @@ class Partner(models.Model):
         if self.is_company:
             self.fiskal_responsible = False
 
-    @api.onchange('osoba_ime', 'osoba_prezime')
+    @api.onchange('firstname', 'lastname')
     def _onchange_names(self):
-        ime = self.osoba_ime or ''
-        prezime = self.osoba_prezime or ''
+        ime = self.firstname or ''
+        prezime = self.lastname or ''
         name = ' '.join((ime, prezime))
         if self.name != name and self.fiskal_responsible:
             self.name = name
@@ -70,16 +73,16 @@ class Partner(models.Model):
     @api.onchange('fiskal_responsible')
     def _onchange_fiskal_responsible(self):
         if self.fiskal_responsible:
-            if self.name and not self.osoba_ime:
+            if self.name and not self.firstname:
                 name = self.name.split(' ')
                 if len(name) == 2:
                     # lako ako je ovo
-                    self.osoba_ime = name[0]
-                    self.osoba_prezime = name[1]
+                    self.firstname = name[0]
+                    self.lastname = name[1]
                 else:
                     #ako nije.. nek popravi tko unosi...
-                    self.osoba_ime = name[0]
-                    self.osoba_prezime = ' '.join(name[1:])
+                    self.firstname = name[0]
+                    self.lastname = ' '.join(name[1:])
 
     def fiskal_important_fields(self):
         """
@@ -88,15 +91,18 @@ class Partner(models.Model):
         and fields if needed (phone, e-mail, ...)
         :return:
         """
-        fields = ['osoba_ime', 'osoba_prezime', 'tag_ids']
+        fields = ['tag_ids']  #  'firstname', 'lastname',
         return fields
 
     @api.multi
     def write(self, vals):
-        f_manager = self.user_has_groups('partner_fiskal_responsible.group_fiskal_responsible_manager')
+        f_manager = self.user_has_groups(
+            'partner_fiskal_responsible.group_fiskal_responsible_manager')
         for partner in self:
-            check = partner.fiskal_responsible and 'fiskal_responsible' not in vals.keys() or \
-                    not partner.fiskal_responsible and vals.get('fiskal_responsible', False)
+            check = partner.fiskal_responsible and \
+                    'fiskal_responsible' not in vals.keys() or \
+                    not partner.fiskal_responsible and \
+                    vals.get('fiskal_responsible', False)
 
             if check:
 
@@ -111,9 +117,11 @@ class Partner(models.Model):
                         missing.append(field)
                 error = False
                 if protect:
-                    error = "Protected fields for fiskal responsible person: %s " % str(fiskal_important_fields)
+                    error = "Protected fields for fiskal responsible person: "
+                    error += str(fiskal_important_fields)
                 if missing:
-                    error = "Missing required fields for fiskal responsible person: %s" % str(missing)
+                    error = "Missing required fields for fiskal responsible: "
+                    error += str(missing)
                 if error:
                     raise UserError(error)
         return super(Partner, self).write(vals)
