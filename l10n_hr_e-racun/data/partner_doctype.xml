@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="doctype_invoice_b2g" model="res.partner.ubl.doctype">
+        <field name="doc_type">invoice</field>
+        <field name="schema">EN19631</field>
+    </record>
+    <record id="doctype_invoice_b2b" model="res.partner.ubl.doctype">
+        <field name="doc_type">invoice</field>
+        <field name="schema">HRINVOICE1</field>
+    </record>
+    <record id="doctype_credit_b2g" model="res.partner.ubl.doctype">
+        <field name="doc_type">credit_note</field>
+        <field name="schema">EN19631</field>
+    </record>
+    <record id="doctype_credit_b2b" model="res.partner.ubl.doctype">
+        <field name="doc_type">credit_note</field>
+        <field name="schema">HRINVOICE1</field>
+    </record>
+    <record id="doctype_reminder_b2g" model="res.partner.ubl.doctype">
+        <field name="doc_type">reminder</field>
+        <field name="schema">EN19631</field>
+    </record>
+    <record id="doctype_reminder_b2b" model="res.partner.ubl.doctype">
+        <field name="doc_type">reminder</field>
+        <field name="schema">HRINVOICE1</field>
+    </record>
+
+</odoo>

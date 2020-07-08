@@ -1,0 +1,5 @@
+
+setup = {
+  'PDV 25%': ['tax_type_vat', 'tax_categ_s'],
+  'PDV 13%': ['tax_type_vat', 'tax_categ_s'],
+  'PDV 5%': ['tax_type_vat', 'tax_categ_s'],

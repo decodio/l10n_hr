@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="businecc_process_p1" model="unece.code.list">
+    <field name="type">process</field>
+    <field name="code">P1</field>
+    <field name="name">P1-Fakturiranje isporuka dobara i usluga preko narudžbi na temelju ugovora</field>
+    <field name="description">Self explanatory.</field>
+</record>
+
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+    <!--
+    Original module uom_unece also has this units with noupdate=1
+    so maybe wee need different approach here?
+    modifying these units is recomended / mandatory for croatia localisation
+    because most services will not recognize original codes
+    -->
+<record id="uom.product_uom_unit" model="uom.uom">
+    <!-- OCA CODE: C62 - unit, croatia recomended code: H87 - piece-->
+    <field name="unece_code">H87</field>
+</record>
+<record id="uom.product_uom_km" model="uom.uom">
+    <!-- OCA CODE: KTM - unit, croatia recomended -->
+    <field name="unece_code">KMT</field>
+</record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_partner_property_form" model="ir.ui.view">
+    <field name="name">res.partner.property.form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="account.view_partner_property_form"/>
+    <field name="arch" type="xml">
+        <notebook position="inside">
+            <page string="E-Invoice">
+                <div>
+                    Provjera partnera na
+                    <a href="https://servisi.fina.hr/e-racun-javna-trazilica"
+                       target="_blank">FINA REGISTAR</a>
+                </div>
+                <group>
+                    <field name="e_racun_schema"/>
+                    <field name="e_racun_mail"/>
+                </group>
+                <group>
+                
+                </group>
+                <field name="ubl_doctype_ids" widget="many2many_tags"/>
+            </page>
+        </notebook>
+    </field>
+</record>
+
+</odoo>

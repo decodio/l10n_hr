@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--
+maybe in separate module?
+full list found here:
+http://www.unece.org/trade/untdid/d98a/uncl/uncl1001.htm
+original account_invoice_ubl only recognizes 380 & 381
+-->
+<record id="unece_doc_82" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">82</field>
+    <field name="name">Metered services invoice</field>
+    <field name="description">
+Document/message claiming payment for the supply of
+metered services (e.g., gas, electricity, etc.) supplied
+to a fixed meter whose consumption is measured over a
+period of time.
+    </field>
+</record>
+<record id="unece_doc_325" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">325</field>
+    <field name="name">Proforma invoice</field>
+    <field name="description">
+Document/message serving as a preliminary invoice,
+containing - on the whole - the same information as the
+final invoice, but not actually claiming payment.
+    </field>
+</record>
+<record id="unece_doc_326" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">326</field>
+    <field name="name">Partial invoice</field>
+    <field name="description">
+Self explanatory
+    </field>
+</record>
+<record id="unece_doc_380" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">380</field>
+    <field name="name">Commercial invoice</field>
+    <field name="description">
+Document/message claiming payment for goods or services
+supplied under conditions agreed between seller and buyer.
+    </field>
+</record>
+<record id="unece_doc_381" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">381</field>
+    <field name="name">Credit note</field>
+    <field name="description">
+Document/message for providing credit information to the relevant party.
+    </field>
+</record>
+<record id="unece_doc_383" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">383</field>
+    <field name="name">Debit note</field>
+    <field name="description">
+Document/message for providing debit information to the relevant party.
+    </field>
+</record>
+<record id="unece_doc_384" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">384</field>
+    <field name="name">Corrected invoice</field>
+    <field name="description">
+Commercial invoice that includes revised information
+differing from an earlier submission of the same invoice.
+    </field>
+</record>
+<record id="unece_doc_386" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">386</field>
+    <field name="name">Prepayment invoice</field>
+    <field name="description">
+An invoice to pay amounts for goods and services in advance;
+these amounts will be subtracted from the final invoice.
+    </field>
+</record>
+<record id="unece_doc_387" model="unece.code.list">
+    <field name="type">doc_type</field>
+    <field name="code">387</field>
+    <field name="name">Hire invoice</field>
+    <field name="description">
+Document/message for invoicing the hiring of
+human resources or renting goods or equipment.
+    </field>
+</record>
+
+</odoo>
