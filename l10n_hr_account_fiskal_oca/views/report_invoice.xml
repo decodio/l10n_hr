@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="report_jir_zki_layout"
+              inherit_id="account.report_invoice_document" >
+        <xpath expr="//p[@t-if='o.comment']" position="before">
+            <t t-if="o.zki" t-call="l10n_hr_account_fiskal.jir_zki" />
+        </xpath>
+    </template>
+
+    <template id="jir_zki">
+        <div class="row">
+            <div class="col-xs-8 text-left">
+                <span>ZKI : </span> <span t-field="o.zki"/><br/>
+                <span>JIR : </span> <span t-field="o.jir"/>
+            </div>
+        </div>
+    </template>
+
+</odoo>

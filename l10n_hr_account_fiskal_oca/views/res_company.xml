@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- cert-->
+    <record id="view_company_form_l10n_hr_account_fiskal" model="ir.ui.view">
+        <field name="name">view_company_form_l10n_hr_account_fiskal</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="l10n_hr_account_oca.view_company_form_l10n_hr_account"/>
+        <field name="arch" type="xml">
+            <field name="fiskal_separator" position="after">
+                <field name="fiskal_cert_id" />
+                <field name="fiskal_spec" attrs="{'required':[('croatia','=',True)]}"/>
+                <field name="fiskal_schema"/>
+                <button string="Test Fiscalisation connection"
+                        type="object" name="button_test_echo"
+                        attrs="{'invisible':[('fiskal_cert_id','=',False)]}"
+                />
+            </field>
+        </field>
+    </record>
+    <!-- Fiskal Prostor -->
+    <record id="view_fiskal_prostor_form_inherit" model="ir.ui.view">
+        <field name="name">view_fiskal_prostor_form_inherit</field>
+        <field name="model">fiskal.prostor</field>
+        <field name="inherit_id" ref="l10n_hr_account_oca.view_fiskal_prostor_form"/>
+        <field name="arch" type="xml">
+           
+                
+                <notebook position="inside">
+<!--						<page string="Adresa">-->
+<!--							<notebook>-->
+<!--								<page string="Fizička adresa prostora" >-->
+<!--									<group colspan="4" col="4">-->
+<!--										<field name="ulica" />-->
+<!--										<field name="kbr" />-->
+<!--										<field name="kbr_dodatak"/>-->
+<!--										<field name="posta" />-->
+<!--										<field name="naselje" />-->
+<!--										<field name="opcina"/>-->
+<!--									</group>-->
+<!--								</page>-->
+<!--								<page string="Ostali tipovi adresa" >-->
+<!--									<field name="prostor_ostalo" />-->
+<!--								</page>-->
+<!--							</notebook>-->
+<!--						</page>-->
+                    <page string="Fiskalizacija - Komunikacija">
+                        <field name="fiskal_log_ids" nolabel="1" colspan="4" />
+                    </page>
+                </notebook>
+           
+        </field>
+    </record>
+
+    <record id="fiskal_log_tree_view" model="ir.ui.view" >
+        <field name="name">fiskal_log_tree_view</field>
+        <field name="model">fiskal.log</field>
+        <field name="arch" type="xml">
+            <tree><!--string="Poslane poruke"-->
+                <field name="name" select="1" />
+                <field name="type" />
+                <field name="greska"/>
+                <field name="time_stamp" />
+                <field name="time_obr" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_fiskal_log_form" model="ir.ui.view" >
+            <field name="name">view_fiskal_log_form</field>
+            <field name="model">fiskal.log</field>
+            <field name="arch" type="xml">
+                <form ><!--string="Evidencija prometa"-->
+                    <group>
+                        <field name="name" string="UUID poruke" readonly="1"/>
+                        <field name="type" readonly="1"/>
+                        <field name="time_stamp" readonly="1"/>
+                        <field name="time_obr" readonly="1"/>
+                        <field name="user_id" readonly="1"/>
+                        <field name="company_id" readonly="1"/>
+                    </group>
+                    <newline/>
+                    <notebook colspan="4">
+                        <page string="Poruka">
+                            <group>
+                                <field name="invoice_id" readonly="1"/>
+                                <field name="fiskal_prostor_id" readonly="1"/>
+                                <newline/>
+                                <field name="greska" colspan="4"/>
+                            </group>
+                        </page>
+                        <page string="Poslana poruka">
+                            <field name="sadrzaj" nolabel="1"/>
+                        </page>
+                        <page string="Odgovor na poruku">
+                            <field name="odgovor"  nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+    
+</odoo>
