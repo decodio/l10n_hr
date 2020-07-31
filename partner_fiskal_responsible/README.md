@@ -7,27 +7,22 @@ Partner fiscal responsible
 =======================
 
 Technical base module extendig partner model for persons (non company partner)
-introducing firstname and lastname fields for storing apropriate data
-field name is used for company data, and personal names are recomputed during create/write methods
+introducing two main features
+1. partners marked as 'Fiscal responsible' can be eduted only by member of 
+  "Fiskal responsible manager" group
+  
+2. fiscal tags can be set to require certain fields normaly not required, 
+   such fields will normlay be: firstname, lastname, phone number, email etc...
+   
+Use this funxtionality in other modules where such data is required,
+mostly localized reports
 
- 
-opciju za one koji su označeni kao osobe (is_company=False) da im se omogući fiskalna odgovornost na dokumentima
-Za takve partnere dodana su poja Ime i Prezime, koja se popunjavaju posebno,
-a ostali podaci uzimaju se iz standardnih polja. 
-
-Ovu funkcionalnost koristimo za generiranje XML datoteka za koje se u starom razvoju
-dodavalo na res_company podatke o osobama odgovornim za pojedini izvještaj.
- 
-Proširiti ovlasti iz drugih modula.
-
-Modul će biti korišten kao osnova za druge module 
 
 Usage
 =====
 
-Korisnik mora imati ovlast "Fiskal responsible manager" da bi mogao uređivati ili brisati 
-korisnika koji je označen kao fiskalno odgovorna osoba.
-
+Edit fiscal tags an fields required per tag using
+Accounting -> Configuration -> Fiscal Tags
 
 Bug Tracker
 ===========

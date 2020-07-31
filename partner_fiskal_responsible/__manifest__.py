@@ -12,10 +12,10 @@
     'website': "http://www.decod.io",
     "support": "support@decod.io",
     "licence": "LGPL-3",
-    "excludes": ["partner_firstname"],  # oca!
 
     "depends": [
-        'base'
+        'base',
+        'account',
     ],
     "external_dependencies": {
         "python": [],
@@ -24,7 +24,9 @@
     "data": [
         'security/fiscal_security.xml',
         'security/ir.model.access.csv',
-        'views/partner_views.xml',
+        'views/partner.xml',
+        'views/partner_tag.xml',
+        # 'views/company.xml',
 
     ],
     "qweb": [],

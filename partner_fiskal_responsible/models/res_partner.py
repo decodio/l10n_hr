@@ -4,20 +4,6 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class FiskalResponsibleMixIn(models.AbstractModel):
-    """
-    Abstract class holding data fields for responsible person,
-    Inherit in any report that need XML creation, and responsible person usage
-    """
-    _name = 'fiskal.responsible.mixin'
-    #_table = False
-
-    partner_id = fields.Many2one(comodel_name='res.partner')
-    first_name = fields.Char('First name')
-    last_name = fields.Char('Last name')
-    email = fields.Char('Email')
-    phone = fields.Char('Phone')
-
 class PartnerFiskalTag(models.Model):
     _name = 'res.partner.fiskal.tag'
 
@@ -27,23 +13,24 @@ class PartnerFiskalTag(models.Model):
 
     name = fields.Char(string='Name')
     partner_ids = fields.Many2many(
-        comodel_name='res.partner.fiskal.tag',
+        comodel_name='res.partner',
         relation='res_partner_fiskal_tag_rel',
         column1='tag_id', column2='partner_id',
         string='Persons'
     )
-    required_field_ids = fields.One2many(
-        comodel_name='ir.model_fields'
+    required_field_ids = fields.Many2many(
+        comodel_name='ir.model.fields',
+        relation="res_partner_fiskal_tag_model_field_rel",
+        column1="tag_id", column2="field_id",
+        string="Required fields",
+        domain=[('model', '=', 'res.partner')]
     )
 
 
 class Partner(models.Model):
     _inherit = 'res.partner'
 
-    # OCA/partner_firstname_ uses same fieldsnames- excluded in manifest
-    firstname = fields.Char('First name')
-    lastname = fields.Char('Last name')
-    fiskal_responsible_user_id = fields.Boolean(
+    fiskal_responsible = fields.Boolean(
         string='Fiscal responsible', default=False,
         help="Check if person is fiscal responsible, "
              "and can be used as such on documents"
@@ -62,36 +49,19 @@ class Partner(models.Model):
         if self.is_company:
             self.fiskal_responsible = False
 
-    @api.onchange('firstname', 'lastname')
-    def _onchange_names(self):
-        ime = self.firstname or ''
-        prezime = self.lastname or ''
-        name = ' '.join((ime, prezime))
-        if self.name != name and self.fiskal_responsible:
-            self.name = name
-
-    @api.onchange('fiskal_responsible')
-    def _onchange_fiskal_responsible(self):
-        if self.fiskal_responsible:
-            if self.name and not self.firstname:
-                name = self.name.split(' ')
-                if len(name) == 2:
-                    # lako ako je ovo
-                    self.firstname = name[0]
-                    self.lastname = name[1]
-                else:
-                    #ako nije.. nek popravi tko unosi...
-                    self.firstname = name[0]
-                    self.lastname = ' '.join(name[1:])
-
-    def fiskal_important_fields(self):
+    def _get_fiskal_important_fields(self):
         """
         list of important fields, to check for changes,
         inherit in other modules with proper super calls,
         and fields if needed (phone, e-mail, ...)
         :return:
         """
-        fields = ['tag_ids']  #  'firstname', 'lastname',
+        self.ensure_one()
+        fields = []
+        for tag in self.tag_ids:
+            for fri in tag.required_field_ids:
+                if fri.name not in fields:
+                    fields.append(fri.name)
         return fields
 
     @api.multi
@@ -106,7 +76,7 @@ class Partner(models.Model):
 
             if check:
 
-                fiskal_important_fields = partner.fiskal_important_fields()
+                fiskal_important_fields = partner._get_fiskal_important_fields()
                 protect, missing = [], []
                 for field in fiskal_important_fields:
                     if field in vals.keys() and not f_manager:

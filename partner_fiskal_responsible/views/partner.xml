@@ -19,23 +19,23 @@
                            options="{'no_create': True}"/>
                 </div>
             </field>
-            <field name="name" position="replace">
-                <div>
-                    <field name="osoba_ime" placeholder="FirstName / Ime"
-                           attrs="{'required' : [('fiskal_responsible','=',True)],
-                                   'invisible': [('fiskal_responsible','=',False)]}"
-                           />
-                    <field name="osoba_prezime" placeholder="LastName / Prezime"
-                           attrs="{'required' : [('fiskal_responsible','=',True)],
-                                   'invisible': [('fiskal_responsible','=',False)]}"
-                           class="oe_inline"
-                           />
-                </div>
-                <field name="name" default_focus="1" placeholder="Name"
-                       attrs="{'required' : [('type', '=', 'contact')],
-                               'read_only': [('fiskal_responsible','=',True)]}"/>
-                
-            </field>
+<!--            <field name="name" position="replace">-->
+<!--                <div>-->
+<!--                    <field name="firstname" placeholder="FirstName"-->
+<!--                           attrs="{'required' : [('fiskal_responsible','=',True)],-->
+<!--                                   'invisible': [('fiskal_responsible','=',False)]}"-->
+<!--                           />-->
+<!--                    <field name="lastname" placeholder="LastName"-->
+<!--                           attrs="{'required' : [('fiskal_responsible','=',True)],-->
+<!--                                   'invisible': [('fiskal_responsible','=',False)]}"-->
+<!--                           class="oe_inline"-->
+<!--                           />-->
+<!--                </div>-->
+<!--                <field name="name" default_focus="1" placeholder="Name"-->
+<!--                       attrs="{'required' : [('type', '=', 'contact')],-->
+<!--                               'read_only': [('fiskal_responsible','=',True)]}"/>-->
+<!--                -->
+<!--            </field>-->
 
         </field>
     </record>
