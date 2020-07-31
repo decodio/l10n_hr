@@ -3,6 +3,7 @@
 <data noupdate="1">
 	<!-- i can move main menuitem anywhere from GUI -->
 	<menuitem name='JOPPD' id='menu_joppd' sequence='69'
+			  web_icon="l10n_hr_joppd,static/description/joppd.png"
 			  groups="l10n_hr_joppd.group_joppd_manager"/>
 </data>
 <data noupdate="0">

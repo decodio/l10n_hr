@@ -18,6 +18,8 @@
     "depends": [
         "l10n_hr_base",
         "base_address_extended",  # Zbog adrese i kucnog broja!
+        "partner_fiskal_responsible",
+        "partner_firstname",
     ],
     "external_dependencies": {
         "python": [],
@@ -26,8 +28,9 @@
     "data": [
         "security/joppd_security.xml",
         "security/ir.model.access.csv",
-        "views/joppd_menuitems.xml",
         "views/joppd_views.xml",
+        "views/joppd_menuitems.xml",
+        "data/partner_fiskal_tags.xml",
 
     ],
     "qweb": [],

@@ -75,6 +75,8 @@
 <!--                                    <label string="Izvještaj sastavio:" for="sast_ime"/>-->
 <!--                                    <newline/>-->
                                     <separator string="Izvještaj sastavio:" colspan="4"/>
+                                    <field name="sastavio_id"/>
+                                    <separator colspan="4"/>
                                     <field name="sast_ime"/>
                                     <field name="sast_prez"/>
                                 </group>

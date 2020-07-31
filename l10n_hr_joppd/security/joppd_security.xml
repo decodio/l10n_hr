@@ -10,7 +10,8 @@
     </record>
     <!--2 steps to avoid making reference to xml id not defined yet, borrow from account-->
     <record id="group_joppd_manager" model="res.groups">
-        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')),
+                                   (4, ref('base.user_admin'))]"/>
     </record>
 
 </data>
