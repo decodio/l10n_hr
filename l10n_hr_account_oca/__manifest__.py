@@ -19,8 +19,12 @@
         "l10n_hr_base",
         "account_invoice_tax_note",  # BOLE: testirati
         "account_product_fiscal_classification", # BOLE: tetsirati postavke
+        #"partner_firstname", # BOLE: odgovorna osoba
+        "partner_fiskal_responsible",
     ],
-    "excludes": ["l10n_hr_account"],
+    "excludes": [
+        "l10n_hr_account"  # possible other localization module
+    ],
     "external_dependencies": {
         "python": [],
         "bin": []
@@ -33,6 +37,7 @@
         "views/account_invoice_view.xml",
         "views/account_journal_view.xml",
         "views/menuitems.xml",
+        "data/partner_fiskal_tag.xml"
     ],
     "qweb": [],
     "demo": [],

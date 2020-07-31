@@ -33,3 +33,6 @@ Korisnik koji treba izdavati račune mora imati postavljeno:
  - Dozvoljeni naplatni uređaji
  - zadani naplatni uređaj
 
+Da bi se mogao potvrditi izlazni račun, poslovni prostor mora biti aktivan
+
+

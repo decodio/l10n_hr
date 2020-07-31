@@ -52,8 +52,9 @@ class AccountInvoice(models.Model):
         default=_default_uredjaj)
 
     fiskal_responsible_id = fields.Many2one(
-        comodel_name='res.users',
+        comodel_name='res.partner',
         string="Odgovorna osoba",
+        domain="[('fiskal_responsible','=',True)]",
         help="Odgovorna osoba za ovaj račun",
         readonly=True, states={'draft': [('readonly', False)]})
 
