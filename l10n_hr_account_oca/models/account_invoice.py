@@ -53,10 +53,15 @@ class AccountInvoice(models.Model):
 
     fiskal_responsible_id = fields.Many2one(
         comodel_name='res.partner',
-        string="Odgovorna osoba",
+        string="Fiskal responsible",
         domain="[('fiskal_responsible','=',True)]",
         help="Odgovorna osoba za ovaj račun",
         readonly=True, states={'draft': [('readonly', False)]})
+    fiskal_user_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Fiskal validate',
+        help='Fiskalizacija. Osoba koja je potvrdila racun',
+        copy=False)
 
     # TODO: + opcije : sifra, naziv, inicijali...
     #  negdje na company ili na accounting
@@ -80,36 +85,6 @@ class AccountInvoice(models.Model):
                     self.partner_id.name, self.fiskalni_broj)
                 raise UserError(msg)
 
-    # @api.multi
-    # def action_move_create(self):
-    #     for inv in self:
-    #         # DB: oca modul account_fiscal_position_vat_check
-    #         # koji omogućuje postavljanje obaveznog OIB.a na fiskalnu poziciju
-    #         # if not inv.fiscal_position_id._fields.get('vat_required', False) or \
-    #         #         not inv.fiscal_position_id:
-    #         #     # TODO: mozda ne bas svaki partner, check it out ...
-    #         #     if not inv.partner_id.vat and inv.partner_id.is_company: #DB? or not self.fiscal_position_id:
-    #         #         msg = _('Validate invoice not possible - partner %s has no VAT record') % inv.partner_id.name
-    #         #         # mozda da ipak pustim bez OIB-a ako je osoba??? to be discussed
-    #         #         raise UserError(msg)
-    #
-    #         # zapišem, pa ako se neki od podataka izmijeni history is here... use in URA/IRA
-    #         # TODO: smarter formatting maybe?
-    #         partner_data = {
-    #             'vat': inv.partner_id.vat and inv.partner_id.vat or _('NO VAT No. entry'),
-    #             'name': inv.partner_id.name,
-    #             'street': inv.partner_id.street and inv.partner_id.street or _('NO Street entry'),
-    #             'city': inv.partner_id.city and inv.partner_id.city or _('NO City entry'),
-    #             'zip': inv.partner_id.zip and inv.partner_id.zip or _('NO Zip entry')
-    #         }
-    #         inv.partner_data = str(partner_data)
-    #
-    #         # ako iz ugovora ne dodje user_id
-    #         # TODO : mozda ipak extra field??
-    #         if not self.user_id:
-    #             self.user_id = self.env.context.get('uid')
-    #     return super(AccountInvoice, self).action_move_create()
-
     @api.onchange('journal_id')
     def _onchange_journal_id(self):
         res = super(AccountInvoice, self)._onchange_journal_id()
@@ -129,10 +104,10 @@ class AccountInvoice(models.Model):
         #     res['domain'].update({
         #         'partner_id': [('property_account_position_id', 'in', fp_ids)]
         #     })
-            self.fiskal_responsible_id = self.journal_id.fiscal_responsible_id \
-                        and self.journal_id.fiscal_responsible_id.id \
-                        or self.journal_id.company_id.fiscal_responsible_id \
-                        and self.journal_id.company_id.fiscal_responsible_id.id \
+            self.fiskal_responsible_id = self.journal_id.fiskal_responsible_id \
+                        and self.journal_id.fiskal_responsible_id.id \
+                        or self.journal_id.company_id.fiskal_responsible_id \
+                        and self.journal_id.company_id.fiskal_responsible_id.id \
                         or False
         return res
 
@@ -206,6 +181,8 @@ class AccountInvoice(models.Model):
                 inv.date_document = inv.date_invoice or fields.Date.context_today(self)
             if not inv.date_delivery:
                 inv.date_delivery = inv.date_invoice or fields.Date.context_today(self)
+            if not self.fiskal_user_id:
+                self.fiskal_user_id = self.env.user.id
         return res
 
     @api.model

@@ -35,4 +35,8 @@ Korisnik koji treba izdavati račune mora imati postavljeno:
 
 Da bi se mogao potvrditi izlazni račun, poslovni prostor mora biti aktivan
 
+polja:
+fiskal_responsible_id - odgovorna osoba
+user_id - ex fiskal_user_id ( u modulu fiskalizacija, posebno polje: Fiskalizirao
+
 
