@@ -109,6 +109,11 @@ class AccountInvoice(models.Model):
                         or self.journal_id.company_id.fiskal_responsible_id \
                         and self.journal_id.company_id.fiskal_responsible_id.id \
                         or False
+            if not self.fiskal_responsible_id:
+                msg = _("Mising fiskal responsible person!\n")
+                msg += _("Please select fiskal responsible partner and set it")
+                msg += _("on company and/or on journal settings")
+                raise UserError(msg)
         return res
 
     @api.onchange('fiskal_uredjaj_id')
@@ -182,7 +187,9 @@ class AccountInvoice(models.Model):
             if not inv.date_delivery:
                 inv.date_delivery = inv.date_invoice or fields.Date.context_today(self)
             if not self.fiskal_user_id:
+                # trenutno onaj koji potvrđuje račun
                 self.fiskal_user_id = self.env.user.id
+
         return res
 
     @api.model
