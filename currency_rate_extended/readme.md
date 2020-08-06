@@ -41,5 +41,8 @@ This module should be installed when database setup is done.
 
 2. Settings -> users and companies -> Companies
   - set default currency rate provider for company
+  
+3, Accountung -> Configuration -> Journals
+  - set per journal specific rate provider
 
 
