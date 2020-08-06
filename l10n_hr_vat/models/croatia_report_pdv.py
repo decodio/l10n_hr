@@ -92,16 +92,28 @@ class PdvObrazac(models.Model):
     def _onchange_pdv_template_id(self):
         existing = [(2, p.id) for p in self.pdv_line_ids]
         new_lines = [(0, 0, {'stavka_id': tl.id})
-                     for tl in self.pdv_template_id.line_ids]
+                     for tl in self.pdv_template_id.line_ids.sorted('sequence')]
         self.pdv_line_ids = existing + new_lines
 
 
     def button_get_data(self):
+        # 1. dohvat PDV stavaka
+        self._get_pdv_data()
+        # 2. dohvat PDVS
+        # 3. dohvat ZP
+        # 4. dohvat PPO
         return
+
+    def _get_pdv_data(self):
+        for pdv in self.pdv_line_ids:
+            pass
+
+
 
 class PdvObrazacStavka(models.AbstractModel):
     _name = 'l10n.hr.pdv.obrazac.line'
     _description = "Common abstrac report line model"
+    _order = 'sequence, id'
 
 
     sequence = fields.Integer(
