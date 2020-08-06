@@ -8,7 +8,7 @@
             <field name="rate" position="after">
                 <field name="rate_inverse"/>
 <!--                <field name="rate_type"/>-->
-                <field name="provider_id"/>
+<!--                <field name="provider_id"/>-->
             </field>
         </field>
     </record>
@@ -20,7 +20,7 @@
             <field name="rate" position="after">
                 <field name="rate_inverse"/>
 <!--                <field name="rate_type"/>-->
-                <field name="provider_id"/>
+<!--                <field name="provider_id"/>-->
             </field>
         </field>
     </record>
@@ -40,6 +40,30 @@
                             context="{'group_by': 'name'}"/>
                 </group>
             </field>
+        </field>
+    </record>
+    <record id="view_currency_rate_pivot" model="ir.ui.view">
+        <field name="name">res.currency.rate.pivot</field>
+        <field name="model">res.currency.rate</field>
+        <field name="arch" type="xml">
+            <pivot string="Rates">
+                <field name="name" type="row"/>
+                <field name="currency_id" type="col"/>
+                <field name="rate_inverse" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_currency_rate_graph" model="ir.ui.view">
+        <field name="name">res.currency.rate.graph</field>
+        <field name="model">res.currency.rate</field>
+        <field name="arch" type="xml">
+            <graph string="Currency Rates">
+                <field name="currency_id" type="row"/>
+                <field name="provider_id" type="row"/>
+                <field name="name" type="col"/>
+                <field name="rate_inverse" type="measure"/>
+            </graph>
         </field>
     </record>
     
@@ -63,4 +87,18 @@
             </field>
         </field>
     </record>
+    
+    <record id="action_currency_rate_all_report" model="ir.actions.act_window">
+            <field name="name">Currency Rates</field>
+            <field name="res_model">res.currency.rate</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="search_view_id" ref="base.view_currency_rate_search"/>
+<!--            <field name="context">{'active_test': False}</field>-->
+    </record>
+    <menuitem id="menu_currency_rates_report"
+              name="Currency rates"
+              action="action_currency_rate_all_report"
+              parent="account.account_reports_management_menu"/>
+    
 </odoo>

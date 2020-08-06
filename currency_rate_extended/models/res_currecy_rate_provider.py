@@ -170,7 +170,7 @@ class ResCurrencyRateProvider(models.Model):
                             'name': timestamp,
                             'rate': rate,
                             'provider_id': provider.id,
-                            'rate_type': provider.rate_type,
+                            #'rate_type': provider.rate_type,
                         })
 
             if is_scheduled:

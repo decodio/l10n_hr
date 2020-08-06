@@ -25,6 +25,7 @@
 
     # any module necessary for this one to work correctly
     'depends': [
+        # 'account',
         'currency_rate_update',
     ],
     "excludes": [
@@ -44,8 +45,6 @@
         "python": [],
         "bin": []
     },
-    'conflicts': ['currency_monthly_rate',
-                  'currency_rate_inverted'],
 
     'demo': [],
     'qweb': [],
