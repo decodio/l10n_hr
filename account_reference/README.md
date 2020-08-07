@@ -27,6 +27,10 @@ Na izlaznim računima, kartica Ostalo, prije potvrđivanja računa potrebno je p
 koji je bankovni račun odabran ( ukoliko ih poduzeće ima više ) jer se taj podatak ispisuje
 uz poziv na broj kao informacija za uplaćivanje računa
 
+Računovodstvo -> Postavke -> 
+
+ - plaćanje kupaca - odabrati veza: definirano na dnevniku !
+
 
 Bug Tracker
 ===========

@@ -146,6 +146,12 @@ class Joppd(models.Model):
         copy=False, readonly=True,
         states={'draft': [('readonly', False)]})
 
+    sastavio_id = fields.Many2one(
+        comodel_name='res.partner',
+        string="Sastavio",
+        domain="[('fiskal_responsible','=',True)]"
+    )
+
     sast_ime = fields.Char(
         string="Ime", readonly=True, required=True,
         states={'draft': [('readonly', False)]})
@@ -193,8 +199,9 @@ class Joppd(models.Model):
             self.podnositelj_naziv = self.company_id.partner_id.name
             self.podnositelj_mjesto = self.company_id.partner_id.city
             self.podnositelj_ulica = self.company_id.partner_id.street_name
-            self.podnositelj_kbr = self.company_id.partner_id.street_number +\
-                                    self.company_id.partner_id.street_number2
+            self.podnositelj_kbr = self.company_id.partner_id.street_number \
+                                   # +\
+                                   #  self.company_id.partner_id.street_number
             self.podnositelj_email = self.company_id.partner_id.email
             try:
                 self.podnositelj_oib = self.company_id.partner_id.get_oib_from_vat()

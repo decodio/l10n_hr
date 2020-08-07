@@ -9,15 +9,15 @@ with 2 major functionalities:
 
 1. multiple rates - Currency provider with multi rates, or multi provider 
 
-- Some currency rate providers (mostly banks) use multiple rates per currency: 
-  Ask rate, Mid rate and Sell rate... so this module will provide support for 
-  multiple rater per provider, as well as possibility to configure multiple providers
-  for currency rates
+    - Some currency rate providers (mostly banks) use multiple rates per currency: 
+      Ask rate, Mid rate and Sell rate... so this module will provide support for 
+      multiple rater per provider, as well as possibility to configure multiple providers
+      for currency rates
   
 2. Per journal rate setup 
 
-- Possibility to configure which provider/rate will be used for rate fetch in 
-  specific journal
+    - Possibility to configure which provider/rate will be used for rate fetch in 
+      specific journal
   
 3. Inverse currency rate
   - despite having OCA currency_rate_inverted module
@@ -41,5 +41,8 @@ This module should be installed when database setup is done.
 
 2. Settings -> users and companies -> Companies
   - set default currency rate provider for company
+  
+3, Accountung -> Configuration -> Journals
+  - set per journal specific rate provider
 
 

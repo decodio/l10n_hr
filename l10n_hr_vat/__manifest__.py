@@ -14,6 +14,7 @@
         PDV 
         PDV-S
         ZP
+        PPO
         
         TODO:
         URA
@@ -34,6 +35,7 @@
         'views/res_company_view.xml',
         'views/report_config_pdv_views.xml',
         'views/report_pdv_views.xml',
+        'views/account_tax.xml',
 
         'data/l10n.hr.porezna.uprava.csv',
         'data/l10n.hr.config.report.pdv.csv',

@@ -10,6 +10,7 @@ from odoo.exceptions import UserError, ValidationError
 class FiscalPrateciDokumentMixin(models.AbstractModel):
     """
     Basic fields and methods for all fiscal classes
+    - inherit for invoice, sale, procurment etc...
     """
     _name = 'fiscal.mixin'
     _description = 'Fiscalisation base mixin'
@@ -31,11 +32,12 @@ class FiscalInvoiceMixin(models.AbstractModel):
         string="XML vrijeme računa",
         help="Value from fiscalization msg stored as string",
         size=19, readonly=True, copy=False)
-    fiskal_user_id = fields.Many2one(
-        comodel_name='res.users',
-        string='Fiskalizirao',
-        help='Fiskalizacija. Osoba koja je potvrdila racun',
-        copy=False)
+
+    # fiskal_user_id = fields.Many2one( # -> moved to l10n-hr_account_oca!!
+    #     comodel_name='res.users',
+    #     string='Fiskalizirao',
+    #     help='Fiskalizacija. Osoba koja je potvrdila racun',
+    #     copy=False)
     # zki = fields.Char(
     #     string='ZKI',
     #     readonly=True, copy=False)

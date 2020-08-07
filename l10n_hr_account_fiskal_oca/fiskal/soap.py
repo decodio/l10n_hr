@@ -164,7 +164,7 @@ class XmlDSigMessagePlugin(MessagePlugin):
             verifier = XMLVerifier()
             payload_string = etree.fromstring(payload.plain())
             valid_signature = verifier.verify(payload_string, x509_cert=cert)
-
+            # https://github.com/benoist/xmldsig/issues/31  CHECK THIS!!
         except Exception as exc:
             _logger.exception('%s: %s', exc, context.reply)
             context.reply = _fault('Client',

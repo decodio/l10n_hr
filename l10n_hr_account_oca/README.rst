@@ -15,7 +15,6 @@ Configuration
 
 Companies localized for Croatia needs extra data entered to comply to local laws.
 
-
 Provjerite i dopunite podatke na postavkama poduzeća:
 
 Croatia company parameters:
@@ -32,4 +31,15 @@ Korisnik koji treba izdavati račune mora imati postavljeno:
  - Dozvoljeni prostori
  - Dozvoljeni naplatni uređaji
  - zadani naplatni uređaj
+
+Da bi se mogao potvrditi izlazni račun, poslovni prostor mora biti aktivan
+
+polja:
+fiskal_responsible_id - odgovorna osoba za račune
+  - 1. označiti partnera ( ne usera!) kao fiskal responsible ( može ih biti više)
+    i odabrati mu tag RAČUNI, nakon toga možemo na company postaviti generalno odgovornu osobu,
+    ili na pojedinom dnevniku odgovornu osobu za taj dnevnik,
+
+
+
 

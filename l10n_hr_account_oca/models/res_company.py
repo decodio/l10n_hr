@@ -19,8 +19,9 @@ class Company(models.Model):
         help="Only '/' or '-' are legaly defined as allowed"
     )
     fiskal_responsible_id = fields.Many2one(
-        comodel_name='res.users',
+        comodel_name='res.partner',
         string="Default Fiskal responsible person",
+        domain="[('fiskal_responsible','=',True)]",
         help="Default company fiskal responsible person"
              # BOLE: one more override per journal?
     )

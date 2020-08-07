@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_fiskal_responsible_form" model="ir.ui.view">
+        <field name="name">view_partner_fiskal_responsible_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="company_type" position="after">
+                <div class="oe_edit_only">
+                    <label for="fiskal_responsible"/>
+                    <field name="fiskal_responsible"
+                           attrs="{'invisible':[('is_company','=', True)]}"
+                           groups="partner_fiskal_responsible.group_fiskal_responsible_manager"/>
+                    <field name="tag_ids"
+                           attrs="{'invisible':[('fiskal_responsible','=', False)]}"
+                           groups="partner_fiskal_responsible.group_fiskal_responsible_manager"
+                           widget="many2many_tags" class="oe_inline"
+                           options="{'no_create': True}"/>
+                </div>
+            </field>
+<!--            <field name="name" position="replace">-->
+<!--                <div>-->
+<!--                    <field name="firstname" placeholder="FirstName"-->
+<!--                           attrs="{'required' : [('fiskal_responsible','=',True)],-->
+<!--                                   'invisible': [('fiskal_responsible','=',False)]}"-->
+<!--                           />-->
+<!--                    <field name="lastname" placeholder="LastName"-->
+<!--                           attrs="{'required' : [('fiskal_responsible','=',True)],-->
+<!--                                   'invisible': [('fiskal_responsible','=',False)]}"-->
+<!--                           class="oe_inline"-->
+<!--                           />-->
+<!--                </div>-->
+<!--                <field name="name" default_focus="1" placeholder="Name"-->
+<!--                       attrs="{'required' : [('type', '=', 'contact')],-->
+<!--                               'read_only': [('fiskal_responsible','=',True)]}"/>-->
+<!--                -->
+<!--            </field>-->
+
+        </field>
+    </record>
+</odoo>
