@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_team_salesteams_view_form" model="ir.ui.view">
+        <field name="name">crm.team.form</field>
+        <field name="model">crm.team</field>
+        <field name="priority">9</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            
+            <notebook position="inside">
+                <page string="Croatia settings">
+                    <group>
+                        <field name="journal_id"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    
+</odoo>
