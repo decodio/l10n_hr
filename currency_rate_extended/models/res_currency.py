@@ -107,6 +107,7 @@ class ResCurrencyRate(models.Model):
         help='The rate of the currency of rate 1 to the currency'
     )
 
+
     # redefinition of the constraint inherited from res.currency.rate and
     # wich adds a rate_type option so we can maintain multiple rates for one day
     _sql_constraints = [
