@@ -60,6 +60,7 @@ class AccountInvoice(models.Model):
     fiskal_user_id = fields.Many2one(
         comodel_name='res.users',
         string='Fiskal validate',
+        readonly=True, states={'draft': [('readonly', False)]},
         help='Fiskalizacija. Osoba koja je potvrdila racun',
         copy=False)
 
@@ -84,6 +85,19 @@ class AccountInvoice(models.Model):
                 msg = _('Document from partner %s with number %s already existing') % (
                     self.partner_id.name, self.fiskalni_broj)
                 raise UserError(msg)
+
+    def _get_fiskal_responsible(self):
+        fiskal_responsible = self.journal_id.fiskal_responsible_id \
+                and self.journal_id.fiskal_responsible_id.id \
+                or self.journal_id.company_id.fiskal_responsible_id \
+                and self.journal_id.company_id.fiskal_responsible_id.id \
+                or False
+        if not fiskal_responsible:
+            msg = _("Mising fiskal responsible person!\n")
+            msg += _("Please select fiskal responsible partner and set it")
+            msg += _("on company and/or on journal settings")
+            raise UserError(msg)
+        return fiskal_responsible
 
     @api.onchange('journal_id')
     def _onchange_journal_id(self):
@@ -110,10 +124,7 @@ class AccountInvoice(models.Model):
                         and self.journal_id.company_id.fiskal_responsible_id.id \
                         or False
             if not self.fiskal_responsible_id:
-                msg = _("Mising fiskal responsible person!\n")
-                msg += _("Please select fiskal responsible partner and set it")
-                msg += _("on company and/or on journal settings")
-                raise UserError(msg)
+                self.fiskal_responsible_id = self._get_fiskal_responsible()
         return res
 
     @api.onchange('fiskal_uredjaj_id')
@@ -189,7 +200,8 @@ class AccountInvoice(models.Model):
             if not self.fiskal_user_id:
                 # trenutno onaj koji potvrđuje račun
                 self.fiskal_user_id = self.env.user.id
-
+            if not self.fiskal_responsible_id:
+                self.fiskal_responsible_id = self._get_fiskal_responsible()
         return res
 
     @api.model
