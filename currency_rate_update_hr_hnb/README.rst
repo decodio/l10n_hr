@@ -39,6 +39,7 @@ Configuration
 To configure Croatia HNB currency rates provider :
 
 # Go to *Invoicing > Configuration > Currency update providers*
+ create new provider : Croatia-HNB
  select type of rate to use : buy, mid, sell
 
 Bug Tracker
