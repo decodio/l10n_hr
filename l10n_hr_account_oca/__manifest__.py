@@ -18,7 +18,6 @@
         "base_iban",
         "l10n_hr_base",
         "account_invoice_tax_note",  # BOLE: testirati
-        "account_product_fiscal_classification", # BOLE: tetsirati postavke
         #"partner_firstname", # BOLE: odgovorna osoba
         "partner_fiskal_responsible",
     ],

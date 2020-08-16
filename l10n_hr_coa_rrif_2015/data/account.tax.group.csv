@@ -5,4 +5,47 @@ tax_group_pdv05,PDV 5%,3
 tax_group_ppdv25,PPDV 25%,4
 tax_group_ppdv13,PPDV 13%,5
 tax_group_ppdv05,PPDV 5%,6
-tax_group_osl,NO TAX,7
+tax_group_osl,TAX EXCEPT,7
+tax_group_nema,NO TAX,8
+,,
+tax_group_I_1,I-1 Isporuke u RH za koje PDV obračunava primatelj (tuzemni PPO),9
+tax_group_1_2,I-2 Isporuke dobara obavljenje u drugim državama članicama,10
+tax_group_I_3,I-3 Isporuke dobara unutar EU,11
+tax_group_I_4,I-4 Obavljene usluge unutar EU,12
+tax_group_I_5,I-5 Obavljene isporuke osobama bez sjedišta u RH,13
+tax_group_I_6,I-6 Sastavljanje i postavljanje dobara u drugoj državi članici EU,14
+tax_group_I_7,I-7 Isporuke novih prijevoznih sredstava u EU,15
+tax_group_I_8,I-8 Tuzemne isporuke,16
+tax_group_I_9,I-9 Izvozne isporuke,17
+tax_group_I_10,I-10 Ostala oslobođenja,18
+,,
+tax_group_II_1,II-1 – Isporuke dobara i usluga u RH po stopi 5%,20
+tax_group_II_2,II-2 – Isporuke dobara i usluga u RH po stopi 13%,21
+tax_group_II_3,II-3 – Isporuke dobara i usluga u RH po stopi 25%,22
+tax_group_II_4,II-4 – Primljene isporuke u RH za koje PDV obračunava PRIMATELJ,23
+tax_group_II_5,II-5 – Stjecanje dobara unutar EU po stopi od 5%,24
+tax_group_II_6,II-6 – Stjecanje dobara unutar EU po stopi od 13%,25
+tax_group_II_7,II-7 – Stjecanje dobara unutar EU po stopi od 25%,26
+tax_group_II_8,II-8 – Primljene usluge iz EU po stopi od 5%,27
+tax_group_II_9,II-9 – Primljene usluge iz EU po stopi od 13%,28
+tax_group_II_10,II-10 – Primljene usluge iz EU po stopi od 25%,28
+tax_group_II_11,II-11 – Primljene isporuke od p.obv. bez sjed. u RH po stopi od 5%,29
+tax_group_II_12,II-12 – Primljene isporuke od p.obv. bez sjed. u RH po stopi od 13%,30
+tax_group_II_13,II-13 – Primljene isporuke od p.obv. bez sjed. u RH po stopi od 25%,31
+tax_group_II_14,II-14 – Naknadno oslobođenje izvoza u okviru osobnog putničkog prometa,32
+tax_group_II_15,II-15 – Obračunati PDV pri uvozu,33
+,,
+tax_group_III_1,III-1 Pretporez od primljenih isporuka u tuzemstvu po stopi od 5%,40
+tax_group_III_2,III-2 Pretporez od primljenih isporuka u tuzemstvu po stopi od 13%,41
+tax_group_III_3,III-3 Pretporez od primljenih isporuka u tuzemstvu po stopi od 25%,42
+tax_group_III_4,III-4 Pretporez od primljenih isporuka u RH za koje PDV obračunava primatelj (tuzemni PPO),43
+tax_group_III_5,III-5 Pretporez od stjecanja dobara unutar EU po stopi od 5%,44
+tax_group_III_6,III-6 Pretporez od stjecanja dobara unutar EU po stopi od 13%,45
+tax_group_III_7,III-7 Pretporez od stjecanja dobara unutar EU po stopi od 25%,46
+tax_group_III_8,III-8 Pretporez od primljenih usluga iz EU po stopi od 5%,47
+tax_group_III_9,III-9 Pretporez od primljenih usluga iz EU po stopi od 13%,48
+tax_group_III_10,III-10 Pretporez od primljenih usluga iz EU po stopi od 25%,49
+tax_group_III_11,III-11 Pretporez od primljenih dobara i usluga od por.obv. Bez sjedišta u RH po stopi od 5%,50
+tax_group_III_12,III-12 Pretporez od primljenih dobara i usluga od por.obv. Bez sjedišta u RH po stopi od 13%,51
+tax_group_III_13,III-13 Pretporez od primljenih dobara i usluga od por.obv. Bez sjedišta u RH po stopi od 25%,52
+tax_group_III_14,III-14 Pretporez pri uvozu,53
