@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 class PartnerFiskalTag(models.Model):
     _name = 'res.partner.fiskal.tag'
+    _description = "Partner fiscal tags"
 
     """
     To be used for domain to select on documents, (INVOICE, PDV, JOPPD...)
