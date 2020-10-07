@@ -7,7 +7,9 @@
     "version": "12.0.1.0.0",
     "application": False,
 
-    "author": "Odoo Hrvatska",
+    "author": "Decodio Applications d.o.o," 
+              "DAJ MI 5," 
+              "Odoo Hrvatska",
     "support": "support@odoo-hrvatska.org",
     "website": "http://odoo-hrvatska.org",
     "licence": "LGPL-3",
@@ -16,6 +18,7 @@
         "base_vat",
         "base_iban",
         # TESTNO
+        "account_invoice_tax_note", # from OCA! - oslobodjenja!
 
     ],
     "external_dependencies": {
