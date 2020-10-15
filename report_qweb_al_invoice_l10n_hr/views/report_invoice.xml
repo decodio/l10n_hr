@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="invoice_document_data_l10n_hr"
+                  inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@class='page']/h2" position="replace">
+                <!-- must be a better way to do this... -->
+                <h3 class="text-center mt32 mb32" id="invoice_number">
+                    <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
+                    <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
+                    <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                    <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                    <!-- DB: dodao Storno i refund... -->
+                    <span t-if="o.type == 'out_refund' and o.journal_id.posting_policy == 'contra'">Refund</span>
+                    <span t-if="o.type == 'out_refund' and o.journal_id.posting_policy == 'storno'">Storno invoice</span>
+                    <span t-if="o.type == 'in_refund'">Vendor Refund</span>
+                    <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
+                    <t t-if="o.croatia">
+                    <!-- only for croatia, (country must be set on company in order to print this part!
+                         we need to print special formatted invoice number ,
+                         so o.name is printed as 'Internal number'-->
+
+                        <!--<span t-if="o.fiskalni_broj != ''"><span t-field="o.fiskalni_broj"/></span>-->
+                        <!--<span t-if="o.fiskalni_broj == ''"><span t-field="o.name"/></span>-->
+                        <span t-if="(o.type in ('out_refund', 'out_invoice')) and o.journal_id.posting_policy == 'storno'">
+                            <span t-field="o.fiskalni_broj"/>
+                        </span>
+                        <span t-if="o.type not in ('out_refund', 'out_invoice') or o.journal_id.posting_policy != 'storno'">
+                            <span t-field="o.number"/>
+                        </span>
+                    </t>
+                    <t t-if="not o.croatia">
+                        <span t-field="o.number"/>
+                    </t>
+                </h3>
+            </xpath>
+        </template>
+        
+<!--        <template id="invoice_customer_data_alt_layout_l10n_hr"-->
+<!--                  inherit_id="report_qweb_al_invoice.invoice_customer_data">-->
+<!--             <xpath expr="//t[@t-if='o.partner_id.vat']" position="replace">-->
+<!--                <t t-set="partner_country" t-value="o.partner_id.country_id and o.partner_id.country_id.code or False"/>-->
+<!--                <t t-if="o.company_id.croatia and partner_country == 'HR'">-->
+<!--                    <br/>-->
+<!--                    OIB : <span t-esc="o.partner_id.vat[2:]"/>-->
+<!--                    &lt;!&ndash; TODO: test get_oib_from_vat() &ndash;&gt;-->
+<!--                </t>-->
+<!--                <t t-if="o.partner_id.vat and (partner_country=='HR' and o.partner_id.vies_passed or partner_country!='HR')">-->
+<!--                    <div>-->
+<!--                    TIN : <span t-field="o.partner_id.vat"/>-->
+<!--                    </div>-->
+<!--                </t>-->
+<!--            </xpath>-->
+<!--        </template>-->
+        <template id="invoice_document_data_alt_layout_l10n_hr"
+                  inherit_id="report_qweb_al_invoice.invoice_document_data">
+            <!-- TODO: add option to select: name, code, login or something -->
+            <div id="dd_user" position="after">
+                <t t-if="o.croatia">
+                  <div id="nacin_plac" class="row">
+                      <div class="col-5">
+                          <span style="margin-left:1em">Način plaćanja</span>
+                      </div>
+                      <div class="col-7">
+                          <span t-field="o.nacin_placanja"/>
+                      </div>
+                  </div>
+                  <div id="mjesto_izd" class="row">
+                      <div class="col-5">
+                          <span style="margin-left:1em">Mjesto izdavanja</span>
+                      </div>
+                      <div class="col-7">
+                          <span t-field="o.fiskal_uredjaj_id.prostor_id.mjesto_izdavanja"/>,
+                          <span t-field="o.fiskal_uredjaj_id"/>
+                      </div>
+                  </div>
+<!--                  <div id="nap_ur" class="row">-->
+<!--                      <div class="col-6">Naplatni uređaj</div>-->
+<!--                      <div class="col-6">-->
+<!--                          <span  style="margin-left:1em" t-field="o.fiskal_uredjaj_id"/>-->
+<!--                      </div>-->
+<!--                  </div>-->
+                  <div id="vrijeme_izdavanja" class="row">
+                      <div class="col-5">
+                          <span style="margin-left:1em">Vrijeme izdavanja</span>
+                      </div>
+                      <div class="col-7">
+                          <span t-field="o.vrijeme_izdavanja"/>
+                      </div>
+                  </div>
+                  <div id="internal_number" class="row">
+                      <div class="col-5">
+                          <span style="margin-left:1em">Internal number</span>
+                      </div>
+                      <div class="col-7">
+                          <span t-field="o.number"/>
+                      </div>
+                  </div>
+                </t>
+                
+            </div>
+        </template>
+    </data>
+</odoo>
