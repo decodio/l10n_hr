@@ -15,15 +15,13 @@
         </xpath>
     </template>
     <template id="payment_info" >
-        <div class="row" style="page-break-inside: avoid;">
+        <p class="row" style="page-break-inside: avoid;">
             <div class="col-xs-8 text-left">
                 <strong>Invoice payment info</strong>
                     <br/>
                 <span>Bank : </span>
+                    <strong><span t-field="o.partner_bank_id.bank_id.bic" /></strong>-
                     <span t-field="o.partner_bank_id.bank_id.name"/>
-                    <span> (</span>
-                    <strong><span t-field="o.partner_bank_id.bank_id.bic" /></strong>
-                    <span>)</span>
                     <br/>
                 <span>Account number : </span>
                     <strong><span t-field="o.partner_bank_id.acc_number"/></strong>
@@ -31,6 +29,6 @@
                 <span>Payment reference : </span>
                     <strong><span t-field="o.reference"/></strong>
             </div>
-        </div>
+        </p>
     </template>
 </odoo>
