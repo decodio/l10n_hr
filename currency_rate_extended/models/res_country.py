@@ -9,6 +9,3 @@ class Country(models.Model):
         help="Use inverse rate when converting from/to currency "
              "(0.140381 <--> 7,123456)",
     )
-
-    def _auto_init(self):
-    def init(self):
