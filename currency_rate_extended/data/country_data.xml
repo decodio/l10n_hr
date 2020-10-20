@@ -1,0 +1,8 @@
+   <data>  <!-- noupdate="1">-->
+        <record forcecreate="1" id="base.hr" model="res.country">
+                <field name="inverse_currency_rate" eval="True"/>
+        </record>
+        <record id="base.ba" model="res.country">
+                <field name="inverse_currency_rate" eval="True"/>
+        </record>
+    </data>
