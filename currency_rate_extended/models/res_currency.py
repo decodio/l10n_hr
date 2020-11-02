@@ -32,8 +32,8 @@ class Currency(models.Model):
                 # comming from account_invoice with journal_id in context
                 # need to check all cases for this
                 journal = self.env['account.journal'].browse(journal_id)
-                provider_id = journal.rate_provider_id and \
-                                journal.rate_provider_id.id or False
+                provider_id = journal.currency_rate_provider_id and \
+                                journal.currency_rate_provider_id.id or False
 
         if not provider_id:
             # provider not set on journal, OR journal did not came in context!
