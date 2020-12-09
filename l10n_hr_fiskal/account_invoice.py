@@ -35,7 +35,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
                 log.sadrzaj).Body.getchildren()[0].Racun.DatVrijeme.text
             if datum:
                 datvr = datetime.strptime(datum, "%d.%m.%YT%H:%M:%S")
-                res += datvr.strftime("%Y%m%d_%H%M")
+                res = datvr.strftime("%Y%m%d_%H%M")
                 return res  # vracam nakon prvog koji dodje ovjde!
         return res # ovo samo ako nije nista nasao.. onda nece valjati qrcode!
 
