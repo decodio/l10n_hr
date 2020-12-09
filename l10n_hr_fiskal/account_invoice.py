@@ -4,31 +4,97 @@
 # Copyright (C) 2012- Daj Mi 5 Davor Bojkić bole@dajmi5.com
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import base64
+from cStringIO import StringIO
+from lxml import objectify
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
 from datetime import datetime
 from pytz import timezone, UTC
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 try:
     import fisk
 except ImportError:
     fisk = None
-
+try:
+    import qrcode
+except ImportError:
+    qrcode = None
 
 class FiscalInvoiceMixin(models.AbstractModel):
     _name = "fiscal.invoice.mixin"
 
+    @api.one
+    def get_xml_datetime_value(self):
+        res = False
+        for log in self.fiskal_log_ids:
+            if log.type not in ('racun', 'rac_pon'):
+                continue
+            datum = objectify.fromstring(
+                log.sadrzaj).Body.getchildren()[0].Racun.DatVrijeme.text
+            if datum:
+                datvr = datetime.strptime(datum, "%d.%m.%YT%H:%M:%S")
+                res += datvr.strftime("%Y%m%d_%H%M")
+                return res  # vracam nakon prvog koji dodje ovjde!
+        return res # ovo samo ako nije nista nasao.. onda nece valjati qrcode!
+
+    @api.multi
+    @api.depends('jir', 'zki')
+    def _compute_fiskal_qr(self):
+        if qrcode is None:
+            raise UserError(_("Qrcode python package is missing!"))
+        for inv in self:
+            if not inv.jir and not inv.zki:
+                continue
+            data = "https://porezna.gov.hr/rn?"
+            if inv.jir:
+                # fiskalizirani račun
+                data += "jir=" + inv.jir
+            else:
+                # ispis prije poslane fiskalne poruke ili je poslana poruka
+                # imala neku gresku pa JIR nije dodjeljen
+                data += "zki=" + inv.zki
+            datum = inv.get_xml_datetime_value()  # why list in return?
+            datum = datum and datum[0] or False
+            if not datum:
+                # nema xml. datuma
+                datum = datetime.strptime(
+                    inv.vrijeme_izdavanja,
+                    DEFAULT_SERVER_DATETIME_FORMAT
+                ).strftime("%Y%m%d_%H%M")
+            data += "&datv=" + datum
+            iznos = "&izn=%s" % str(round(self.amount_total, 2))
+            data += iznos
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=10, border=2
+            )
+            qr.add_data(data)
+            qr.make(fit=True)
+            try:
+                img = qr.make_image(fill_color="black", back_color="white")
+                ret = StringIO()
+                img.save(ret, img.format)
+                ret.seek(0)
+                res = base64.b64encode(ret.getvalue())
+                inv.fiskal_qr_code = res
+            except Exception:
+                inv.fiskal_qr_code = False
+                #raise ValueError("Cannot create barcode")
+
     # common fiscal attributes for account.invoice and pos.order
     vrijeme_izdavanja = fields.Datetime("Vrijeme", readonly=True)
     fiskal_user_id = fields.Many2one(
-        'res.users',
-        'Fiskalizirao',
+        comodel_name='res.users',
+        string='Fiskalizirao',
         help='Fiskalizacija. Osoba koja je potvrdila racun')
     zki = fields.Char('ZKI', readonly=True)
     jir = fields.Char('JIR', readonly=True)
     uredjaj_id = fields.Many2one(
-        'fiskal.uredjaj',
-        'Naplatni uredjaj',
+        comodel_name='fiskal.uredjaj',
+        string='Naplatni uredjaj',
         help="Naplatni uređaj na kojem se izdaje racun",
         readonly=True,
         states={'draft': [('readonly', False)]})
@@ -51,6 +117,14 @@ class FiscalInvoiceMixin(models.AbstractModel):
     paragon_br_rac = fields.Char(
         'Paragon br.',
         help="Paragon broj racuna, ako je racun izdan na paragon.")
+
+    fiskal_qr_code = fields.Binary(
+        string="QR Code", compute="_compute_fiskal_qr",
+        # not visible on forms, computed only for printing
+    )
+    # fiskal_qr_name = fields.Char(
+    #     string='QR Filename', default="QR.png",
+    #     readonly=True)
 
     @api.multi
     def copy(self, default=None):

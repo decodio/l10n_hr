@@ -61,7 +61,7 @@ Preduvjeti fisk.py
     To install the package under the site-packages directory of
     your Python installation, run "python setup.py install".
 """,
-    "version" : "1.02",
+    "version" : "8.0.1.1.0",
     "author" : "DAJ MI 5",
     "category" : "Localisation/Croatia",
     "website": "http://www.dajmi5.com",
