@@ -65,11 +65,12 @@ class FiscalInvoiceMixin(models.AbstractModel):
                 ).strftime("%Y%m%d_%H%M")
             data += "&datv=" + datum
             iznos = "&izn=%.2f" % self.amount_total
-            data += iznos
+            data += iznos.replace('.',',')
+            print data
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_L,
-                box_size=10, border=2
+                box_size=10, border=1
             )
             qr.add_data(data)
             qr.make(fit=True)
