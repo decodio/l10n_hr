@@ -28,6 +28,21 @@ class ResCurrencyRateProviderHrHNB(models.Model):
         self.provide_rates = 'multi'
         self.rate_type = 'mid'
 
+    def _create_company_currency_rate(self):
+        rcr = self.env['res.currency.rate']
+        cc_provider_rate = rcr.search(
+            [('provider_id', '=', self.id),
+             ('company_id', '=', self.company_id.id),
+             ('currency_id', '=', self.company_id.currency_id.id)])
+        if not cc_provider_rate:
+            rcr.create({
+                'name': fields.Date.from_string('2000-01-01'),
+                'rate': 1,
+                'rate_inverse': 1,
+                'company_id': self.company_id.id,
+                'provider_id': self.id
+            })
+
     @api.multi
     def _get_supported_currencies(self):
         self.ensure_one()
@@ -52,6 +67,7 @@ class ResCurrencyRateProviderHrHNB(models.Model):
     @api.multi
     def _obtain_rates(self, base_currency, currencies, date_from, date_to):
         self.ensure_one()
+        self._create_company_currency_rate()
         if self.service != 'HR-HNB':
             return super()._obtain_rates(base_currency, currencies, date_from,
                                          date_to)  # pragma: no cover
