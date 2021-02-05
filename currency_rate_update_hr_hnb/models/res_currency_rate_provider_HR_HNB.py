@@ -39,6 +39,7 @@ class ResCurrencyRateProviderHrHNB(models.Model):
                 'name': fields.Date.from_string('2000-01-01'),
                 'rate': 1,
                 'rate_inverse': 1,
+                'currency_id': self.company_id.currency_id.id,
                 'company_id': self.company_id.id,
                 'provider_id': self.id
             })
