@@ -32,8 +32,8 @@ class Currency(models.Model):
                 # comming from account_invoice with journal_id in context
                 # need to check all cases for this
                 journal = self.env['account.journal'].browse(journal_id)
-                provider_id = journal.rate_provider_id and \
-                                journal.rate_provider_id.id or False
+                provider_id = journal.currency_rate_provider_id and \
+                                journal.currency_rate_provider_id.id or False
 
         if not provider_id:
             # provider not set on journal, OR journal did not came in context!
@@ -89,12 +89,12 @@ class Currency(models.Model):
     def _compute_current_rate(self):
         date = self._context.get('date') or fields.Date.today()
         company = self._get_current_company()
-        # the subquery selects the last rate before 'date' for the given currency/company
+        # the subquery selects the last rate before 'date'
+        # for the given currency/company
         currency_rates = self._get_rates(company, date)
         for currency in self:
             currency.rate = currency_rates.get(currency.id) or 1.0
             currency.rate_inverse = 1 / currency_rates.get(currency.id) or 1.0
-
 
 
 class ResCurrencyRate(models.Model):
@@ -106,7 +106,6 @@ class ResCurrencyRate(models.Model):
         digits=(12, 6), default=1.0,
         help='The rate of the currency of rate 1 to the currency'
     )
-
 
     # redefinition of the constraint inherited from res.currency.rate and
     # wich adds a rate_type option so we can maintain multiple rates for one day
@@ -132,11 +131,3 @@ class ResCurrencyRate(models.Model):
     def write(self, vals):
         vals = self._calc_inverse_rate(vals)
         return super(ResCurrencyRate, self).write(vals)
-
-
-
-
-
-
-
-

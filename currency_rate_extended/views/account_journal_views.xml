@@ -8,7 +8,7 @@
             <notebook position="inside">
                 <page string="Currency rates">
                     <group>
-                        <field name="rate_provider_id"/>
+                        <field name="currency_rate_provider_id"/>
                     </group>
                 </page>
             </notebook>

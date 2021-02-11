@@ -25,7 +25,6 @@
 
     # any module necessary for this one to work correctly
     'depends': [
-        # 'account',
         'currency_rate_update',
     ],
     "excludes": [
@@ -39,6 +38,8 @@
         'views/res_currency_rate_views.xml',
         'views/account_journal_views.xml',
         'views/res_currency_rate_provider_views.xml',
+        'views/res_country_views.xml',
+        'data/country_data.xml',
     ],
     # only if external dependency exists
     'external_dependencies': {
