@@ -3,13 +3,11 @@
 
 import logging
 import json
-from datetime import timedelta
 import urllib.request as request
-
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
+
 
 class ResCurrencyRateProviderHrHNB(models.Model):
     _inherit = 'res.currency.rate.provider'
@@ -23,7 +21,7 @@ class ResCurrencyRateProviderHrHNB(models.Model):
         if not self.service:
             return {}
         if self.service != 'HR-HNB':
-            return super(ResCurrencyRateProvider_HR_HNB, self).onchange_service()
+            return super(ResCurrencyRateProviderHrHNB, self).onchange_service()
         self.fetch_inverse = True
         self.provide_rates = 'multi'
         self.rate_type = 'mid'
