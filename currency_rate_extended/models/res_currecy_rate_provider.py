@@ -7,6 +7,7 @@ from sys import exc_info
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
+from datetime import datetime, time
 
 
 _logger = logging.getLogger(__name__)
@@ -175,3 +176,14 @@ class ResCurrencyRateProvider(models.Model):
 
             if is_scheduled:
                 provider._schedule_next_run()
+
+    @api.multi
+    def _schedule_next_run(self):
+        self.ensure_one()
+        # FOR SOME REASON self.next_run = xyz LOCKS TABLE IF CALLED BY MULTITHREADED CRON
+        self.write({'last_successful_run': self.next_run,
+                    'next_run': (datetime.combine(
+                        self.next_run,
+                        time.min) + self._get_next_run_period()
+                        ).date()
+                    })
