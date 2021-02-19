@@ -123,6 +123,8 @@ class ResCompany(models.Model):
         greska = msg.get_last_error()
         id_poruke = msg.get_id_msg()  # idPoruke Echo does not have it
         # message datetime Echo request does not have it
+        # msg.get_datetime_msg() is returning string in "Europe/Zagreb" timezone
+        #  TODO: convert it to UTC
         msg_datetime = msg.get_datetime_msg() or datetime.now()
 
         self.env.cr.execute("""
