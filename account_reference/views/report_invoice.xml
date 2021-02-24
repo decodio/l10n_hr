@@ -2,28 +2,33 @@
 <odoo>
     <!-- dodaje poziv na broj -->
     <template id="report_invoice_payment_reference_layout" inherit_id="account.report_invoice_document" >
-        <xpath expr="//p[@t-if='o.comment']" position="before">
-            <t t-if="o.reference_type == 'pnbr' and o.state != 'paid' and o.partner_bank_id"
-               t-call="account_reference.payment_info" />
+        <xpath expr="//p[@t-if='o.reference']" position="replace">
+            <!-- original line -->
+            <p t-if="o.reference and o.company_id.invoice_reference_type != 'per_journal'">
+               Please use the following communication for your payment :
+                <b><span t-field="o.reference"/></b>
+            </p>
+            <p t-if="o.reference and o.company_id.invoice_reference_type == 'per_journal'">
+                <t t-if="o.state != 'paid' and o.partner_bank_id"
+                   t-call="account_reference.payment_info" />
+            </p>
         </xpath>
     </template>
     <template id="payment_info" >
-        <div class="row" style="page-break-inside: avoid;">
+        <p class="row" style="page-break-inside: avoid;">
             <div class="col-xs-8 text-left">
                 <strong>Invoice payment info</strong>
+                    <br/>
+                <span>Bank : </span>
+                    <strong><span t-field="o.partner_bank_id.bank_id.bic" /></strong>-
+                    <span t-field="o.partner_bank_id.bank_id.name"/>
                     <br/>
                 <span>Account number : </span>
                     <strong><span t-field="o.partner_bank_id.acc_number"/></strong>
                     <br/>
-                <span>Bank : </span>
-                    <span t-field="o.partner_bank_id.bank_id.name"/>
-                    <span> (</span>
-                    <span t-field="o.partner_bank_id.bank_id.bic" />
-                    <span>)</span>
-                    <br/>
-                <span>Reference : </span>
+                <span>Payment reference : </span>
                     <strong><span t-field="o.reference"/></strong>
             </div>
-        </div>
+        </p>
     </template>
 </odoo>

@@ -46,10 +46,9 @@ class AccountMoveLine(models.Model):
         contra_lines = self - storno_lines
         for line in storno_lines:
             if line.amount_currency:
-                if (line.amount_currency > 0.0 and line.balance > 0.0) or (
-                        line.amount_currency < 0.0 and line.balance < 0.0):
+                if (line.amount_currency > 0.0 and line.balance < 0.0) or (
+                        line.amount_currency < 0.0 and line.balance > 0.0):
                     raise ValidationError(
                         _('The amount expressed in the secondary currency must'
-                          ' be positive when account is debited and negative'
-                          ' when account is credited.'))
+                          ' be same sign as line balance'))
         super(AccountMoveLine, contra_lines)._check_currency_amount()

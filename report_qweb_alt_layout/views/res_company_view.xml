@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+    
+    <record id="view_company_alt_print_layout" model="ir.ui.view">
+        <field name="name">view_company_alt_print_layout</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Alternative qweb layouts">
+                    <label for="tax_no_print"/>
+                    <field name="tax_no_print" class="oe_inline"/>
+                    <br/>
+                    <label for="apply_alt_layout"/>
+                    <field name="apply_alt_layout" class="oe_inline"/>
+                    <br/>
+                    <label for="always_print_discount"/>
+                    <field name="always_print_discount" class="oe_inline"/>
+
+                    <group>
+                        <field name="address_space_side"
+                               attrs="{'invisible':[('apply_alt_layout','=',False)]}"/>
+
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
+

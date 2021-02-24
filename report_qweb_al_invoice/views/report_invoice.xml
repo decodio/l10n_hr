@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+        <template id="report_invoice_header_alt_layout"
+                  inherit_id="account.report_invoice_document" >
+            
+            <t t-set="address" position="replace">
+                <t t-set="alt_layout" t-value="o.company_id.apply_alt_layout"/>
+                <t t-set="address_side" t-value="o.company_id.address_space_side"/>
+                <t t-set="tax_print" t-value="not o.company_id.tax_no_print"/>
+                <t t-if="not alt_layout">
+                    <t t-set="address">
+                        <address t-field="o.partner_id"
+                                 t-options='{
+                                 "widget": "contact",
+                                 "fields": ["address", "name"],
+                                 "no_marker": True}' />
+                        <div t-if="o.partner_id.vat" class="mt16">
+                            <t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
+                            <span t-field="o.partner_id.vat"/></div>
+                    </t>
+                </t>
+                <t t-if="alt_layout">
+                    <div id="alt_info" t-if="alt_layout" class="row mt32 mb32">
+                        <t t-if="address_side == 'left'">
+                            <div id="customer_data_right" class="col-6">
+                                <t t-call="report_qweb_al_invoice.invoice_customer_data"/>
+                            </div>
+                            <div id="invoice_data_left" class="col-6">
+                                <t t-call="report_qweb_al_invoice.invoice_document_data"/>
+                            </div>
+                        </t>
+                        <t t-if="address_side == 'right'">
+                            <div id="invoice_data_right" class="col-6">
+                                <t t-call="report_qweb_al_invoice.invoice_document_data"/>
+                            </div>
+                            <div id="customer_data_left" class="col-6">
+                                <t t-call="report_qweb_al_invoice.invoice_customer_data"/>
+                            </div>
+                        </t>
+                        
+                </div>
+                </t>
+            </t>
+            
+            <div id='informations' position="attributes">
+                <attribute name="t-if">not alt_layout</attribute>
+            </div>
+            
+
+            <xpath expr="//t[@t-set='display_discount']" position="replace">
+                <t t-set="display_discount"
+                   t-value="any([l.discount for l in o.invoice_line_ids]) or o.company_id.always_print_discount"/>
+            </xpath>
+<!--            <xpath expr="//span[@t-esc=\"', '.join(map(lambda x: (x.description or x.name), line.invoice_line_tax_ids))]\"/.."-->
+<!--                   position="replace">-->
+<!--                <t t-if="tax_print">-->
+<!--                    <td t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">-->
+<!--                        <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.invoice_line_tax_ids))"/>-->
+<!--                    </td>-->
+<!--                </t>-->
+<!--            </xpath>-->
+<!--            -->
+            <xpath expr="//t[@t-as='amount_by_group']" position="replace">
+                <t t-if="tax_print">
+                    <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                        <tr style="">
+                            <t t-if="len(o.tax_line_ids) == 1 and o.amount_untaxed == amount_by_group[2]">
+                                <td><span t-esc="amount_by_group[0]"/></td>
+                                <td class="text-right o_price_total">
+                                    <span t-esc="amount_by_group[3]" />
+                                </td>
+                            </t>
+                            <t t-else="">
+                                <td>
+                                    <span t-esc="amount_by_group[0]"/>
+                                    <span>&amp;nbsp;<span>on</span>
+                                        <t t-esc="amount_by_group[4]"/>
+                                    </span>
+                                </td>
+                                <td class="text-right o_price_total">
+                                    <span t-esc="amount_by_group[3]"/>
+                                </td>
+                            </t>
+                        </tr>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="invoice_customer_data">
+            <div >
+                <!-- check : one or more addresses -->
+                <t t-set="multi_address" t-value="o.partner_id != o.commercial_partner_id"/>
+
+                <h5><strong t-field="o.partner_id.name"/></h5>
+                
+                <div class="col-10" t-field="o.partner_id.street"/>
+                <t t-if="o.partner_id.street2">
+                    <div class="col-10" t-field="o.partner_id.street2"/>
+                </t>
+                <div class="col-10" >
+                    <span t-field="o.partner_id.zip"/>
+                    <t t-if="o.partner_id.city">
+                    , <span t-field="o.partner_id.city"/>
+                    </t>
+                </div>
+                
+                <t t-if="o.partner_id.country_id">
+                    <div class="col-10" t-field="o.partner_id.country_id.name"/>
+                </t>
+                 <t t-if="o.partner_id.vat">
+                        <div class="col-10">
+                        <t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/> : <span t-field="o.partner_id.vat"/>
+                        </div>
+                </t>
+<!-- TODO -->
+<!--                <t t-if="multi_address">-->
+<!--                    <br/>-->
+<!--                    <strong>Company: </strong>-->
+<!--                    <div t-field="o.commercial_partner_id"-->
+<!--                         t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>-->
+<!--                </t>-->
+<!--                <t t-if="o.partner_id.ref">-->
+<!--                    <div class="col-xs-5">Customer Code</div>-->
+<!--                    <div class="col-xs-7" t-field="o.partner_id.ref"/>-->
+<!--                </t>-->
+            </div>
+        </template>
+
+        <template id="invoice_document_data">
+             <div name="document_data" >
+                  <t t-set="has_desc" t-value="o.name"/>
+                  <t t-set="has_origin" t-value="o.origin"/>
+                 
+                 <div id="dd_date" class="row">
+                     <div class="col-5">
+                         <span style="margin-left:1em">Date</span>
+                     </div>
+                     <div class="col-7">
+                         <span t-field="o.date"/>
+                     </div>
+                 </div>
+                 <div id="dd_delivery_date" class="row">
+                     <div class="col-5">
+                         <span style="margin-left:1em">Delivery date</span>
+                     </div>
+                     <div class="col-7">
+                         <span t-field="o.date_delivery"/>
+                     </div>
+                 </div>
+                 <div id="dd_document_date" class="row">
+                     <div class="col-5">
+                         <span style="margin-left:1em">Document date</span>
+                     </div>
+                     <div class="col-7">
+                         <span t-field="o.date_document"/>
+                     </div>
+                 </div>
+                 <div id="dd_due_date" class="row">
+                     <div class="col-5">
+                         <span style="margin-left:1em">Due date</span>
+                     </div>
+                     <div class="col-7">
+                         <span t-field="o.date_due"/>
+                     </div>
+                 </div>
+                 <div id="dd_user" class="row">
+                     <div class="col-5">
+                         <span style="margin-left:1em">Responsible person</span>
+                     </div>
+                     <div class="col-7">
+                         <span t-field="o.user_id.name"/>
+                     </div>
+                 </div>
+                 <t t-if="has_desc">
+                     <div id="description" class="row">
+                         <div class="col-5">
+                             <span style="margin-left:1em">Description:</span>
+                         </div>
+                         <div class="col-7">
+                             <span t-field="o.name"/>
+                         </div>
+                     </div>
+                 </t>
+                 <t t-if="has_origin">
+                     <div id="origin" class="row">
+                         <div class="col-5">
+                             <span style="margin-left:1em">Origin:</span>
+                         </div>
+                         <div class="col-7">
+                             <span t-field="o.origin"/>
+                         </div>
+                     </div>
+                 </t>
+                 
+                 
+                 
+<!--                  <div class="col-4">-->
+<!--                      <p class="m-1">User</p>-->
+<!--                      <p class="m-1">Delivery date</p>-->
+<!--                      <p class="m-1">Document data</p>-->
+<!--                      <p class="m-1">Due date</p>-->
+<!--                      <t t-if="has_desc">-->
+<!--                        <p class="m-1">Description</p>-->
+<!--                      </t>-->
+<!--                      <t t-if="has_origin">-->
+<!--                        <p class="m-1">Source</p>-->
+<!--                      </t>-->
+<!--                  </div>-->
+<!--                    <div class="col-8">-->
+<!--                      <p class="m-1" style="margin-left:1em" t-field="o.user_id.name"/>-->
+<!--                      <p class="m-1" style="margin-left:1em" t-field="o.date_delivery"/>-->
+<!--                      <p class="m-1" style="margin-left:1em" t-field="o.date_document"/>-->
+<!--                      <p class="m-1" style="margin-left:1em" t-field="o.date_due"/>-->
+<!--                        <t t-if="has_desc">-->
+<!--                         <p class="m-1" style="margin-left:1em" t-field="o.name"/>-->
+<!--                        </t>-->
+<!--                    <t t-if="has_origin">-->
+<!--                      <p class="m-1" style="margin-left:1em" t-field="o.origin"/>-->
+<!--                    </t>-->
+<!--                    </div>-->
+             </div>
+        </template>
+    
+</odoo>

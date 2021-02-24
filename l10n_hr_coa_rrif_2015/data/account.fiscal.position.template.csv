@@ -1,10 +1,10 @@
-"id","chart_template_id/id","name","country_group_id/id","auto_apply"
-"fp_template_R1 ","l10n_hr_coa_rrif_2015_template","R1","",0
-"fp_template_R2","l10n_hr_coa_rrif_2015_template","R2–PO NAPLAĆENOM","",0
-"fp_template_NIJE_U_PDV","l10n_hr_coa_rrif_2015_template","NIJE U SUSTAVU PDV","",0
-"fp_template_EU","l10n_hr_coa_rrif_2015_template","EU","europe-hr",1
-"fp_template_INO","l10n_hr_coa_rrif_2015_template","INO","",0
-"fp_template_BEZ_SJED","l10n_hr_coa_rrif_2015_template","BEZ SJEDISTA","",0
-"fp_template_PPO","l10n_hr_coa_rrif_2015_template","PPO","",0
-"fp_template_AVANS","l10n_hr_coa_rrif_2015_template","AVANS","",0
-"fp_template_NEOP","l10n_hr_coa_rrif_2015_template","NEOPOREZIVO","",0
+"id","chart_template_id/id","name","country_group_id/id","auto_apply","note"
+"fp_template_R1 ","l10n_hr_coa_rrif_2015_template","R1",,0,
+"fp_template_R2","l10n_hr_coa_rrif_2015_template","R2–PO NAPLAĆENOM",,0,
+"fp_template_NIJE_U_PDV","l10n_hr_coa_rrif_2015_template","NIJE U SUSTAVU PDV",,0,
+"fp_template_EU","l10n_hr_coa_rrif_2015_template","EU","europe-hr",1,"Oslobođeno PDV-a temeljem čl.17. st.1 i čl.26.st.3. Zakona o PDV-u - REVERSE CHARGE - "
+"fp_template_INO","l10n_hr_coa_rrif_2015_template","INO",,0,"Oslobođeno PDV-a temeljem čl.17. st.1 i čl.26.st.3. Zakona o PDV-u - REVERSE CHARGE - "
+"fp_template_BEZ_SJED","l10n_hr_coa_rrif_2015_template","BEZ SJEDISTA",,0,
+"fp_template_PPO","l10n_hr_coa_rrif_2015_template","PPO",,0,
+"fp_template_AVANS","l10n_hr_coa_rrif_2015_template","AVANS",,0,
+"fp_template_NEOP","l10n_hr_coa_rrif_2015_template","NEOPOREZIVO",,0,
