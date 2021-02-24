@@ -12,6 +12,10 @@
         payment - all except bank transfer must be ficalized at time of confirming or
         if that is not possible within 48 hours of confirming.
         This module adds fiscalization functionality.
+        
+        pip install pycryptodome
+        pip install backports.ssl_match_hostname
+        pip install signxml
     """,
 
     'author': 'Decodio Apllications Ltd',
@@ -45,7 +49,10 @@
     # only if external dependency exists
     'external_dependencies': {
         "python": [],
-        "bin": []
+        "bin": [],
+        "pycryptodome": [],
+        "backports.ssl_match_hostname": [],
+        "signxml": []
     },
     'conflicts': ['l10n_hr_account'],  #by UVID, from odoo app store if ported to v12
 
