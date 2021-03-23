@@ -2,10 +2,10 @@
 
 from openerp.tools.translate import _
 
-class get_vat_book_report_common(object):         
+class get_vat_book_report_common(object):
 
     def get_lines(self, report_object, data, stupci, row_start_values_sql, invoice_sql='', insert_sql= '', journal_sql= ''):
-         
+
         periods_ids = report_object.period_ids
         knjiga_id = data['form']['knjiga_id'] or False
         company_id = report_object.pool.get('account.tax.code').browse(report_object.cr, report_object.uid, data['form']['chart_tax_id']).company_id.id or False
@@ -22,9 +22,9 @@ class get_vat_book_report_common(object):
         for stupac in stupci:
             poz_id = report_object.pool.get('l10n_hr_pdv.report.knjiga').search(report_object.cr, report_object.uid, [('knjiga_id','=',knjiga_id), ('position','=',str(stupac))])
             all_taxes[stupac] = None
-            if poz_id:                 
+            if poz_id:
                 all_taxes[stupac] = report_object.pool.get('l10n_hr_pdv.report.knjiga.stavka').search(report_object.cr, report_object.uid, [('report_knjiga_id','=',poz_id[0])])
-            
+
         stupciSql = {}
         sum_all_stupci = sum_sql = line_query2  = ''
         i = 0
@@ -58,21 +58,22 @@ class get_vat_book_report_common(object):
         if date_start:
             linesSelect += " AND (invoice_date_invoice >= \'" + date_start + "\')"
         if date_stop:
-            linesSelect += " AND (invoice_date_invoice <= \'" + date_stop + "\')" 
+            linesSelect += " AND (invoice_date_invoice <= \'" + date_stop + "\')"
         linesSelect += ')'
-        
+
         #report_object.cr.execute(viewSQL + line_query + linesSelect)
         report_object.cr.execute(insert_sql + line_query + linesSelect)
-        
+
         select_sql = 'SELECT * FROM l10n_hr_vat_' + str(report_object.uid) + \
-            ' WHERE (' + sum_all_stupci + ') <> 0 ORDER BY invoice_date, rbr'
-        report_object.cr.execute(select_sql) 
-        res = report_object.cr.dictfetchall() 
+                     ' ORDER BY invoice_date, rbr'
+            # ' WHERE (' + sum_all_stupci + ') <> 0 ORDER BY invoice_date, rbr' # TODO remove - print only non zeroes
+        report_object.cr.execute(select_sql)
+        res = report_object.cr.dictfetchall()
         self.set_rbr(data, report_object, res)
-        report_object.cr.execute('SELECT ' + sum_sql + ' FROM l10n_hr_vat_' + str(report_object.uid))       
+        report_object.cr.execute('SELECT ' + sum_sql + ' FROM l10n_hr_vat_' + str(report_object.uid))
         report_object.sums = report_object.cr.dictfetchall()
         #report_object.cr.execute('DROP VIEW l10n_hr_vat_' + str(report_object.uid))
-               
+
         return res
 
     def set_rbr(self, data, report_object, res):
@@ -80,9 +81,9 @@ class get_vat_book_report_common(object):
         lines = res
         for line in lines:
             line_count += 1
-            line['rbr'] = str(line_count) + '.'   
+            line['rbr'] = str(line_count) + '.'
 
-        
+
     def create_column_query(self, stupac, all_taxes, company_id, journal_list):
         if not all_taxes[stupac]:
             return None
@@ -101,5 +102,5 @@ class get_vat_book_report_common(object):
         AND line.move_id = stavka.move_id \
         AND line.journal_id IN (' + str(journal_list).strip('[]') + ') \
         AND account.active '
-        
+
         return sql
