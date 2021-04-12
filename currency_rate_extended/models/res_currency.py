@@ -11,7 +11,7 @@ class Currency(models.Model):
 
     rate_inverse = fields.Float(
         string="Inverse rate",
-        digits=(12, 6), default=1.0,
+        digits=(16, 6), default=1.0,
         compute='_compute_current_rate',
         help='The rate of the currency of rate 1 to the currency'
     )
@@ -84,6 +84,19 @@ class Currency(models.Model):
             self.env['res.users']._get_company()
         return company
 
+    @api.model
+    def _get_conversion_rate(self, from_currency, to_currency, company, date):
+        rate = super()._get_conversion_rate(
+            from_currency,
+            to_currency,
+            company,
+            date
+        )
+        if company.inverse_currency_rate and rate:
+            return 1 / rate
+        else:
+            return rate
+
     @api.multi
     @api.depends('rate_ids.rate')
     def _compute_current_rate(self):
@@ -103,9 +116,11 @@ class ResCurrencyRate(models.Model):
 
     rate_inverse = fields.Float(
         string="Inverse rate",
-        digits=(12, 6), default=1.0,
+        digits=(16, 6), default=1.0,
         help='The rate of the currency of rate 1 to the currency'
     )
+    rate = fields.Float(digits=(16, 8), default=1.0,
+                        help='The rate of the currency to the currency of rate 1')
 
     # redefinition of the constraint inherited from res.currency.rate and
     # wich adds a rate_type option so we can maintain multiple rates for one day
