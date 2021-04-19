@@ -85,17 +85,38 @@ class Currency(models.Model):
         return company
 
     @api.model
-    def _get_conversion_rate(self, from_currency, to_currency, company, date):
-        rate = super()._get_conversion_rate(
-            from_currency,
-            to_currency,
-            company,
-            date
-        )
+    def _get_rate_or_inverse_rate(self, from_currency, to_currency, company, date):
+        rate = self._get_conversion_rate(
+            from_currency, to_currency, company, date)
         if company.inverse_currency_rate and rate:
             return 1 / rate
         else:
             return rate
+
+    def _convert(self, from_amount, to_currency, company, date, round=True,
+                 force_rate=None):
+        """Returns the converted amount of ``from_amount``` from the currency
+           ``self`` to the currency ``to_currency`` for the given ``date`` and
+           company.
+
+           :param company: The company from which we retrieve the convertion rate
+           :param date: The nearest date from which we retriev the conversion rate.
+           :param round: Round the result or not
+           :param force_rate: apply manually entered rate
+        """
+
+        if force_rate:
+            if self == to_currency:
+                to_amount = from_amount
+            else:
+                if company.inverse_currency_rate:
+                    to_amount = from_amount * (1 / force_rate)
+                else:
+                    to_amount = from_amount * force_rate
+            return to_currency.round(to_amount) if round else to_amount
+
+        return super()._convert(
+            from_amount, to_currency, company, date, round=round)
 
     @api.multi
     @api.depends('rate_ids.rate')
