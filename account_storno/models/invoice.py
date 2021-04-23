@@ -29,8 +29,8 @@ class AccountInvoice(models.Model):
     _inherit = "account.invoice"
 
     @api.model
-    def line_get_convert(self, line, part, date):
-        res = super(account_invoice, self).line_get_convert( line, part, date)
+    def line_get_convert(self, line, part):
+        res = super(account_invoice, self).line_get_convert(line, part)
 
         def convert_reverse_vat(line):
             credit = debit = 0.0
