@@ -109,7 +109,7 @@ class Currency(models.Model):
             if self == to_currency:
                 to_amount = from_amount
             else:
-                if company.inverse_currency_rate:
+                if not company.inverse_currency_rate:
                     to_amount = from_amount * (1 / force_rate)
                 else:
                     to_amount = from_amount * force_rate
