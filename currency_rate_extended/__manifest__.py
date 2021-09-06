@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 Decodio Applications
+# Copyright 2021 Ecodica
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': "Currency rate Extensions",
@@ -13,8 +13,8 @@
         Long description of module's purpose
     """,
 
-    'author': 'Decodio Apllications Ltd',
-    'website': 'https://www.decod.io',
+    'author': 'Ecodica',
+    'website': 'https://www.ecodica.eu',
     'license': 'LGPL-3',
 
     # Categories can be used to filter modules in modules listing

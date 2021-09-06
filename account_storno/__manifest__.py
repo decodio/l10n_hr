@@ -1,4 +1,4 @@
-# Copyright 2011- Slobodni programi d.o.o.
+# Copyright 2021 Ecodica
 # Copyright 2018 Forest and Biomass Romania
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -7,8 +7,7 @@
     'summary': 'Allows Storno accounting (negative accounting entries)',
     'version': '12.0.1.0.0',
     'category': 'Accounting',
-    'author': 'Slobodni programi d.o.o., '
-              'Decodio Applications d.o.o.,'
+    'author': 'Ecodica'
               'Forest and Biomass Romania, '
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/account-financial-tools',

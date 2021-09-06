@@ -7,7 +7,7 @@
     'category': 'Financial Management/Configuration',
     'summary': 'Update exchange rates using Croatia HNB',
     'author':
-        'Decodio Applications d.o.o.'
+        'Ecodica'
         'Odoo Community Association (OCA)',
     'license': 'AGPL-3',
     'installable': True,

@@ -6,7 +6,7 @@
     "version": "12.0.1.0.0",
     "application": False,
 
-    "author": "Decodio Applications ltd",
+    "author": "Ecodica",
     "licence": "LGPL-3",
 
     "depends": [

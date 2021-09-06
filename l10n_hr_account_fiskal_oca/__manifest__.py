@@ -1,4 +1,4 @@
-# Copyright 2020 Decodio Applications Ltd (https://decod.io)
+# Copyright 2021 Ecodica
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 {
     'name': "Croatia accounting - fiscalisation",
@@ -18,8 +18,8 @@
         pip install signxml
     """,
 
-    'author': 'Decodio Apllications Ltd',
-    'website': 'https://www.decod.io',
+    'author': 'Ecodica',
+    'website': 'https://www.ecodica.eu',
     'license': 'LGPL-3',
 
     # Categories can be used to filter modules in modules listing
