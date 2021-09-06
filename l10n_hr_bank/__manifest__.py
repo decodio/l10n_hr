@@ -1,4 +1,5 @@
 # © 2018 Davor Bojkić - Bole <bole@dajmi5.com>
+# Copyright 2021 Ecodica
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
@@ -9,7 +10,7 @@
     "version": "12.0.1.0.0",
     "application": False,
     "author": "Odoo Community Association (OCA)"
-              ", Decodio Applications d.o.o.",
+              ", Ecodica",
               ", Davor Bojkić (DAJ MI 5)"
     "website": "https://github.com/OCA/l10n-croatia",
     "license": "AGPL-3",

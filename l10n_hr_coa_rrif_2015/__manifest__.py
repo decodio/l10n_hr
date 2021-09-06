@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Copyright 2021 Ecodica
 {
     "name": "Croatia COA - RRIF 2015",
     "summary": "Croatia COA template - RRIF2015",
@@ -7,7 +8,7 @@
     "version": "12.0.1.0.0",
     "application": False,
 
-    "author": "Decodio Applications d.o.o," 
+    "author": "Ecodica" 
               "DAJ MI 5," 
               "Odoo Hrvatska",
     "support": "support@odoo-hrvatska.org",
