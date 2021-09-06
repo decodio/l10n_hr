@@ -1,4 +1,4 @@
-
+# Copyright 2021 Ecodica
 {
     "name": "Croatia - Sales to Accounting",
     "summary": "Croatia Sales to accounting localisation",
@@ -7,8 +7,8 @@
     "version": "12.0.0.0.1",
     "application": False,
 
-    'author': "Decodio Application ltd.",
-    'website': "http://www.decod.io",
+    'author': "Ecodica",
+    'website': "https://www.ecodica.eu",
     "support": "support@decod.io",
     "license": "LGPL-3",
     "depends": [

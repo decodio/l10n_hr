@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Copyright 2021 Ecodica
 {
     'name': "Croatia - VAT reports",
     # Categories can be used to filter modules in modules listing
@@ -21,8 +22,8 @@
         IRA...
     """,
 
-    'author': "Decodio Apllications Ltd",
-    'website': "https://www.decod.io",
+    'author': "Ecodica",
+    'website': "https://www.ecodica.eu",
     "licence": "LGPL-3",
 
     'depends': [

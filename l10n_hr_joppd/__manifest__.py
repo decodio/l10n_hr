@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# Copyright 2021 Ecodica
 {
     "name": """JOPPD obrazac""",
     "summary": """joppd obrazac osnova""",
@@ -8,8 +8,8 @@
     "version": "1.1.0",
     "application": False,
 
-    'author': "Decodio Application ltd.",
-    'website': "http://www.decod.io",
+    'author': "Ecodica",
+    'website': "https://www.ecodica.eu",
     "support": "support@decod.io",
     "licence": "LGPL-3",
     #"price" : 20.00,   #-> only if module if sold!

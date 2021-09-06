@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# Copyright 2021 Ecodica
 {
     "name": """Partner fiscal responsible""",
     "summary": """Fiskal responsability enabled on persons""",
@@ -8,8 +8,8 @@
     "version": "12.0.1.0.0",
     "application": False,
 
-    'author': "Decodio Application ltd.",
-    'website': "http://www.decod.io",
+    'author': "Ecodica",
+    'website': "https://www.ecodica.eu",
     "support": "support@decod.io",
     "licence": "LGPL-3",
 

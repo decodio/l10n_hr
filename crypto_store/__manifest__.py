@@ -1,4 +1,4 @@
-# Copyright 2020 Decodio Applications Ltd (https://decod.io)
+# Copyright 2021 Ecodica
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 {
@@ -10,8 +10,8 @@
     "application": False,
 
     "author": "Coop. Trab. Moldeo Interactive Ltda.,"
-              "Decodio Applications ltd.",
-    #"support": "support@odoo-hrvatska.orgr",
+              "Ecodica",
+    # "support": "support@odoo-hrvatska.orgr",
     "website": "https://decod.io",
     "license": "LGPL-3",
     "depends": [
