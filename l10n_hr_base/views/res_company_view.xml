@@ -18,6 +18,37 @@
                             <field name="nkd"/>
                             <field name="podrucje_djelatnosti"/>
                         </group>
+                        <group>
+                            <group>
+                                <field name="porezna_uprava"/>
+                                <field name="porezna_ispostava"/>
+                            </group>
+                            <group>
+                                <field name="maticni_broj"/>
+<!--                                <field name="nkd_id"/> u l10n_hr_base_nkd modulu -->
+                                <field name="temeljni_kapital"/>
+                                <field name="clanovi_uprave"/>
+                                <field name="trg_sud"/>
+                            </group>
+                        </group>
+                        <group string = "Podaci za izvoz Obrazac PDV">
+                            <group>
+                                <field name="responsible_fname"/>
+                                <field name="responsible_lname"/>
+                                <field name="responsible_tel"/>
+                                <field name="responsible_email"/>
+                            </group>
+                            <group>
+                                <field name="ulica"/>
+                                <field name="kbr"/>
+                                <field name="kbr_dodatak"/>
+                                <field name="podrucje_djelatnosti"/>
+                            </group>
+                        </group>
+                        <group colspan="4">
+                            <field name="zaglavlje_ispisa" colspan="4"/>
+                            <field name="podnozje_ispisa" colspan="4"/>
+                        </group>
                     </page>
                 </notebook>
             </field>

@@ -17,17 +17,23 @@ class Company(models.Model):
 
     croatia = fields.Boolean(
         string="Croatia",
-        compute="_check_origin_croatia",
+        compute="_check_origin_croatia",)
         # technical field for show/hide croatia settings, multi-localziation environment
         # never to be exposed to UI, always invisible!
-        # todo: move to l10n_hr_base_multilocalization module
-    )
+        # todo: move to l10n_hr_base_multilocalization module)
     # Fields, DB: NAMJERNO SU SVI NAZIVI NA HRVATSKOM!
 
     nkd = fields.Char(
         string="NKD",
-        help="Šifra glavne djelatnosti prema NKD-2007"
-    )
+        help="Šifra glavne djelatnosti prema NKD-2007")
+    # u l10n_hr_base_nkd modulu
+    # nkd_id = fields.Many2one(
+    #     comodel_name='l10n.hr.nkd', string='NKD',
+    #     help='Nacionalna klasifikacija djelatnosti')
+
+    porezna_uprava = fields.Char('Porezna uprava')
+    porezna_ispostava = fields.Char('Porezna ispostava')
+
     mirovinsko = fields.Char(
         string='Mirovinsko',
         help='Broj obveznika uplaćivanja mirovinskog osiguranja')
@@ -35,6 +41,27 @@ class Company(models.Model):
         string='Zdravstveno',
         help='Broj obveze uplaćivanja zdravstvenog osiguranja')
     maticni_broj = fields.Char(string='Matični broj')
+
+    temeljni_kapital = fields.Float(string='Temeljni kapital', digits=(16, 2))
+    clanovi_uprave = fields.Char(string='Članovi uprave')
+    trg_sud = fields.Char(string='Trgovački sud u', size=32)
+    podnozje_ispisa = fields.Text(string='Podnožje ispisa', default='')
+    zaglavlje_ispisa = fields.Char(string='Zaglavlje ispisa')
+
+    responsible_fname = fields.Char(
+        string='Ime', size=64, help='Ime odgovorne osobe')
+    responsible_lname = fields.Char(
+        string='Prezime', size=64, help='Prezime odgovorne osobe')
+    responsible_tel = fields.Char(
+        string='Telefon', size=64, help='Tel odgovorne osobe')
+    responsible_email = fields.Char(
+        string='E-mail', size=64, help='E-mail odgovorne osobe')
+
+    # BOLE: dodana polja za URA u xml:
+    ulica = fields.Char('Ulica')
+    kbr = fields.Char('Kucni broj')
+    kbr_dodatak = fields.Char('Dodatak kucnom broju')
+
     # BOLE: ovo se nalazi u OCA/business_requirements modulu !!
     podrucje_djelatnosti = fields.Selection(
         selection=[
@@ -90,4 +117,3 @@ class Company(models.Model):
             'time_stamp': tstamp,                                   # timestamp, za zapis i izračun vremena obrade
             'odoo_datetime': time_now.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         }
-
