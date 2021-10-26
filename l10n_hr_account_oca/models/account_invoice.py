@@ -64,6 +64,11 @@ class AccountInvoice(models.Model):
         help='Fiskalizacija. Osoba koja je potvrdila racun',
         copy=False)
 
+    @api.onchange('date_document')
+    def _onchange_date_document(self):
+        self.date_invoice = self.date_document
+        self.date_delivery = self.date_document
+
     # TODO: + opcije : sifra, naziv, inicijali...
     #  negdje na company ili na accounting
     # racun_potvrdio = fields.Char
