@@ -33,10 +33,10 @@ class AccountMove(models.Model):
         # imported invoice with fiskal number, do not touch
         if not invoice.fiskalni_broj:
             invoice.fiskalni_broj = fiskalni_broj
-        else:
-            invoice.comment = invoice.comment and invoice.comment + '\n' or \
-                              'Prilikom potvrđivanja računa korišten je '\
-                              'importirani broj računa'
+        # else:
+        #     invoice.comment = invoice.comment and invoice.comment + '\n' or \
+        #                       'Prilikom potvrđivanja računa korišten je '\
+        #                       'importirani broj računa'
 
 
     @api.multi
