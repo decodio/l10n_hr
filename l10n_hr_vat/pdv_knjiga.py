@@ -215,18 +215,20 @@ class account_move(osv.osv):
                 if move.journal_id.type not in JOURNAL_INVOICES:
                     invoice = False #Samo račune na post metodi?
                 if not invoice:
-                    continue    
-                #Find invoice looking at reconciliation TODO remove this
+                    continue
+                '''
+                #Find invoice looking at reconciliation
+                reconcile_invoice = False
                 if not invoice:
                     for move_line in move.line_id:
                         if move_line.reconcile_id:
                             for rml in move_line.reconcile_id.line_id:
-                                invoice = rml.invoice or invoice
-                                if invoice:
+                                if rml.invoice:
+                                    reconcile_invoice = rml.invoice
                                     break
-                        if invoice:
+                        if reconcile_invoice:
                             break
-                '''
+
                 move_exist = line_obj.search(cr, uid, [('move_id', '=', move.id)])
                 if move_exist:
                     continue
@@ -237,7 +239,8 @@ class account_move(osv.osv):
                                            'l10n_hr_pdv_knjiga_id' : pdv_knjiga_id.id,
                                            'move_id': move.id,
                                            'period_id': move.period_id.id,
-                                           'invoice_id':invoice and invoice.id
+                                           'invoice_id': invoice and invoice.id
+                                                         or reconcile_invoice and reconcile_invoice.id or False
                                      }
                         pdv_knjiga_line_id = line_obj.create(cr, uid, pdv_knjiga_line, context=context)
 
