@@ -179,8 +179,8 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
                    '     ( SELECT  pks.id, '\
                    '               row_number() '\
                    '               OVER( PARTITION BY  p.fiscalyear_id, pks.l10n_hr_pdv_knjiga_id '\
-                   '                         ORDER BY pks.move_date,'
-                   '                               /* p.date_start, i.date,*/  pks.move_id  '\
+                   '                         ORDER BY pks.move_date, pks.move_id '
+                   '                               /* p.date_start, i.date,*/ '\
                    '                               /*pocetak perioda, datum knjiženja, redoslijed knjiženja*/ '\
                    '                   ) '\
                    '               as poredak '\
