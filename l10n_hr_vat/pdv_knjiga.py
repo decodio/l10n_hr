@@ -199,7 +199,6 @@ class l10n_hr_pdv_knjiga_stavka(osv.osv):
 #                   ,(fiscal_year_ids, pdv_knjiga_ids ) )
 
 
-
 class account_move(osv.osv):
     _inherit = 'account.move'
 
@@ -233,7 +232,8 @@ class account_move(osv.osv):
                 if move_exist:
                     continue
                 pdv_knjiga_ids = move.journal_id.l10n_hr_pdv_knjiga_ids
-                if pdv_knjiga_ids:
+
+                if pdv_knjiga_ids and (invoice or reconcile_invoice):
                     for pdv_knjiga_id in pdv_knjiga_ids:
                         pdv_knjiga_line = {'name': move.name or '/',
                                            'l10n_hr_pdv_knjiga_id' : pdv_knjiga_id.id,
@@ -243,6 +243,27 @@ class account_move(osv.osv):
                                                          or reconcile_invoice and reconcile_invoice.id or False
                                      }
                         pdv_knjiga_line_id = line_obj.create(cr, uid, pdv_knjiga_line, context=context)
+
+                # vat_on_payment case or multiple and partially paid invoices
+                # on one account_move
+                if pdv_knjiga_ids and not (invoice or reconcile_invoice):
+                    # try with real_invoice_id from account_vat_on_payment
+                    sql = """ SELECT DISTINCT real_invoice_id 
+                                FROM account_move_line
+                               WHERE move_id=%s
+                                 AND real_invoice_id IS NOT NULL
+                          """
+                    cr.execute(sql, (move.id,))
+                    invoices = cr.fetchall()
+                    for real_invoice in invoices:  # + one
+                        real_invoice_number = self.pool.get('account.invoice').browse(cr, uid,[real_invoice[0]], context=context).number  # or internal_invoice_number
+                        for pdv_knjiga_id in pdv_knjiga_ids:
+                            pdv_knjiga_line = {'name': real_invoice_number or move.name or '/',
+                                               'l10n_hr_pdv_knjiga_id' : pdv_knjiga_id.id,
+                                               'move_id': move.id,
+                                               'period_id': move.period_id.id,
+                                               'invoice_id': real_invoice[0]}
+                            line_obj.create(cr, uid, pdv_knjiga_line, context=context)
 
                 # check for exceptions in examining tax codes in lines
                 '''
@@ -275,6 +296,13 @@ class account_move(osv.osv):
 
 class account_move_line(osv.osv):
     _inherit = 'account.move.line'
+
+    # real_invoice_id is for compatibility with account_vat_on_payment module
+    _columns = {
+        'real_invoice_id': fields.many2one('account.invoice', 'Real invoice'),
+    }
+
+
 
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
         res = super(account_move_line, self).reconcile(cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=context)
@@ -371,6 +399,22 @@ class account_invoice(osv.osv):
                                               'tax_exemption_id', 'Oslobodenja poreza'),
 
     }
+
+    def finalize_invoice_move_lines(self, cr, uid, ids, move_lines, context):
+        """
+        Set real_invoice_id as it is needed for vat_on_payment cases
+        """
+        move_lines = super(account_invoice, self).finalize_invoice_move_lines(
+            cr, uid, ids, move_lines, context)
+        assert len(ids) == 1
+        invoice_browse = self.browse(cr, uid, ids, context=context)
+        context = self.pool['res.users'].context_get(cr, uid)
+        new_move_lines = []
+        for line_tuple in move_lines:
+            if line_tuple[2].get('tax_code_id', False):
+                line_tuple[2]['real_invoice_id'] = invoice_browse.id
+            new_move_lines.append(line_tuple)
+        return new_move_lines
 
     def action_move_create(self, cr, uid, ids, *args):
         #update period_id before move_create

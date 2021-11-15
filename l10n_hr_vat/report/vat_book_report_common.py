@@ -2,6 +2,7 @@
 
 from openerp.tools.translate import _
 
+
 class get_vat_book_report_common(object):
 
     def get_lines(self, report_object, data, stupci, row_start_values_sql, invoice_sql='', insert_sql= '', journal_sql= ''):
@@ -100,8 +101,10 @@ class get_vat_book_report_common(object):
         AND line.account_id = account.id \
         AND account.company_id = ' + str(company_id) + ' \
         AND line.period_id IN (stavka.period_id)  \
-        AND line.move_id = stavka.move_id \
+        AND line.move_id = stavka.move_id  \
+        AND line.real_invoice_id = stavka.invoice_id \
         AND line.journal_id IN (' + str(journal_list).strip('[]') + ') \
         AND account.active '
 
+       # -- vat_on_payment needs invoice_id  in AND line.move_id = stavka.move_id
         return sql
