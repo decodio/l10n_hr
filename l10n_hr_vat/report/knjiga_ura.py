@@ -154,7 +154,7 @@ class Parser(report_sxw.rml_parse):
          --COALESCE(invoice_partner_name, ' ') || ', ' || COALESCE(invoice_partner_street, ' ') || ', ' || COALESCE(invoice_partner_city, ' ') AS partner_name,
          --SUBSTRING(invoice_partner_oib, 3) AS partner_oib,    
         COALESCE(invoice.number, stavka.name) AS invoice_number,
-        COALESCE(invoice_date_invoice, am.date) AS invoice_date, 
+        COALESCE(am.date, invoice_date_invoice) AS invoice_date, 
         COALESCE(invoice_partner_name, p.name, ' ') || ', ' || COALESCE(invoice_partner_street, p.street ,' ') || ', ' || COALESCE(invoice_partner_city, p.city, ' ') AS partner_name,
         SUBSTRING(COALESCE(invoice_partner_oib, p.vat, ' '), 3) AS partner_oib, 
         p.vat_id_type as vat_type,           --               
