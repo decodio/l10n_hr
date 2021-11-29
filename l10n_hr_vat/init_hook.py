@@ -34,7 +34,7 @@ def store_field_stored_invoice_id(cr):
     cr.execute(
         """
         ALTER TABLE account_move_line ADD COLUMN real_invoice_id bigint;
-        COMMENT ON COLUMN account_move_line.stored_invoice_id IS 'Invoice';
+        COMMENT ON COLUMN account_move_line.real_invoice_id IS 'Invoice';
         """)
 
     logger.info('Computing field real_invoice_id on account.move.line')
