@@ -40,8 +40,8 @@ Authors:
 
 """,
     "version": "8.0.2.0.0",
-    "author" : "Croatian community",
-    "category" : "Localisation/Croatia",
+    "author": "Croatian community",
+    "category": "Localisation/Croatia",
     "website": "https://launchpad.net/openobject-croatia",
 
     'depends': [
