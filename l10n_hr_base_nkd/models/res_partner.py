@@ -1,12 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-import pytz
-from tzlocal import get_localzone
-from datetime import datetime
 from odoo import api, fields, models, _
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
-class Partenr(models.Model):
+
+class Partner(models.Model):
     _inherit = "res.partner"
 
     nkd_id = fields.Many2one(
