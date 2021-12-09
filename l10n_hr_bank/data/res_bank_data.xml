@@ -4,7 +4,7 @@
         <!-- Croatian banks -->
         <record id="res_bank_hr_2500009" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2500009</field>-->
+            <field name="vbb_code">2500009</field>
             <field name="bic">HAABHR22</field>
             <field name="name">ADDIKO BANK d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -13,25 +13,25 @@
         </record>
         <record id="res_bank_hr_4133006" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">4133006</field>-->
+            <field name="vbb_code">4133006</field>
             <field name="bic">SKOVHR22</field>
             <field name="name">BANKA KOVANICA d.d. Varaždin</field>
             <field name="zip">42000</field>
             <field name="city">Varaždin</field>
             <field name="street">P. Preradovića 29</field>
         </record>
-        <record id="res_bank_hr_4109006" model="res.bank">
+        <!--<record id="res_bank_hr_4109006" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">4109006</field>-->
+            <field name="vbb_code">4109006</field>
             <field name="bic">DALMHR22</field>
             <field name="name">BANKA SPLITSKO-DALMATINSKA d.d. Split</field>
             <field name="zip">21000</field>
             <field name="city">Split</field>
             <field name="street">114. brigade 9</field>
-        </record>
+        </record>-->
         <record id="res_bank_hr_2488001" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2488001</field>-->
+            <field name="vbb_code">2488001</field>
             <field name="bic">BFKKHR22</field>
             <field name="name">BKS BANK AG, Glavna podružnica Rijeka</field>
             <field name="zip">51000</field>
@@ -40,7 +40,7 @@
         </record>
         <record id="res_bank_hr_2485003" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2485003</field>-->
+            <field name="vbb_code">2485003</field>
             <field name="bic">CROAHR2X</field>
             <field name="name">CROATIA BANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -49,7 +49,7 @@
         </record>
         <record id="res_bank_hr_2402006" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2402006</field>-->
+            <field name="vbb_code">2402006</field>
             <field name="bic">ESBCHR22</field>
             <field name="name">ERSTE &amp; STEIERMÄRKISCHE BANK d.d. Rijeka</field>
             <field name="zip">51000</field>
@@ -58,7 +58,7 @@
         </record>
         <record id="res_bank_hr_2493003" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2493003</field>-->
+            <field name="vbb_code">2493003</field>
             <field name="bic">HKBOHR2X</field>
             <field name="name">HRVATSKA BANKA ZA OBNOVU I RAZVITAK Zagreb</field>
             <field name="zip">10000</field>
@@ -67,7 +67,7 @@
         </record>
         <record id="res_bank_hr_1001005" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">1001005</field>-->
+            <field name="vbb_code">1001005</field>
             <field name="bic">NBHRHR2D</field>
             <field name="name">HRVATSKA NARODNA BANKA</field>
             <field name="zip">10002</field>
@@ -76,7 +76,7 @@
         </record>
         <record id="res_bank_hr_2390001" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2390001</field>-->
+            <field name="vbb_code">2390001</field>
             <field name="bic">HPBZHR2X</field>
             <field name="name">HRVATSKA POŠTANSKA BANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -85,7 +85,7 @@
         </record>
         <record id="res_bank_hr_2492008" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2492008</field>-->
+            <field name="vbb_code">2492008</field>
             <field name="bic">IMXXHR22</field>
             <field name="name">IMEX BANKA d.d. Split</field>
             <field name="zip">21000</field>
@@ -94,25 +94,25 @@
         </record>
         <record id="res_bank_hr_2380006" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2380006</field>-->
+            <field name="vbb_code">2380006</field>
             <field name="bic">ISKBHR2X</field>
             <field name="name">ISTARSKA KREDITNA BANKA UMAG d.d. Umag</field>
             <field name="zip">52470</field>
             <field name="city">Umag</field>
             <field name="street">Ernesta Miloša 1</field>
         </record>
-        <record id="res_bank_hr_2411006" model="res.bank">
+        <!--<record id="res_bank_hr_2411006" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2411006</field>-->
+            <field name="vbb_code">2411006</field>
             <field name="bic">JADRHR2X</field>
             <field name="name">JADRANSKA BANKA d.d. Šibenik</field>
             <field name="zip">22000</field>
             <field name="city">Šibenik</field>
             <field name="street">Ante Starčevića 4</field>
-        </record>
+        </record>-->
         <record id="res_bank_hr_2489004" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2489004</field>-->
+            <field name="vbb_code">2489004</field>
             <field name="bic">VBVZHR22</field>
             <field name="name">J&amp;T BANKA d.d. Varaždin</field>
             <field name="zip">42000</field>
@@ -121,7 +121,7 @@
         </record>
         <record id="res_bank_hr_2400008" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2400008</field>-->
+            <field name="vbb_code">2400008</field>
             <field name="bic">KALCHR2X</field>
             <field name="name">KARLOVAČKA BANKA d.d. Karlovac</field>
             <field name="zip">47000</field>
@@ -130,7 +130,7 @@
         </record>
         <record id="res_bank_hr_4124003" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">4124003</field>-->
+            <field name="vbb_code">4124003</field>
             <field name="bic">KENBHR22</field>
             <field name="name">KENTBANK d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -139,16 +139,16 @@
         </record>
         <record id="res_bank_hr_2481000" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2481000</field>-->
+            <field name="vbb_code">2481000</field>
             <field name="bic">KREZHR2X</field>
-            <field name="name">KREDITNA BANKA ZAGREB d.d. Zagreb</field>
+            <field name="name">AGRAM BANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
             <field name="city">Zagreb</field>
             <field name="street">Ul. grada Vukovara 74</field>
         </record>
         <record id="res_bank_hr_2407000" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2407000</field>-->
+            <field name="vbb_code">2407000</field>
             <field name="bic">OTPVHR2X</field>
             <field name="name">OTP BANKA HRVATSKA d.d. Zadar</field>
             <field name="zip">23000</field>
@@ -157,7 +157,7 @@
         </record>
         <record id="res_bank_hr_2408002" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2408002</field>-->
+            <field name="vbb_code">2408002</field>
             <field name="bic">PAZGHR2X</field>
             <field name="name">PARTNER BANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -166,25 +166,25 @@
         </record>
         <record id="res_bank_hr_2386002" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2386002</field>-->
+            <field name="vbb_code">2386002</field>
             <field name="bic">PDKCHR2X</field>
             <field name="name">PODRAVSKA BANKA d.d. Koprivnica</field>
             <field name="zip">48300</field>
             <field name="city">Koprivnica</field>
             <field name="street">Opatička 3</field>
         </record>
-        <record id="res_bank_hr_4132003" model="res.bank">
+        <!--<record id="res_bank_hr_4132003" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">4132003</field>-->
+            <field name="vbb_code">4132003</field>
             <field name="bic">SPRMHR22</field>
             <field name="name">PRIMORSKA BANKA d.d. Rijeka</field>
             <field name="zip">51000</field>
             <field name="city">Rijeka</field>
             <field name="street">Scarpina 7</field>
-        </record>
+        </record>-->
         <record id="res_bank_hr_2340009" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2340009</field>-->
+            <field name="vbb_code">2340009</field>
             <field name="bic">PBZGHR2X</field>
             <field name="name">PRIVREDNA BANKA ZAGREB d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -193,7 +193,7 @@
         </record>
         <record id="res_bank_hr_2484008" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2484008</field>-->
+            <field name="vbb_code">2484008</field>
             <field name="bic">RZBHHR2X</field>
             <field name="name">RAIFFEISENBANK AUSTRIA d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -202,7 +202,7 @@
         </record>
         <record id="res_bank_hr_2403009" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2403009</field>-->
+            <field name="vbb_code">2403009</field>
             <field name="bic">SMBRHR22</field>
             <field name="name">SAMOBORSKA BANKA d.d. Samobor</field>
             <field name="zip">10430</field>
@@ -211,7 +211,7 @@
         </record>
         <record id="res_bank_hr_2503007" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2503007</field>-->
+            <field name="vbb_code">2503007</field>
             <field name="bic">VBCRHR22</field>
             <field name="name">SBERBANK d.d. Zagreb</field>
             <field name="zip">10000</field>
@@ -220,52 +220,52 @@
         </record>
         <record id="res_bank_hr_2412009" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2412009</field>-->
+            <field name="vbb_code">2412009</field>
             <field name="bic">SBSLHR2X</field>
             <field name="name">SLATINSKA BANKA d.d. Slatina</field>
             <field name="zip">33520</field>
             <field name="city">Slatina</field>
             <field name="street">Vladimira Nazora 2</field>
         </record>
-        <record id="res_bank_hr_2330003" model="res.bank">
+        <!--<record id="res_bank_hr_2330003" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2330003</field>-->
+            <field name="vbb_code">2330003</field>
             <field name="bic">SOGEHR22</field>
             <field name="name">SOCIETE GENERALE-SPLITSKA BANKA d.d. Split</field>
             <field name="zip">21000</field>
             <field name="city">Split</field>
             <field name="street">Ruđera Boškovića 16</field>
-        </record>
-        <record id="res_bank_hr_2483005" model="res.bank">
+        </record>-->
+        <!--<record id="res_bank_hr_2483005" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2483005</field>-->
+            <field name="vbb_code">2483005</field>
             <field name="bic">STEDHR22</field>
             <field name="name">ŠTEDBANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
             <field name="city">Zagreb</field>
             <field name="street">Slavonska avenija 3</field>
-        </record>
-        <record id="res_bank_hr_6717002" model="res.bank">
+        </record>-->
+        <!--<record id="res_bank_hr_6717002" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">6717002</field>-->
+            <field name="vbb_code">6717002</field>
             <field name="bic">ASBZHR22</field>
             <field name="name">TESLA ŠTEDNA BANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
             <field name="city">Zagreb</field>
             <field name="street">Trg J. F. Kennedyja 6 B</field>
-        </record>
-        <record id="res_bank_hr_2381009" model="res.bank">
+        </record>-->
+        <!--<record id="res_bank_hr_2381009" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2381009</field>-->
+            <field name="vbb_code">2381009</field>
             <field name="bic">CCBZHR2X</field>
             <field name="name">VENETO BANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
             <field name="city">Zagreb</field>
             <field name="street">Draškovićeva 58</field>
-        </record>
+        </record>-->
         <record id="res_bank_hr_2360000" model="res.bank">
             <field name="country" ref="base.hr"/>
-            <!--<field name="prefix">2360000</field>-->
+            <field name="vbb_code">2360000</field>
             <field name="bic">ZABAHR2X</field>
             <field name="name">ZAGREBAČKA BANKA d.d. Zagreb</field>
             <field name="zip">10000</field>
