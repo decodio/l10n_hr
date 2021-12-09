@@ -27,6 +27,7 @@
     "data": [
         #"data/res_bank_data.xml",  # -> moved to l10n_hr_bank
         "views/res_company_view.xml",
+        "views/res_bank_view.xml",
         "data/module_category_croatia.xml",
         # moved to NKD
         #"views/l10n_hr_nkd_view.xml",
