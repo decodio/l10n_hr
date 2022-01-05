@@ -214,3 +214,7 @@ msgstr "<span>Informacije za uplatu</span>\n"
 msgid "Add country code as prefix"
 msgstr "Dodaj kod države kao prefix"
 
+#. module: account_reference
+#: model:ir.model.fields,field_description:account_reference.field_account_invoice__payment_reference
+msgid "Payment Reference"
+msgstr "Referenca plaćanja"
