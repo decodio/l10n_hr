@@ -2,11 +2,14 @@
 
 from datetime import datetime as dt
 from . import poziv_na_broj as pnbr
-from odoo import api, models
+from odoo import api, models, fields
 
 
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
+
+    payment_reference = fields.Char(string='Payment Reference', copy=False, readonly=True,
+                                    states={'draft': [('readonly', False)]})
 
     def pnbr_get(self):
 
