@@ -56,6 +56,8 @@ class Company(models.Model):
         string='Telefon', size=64, help='Tel odgovorne osobe')
     responsible_email = fields.Char(
         string='E-mail', size=64, help='E-mail odgovorne osobe')
+    responsible_vat = fields.Char(
+        string='OIB', size=32, help='OIB odgovorne osobe')
 
     # BOLE: dodana polja za URA u xml:
     ulica = fields.Char('Ulica')

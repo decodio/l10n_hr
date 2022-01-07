@@ -35,6 +35,7 @@
                             <group>
                                 <field name="responsible_fname"/>
                                 <field name="responsible_lname"/>
+                                <field name="responsible_vat"/>
                                 <field name="responsible_tel"/>
                                 <field name="responsible_email"/>
                             </group>
