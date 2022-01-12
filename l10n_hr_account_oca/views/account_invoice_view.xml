@@ -22,6 +22,16 @@
                 <field name="date_document" force_save="1"/>
                 <field name="date_delivery"/>
             </field>
+            <field name="date_invoice" position="replace">
+                <label for="date_invoice" />
+                <div>
+                    <field name="date_invoice" options="{'datepicker': {'warn_future': true}}" class="oe_inline"/>
+                    <span>&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>
+                    <label for="vrijeme_izdavanja" attrs="{'invisible': [('vrijeme_izdavanja', '=', False)]}"
+                           style="font-weight:bold;"/>
+                    <field name="vrijeme_izdavanja" class="oe_inline" readonly="1"/>
+                </div>
+            </field>
             <xpath expr="//field[@name='number']/.." position="before">
                 <div attrs="{'invisible': [('fiskalni_broj','=',False)]}">
                     <label for="fiskalni_broj"  string="HR fiskal number : " />
@@ -34,7 +44,6 @@
                       attrs="{'invisible':[('croatia','=',False)]}">
                     <group colspan="4" col="4">
 <!--                        <field name="date_document" /> &lt;!&ndash; do i need it? &ndash;&gt;-->
-                        <field name="vrijeme_izdavanja" readonly="1"/>
                         <field name="fiskal_responsible_id" create="0" delete="0"/>
                         <field name="fiskal_user_id" create="0" delete="0"/>
 <!--                            <field name="fiskalni_broj" readonly="1"/>-->
