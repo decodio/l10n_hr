@@ -39,18 +39,16 @@
 <!--                        <label string=" - internal number - " class="oe_inline"/>-->
                 </div>
             </xpath>
-            <notebook position="inside">
-                <page string="Croatia data" name="croatia"
-                      attrs="{'invisible':[('croatia','=',False)]}">
-                    <group colspan="4" col="4">
-<!--                        <field name="date_document" /> &lt;!&ndash; do i need it? &ndash;&gt;-->
-                        <field name="fiskal_responsible_id" create="0" delete="0"/>
-                        <field name="fiskal_user_id" create="0" delete="0"/>
-<!--                            <field name="fiskalni_broj" readonly="1"/>-->
-                    </group>
-                    <field name="croatia" invisible="1"/>
-                </page>
-            </notebook>
+            <xpath expr="//page[@name='other_info']/group/group[last()]" position="after">
+                <group string="Croatia data" name="croatia"
+                      attrs="{'invisible':[('croatia','=',False)]}" colspan="4" col="4">
+                    <!--<field name="date_document" /> &lt;!&ndash; do i need it? &ndash;&gt;-->
+                    <field name="fiskal_responsible_id" create="0" delete="0" colspan="2"/>
+                    <field name="fiskal_user_id" create="0" delete="0" colspan="2"/>
+                    <!--<field name="fiskalni_broj" readonly="1"/>-->
+                </group>
+                <field name="croatia" invisible="1"/>
+            </xpath>
             <xpath expr="//field[@name='tax_line_ids']/tree/field[@name='amount_total']" position="before">
                 <field name="base"/>
             </xpath>
