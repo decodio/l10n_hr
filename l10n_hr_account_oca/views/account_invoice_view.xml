@@ -10,14 +10,10 @@
 <!--                <button name="action_invoice_cancel" position="attributes">-->
 <!--                    <attribute name="invisible">[('croatia','=',True)]</attribute>-->
 <!--                </button>-->
-            <field name="payment_term_id" position="after">
-                <field name="fiskal_uredjaj_id" widget="selection"
-                       attrs="{'required':[('type','in',['out_invoice','out_refund'])],
-                               'invisible':[('croatia','=',False)]}"/>
-                <field name="nacin_placanja"
-                       attrs="{'required':[('type','in',['out_invoice','out_refund'])],
-                               'invisible':[('croatia','=',False)]}"/>
-            </field>
+            <xpath expr="//form/sheet//label[@for='currency_id']/following::div[1]" position="after">
+                <field name="fiskal_responsible_id" create="0" delete="0" colspan="2"/>
+                <field name="fiskal_user_id" create="0" delete="0" colspan="2"/>
+            </xpath>
             <field name="date_invoice" position="before">
                 <field name="date_document" force_save="1"/>
                 <field name="date_delivery"/>
@@ -42,9 +38,13 @@
             <xpath expr="//page[@name='other_info']/group/group[last()]" position="after">
                 <group string="Croatia data" name="croatia"
                       attrs="{'invisible':[('croatia','=',False)]}" colspan="4" col="4">
+                    <field name="fiskal_uredjaj_id" widget="selection"
+                       attrs="{'required':[('type','in',['out_invoice','out_refund'])],
+                               'invisible':[('croatia','=',False)]}"/>
+                    <field name="nacin_placanja"
+                       attrs="{'required':[('type','in',['out_invoice','out_refund'])],
+                               'invisible':[('croatia','=',False)]}"/>
                     <!--<field name="date_document" /> &lt;!&ndash; do i need it? &ndash;&gt;-->
-                    <field name="fiskal_responsible_id" create="0" delete="0" colspan="2"/>
-                    <field name="fiskal_user_id" create="0" delete="0" colspan="2"/>
                     <!--<field name="fiskalni_broj" readonly="1"/>-->
                 </group>
                 <field name="croatia" invisible="1"/>
