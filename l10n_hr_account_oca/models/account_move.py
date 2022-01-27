@@ -38,7 +38,6 @@ class AccountMove(models.Model):
         #                       'Prilikom potvrđivanja računa korišten je '\
         #                       'importirani broj računa'
 
-
     @api.multi
     def post(self, invoice=False):
         res = super(AccountMove, self).post(invoice=invoice)
@@ -60,4 +59,12 @@ class AccountMove(models.Model):
                     invoice.fiskal_uredjaj_id.lock = True
                 if not invoice.fiskal_uredjaj_id.prostor_id.lock:
                     invoice.fiskal_uredjaj_id.prostor_id.lock = True
+        if invoice and not invoice.number_sequence:
+            for move in self:
+                if move.journal_id.sequence_id:
+                    sequence = move.journal_id.sequence_id
+                    if invoice.type in ['out_refund', 'in_refund'] and move.journal_id.refund_sequence:
+                        sequence = move.journal_id.refund_sequence_id
+                    sequence_date = self.date or self.date_invoice
+                    invoice.number_sequence = sequence._get_current_sequence(sequence_date=sequence_date).number_next_actual
         return res
