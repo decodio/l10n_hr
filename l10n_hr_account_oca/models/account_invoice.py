@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
+    _order = "number_sequence DESC"
 
     @api.model
     def _default_uredjaj(self):
@@ -63,6 +64,8 @@ class AccountInvoice(models.Model):
         readonly=True, states={'draft': [('readonly', False)]},
         help='Fiskalizacija. Osoba koja je potvrdila racun',
         copy=False)
+    number_sequence = fields.Integer(string='Number Sequence', help='Helper field to easily sort invoices by number',
+                                     default=0, copy=False, index=True)
 
     @api.onchange('date_document')
     def _onchange_date_document(self):
