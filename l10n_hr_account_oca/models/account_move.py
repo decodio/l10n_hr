@@ -13,30 +13,17 @@ class AccountMove(models.Model):
         # DB: Refund sequence je isti kao i main seq
         #     osim ako nije drugačije zadano!
         separator = invoice.company_id.fiskal_separator
-        sequence = move.journal_id.sequence_id
-        pref, suff = sequence.prefix, sequence.suffix
-        broj = move.name
-        blen = len(broj)
-        for where in [pref, suff]:
-            if not where or where == '':
-                continue
-            for what in ['%(range_year)s', '%(year)s']:
-                # TODO : ostali formati
-                if what in where:
-                    where = where.replace(what, str(invoice.date_invoice)[:4])
-            broj = broj.replace(where, '')
-            if len(broj) < blen:
-                blen = len(broj)
-            else:
-                raise Warning('Prefix ili sufix brojevnog kruga nije podržan!')
-        fiskalni_broj = separator.join((str(int(broj)), prostor, uredjaj))
-        # imported invoice with fiskal number, do not touch
+        sequence = move.journal_id.sequence_id.with_context(
+            ir_sequence_date=invoice.date or invoice.date_invoice,
+            ir_sequence_date_range=invoice.date or invoice.date_invoice,
+        )
+        prefix, suffix = sequence._get_prefix_suffix()
+        invoice_name = move.name.replace(prefix, '', 1)
+        if suffix and invoice_name.endswith(suffix):
+            invoice_name = invoice_name[:-len(suffix)]
+        fiskalni_broj = separator.join((str(int(invoice_name)), prostor, uredjaj))
         if not invoice.fiskalni_broj:
             invoice.fiskalni_broj = fiskalni_broj
-        # else:
-        #     invoice.comment = invoice.comment and invoice.comment + '\n' or \
-        #                       'Prilikom potvrđivanja računa korišten je '\
-        #                       'importirani broj računa'
 
     @api.multi
     def post(self, invoice=False):
@@ -49,7 +36,7 @@ class AccountMove(models.Model):
                 if invoice.fiskal_uredjaj_id.prostor_id.state != 'active':
                     raise Warning(_(
                         "Invoice posting not possible, "
-                        "business premisse %s is not active!" %
+                        "business premise %s is not active!" %
                         invoice.fiskal_uredjaj_id.prostor_id.name
                     ))
                 self._gen_fiskal_number(invoice, move)
