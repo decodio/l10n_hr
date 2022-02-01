@@ -24,8 +24,7 @@ res_partner: dodana metoda: 'get_oib' za dohvat oib-a partnera
 - NKD 2007 -> modul: l10n_hr_nkd
 - Banke u R.Hrvatskoj ->  modul: l10n_hr_bank
 
-Prijevod base modula sa hrvatskim specifičnostima,
-npr: state - status ili drzava, ovisno o polju
+Prijevod base modula sa hrvatskim specifičnostima ("state" status ili država, ovisno o polju)
    ( Ivica Dimjašević < ivica.dimjasevic@storm.hr > )
 
 l10n_hr_xml_common - mixin klasa sa metodama za sve HR time formate xml poruka
@@ -44,7 +43,7 @@ Credits
 Contributors
 ------------
 
-Goran Kliska (goran.kliska@slobodni-programi.hr)
+Goran Kliska (goran.kliska@ecodica.eu)
 Davor Bojkić (davor.bojkic@dajmi5.hr)
 Ivica Dimjašević (ivica.dimjasevic@storm.hr)
 
