@@ -242,6 +242,6 @@ class AccountInvoice(models.Model):
             # DB: mozda prvo provjjeriti postoji li jos koji storno,
             # u biti ovjde će se upisati broj kad se potvrđuje ulazno odobrenje
             # ili storno ulzaog računa!
-            values['fiskalni_broj'] = 'Storno - ' + invoice.fiskalni_broj
+            # values['fiskalni_broj'] = 'Storno - ' + invoice.fiskalni_broj
         return values
 
