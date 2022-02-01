@@ -100,7 +100,7 @@ class AccountInvoice(models.Model):
                 or self.journal_id.company_id.fiskal_responsible_id \
                 and self.journal_id.company_id.fiskal_responsible_id.id \
                 or False
-        if not fiskal_responsible:
+        if self.croatia and not fiskal_responsible:
             msg = _("Mising fiskal responsible person!\n")
             msg += _("Please select fiskal responsible partner and set it")
             msg += _("on company and/or on journal settings")
@@ -193,6 +193,8 @@ class AccountInvoice(models.Model):
     @api.multi
     def action_date_assign(self):
         res = super(AccountInvoice, self).action_date_assign()
+        if not self.croatia:
+            return res
         for inv in self:
             if not inv.date_invoice:
                 inv.date_invoice = fields.Date.context_today(self)
