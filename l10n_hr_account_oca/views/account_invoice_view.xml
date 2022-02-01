@@ -39,7 +39,7 @@
                 <group string="Croatia data" name="croatia"
                       attrs="{'invisible':[('croatia','=',False)]}" colspan="4" col="4">
                     <field name="fiskal_uredjaj_id" widget="selection"
-                       attrs="{'required':[('type','in',['out_invoice','out_refund'])],
+                       attrs="{'required':[('type','in',['out_invoice','out_refund']),('croatia','=',True)],
                                'invisible':[('croatia','=',False)]}"/>
                     <field name="nacin_placanja"
                        attrs="{'required':[('type','in',['out_invoice','out_refund'])],
