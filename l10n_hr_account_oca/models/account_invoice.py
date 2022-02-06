@@ -4,7 +4,6 @@ from odoo.exceptions import UserError
 
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
-    _order = "number_sequence DESC"
 
     @api.model
     def _default_uredjaj(self):
@@ -38,9 +37,9 @@ class AccountInvoice(models.Model):
         readonly=True, states={'draft': [('readonly', False)]})
     fiskalni_broj = fields.Char(
         string="Fiskalni broj", copy=False,
-        help="Fiskalni broj računa, ukoliko je različit od broja računa",
+        help="IR-A: Fiskalni broj izlaznog računa\n"
+             "UR-A: Broj ulaznog računa (Fiskalni broj za domaće račune).",
         readonly=True, states={'draft': [('readonly', False)]})
-            # i za ulazne račune se ovdje moze upisati
     nacin_placanja = fields.Selection(
         selection=[('T', 'TRANSAKCIJSKI RAČUN')],
         string="Način plaćanja", default="T",
@@ -64,13 +63,35 @@ class AccountInvoice(models.Model):
         readonly=True, states={'draft': [('readonly', False)]},
         help='Fiskalizacija. Osoba koja je potvrdila racun',
         copy=False)
-    number_sequence = fields.Integer(string='Number Sequence', help='Helper field to easily sort invoices by number',
-                                     default=0, copy=False, index=True)
 
     @api.onchange('date_document')
     def _onchange_date_document(self):
         self.date_invoice = self.date_document
         self.date_delivery = self.date_document
+
+    @api.onchange('fiskalni_broj')
+    def _onchange_fiskalni_broj(self):
+        if self.type in ('in_invoice', 'in_refund'):
+            if 'supplier_invoice_number' in self._fields:
+                if not self.supplier_invoice_number:
+                    self.supplier_invoice_number = self.fiskalni_broj
+            if not self.reference:
+                self.reference = self.fiskalni_broj
+
+    @api.onchange('partner_id', 'company_id')
+    def _onchange_partner_id(self):
+        res = super(AccountInvoice, self)._onchange_partner_id()
+        type = self.type or self.env.context.get('type', 'out_invoice')
+        if type == 'in_invoice' and self.partner_id:
+            reference = self.reference or ''
+            if self.partner_id.country_id.code == 'HR':
+                if not reference.startswith('HR'):
+                    self.reference = 'HR00 ' + reference
+            else:
+                if reference.startswith('HR'):
+                    self.reference = self.reference[5:]
+        return res
+
 
     # TODO: + opcije : sifra, naziv, inicijali...
     #  negdje na company ili na accounting
@@ -78,7 +99,7 @@ class AccountInvoice(models.Model):
 
     @api.constrains('fiskalni_broj', 'partner_id', 'date_invoice')
     def _check_double_documents(self):
-        if self.fiskalni_broj:
+        if self.fiskalni_broj and self.date_invoice:
             self._cr.execute("""
             SELECT count(id) from account_invoice
              where partner_id = %(partner)s
