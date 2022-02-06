@@ -33,6 +33,7 @@
         #"views/res_config_view.xml",
         "views/res_company_view.xml",
         "views/res_users_view.xml",
+        "views/account_move.xml",
         "views/account_invoice_view.xml",
         "views/account_journal_view.xml",
         "views/menuitems.xml",

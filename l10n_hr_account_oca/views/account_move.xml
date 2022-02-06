@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="account_move_form_view">
+        <field name="name">account.move.form(l10n_hr_account_oca)</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="croatia" invisible="1"/>
+                <field name="fiskalni_broj"
+                       attrs="{'invisible': [('croatia','=',False)]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
