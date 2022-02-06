@@ -8,6 +8,13 @@ from odoo.exceptions import ValidationError
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+    def _gen_fiskal_number(self, invoice, move):
+        # don't change fiscal_number if fiscalization is started
+        if self.zki:
+            return
+        return super()._gen_fiskal_number(invoice, move)
+
+
     @api.multi
     def post(self, invoice=False):
         res = super(AccountMove, self).post(invoice=invoice)
