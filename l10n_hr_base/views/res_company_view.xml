@@ -22,6 +22,7 @@
                             <group>
                                 <field name="porezna_uprava"/>
                                 <field name="porezna_ispostava"/>
+                                <field name="pdv_po_naplati"/>
                             </group>
                             <group>
                                 <field name="maticni_broj"/>
