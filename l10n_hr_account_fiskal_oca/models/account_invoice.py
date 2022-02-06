@@ -126,7 +126,6 @@ class FiscalInvoiceMixin(models.AbstractModel):
             elif fiskal_type == 'marza':
                 iznos_marza += tax.base
 
-
         for pdv in tax_data['Pdv']:
             _pdv = tax_data['Pdv'][pdv]
             porez = factory.create('Porez')
@@ -166,7 +165,6 @@ class FiscalInvoiceMixin(models.AbstractModel):
             naknada.NazivN = naziv
             naknada.IznosN = fiskal.format_decimal(iznos)
             racun.Naknade.append(naknada)
-
         return racun
 
     def _prepare_fisk_racun(self, factory, fiskal_data):
