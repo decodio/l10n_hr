@@ -33,6 +33,8 @@ class Company(models.Model):
 
     porezna_uprava = fields.Char('Porezna uprava')
     porezna_ispostava = fields.Char('Porezna ispostava')
+    # TODO: Istražiti pdv_po_naplati - dodan radi l10nhr_tax_forms reporta
+    pdv_po_naplati = fields.Boolean("PDV po naplati", default=False)
 
     mirovinsko = fields.Char(
         string='Mirovinsko',
