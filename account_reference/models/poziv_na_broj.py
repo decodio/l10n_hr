@@ -23,22 +23,23 @@
 #
 ##############################################################################
 
-#import logging
+# import logging
 
 def mod11ini(value):
-    '''
+    """
     Compute mod11ini
-    '''
+    """
     length = len(value)
-    sum = 0
+    isum = 0
     for i in range(0, length):
-        sum += int(value[length - i - 1]) * (i + 2)
-    res = sum % 11
+        isum += int(value[length - i - 1]) * (i + 2)
+    res = isum % 11
     if res > 1:
         res = 11 - res
     else:
         res = 0
     return str(res)
+
 
 def iso7064(value):
     """
@@ -50,15 +51,16 @@ def iso7064(value):
         t = (2 * ((t + c) % 10 or 10)) % 11
     return str((11 - t) % 10)
 
+
 def mod11p7(value):
     length = len(value)
     ### if 1.st digit differs from three - ERROR
-    #if not return_check_digit and int(value[0]) != 3:
+    # if not return_check_digit and int(value[0]) != 3:
     #    return False
-    sum = 0
-    for i in xrange(0, length):
-        sum += int(value[length - i - 1]) * ((i % 6) + 2)
-    res = sum % 11
+    isum = 0
+    for i in range(0, length):
+        isum += int(value[length - i - 1]) * ((i % 6) + 2)
+    res = isum % 11
     if res == 0:
         return '5'
     elif res == 1:
@@ -66,18 +68,20 @@ def mod11p7(value):
     else:
         return str(11 - res)
 
+
 def mod10zb(value):
-    l = len(value)
+    ln = len(value)
     res = 0
-    for i in xrange(0, l):
-        res += int(value[l - i - 1]) * (i % 2 + 1)
+    for i in range(0, ln):
+        res += int(value[ln - i - 1]) * (i % 2 + 1)
     return str(res % 10)
 
+
 def mod10(value):
-    l = len(value)
+    ln = len(value)
     res = 0
-    for i in xrange(0, l):
-        num = int(value[l - i - 1]) * (((i + 1) % 2) + 1)
+    for i in range(0, ln):
+        num = int(value[ln - i - 1]) * (((i + 1) % 2) + 1)
         res += (num / 10 + num % 10)
     res = res % 10
     if res == 0:
@@ -85,16 +89,19 @@ def mod10(value):
     else:
         return str(10 - res)
 
+
 def mod11(value):
-    l = len(value)
+    ln = len(value)
     res = 0
-    for i in xrange(0, l):
-        res += int(value[l - i - 1]) * (i % 6 + 2)
+    for i in range(0, ln):
+        res += int(value[ln - i - 1]) * (i % 6 + 2)
     res = res % 11
     if res > 1:
         return str(11 - res)
     else:
         return '0'
+
+
 """
 # Test
 mod11p7('3456789012') # res = '2'
@@ -105,10 +112,11 @@ mod10('54370395') #res=7
 mod11('54370395') #res=8
 """
 
+
 def reference_number_get(model=None, p1='', p2='', p3='', p4=''):
 
     if not model:
-        model = '' # or '99'?
+        model = ''  # or '99'?
     if model == "01":
         res = '-'.join((p1, p2, p3 + mod11ini(p1 + p2 + p3)))
     elif model == "02":
@@ -180,13 +188,13 @@ def reference_number_get(model=None, p1='', p2='', p3='', p4=''):
     elif model == "66":
         res = '-'.join((p1, p2[:7] + mod11ini(p2[:7]) + p2[7:], p3))
     elif model == "83":
-        res = '-'.join(((p1 + mod11ini(p1), p2, p3)))
+        res = '-'.join((p1 + mod11ini(p1), p2, p3))
     elif model == "84":
         if len(p2) == 4:
             res = '-'.join((p1 + mod11ini(p1), p2, p3))
         else:
-            res = '-'.join(((p1 + mod11ini(p1), p2)))
-    else: # model in ('','00',"99")
+            res = '-'.join((p1 + mod11ini(p1), p2))
+    else:  # model in ('','00',"99")
         res = (p1 + '-' + p2 + '-' + p3 + '-' + p4)
 
     res.strip('-')
@@ -211,17 +219,18 @@ MODELS_LENGHT = {
     "12": ('F13K', 'v12n', 'v12n', 'n00n'),
 }
 
+
 def get_only_numeric_chars(ref):
     return ref and ''.join([r for r in ref if r.isdigit()]) or '' # take out non numeric chars!
 
-#TODO
+
+# TODO
 def validate_lenghts(model, value):
     # 22 znaka , uključivo max 2 crtice, + 4 zanka za HR + model
     # max 26 znakova !
     return True
 
-#TODO
-def reference_number_valid(model='', P=''):
+
+# TODO
+def reference_number_valid(model='', p=''):
     return True
-
-
