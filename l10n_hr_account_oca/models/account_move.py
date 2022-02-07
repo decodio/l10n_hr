@@ -7,10 +7,18 @@ from odoo.exceptions import Warning, ValidationError, UserError
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+    invoice_id = fields.Many2one(
+        comodel_name='account.invoice',
+        string='Invoice', copy=False, readonly=True)
+    # fiskalni_broj and date_invoice are not related fields.
     fiskalni_broj = fields.Char(
         string="Fiskalni broj", copy=False,
         help="Fiskalni broj računa u knjigama URA/IRA.",
         readonly=True, states={'draft': [('readonly', False)]})
+    date_invoice = fields.Date(string='Invoice Date',
+        readonly=True, states={'draft': [('readonly', False)]}, index=True,
+        help="Invoice date", copy=False)
+
     croatia = fields.Boolean(related="company_id.croatia")
 
     def _gen_fiskal_number(self, invoice, move):
@@ -27,7 +35,7 @@ class AccountMove(models.Model):
         if suffix and invoice_name.endswith(suffix):
             invoice_name = invoice_name[:-len(suffix)]
         if not invoice_name.isdigit():
-            raise Warning(_("Invalid fiscal invoice number! %s is not integer.")
+            raise UserError(_("Invalid fiscal invoice number! %s is not integer.")
                           % invoice_name)
         fiskalni_broj = separator.join((str(int(invoice_name)), prostor, uredjaj))
         # user can change/force invoice.fiskalni_broj
@@ -42,7 +50,7 @@ class AccountMove(models.Model):
         # if (not invoice) and self.company_id.croatia:
         #     for move in self:
         #         if move.journal_id.type in ('sale', 'purchase') and not move.fiskalni_broj:
-        #             raise UserWarning(_("Fiscal Invoice number is mandatory!" ))
+        #             raise UserError(_("Fiscal Invoice number is mandatory!" ))
 
         if (not invoice) or (not self.company_id.croatia):
             return res
@@ -50,7 +58,7 @@ class AccountMove(models.Model):
         # only for croatia out invoices check active premise and gen fiscal inv. number
         if invoice.type in ('out_invoice', 'out_refund'):
             if invoice.fiskal_uredjaj_id.prostor_id.state != 'active':
-                raise Warning(_(
+                raise UserError(_(
                     "Invoice posting not possible, business premise %s is not active!")
                     % invoice.fiskal_uredjaj_id.prostor_id.name)
             self._gen_fiskal_number(invoice, self)
@@ -71,5 +79,8 @@ class AccountMove(models.Model):
             if not invoice.fiskalni_broj:
                 raise UserError(_("Fiscal Invoice number is missing!"))
 
-        self.fiskalni_broj = invoice.fiskalni_broj
+        self.write({'fiskalni_broj': invoice.fiskalni_broj,
+                    'date_invoice': invoice.date_invoice,
+                    'invoice_id': invoice.id,
+                    })
         return res

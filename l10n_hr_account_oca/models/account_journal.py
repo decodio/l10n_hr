@@ -1,6 +1,6 @@
 
 from odoo import api, fields, models, _
-from odoo.exceptions import Warning
+from odoo.exceptions import UserError
 
 
 class AccountJournal(models.Model):
@@ -88,4 +88,4 @@ class AccountJournal(models.Model):
                 elif prostor.sequence_id != self.sequence_id:
                     msg += "seqvenca: %s" % prostor.sequence_id.name
                     msg += " razlikuje se od sekvence na dnevniku!"
-                    raise Warning(msg)
+                    raise UserError(msg)
