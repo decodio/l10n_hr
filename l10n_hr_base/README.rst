@@ -12,12 +12,10 @@ Podaci o poduzeću u raznim tijelima drzavne uprave:
 - Br. obveze zdravstveno
 - Maticni broj
 
-- dev note:
-res_company : dodana metoda 'get_l10n_hr_time_formatted '
-              za dohvaćanje lokalno formatiranog vremena
-              u svim formatima koji se koriste u HR bez obzira
-              koja je time zona postavljena na serveru
-res_partner: dodana metoda: 'get_oib' za dohvat oib-a partnera
+Dev notes
+---------
+- res_company: dodana metoda 'get_l10n_hr_time_formatted' za dohvaćanje lokalno formatiranog vremena u svim formatima koji se koriste u HR bez obzira koja je time zona postavljena na serveru
+- res_partner: dodana metoda 'get_oib' za dohvat oib-a partnera
 
 Šifrarnici i popisi:
 
@@ -46,13 +44,3 @@ Contributors
 Goran Kliska (goran.kliska@ecodica.eu)
 Davor Bojkić (davor.bojkic@dajmi5.hr)
 Ivica Dimjašević (ivica.dimjasevic@storm.hr)
-
-Icon
-----
-
-
-
-
-
-
-

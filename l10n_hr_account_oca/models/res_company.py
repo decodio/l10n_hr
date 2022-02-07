@@ -1,6 +1,6 @@
 
 from odoo import api, fields, models, _
-from odoo.exceptions import Warning, ValidationError
+from odoo.exceptions import Warning, ValidationError, UserError
 
 
 class Company(models.Model):
@@ -120,13 +120,13 @@ class FiskalProstor(models.Model):
     @api.one
     def button_activate_prostor(self):
         if '-' in self.oznaka_prostor or '/' in self.oznaka_prostor:
-            raise Warning(
+            raise UserError(
                 _('Fiscal code contains invalid characters (- or /)')
             )
         self.state = 'active'
         if self.sljed_racuna == 'P':
             if not self.journal_ids:
-                raise Warning(
+                raise UserError(
                     _('Activate not possible : no journals assigned!'))
             for journal in self.journal_ids:
                 if journal.sequence_id != self.sequence_id:
@@ -135,7 +135,7 @@ class FiskalProstor(models.Model):
                            self.sequence_id.name
                     msg += "\n" + _("Journal sequence : %s") % \
                            journal.sequence_id.name
-                    raise Warning(_('Sequence mismatch '))
+                    raise UserError(_('Sequence mismatch '))
         else:  # sljed_racuna == 'N'
             if self.sequence_id:
                 self.sequence_id = False
