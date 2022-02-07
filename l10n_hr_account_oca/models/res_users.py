@@ -36,7 +36,7 @@ class Users(models.Model):
             if not self.uredjaj_ids:
                 raise UserError(
                     _('You have no allowed devices, '
-                      'setting defualt is not possible!'))
+                      'setting default is not possible!'))
             allowed_devices = [d.id for d in self.uredjaj_ids]
             uredjaj = self.default_uredjaj.id
             if uredjaj not in allowed_devices:
