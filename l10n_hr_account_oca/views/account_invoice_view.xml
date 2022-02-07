@@ -35,6 +35,11 @@
 <!--                        <label string=" - internal number - " class="oe_inline"/>-->
                 </div>
             </xpath>
+
+            <field name="name" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+
             <xpath expr="//page[@name='other_info']/group/group[last()]" position="after">
                 <group string="Croatia data" name="croatia"
                       attrs="{'invisible':[('croatia','=',False)]}" colspan="4" col="4">
@@ -64,10 +69,14 @@
             <xpath expr="//field[@name='number']" position="before">
                 <div attrs="{'invisible': [('croatia','=',False)]}">
                     <label for="fiskalni_broj" string="UR-A Račun br.: "/>
-                    <field name="fiskalni_broj" class="oe_inline"/>
+                    <field name="fiskalni_broj" class="oe_inline"
+                           attrs="{'required': [('state', '=', 'draft'),('croatia','=',True)]}"/>
                 </div>
             </xpath>
 
+            <field name="name" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
 
             <field name="date_invoice" position="before">
                 <field name="date_document" force_save="1"/>
