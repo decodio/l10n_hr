@@ -52,6 +52,7 @@
                             <group >
                                 <group colspan="4" col="4">
                                     <field name="date_joppd"/>
+                                    <field name="period_joppd" options="{'no_create': True, 'no_open':True}"/>
                                     <field name="xml_schema"/>
                                     <field name="oznaka" />
                                     <field name="vrsta" />

@@ -52,6 +52,9 @@ class Joppd(models.Model):
         res = self._get_joppd_oznaka()
         return res + ' (priprema)'
 
+    def _default_period_joppd(self):
+        return self.env.user.company_id.find_daterange_fm(fields.Date.today())
+
     company_id = fields.Many2one(
         comodel_name='res.company',
         string='Company', required=True,
@@ -80,6 +83,10 @@ class Joppd(models.Model):
         required=True, readonly=True,
         states={'draft': [('readonly', False)]},
         default=fields.Date.today())
+    period_joppd = fields.Many2one(
+        comodel_name='date.range', string="Razdoblje",
+        required=True, help="Razdoblje prijave obrazca",
+        default=_default_period_joppd)
     parent_id = fields.Many2one(
         comodel_name='l10n.hr.joppd',
         string='Izvorno izvješće')
