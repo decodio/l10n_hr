@@ -39,7 +39,7 @@ Authors:
     * Tomislav Bošnjakovič @ Slobodni programi d.o.o.
 
 """,
-    "version" : "1",
+    "version": "8.0.2.0.0",
     "author" : "Croatian community",
     "category" : "Localisation/Croatia",
     "website": "https://launchpad.net/openobject-croatia",
