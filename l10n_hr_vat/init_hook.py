@@ -42,9 +42,9 @@ def store_field_stored_invoice_id(cr):
     cr.execute(
         """
         UPDATE account_move_line aml
-        SET real_invoice_id = inv.id
-        FROM account_move AS am, account_invoice AS inv
-        WHERE am.id = aml.move_id
-        AND am.id = inv.move_id
+           SET real_invoice_id = inv.id
+          FROM account_move AS am, account_invoice AS inv
+         WHERE am.id = aml.move_id
+           AND am.id = inv.move_id
         """
     )
