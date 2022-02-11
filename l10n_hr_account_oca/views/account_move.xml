@@ -6,10 +6,6 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
-            <field name="move_type" position="replace"/>
-            <field name="journal_id" position="after">
-                <field name="move_type"/>
-            </field>
             <field name="ref" position="after">
                 <field name="croatia" invisible="1"/>
                 <field name="invoice_id"  attrs="{'invisible': [('croatia','=',False)]}"/>
