@@ -20,6 +20,7 @@
         "base_address_extended",  # Zbog adrese i kucnog broja!
         "partner_fiskal_responsible",
         "partner_firstname",
+        "date_range"
     ],
     "external_dependencies": {
         "python": [],
