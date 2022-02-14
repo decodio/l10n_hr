@@ -52,9 +52,6 @@ class Joppd(models.Model):
         res = self._get_joppd_oznaka()
         return res + ' (priprema)'
 
-    def _default_period_joppd(self):
-        return self.env.user.company_id.find_daterange_fm(fields.Date.today())
-
     company_id = fields.Many2one(
         comodel_name='res.company',
         string='Company', required=True,
@@ -85,8 +82,7 @@ class Joppd(models.Model):
         default=fields.Date.today())
     period_joppd = fields.Many2one(
         comodel_name='date.range', string="Razdoblje",
-        required=True, help="Razdoblje prijave obrazca",
-        default=_default_period_joppd)
+        required=True, help="Razdoblje prijave obrazca")
     parent_id = fields.Many2one(
         comodel_name='l10n.hr.joppd',
         string='Izvorno izvješće')
@@ -220,6 +216,16 @@ class Joppd(models.Model):
                 self.podnositelj_oib = oib
         elif self.podnositelj_oznaka in ('6', '7', '8', '9'):
             raise ValidationError('Navedenu oznaku niste ovlašteni koristiti!')
+
+    @api.onchange('date_joppd')
+    def _onchange_date_joppd(self):
+        related_date_range_id = self.env['date.range'].search([('date_end', '>=', self.date_joppd),
+                                                               ('date_start', '<=', self.date_joppd)], limit=1)
+        if related_date_range_id:
+            previous_date_range_id = self.env['date.range'].search(
+                [('date_end', '<=', related_date_range_id.date_start)],
+                limit=1, order='date_end DESC')
+            self.period_joppd = previous_date_range_id.id or None
 
     def _numeriraj_sql(self):
         sql = {
