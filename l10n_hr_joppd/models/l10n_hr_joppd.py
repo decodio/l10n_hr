@@ -81,8 +81,17 @@ class Joppd(models.Model):
         states={'draft': [('readonly', False)]},
         default=fields.Date.today())
     period_joppd = fields.Many2one(
-        comodel_name='date.range', string="Razdoblje",
+        comodel_name='date.range', string="Razdoblje", readonly=True,
+        states={'draft': [('readonly', False)]},
         required=True, help="Razdoblje prijave obrazca")
+    period_date_from_joppd = fields.Date(
+        string='Datum razdoblja od',
+        required=True, readonly=True,
+        states={'draft': [('readonly', False)]})
+    period_date_to_joppd = fields.Date(
+        string='Datum razdoblja do',
+        required=True, readonly=True,
+        states={'draft': [('readonly', False)]})
     parent_id = fields.Many2one(
         comodel_name='l10n.hr.joppd',
         string='Izvorno izvješće')
@@ -226,6 +235,15 @@ class Joppd(models.Model):
                 [('date_end', '<=', related_date_range_id.date_start)],
                 limit=1, order='date_end DESC')
             self.period_joppd = previous_date_range_id.id or None
+
+    @api.onchange('period_joppd')
+    def _onchange_period_joppd(self):
+        if self.period_joppd:
+            self.period_date_from_joppd = self.period_joppd.date_start
+            self.period_date_to_joppd = self.period_joppd.date_end
+        else:
+            self.period_date_from_joppd = False
+            self.period_date_to_joppd = False
 
     def _numeriraj_sql(self):
         sql = {
