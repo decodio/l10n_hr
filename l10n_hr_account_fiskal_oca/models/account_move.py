@@ -10,7 +10,7 @@ class AccountMove(models.Model):
 
     def _gen_fiskal_number(self, invoice, move):
         # don't change fiscal_number if fiscalization is started
-        if self.zki:
+        if invoice.zki:
             return
         return super()._gen_fiskal_number(invoice, move)
 
