@@ -20,6 +20,7 @@
         "account_invoice_tax_note",  # BOLE: testirati
         #"partner_firstname", # BOLE: odgovorna osoba
         "partner_fiskal_responsible",
+        "account_reference",
     ],
     "excludes": [
         "l10n_hr_account"  # possible other localization module
