@@ -11,31 +11,27 @@ class AccountInvoice(models.Model):
     payment_reference = fields.Char(string='Payment Reference', copy=False, readonly=True,
                                     states={'draft': [('readonly', False)]})
 
+    def getP1_P4data(self, what):
+        res = ''
+        if what == 'partner_code':
+            res = self.partner_id.ref or str(self.partner_id.id)
+        elif what == 'partner_id':
+            res = str(self.partner_id.id)
+        elif what == 'invoice_no':
+            res = self.number
+        elif what == 'invoice_ym':
+            res = dt.strftime(self.date_invoice, "%Y%m")
+        elif what == 'delivery_ym':
+            res = dt.strftime(self.date_delivery, "%Y%m")
+        return pnbr.get_only_numeric_chars(res)
+
     def pnbr_get(self):
-
-        def getP1_P4data(self, what):
-            res = ''
-            if what == 'partner_code':
-                res = self.partner_id.ref or self.partner_id.id
-            elif what == 'partner_id':
-                res = str(self.partner_id.id)
-            elif what == 'invoice_no':
-                res = self.number
-            elif what == 'invoice_ym':
-                res = dt.strftime(self.date_invoice, "%Y%m")
-            elif what == 'delivery_ym':
-                res = dt.strftime(self.date_delivery, "%Y%m")
-            return pnbr.get_only_numeric_chars(res)
-
         model = self.journal_id.model_pnbr
-
-        P1 = getP1_P4data(self, self.journal_id.P1_pnbr or '')
-        P2 = getP1_P4data(self, self.journal_id.P2_pnbr or '')
-        P3 = getP1_P4data(self, self.journal_id.P3_pnbr or '')
-        P4 = getP1_P4data(self, self.journal_id.P4_pnbr or '')
-
+        P1 = self.getP1_P4data(self.journal_id.P1_pnbr or '')
+        P2 = self.getP1_P4data(self.journal_id.P2_pnbr or '')
+        P3 = self.getP1_P4data(self.journal_id.P3_pnbr or '')
+        P4 = self.getP1_P4data(self.journal_id.P4_pnbr or '')
         res = pnbr.reference_number_get(model, P1, P2, P3, P4)
-
         cc = self.journal_id.country_prefix and \
              self.company_id.country_id and \
              self.company_id.country_id.code or ''
