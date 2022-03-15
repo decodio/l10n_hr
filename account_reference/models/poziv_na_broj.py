@@ -220,8 +220,9 @@ MODELS_LENGHT = {
 }
 
 
-def get_only_numeric_chars(ref):
-    return ref and ''.join([r for r in ref if r.isdigit()]) or '' # take out non numeric chars!
+def get_only_numeric_chars(ref, exclude_characters=None):
+    exclude_characters = exclude_characters or []
+    return ref and ''.join([r for r in ref if r.isdigit() or r in exclude_characters]) or '' # take out non numeric chars!
 
 
 # TODO
