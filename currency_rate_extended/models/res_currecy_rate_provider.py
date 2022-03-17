@@ -71,7 +71,25 @@ class ResCurrencyRateProvider(models.Model):
         Inherit in other modules and modify some values depending on service
         - inverse currency rate, providing rates value etc...
         """
-        return True
+        return
+
+    @api.multi
+    def _get_supported_currencies(self):
+        self.ensure_one()
+        if self.service != 'manual':
+            return super()._get_supported_currencies()  # pragma: no cover
+
+        # List of currencies obrained from:
+        # https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip
+        return \
+            [
+                'USD', 'JPY', 'BGN', 'CYP', 'CZK', 'DKK', 'EEK', 'GBP',
+                'HUF', 'LTL', 'LVL', 'MTL', 'PLN', 'ROL', 'RON', 'SEK',
+                'SIT', 'SKK', 'CHF', 'ISK', 'NOK', 'HRK', 'RUB', 'TRL',
+                'TRY', 'AUD', 'BRL', 'CAD', 'CNY', 'HKD', 'IDR', 'ILS',
+                'INR', 'KRW', 'MXN', 'MYR', 'NZD', 'PHP', 'SGD', 'THB',
+                'ZAR', 'EUR'
+            ]
 
     @api.multi
     def _update(self, date_from, date_to, newest_only=False):

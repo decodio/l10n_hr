@@ -5,6 +5,9 @@
         <field name="model">res.currency.rate</field>
         <field name="inherit_id" ref="base.view_currency_rate_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="editable" />  <!-- make tree non-editable -->
+            </xpath>
             <field name="rate" position="after">
                 <field name="rate_inverse"/>
 <!--                <field name="rate_type"/>-->
@@ -15,8 +18,11 @@
     <record id="view_currency_rate_type_form" model="ir.ui.view">
         <field name="name">res.currency.rate.type.form</field>
         <field name="model">res.currency.rate</field>
-        <field name="inherit_id" ref="base.view_currency_rate_form"/>
+        <field name="inherit_id" ref="currency_rate_update.view_currency_rate_form"/> <!--ref="base.view_currency_rate_form"-->
         <field name="arch" type="xml">
+            <field name="provider_id" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </field>
             <field name="rate" position="after">
                 <field name="rate_inverse"/>
 <!--                <field name="rate_type"/>-->

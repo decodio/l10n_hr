@@ -19,9 +19,12 @@ class ResCurrencyRateProviderHrHNB(models.Model):
     @api.onchange('service')
     def onchange_service(self):
         if not self.service:
-            return {}
+            return False
         if self.service != 'HR-HNB':
             return super(ResCurrencyRateProviderHrHNB, self).onchange_service()
+            # if isinstance(res, bool):
+            #     res = False  # on_change does not like True
+            # return res
         self.fetch_inverse = True
         self.provide_rates = 'multi'
         self.rate_type = 'mid'
