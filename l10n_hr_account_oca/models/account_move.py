@@ -22,8 +22,8 @@ class AccountMove(models.Model):
     croatia = fields.Boolean(related="company_id.croatia")
 
     def _gen_fiskal_number(self, invoice, move):
-        prostor = invoice.fiskal_uredjaj_id.prostor_id.oznaka_prostor
-        uredjaj = str(invoice.fiskal_uredjaj_id.oznaka_uredjaj)
+        prostor = invoice.fiskal_uredjaj_id.prostor_id.oznaka_prostor or ''
+        uredjaj = invoice.fiskal_uredjaj_id.oznaka_uredjaj and str(invoice.fiskal_uredjaj_id.oznaka_uredjaj) or ''
         # DB: Refund sequence je isti kao i main seq osim ako nije drugačije zadano!
         separator = invoice.company_id.fiskal_separator
         sequence = move.journal_id.sequence_id.with_context(
@@ -76,6 +76,7 @@ class AccountMove(models.Model):
             if not invoice.name:
                 if 'supplier_invoice_number' in invoice._fields:
                     invoice.name = invoice.supplier_invoice_number
+            self._gen_fiskal_number(invoice, self)
             if not invoice.fiskalni_broj:
                 raise UserError(_("Fiscal Invoice number is missing!"))
 
