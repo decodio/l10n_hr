@@ -204,8 +204,6 @@
                     <field name="b3" placeholder="Šifrarnik gradova, npr: Zagreb: 01333"/>
                     <field name="b61" placeholder="šifre: Prilog 2, npr: 0001"/>
                     <field name="b62" placeholder="šifre: Prilog 3, npr: 0001"/>
-                    <field name="b151" placeholder="šifre: Prilog 4, npr: 0"/>
-                    <field name="b161" placeholder="šifre: Prilog 5, npr: 0"/>
                 </group>
                 <group string="Doprinosi" colspan="4" col="4">
                     <field name="b71" />
@@ -242,11 +240,13 @@
                             <field name="b134" />
                             <field name="b135" />
                         </group>
-                        <group string="14-15 - porez/prirez" colspan="2" col="2">
+                        <group string="14-16 - porez/prirez" colspan="2" col="2">
                             <field name="b141" />
                             <field name="b142" />
                             <field name="b152" />
                             <field name="b162" />
+                            <field name="b151" placeholder="šifre: Prilog 4, npr: 0"/>
+                            <field name="b161" placeholder="šifre: Prilog 5, npr: 0"/>
                         </group>
                     </group>
                 </group>
