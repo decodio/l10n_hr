@@ -39,7 +39,7 @@ class AccountMoveLine(models.Model):
                         _('Wrong credit or debit value in accounting entry.'))
 
     @api.multi
-    @api.constrains('amount_currency')
+    @api.constrains('amount_currency', 'debit', 'credit')
     def _check_currency_amount(self):
         storno_lines = self.filtered(
             lambda line: line.move_id.journal_id.posting_policy == 'storno')
