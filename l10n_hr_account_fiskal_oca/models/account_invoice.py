@@ -302,6 +302,7 @@ class AccountInvoice(models.Model):
             self.fiscalisation_active = self.journal_id.fiscalisation_active
         else:
             self.fiscalisation_active = False
+        return super(AccountInvoice, self)._onchange_journal_id()
 
     def button_fiskaliziraj(self):
         self.ensure_one()
