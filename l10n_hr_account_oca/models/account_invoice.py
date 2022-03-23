@@ -219,6 +219,8 @@ class AccountInvoice(models.Model):
         for inv in self:
             if not inv.date_invoice:
                 inv.date_invoice = fields.Date.context_today(self)
+            # ira = self.type in ('out_invoice', 'out_refund')
+            # if ira and not inv.vrijeme_izdavanja:
             if not inv.vrijeme_izdavanja:
                 # DB: treba li korisniku omogućiti odabir vremena izdavanja?
                 time_now = self.company_id.get_l10n_hr_time_formatted()
