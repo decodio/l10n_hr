@@ -198,7 +198,6 @@ class FiskalLog(models.Model):
     _name = 'fiskal.log'
     _description = 'Fiskal messages log'
 
-
     name = fields.Char(
         string='Oznaka',
         size=64, readonly=True,
