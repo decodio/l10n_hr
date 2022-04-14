@@ -208,12 +208,18 @@ class Joppd(models.Model):
     @api.onchange('podnositelj_oznaka')
     def _onchange_oznaka_podnositelj(self):
         if self.podnositelj_oznaka == '1':
+            full_addr = self.company_id.partner_id.street
+            part_addr = full_addr.split(" ")
+            num = part_addr[len(part_addr) - 1]
+            addr = ""
+            for index in range(len(part_addr) - 1):
+                addr += part_addr[index] + " "
+            if len(addr) > 0:
+                addr = addr[:-1]
             self.podnositelj_naziv = self.company_id.partner_id.name
             self.podnositelj_mjesto = self.company_id.partner_id.city
-            self.podnositelj_ulica = self.company_id.partner_id.street_name
-            self.podnositelj_kbr = self.company_id.partner_id.street_number \
-                                   # +\
-                                   #  self.company_id.partner_id.street_number
+            self.podnositelj_ulica = addr
+            self.podnositelj_kbr = num
             self.podnositelj_email = self.company_id.partner_id.email
             try:
                 self.podnositelj_oib = self.company_id.partner_id.get_oib_from_vat()
