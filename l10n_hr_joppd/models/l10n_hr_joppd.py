@@ -493,7 +493,7 @@ class Joppd_B(models.Model):
             ('4', '4 - Početak i kraj u istom mjesecu'),
             ('5', '5 - Obveza nastala nakon perioda')],
         string='8. Oznaka mjeseca osiguranja',
-        help=jh.b8_help, default='3')
+        help=jh.b8_help, default='0')
     b9 = fields.Selection(
         selection=[
             ('0', '0 - Bez radnog vremena'),
@@ -501,7 +501,7 @@ class Joppd_B(models.Model):
             ('2', '2 - Nepuno radno vrijeme'),
             ('3', '3 - Pola rad.vr.-njega djeteta')],
         string='9. Oznaka radnog vremena',
-        help=jh.b9_help, default='1')
+        help=jh.b9_help, default='0')
     b10 = fields.Integer(
         string='10. Broj sati rada', help=jh.b10_help)
     b100 = fields.Integer(
