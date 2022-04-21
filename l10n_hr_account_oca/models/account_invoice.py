@@ -64,6 +64,12 @@ class AccountInvoice(models.Model):
         help='Fiskalizacija. Osoba koja je potvrdila racun',
         copy=False)
 
+    def _get_onchange_create(self):
+        res = super()._get_onchange_create()
+        if 'fiskal_uredjaj_id' not in res['_onchange_journal_id']:
+            res['_onchange_journal_id'].append('fiskal_uredjaj_id')
+        return res
+
     @api.onchange('date_document')
     def _onchange_date_document(self):
         self.date_invoice = self.date_document
