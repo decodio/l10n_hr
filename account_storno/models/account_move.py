@@ -40,7 +40,7 @@ class AccountMove(models.Model):
         super(AccountMove, contra_moves)._compute_matched_percentage()
 
     @api.multi
-    def _reverse_move(self, date=None, journal_id=None):
+    def _reverse_move(self, date=None, journal_id=None, auto=False):
         self.ensure_one()
         date = date or fields.Date.today()
         if self.journal_id.posting_policy == 'storno':
