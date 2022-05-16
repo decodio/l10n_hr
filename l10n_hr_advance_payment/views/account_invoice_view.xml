@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="invoice_form_add_advance_invoice_ids" model="ir.ui.view">
+        <field name="name">invoice_form_add_advance_invoice_ids</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook/page[last()]" position="after">
+                <page string="Advance Invoices" name="advance_invoices"
+                          attrs="{'invisible': [('advance_payment', '=', True)]}">
+                    <group>
+                        <field name="advance_payment" invisible="True"/>
+                        <field name="advance_invoice_ids" nolabel="1" colspan="4"
+                               domain="[('advance_payment','=','True'),
+                                        ('partner_id','=',partner_id), ('state','not in',('draft', 'cancel'))]"
+                               context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'account.invoice_form',
+                                        'default_type': 'out_invoice', 'type':'out_invoice', 'journal_type': 'sale',
+                                        'default_advance_payment': True, 'default_partner_id': partner_id}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>
