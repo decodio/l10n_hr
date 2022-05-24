@@ -24,6 +24,29 @@
         </field>
     </record>
 
+    <record id="invoice_supplier_form_add_advance_invoice_ids" model="ir.ui.view">
+        <field name="name">invoice_supplier_form_add_advance_invoice_ids</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook/page[last()]" position="after">
+                <page string="Advance Invoices" name="advance_invoices"
+                          attrs="{'invisible': [('advance_payment', '=', True)]}">
+                    <group>
+                        <field name="advance_payment" invisible="True"/>
+                        <field name="advance_invoice_ids" nolabel="1" colspan="4"
+                               domain="[('advance_payment','=','True'),
+                                        ('partner_id','=',partner_id), ('state','not in',('draft', 'cancel'))]"
+                               context="{'tree_view_ref': 'account.invoice_supplier_tree', 'form_view_ref': 'account.invoice_supplier_form',
+                                        'default_type': 'in_invoice', 'type':'in_invoice', 'journal_type': 'purchase',
+                                        'default_advance_payment': True}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
 
 
 </odoo>
