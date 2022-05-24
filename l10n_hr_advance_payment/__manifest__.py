@@ -20,12 +20,13 @@
 
     # TODO: refactor AccountInvoice.action_move_create method so that it calls super in account_base module, afterwards
     #  remove dependency link between these two modules
-    'depends': ['sale', 'account', 'account_base'],
+    'depends': ['sale', 'account', 'account_base', 'purchase_deposit'],
 
     # always loaded
     'data': [
         'views/account_invoice_view.xml',
         'views/sale_order_view.xml',
+        'views/purchase_order_view.xml',
     ],
     # only if external dependency exists
     'external_dependencies': {
