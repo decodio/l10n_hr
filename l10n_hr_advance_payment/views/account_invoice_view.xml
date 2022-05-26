@@ -12,9 +12,10 @@
                           attrs="{'invisible': [('advance_payment', '=', True)]}">
                     <group>
                         <field name="advance_payment" invisible="True"/>
+                        <!-- TODO: get only advances with residual amount left -->
                         <field name="advance_invoice_ids" nolabel="1" colspan="4"
                                domain="[('advance_payment','=','True'),
-                                        ('partner_id','=',partner_id), ('state','not in',('draft', 'cancel'))]"
+                                        ('partner_id','=',partner_id), ('state','in',('open', 'paid'))]"
                                context="{'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'account.invoice_form',
                                         'default_type': 'out_invoice', 'type':'out_invoice', 'journal_type': 'sale',
                                         'default_advance_payment': True, 'default_partner_id': partner_id}"/>
@@ -37,7 +38,7 @@
                         <field name="advance_payment" invisible="True"/>
                         <field name="advance_invoice_ids" nolabel="1" colspan="4"
                                domain="[('advance_payment','=','True'),
-                                        ('partner_id','=',partner_id), ('state','not in',('draft', 'cancel'))]"
+                                        ('partner_id','=',partner_id), ('state','in',('open', 'paid'))]"
                                context="{'tree_view_ref': 'account.invoice_supplier_tree', 'form_view_ref': 'account.invoice_supplier_form',
                                         'default_type': 'in_invoice', 'type':'in_invoice', 'journal_type': 'purchase',
                                         'default_advance_payment': True}"/>
