@@ -19,6 +19,7 @@ class SaleOrder(models.Model):
     def action_view_advance_payment_invoice(self):
         invoices = self.mapped('invoice_ids').filtered('advance_payment')
         action = self.env.ref('account.action_invoice_tree1').read()[0]
+        action['display_name'] = 'Customer Advance Payments'
         if len(invoices) > 1:
             action['domain'] = [('id', 'in', invoices.ids)]
         elif len(invoices) == 1:
@@ -54,6 +55,6 @@ class SaleOrder(models.Model):
         res = super().action_invoice_create(grouped=grouped, final=final)
         advance_payments = self.invoice_ids.filtered('advance_payment')
         sale_invoices = self.invoice_ids - advance_payments
-        if len(sale_invoices) == 1:
+        if len(advance_payments) == 1:
             sale_invoices.advance_invoice_ids = [(6, 0, advance_payments.ids)]
         return res
