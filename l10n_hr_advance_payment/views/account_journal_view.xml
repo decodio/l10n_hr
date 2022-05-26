@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_journal_form_add_advanced_payment" model="ir.ui.view">
+            <field name="name">view_account_journal_form_add_advanced_payment</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <field name="group_invoice_lines" position="after">
+                    <field name="advance_payment"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>
