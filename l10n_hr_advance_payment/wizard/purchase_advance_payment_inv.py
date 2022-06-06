@@ -10,12 +10,7 @@ class PurchaseAdvancePaymentInv(models.TransientModel):
         # delete Purchase Order deposit/down payment line
         # 1.1. delete relation with Invoice line
         # 1.2. delete Purchase Order line
-        po_line.invoice_lines = [(5,)]
-        # TODO: do not toggle order states to unlink down payment line
-        old_state = order.state
-        order.state = 'draft'
-        po_line and po_line.sudo().unlink()
+        self.env.cr.execute("DELETE FROM purchase_order_line WHERE id = %s", (po_line.id,))
         created_invoice.advance_payment = True
-        order.state = old_state
         created_invoice.purchase_id = order.id
         return created_invoice
