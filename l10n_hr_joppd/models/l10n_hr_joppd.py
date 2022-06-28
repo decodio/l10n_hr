@@ -220,7 +220,7 @@ class Joppd(models.Model):
             self.podnositelj_mjesto = self.company_id.partner_id.city
             self.podnositelj_ulica = addr
             self.podnositelj_kbr = num
-            self.podnositelj_email = self.company_id.partner_id.email
+            self.podnositelj_email = self.company_id.responsible_email
             try:
                 self.podnositelj_oib = self.company_id.partner_id.get_oib_from_vat()
             except:
