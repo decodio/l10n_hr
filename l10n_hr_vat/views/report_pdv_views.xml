@@ -92,7 +92,7 @@
 
     <!-- PDV-S LINES -->
     <record id="view_l10n_hr_pdv_obrazac_pdvs_tree" model="ir.ui.view">
-        <field name="view_l10n_hr_pdv_obrazac_pdvs_tree"/>
+        <field name="name">view_l10n_hr_pdv_obrazac_pdvs_tree</field>
         <field name="model">l10n.hr.pdv.report.pdvs</field>
         <field name="arch" type="xml">
             <tree string="PDV-S lines" edit="bottom"
@@ -108,7 +108,7 @@
         </field>
     </record>
     <record id="view_l10n_hr_pdv_obrazac_pdvs_form" model="ir.ui.view">
-        <field name="view_l10n_hr_pdv_obrazac_pdvs_form"/>
+        <field name="name">view_l10n_hr_pdv_obrazac_pdvs_form</field>
         <field name="model">l10n.hr.pdv.report.pdvs</field>
         <field name="arch" type="xml">
            
@@ -134,7 +134,7 @@
 
     <!-- ZP LINES -->
     <record id="view_l10n_hr_pdv_obrazac_pdvzp_tree" model="ir.ui.view">
-        <field name="view_l10n_hr_pdv_obrazac_pdvzp_tree"/>
+        <field name="name">view_l10n_hr_pdv_obrazac_pdvzp_tree</field>
         <field name="model">l10n.hr.pdv.report.zp</field>
         <field name="arch" type="xml">
             <tree string="ZP lines" editable="bottom"
@@ -152,7 +152,7 @@
         </field>
     </record>
     <record id="view_l10n_hr_pdv_obrazac_pdvzp_form" model="ir.ui.view">
-        <field name="view_l10n_hr_pdv_obrazac_pdvzp_form"/>
+        <field name="name">view_l10n_hr_pdv_obrazac_pdvzp_form</field>
         <field name="model">l10n.hr.pdv.report.zp</field>
         <field name="arch" type="xml">
             
