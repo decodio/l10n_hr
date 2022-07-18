@@ -60,7 +60,8 @@ class AccountMove(models.Model):
                 self.reverse_entry_id = reversed_move
             self.recompute()
             return reversed_move
-        return super(AccountMove, self)._reverse_move(date, journal_id)
+        return super(AccountMove, self)._reverse_move(
+            date=date, journal_id=journal_id, auto=auto)
 
 
 
