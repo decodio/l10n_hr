@@ -8,7 +8,7 @@ class Company(models.Model):
 
     porezna_id = fields.Many2one(
         comodel_name='l10n.hr.porezna.uprava',
-        string='Porezna ispostava'
+        string='Porezna uprava'
     )
 
 

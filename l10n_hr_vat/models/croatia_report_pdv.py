@@ -54,14 +54,14 @@ class PdvObrazac(models.Model):
         comodel_name='l10n.hr.pdv.report.pdvs',
         inverse_name='report_id',
         string='PDV-S')
-    pdvs_xml_file = fields.Binary('XML File', attachment=True)
+    pdvs_xml_file = fields.Binary('PDVS XML File', attachment=True)
     pdvs_xml_file_name = fields.Char(string="PDV-S XML file")
     # PDV-ZP data
     pdvzp_line_ids = fields.One2many(
         comodel_name='l10n.hr.pdv.report.zp',
         inverse_name='report_id',
         string='ZP')
-    pdvzp_xml_file = fields.Binary('XML File', attachment=True)
+    pdvzp_xml_file = fields.Binary('PDV-ZP XML File', attachment=True)
     pdvzp_xml_file_name = fields.Char(string="ZP XML file")
 
     # PDV-PPO DATA
