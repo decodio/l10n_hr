@@ -27,7 +27,7 @@ class get_vat_book_report_common(object):
                 all_taxes[stupac] = report_object.pool.get('l10n_hr_pdv.report.knjiga.stavka').search(report_object.cr, report_object.uid, [('report_knjiga_id','=',poz_id[0])])
 
         stupciSql = {}
-        sum_all_stupci = sum_sql = line_query2 = ''
+        sum_all_stupci = sum_sql = line_query2  = ''
         i = 0
         for stupac in stupci:
             i += 1
@@ -66,9 +66,8 @@ class get_vat_book_report_common(object):
         report_object.cr.execute(insert_sql + line_query + linesSelect)
 
         select_sql = 'SELECT * FROM l10n_hr_vat_' + str(report_object.uid) + \
-             ' WHERE (' + sum_all_stupci + ') <> 0 ORDER BY invoice_date, rbr'
-        # TODO remove - print only non zeroes
-        # ' ORDER BY invoice_date, rbr'
+                     ' ORDER BY invoice_date, rbr'
+            # ' WHERE (' + sum_all_stupci + ') <> 0 ORDER BY invoice_date, rbr' # TODO remove - print only non zeroes
         report_object.cr.execute(select_sql)
         res = report_object.cr.dictfetchall()
         self.set_rbr(data, report_object, res)
