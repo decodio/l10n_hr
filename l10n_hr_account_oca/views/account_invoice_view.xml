@@ -36,9 +36,12 @@
                 </div>
             </xpath>
 
-            <field name="name" position="attributes">
+            <!--Using a more specific xpath because using a simple field name invisible will go through
+                all view definitions in the inherited view as well as inline view definition and make
+                the name field invisible that is not the desired outcome.-->
+            <xpath expr="//page[@name='other_info']//field[@name='name']" position="attributes">
                 <attribute name="invisible">True</attribute>
-            </field>
+            </xpath>
 
             <xpath expr="//page[@name='other_info']/group/group[last()]" position="after">
                 <group string="Croatia data" name="croatia"
