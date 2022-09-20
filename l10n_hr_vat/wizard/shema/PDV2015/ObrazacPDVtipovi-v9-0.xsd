@@ -114,13 +114,13 @@
 			<xsd:element name="Podatak500" type="temeljni:tDecimal15-2"/>
 			<xsd:element name="Podatak600" type="temeljni:tDecimal15-2"/>
 			<xsd:element name="Podatak700" type="temeljni:tDecimal15-2"/>
-			<xsd:element name="Podatak810" type="temeljni:tNonNegativeDecimal15-2"/>
-			<xsd:element name="Podatak811" type="temeljni:tNonNegativeDecimal15-2"/>
-			<xsd:element name="Podatak812" type="temeljni:tNonNegativeDecimal15-2"/>
-			<xsd:element name="Podatak813" type="temeljni:tNonNegativeDecimal15-2"/>
-			<xsd:element name="Podatak814" type="temeljni:tNonNegativeDecimal15-2"/>
-			<xsd:element name="Podatak815" type="temeljni:tNonNegativeDecimal15-2"/>
-			<xsd:element name="Podatak820" type="temeljni:tNonNegativeDecimal15-2"/>
+			<xsd:element name="Podatak810" type="temeljni:tDecimal15-2"/>
+			<xsd:element name="Podatak811" type="temeljni:tDecimal15-2"/>
+			<xsd:element name="Podatak812" type="temeljni:tDecimal15-2"/>
+			<xsd:element name="Podatak813" type="temeljni:tDecimal15-2"/>
+			<xsd:element name="Podatak814" type="temeljni:tDecimal15-2"/>
+			<xsd:element name="Podatak815" type="temeljni:tDecimal15-2"/>
+			<xsd:element name="Podatak820" type="temeljni:tDecimal15-2"/>
       <xsd:element name="Podatak830" type="temeljni:tNonNegativeDecimal15-2"/>
 			<xsd:element name="Podatak831" type="sIsporukaNekretnina"/>
 			<xsd:element name="Podatak832" type="sIsporukaNekretnina"/>
