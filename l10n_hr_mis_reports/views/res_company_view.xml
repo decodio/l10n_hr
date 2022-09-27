@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_company_form_add_gfi_pod_xlsx_template" model="ir.ui.view">
+            <field name="name">view_company_form_add_gfi_pod_xlsx_template</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='pdv_export']//group[last()]" position="after">
+                    <group string="XLSX Templates" name="xlsx_templates">
+                        <field name="gfi_pod_xlsx_template_file_name" invisible="1"/>
+                        <field name="gfi_pod_xlsx_template_file" filename="gfi_pod_xlsx_template_file_name"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>
+

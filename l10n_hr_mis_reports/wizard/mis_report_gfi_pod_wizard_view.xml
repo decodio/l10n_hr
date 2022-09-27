@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mis_report_gfi_pod_wizard_form_view" model="ir.ui.view">
+        <field name="name">mis_report_gfi_pod_wizard_form_view</field>
+        <field name="model">mis.report.gfi.pod.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group attrs="{'invisible': [('out_xls', '!=', False)]}">
+                        <field name="balance_sheet_mis_report_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                        <field name="profit_loss_mis_report_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                    </group>
+                    <field name="name" invisible="1"/>
+                    <div attrs="{'invisible': [('out_xls', '=', False)]}">
+                        <h2>GFI-POD report export completed</h2>
+                        <p>Here is the file:
+                            <field name="out_xls" readonly="1" filename="name"/>
+                        </p>
+                    </div>
+                    <p attrs="{'invisible': [('out_xls', '=', False)]}">This file was generated using
+                        <strong>XLSX template</strong>
+                        and comes with corresponding <strong>.xlsx</strong> extension. Make sure to save file as
+                        <strong>Excel 97-2003</strong>
+                        for import on <strong>FINA</strong> website!
+                    </p>
+                </sheet>
+                <footer>
+                    <button type="object" name="create_xls_report" string="Create Excel Report" class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mis_report_gfi_pod_wizard_view_action">
+        <field name="name">GFI-POD</field>
+        <field name="view_id" ref="mis_report_gfi_pod_wizard_form_view"/>
+        <field name="res_model">mis.report.gfi.pod.wizard</field>
+        <field name="view_type">form</field>
+        <field name="target">new</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="mis_report_gfi_pod_wizard_menu"
+            parent="mis_builder.mis_report_finance_menu"
+            name="GFI-POD"
+            action="mis_report_gfi_pod_wizard_view_action"
+            sequence="30"
+    />
+
+</odoo>
