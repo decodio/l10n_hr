@@ -32,7 +32,7 @@
                                 <field name="trg_sud"/>
                             </group>
                         </group>
-                        <group string = "Podaci za izvoz Obrazac PDV">
+                        <group string="Podaci za izvoz Obrazac PDV" name="pdv_export">
                             <group>
                                 <field name="responsible_fname"/>
                                 <field name="responsible_lname"/>
