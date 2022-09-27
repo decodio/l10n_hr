@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="mis_report_view_form_add_kpi_ids_report_position" model="ir.ui.view">
+        <field name="name">mis_report_view_form_add_kpi_ids_report_position</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_view_form"/>
+        <field name="model">mis.report</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='kpi_ids']/tree/field[@name='type']" position="after">
+                <field name="report_position"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
