@@ -4,9 +4,9 @@ from io import BytesIO
 import openpyxl
 from openpyxl.cell.cell import Cell
 import base64
-REPORT_POSITION_CELL = 'I'
-PREVIOUS_YEAR_CELL = 'K'
-CURRENT_YEAR_CELL = 'L'
+REPORT_POSITION_CELL = 'G'
+PREVIOUS_YEAR_CELL = 'I'
+CURRENT_YEAR_CELL = 'J'
 PROFIT_LOSS_SHEET_NAME = 'RDG'
 BALANCE_SHEET_NAME = 'Bilanca'
 SHEET_ROW_START = 8
