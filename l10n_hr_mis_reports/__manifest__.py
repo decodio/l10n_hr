@@ -19,7 +19,7 @@
         "l10n_hr_base",
     ],
     "external_dependencies": {
-        "python": [],
+        "python": ['openpyxl'],
         "bin": []
     },
     "data": [
