@@ -1,4 +1,5 @@
 from odoo import fields, models, api, _
+from odoo.tools.float_utils import float_round
 from odoo.exceptions import ValidationError
 from io import BytesIO
 import openpyxl
@@ -46,8 +47,8 @@ class MisReportGFIPODWizard(models.TransientModel):
             if aop_position_cell:
                 report_position_data = data.get(aop_position_cell.value)
                 if report_position_data:
-                    previous_year_cell.value = report_position_data.get('previous')
-                    current_year_cell.value = report_position_data.get('current')
+                    previous_year_cell.value = int(float_round(report_position_data.get('previous'), precision_digits=0))
+                    current_year_cell.value = int(float_round(report_position_data.get('current'), precision_digits=0))
 
     @api.multi
     def _create_xls_report(self, company):
