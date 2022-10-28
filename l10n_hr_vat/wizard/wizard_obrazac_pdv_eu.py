@@ -694,7 +694,7 @@ class obrazac_pdv_eu(orm.TransientModel):
                             EM.OIB(),
                             EM.Iznos()
                         )),
-                    EM.Iznos(total['sum_isporuke']),
+                    EM.Iznos(total['sum_isporuke'] or 0.0),
                     EM.DatumOd(period_rec.date_start),
                     EM.DatumDo(period_rec.date_stop))
 
