@@ -11,6 +11,7 @@ class AccountInvoice(models.Model):
         column1='invoice_id', column2='advance_invoice_id',
         string='Advance Invoices', readonly=False, copy=False)
 
+    @api.onchange('journal_id')
     def _onchange_journal_id(self):
         res = super()._onchange_journal_id()
         if self.journal_id.advance_payment:
