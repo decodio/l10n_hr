@@ -15,16 +15,16 @@ class JOPPDObrazacXlsx(models.AbstractModel):
     def print_osnovni_podaci(self, workbook, joppd):
         sheet = workbook.add_worksheet(_('Osnovni podaci strane A'))
         label_style = workbook.add_format({'bold': True, 'bottom': 1})
-        sheet.set_column(0, 0, 50)
-        sheet.set_column(1, 1, 50)
-        sheet.set_column(2, 2, 50)
-        sheet.set_column(3, 3, 30)
-        sheet.set_column(4, 4, 50)
+        sheet.set_column(0, 0, 30)
+        sheet.set_column(1, 1, 40)
+        sheet.set_column(2, 2, 30)
+        sheet.set_column(3, 3, 40)
         sheet.fit_to_pages(1, 0)
         sheet.set_row(0, None, None, {'collapsed': 1})
         # datumi i razdoblja
         row = 1
-        sheet.write(row, 0, joppd.name, label_style)
+        sheet.write(row, 0, _('Naziv'), label_style)
+        sheet.write(row, 1, joppd.name)
         row += 1
         sheet.write(row, 0, _('Datum'), label_style)
         sheet.write(row, 1, format_date(self.env, joppd.date_joppd) or '')
@@ -63,8 +63,8 @@ class JOPPDObrazacXlsx(models.AbstractModel):
         sheet.write(row, 1, str(joppd.broj_osoba))
         sheet.write(row, 2, _('IV.2 Broj redaka'), label_style)
         sheet.write(row, 3, str(joppd.broj_redaka))
-        row += 1
-        sheet.write(row, 0, _('Izvještaj sastavio:'))
+        row += 2
+        sheet.write(row, 0, _('Izvještaj sastavio:'), label_style)
         row += 1
         sheet.write(row, 0, _('Sastavio'), label_style)
         sheet.write(row, 1, joppd.sastavio_id.name_get()[0][1])
