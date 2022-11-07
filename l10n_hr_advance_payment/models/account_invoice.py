@@ -10,9 +10,6 @@ class AccountInvoice(models.Model):
             inv.total_adv_amount_untaxed = 0.0
             inv.total_adv_amount_tax = 0.0
             inv.total_adv_amount_total = 0.0
-            inv.lcy_total_adv_amount_untaxed = 0.0
-            inv.lcy_total_adv_amount_tax = 0.0
-            inv.lcy_total_adv_amount_total = 0.0
             for adv_inv in inv.advance_invoice_ids:
                 if adv_inv.state in ('open', 'paid'):
                     inv.total_adv_amount_untaxed += adv_inv.amount_untaxed
