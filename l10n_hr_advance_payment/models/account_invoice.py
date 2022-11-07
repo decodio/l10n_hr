@@ -25,18 +25,9 @@ class AccountInvoice(models.Model):
         relation='account_advance_invoice_invoice_rel',
         column1='invoice_id', column2='advance_invoice_id',
         string='Advance Invoices', readonly=False, copy=False)
-    total_adv_amount_untaxed = fields.Float(
-        string='Total Advance Untaxed Amount', readonly=True, compute=_calc_total_advance)
-    total_adv_amount_tax = fields.Float(
-        string='Total AdvanceTaxes', readonly=True, compute=_calc_total_advance)
-    total_adv_amount_total = fields.Float(
-        string='Total Advance Total', readonly=True, compute=_calc_total_advance)
-    lcy_total_adv_amount_untaxed = fields.Float(
-        string='Total Advance Untaxed Amount LCY', readonly=True, compute=_calc_total_advance)
-    lcy_total_adv_amount_tax = fields.Float(
-        string='Total AdvanceTaxes LCY', readonly=True, compute=_calc_total_advance)
-    lcy_total_adv_amount_total = fields.Float(
-        string='Total Advance Total LCY', readonly=True, compute=_calc_total_advance)
+    total_adv_amount_untaxed = fields.Float(string='Total Advance Untaxed Amount', readonly=True, compute=_calc_total_advance)
+    total_adv_amount_tax = fields.Float(string='Total AdvanceTaxes', readonly=True, compute=_calc_total_advance)
+    total_adv_amount_total = fields.Float(string='Total Advance Total', readonly=True, compute=_calc_total_advance)
 
     @api.onchange('journal_id')
     def _onchange_journal_id(self):
