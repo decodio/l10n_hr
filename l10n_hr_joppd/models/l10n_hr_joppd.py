@@ -413,6 +413,13 @@ class Joppd(models.Model):
         # TODO
         return
 
+    def export_xls(self):
+        self.ensure_one()
+        return (
+            self.env.ref("l10n_hr_joppd.joppd_obrazac_xlsx")
+            .report_action(self, data=dict(dummy=True))  # required to propagate context
+        )
+
 
 class Joppd_A(models.Model):
     _name = 'l10n.hr.joppd.a'
