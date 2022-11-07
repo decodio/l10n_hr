@@ -33,10 +33,17 @@
                             attrs="{'invisible':[('state','!=','accepted')]}" icon="fa-pencil"/>
                     <button string="Dopuna" type="object" name="button_addition"
                             attrs="{'invisible':[('state','!=','accepted')]}" icon="fa-plus"/>
-
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
+                    <div class="oe_read_only oe_right oe_button_box" name="buttons">
+                        <button
+                            type="object"
+                            name="export_xls"
+                            string="Export"
+                            icon="fa-download"
+                        />
+                    </div>
                     <field name="company_id" invisible="1"/>
                     <field name="name" readonly="True"/>
                     <notebook colspan="4" >
