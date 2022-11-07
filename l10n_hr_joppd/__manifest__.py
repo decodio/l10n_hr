@@ -10,7 +10,7 @@
 
     'author': "Ecodica",
     'website': "https://www.ecodica.eu",
-    "support": "support@decod.io",
+    "support": "support@ecodica.eu",
     "licence": "LGPL-3",
     #"price" : 20.00,   #-> only if module if sold!
     #"currency": "EUR",
@@ -20,7 +20,8 @@
         "base_address_extended",  # Zbog adrese i kucnog broja!
         "partner_fiskal_responsible",
         "partner_firstname",
-        "date_range"
+        "date_range",
+        "report_xlsx",
     ],
     "external_dependencies": {
         "python": [],
@@ -32,7 +33,7 @@
         "views/joppd_views.xml",
         "views/joppd_menuitems.xml",
         "data/partner_fiskal_tags.xml",
-
+        "report/joppd_obrazac_xlsx.xml",
     ],
     "qweb": [],
     "demo": [],
