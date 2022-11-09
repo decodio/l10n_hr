@@ -39,8 +39,7 @@ class MisReportInstancePeriod(models.Model):
                 [('analytic_distribution_ids.account_id', '=', self.analytic_account_id.id)])
             if analytic_tags:
                 res[analytic_account_start_index:analytic_account_start_index] = \
-                    ['&', '|', ('analytic_tag_ids', 'in', analytic_tags.ids)]
-            else:
-                # add OR operator
-                res[analytic_account_start_index:analytic_account_start_index] = '|'
+                    ['|', ('analytic_tag_ids', 'in', analytic_tags.ids)]
+        if self.analytic_tag_ids and self.analytic_account_id:
+            res[analytic_account_start_index:analytic_account_start_index] = ['|']
         return res
