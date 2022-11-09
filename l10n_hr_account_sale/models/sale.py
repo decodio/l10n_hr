@@ -28,7 +28,7 @@ class Sale(models.Model):
                     user_default_uredjaj not in sj_uredjaj_ids:
                 uj_uredaji = user_uredjaj_ids & sj_uredjaj_ids
                 fiskal_uredjaj_id = uj_uredaji[0]
-            if team_journal.id != invoice_vals.get('journal_id'):
+            if team_journal and team_journal.id != invoice_vals.get('journal_id'):
                 invoice_vals['journal_id'] = team_journal.id
             invoice_vals['fiskal_uredjaj_id'] = fiskal_uredjaj_id.id
         return invoice_vals
