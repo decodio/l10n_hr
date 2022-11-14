@@ -27,19 +27,25 @@ class MisReportInstancePeriod(models.Model):
 
     def _get_additional_move_line_filter(self):
         res = super()._get_additional_move_line_filter()
+        move_state_filter = list(filter(lambda a: a[0] == 'move_id.state', res))
+        move_state_index = move_state_filter and res.index(move_state_filter[0]) or 0
         if self.analytic_tag_ids:
-            analytic_tag_filters = list(filter(lambda a: a[0] == 'analytic_tag_ids', res))
+            def filter_domain(a):
+                if a[0] == 'analytic_tag_ids' and a[1] == '=':
+                    return True
+            analytic_tag_filters = list(filter(filter_domain, res))
             or_operator_counter = len(analytic_tag_filters) - 1
             analytic_tags_start_index = res.index(analytic_tag_filters[0])
             res[analytic_tags_start_index:analytic_tags_start_index] = ['|'] * or_operator_counter
         if self.analytic_account_id:
-            analytic_account_filter = list(filter(lambda a: a[0] == 'analytic_account_id', res))
-            analytic_account_start_index = res.index(analytic_account_filter[0])
+            # start searching after move state filter
+            analytic_account_filter = list(filter(lambda a: a[0] == 'analytic_account_id', res[move_state_index:]))
+            analytic_account_start_index = res.index(analytic_account_filter[0], move_state_index)
             analytic_tags = self.env['account.analytic.tag'].search(
                 [('analytic_distribution_ids.account_id', '=', self.analytic_account_id.id)])
             if analytic_tags:
                 res[analytic_account_start_index:analytic_account_start_index] = \
                     ['|', ('analytic_tag_ids', 'in', analytic_tags.ids)]
         if self.analytic_tag_ids and self.analytic_account_id:
-            res[analytic_account_start_index:analytic_account_start_index] = ['|']
+            res[analytic_account_start_index:analytic_account_start_index] = ['&']
         return res
