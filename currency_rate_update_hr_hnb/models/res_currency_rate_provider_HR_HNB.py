@@ -85,7 +85,6 @@ class ResCurrencyRateProviderHrHNB(models.Model):
                 continue
             rate_date = cd['datum_primjene']
 
-            qty = cd['jedinica']
             rate_string = self.get_l10n_hr_rate_string(self.rate_type)
             rate = cd.get(rate_string + '_tecaj').replace(',', '.')
             try:
@@ -97,15 +96,15 @@ class ResCurrencyRateProviderHrHNB(models.Model):
             # not directly dependant but have in mind
 
             if not result.get(rate_date):
-                result[rate_date] = {currency: qty / rate}
+                result[rate_date] = {currency: rate}
             else:
-                result[rate_date].update({currency: qty / rate})
+                result[rate_date].update({currency: rate})
         return result
 
 
     @api.multi
     def _l10n_hr_hnb_urlopen(self, currencies=None, date_from=None, date_to=None):
-        url = "http://api.hnb.hr/tecajn/v2"
+        url = "https://api.hnb.hr/tecajn-eur/v3"
         if date_from is not None:
             if date_to is not None:
                 url += "?datum-primjene-od=%s&datum-primjene-do=%s" % (
