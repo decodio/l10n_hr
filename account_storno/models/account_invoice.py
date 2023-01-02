@@ -228,3 +228,17 @@ class AccountInvoice(models.Model):
         else:
             line = super(AccountInvoice, self).group_lines(iml, line)
         return line
+
+    @api.model
+    def _prepare_refund(self, invoice, date_invoice=None, date=None,
+                        description=None, journal_id=None):
+        values = super(AccountInvoice, self)._prepare_refund(
+            invoice=invoice, date_invoice=date_invoice, date=date,
+            description=description, journal_id=journal_id)
+        # For croatian refund partner_bank_id should be
+        # taken from account invoice if it is set otherwise do not add it to
+        # values because odoo will compute the partner_bank_id based on invoice
+        # partner_id
+        if invoice.type in ('out_invoice', 'out_refund') and invoice.partner_bank_id:
+            values['partner_bank_id'] = invoice.partner_bank_id.id
+        return values
