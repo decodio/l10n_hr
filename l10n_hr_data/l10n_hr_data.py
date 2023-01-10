@@ -111,7 +111,7 @@ class res_company(models.Model):
             val.append(' | VAT: ' + self.vat)
         if self.temeljni_kapital:
             val.append('\nTemeljni kapital društva ' + '{:,.2f}'.format(self.temeljni_kapital)
-                       + ' HRK uplaćen je u cijelosti u novcu')
+                       + ' EUR uplaćen je u cijelosti u novcu')
         if self.clanovi_uprave:
             val.append(' Članovi uprave: ' + self.clanovi_uprave)
         self.podnozje_ispisa = ''.join(val)

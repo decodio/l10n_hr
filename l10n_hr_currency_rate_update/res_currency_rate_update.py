@@ -65,25 +65,11 @@ class HNB_getter(Currency_getter_interface):  # class added according to Croatia
 
     def get_available_currencies(self):
         """implementation of abstract method of Currency_getter_interface"""
-        currencies = []
-        date_start = datetime.now()
-        counter = 0
-        found = False
-        while counter < 20 and not found:
-            tmp_date = date_start - relativedelta(days= +counter)
-            url = 'http://www.hnb.hr/tecajn/%s' % (tmp_date.strftime('f%d%m%y.dat'))  # %s is supposed to be f040412.dat in format 'f%d%m%Y.dat'
-            raw_file = self.get_url(url)
-            if '<html>' in raw_file:
-                counter += 1
-                continue
-            found = True
-            raw_file = raw_file.strip()
-            lines = raw_file.split("\r\n")
-            for line in lines[1:]:
-                vals = line.strip().split()
-                currencies.append(vals[0][3:6].upper())
-            return currencies
-        return False
+        url = "https://api.hnb.hr/tecajn-eur/v3"
+        res = requests.get(url)
+        data = json.loads(res.text)
+        currencies = [c.get('valuta') for c in data if c.get('valuta')]
+        return currencies
 
     def get_currency_for_period(self, currency_array, main_currency, max_delta_days,
                                 date_start, date_end, currency_type_array=None):
@@ -92,9 +78,10 @@ class HNB_getter(Currency_getter_interface):  # class added according to Croatia
             currency_type_array = []
 
         self.updated_currency = {'data': {}, 'log_message': '', 'exception': {}}
+        self.validate_cur(main_currency)
 
-        # This is the default currency of the service ('HRK' in Croatia, this is croatian service)
-        service_currency = u'HRK'
+        # This is the default currency of the service ('EUR' in Croatia, this is croatian service)
+        service_currency = u'EUR'
         current_time = datetime.now()
         if date_start is None or date_start > datetime.now():
             date_start = current_time - timedelta(days=7)
@@ -103,68 +90,14 @@ class HNB_getter(Currency_getter_interface):  # class added according to Croatia
 
         date_diff = (date_end - date_start).days + 1
         for single_date in [d for d in (date_start + relativedelta(days= +n) for n in range(date_diff)) if d <= date_end]:
-            rate_name = single_date.strftime("%Y-%m-%d")
-            url = 'http://www.hnb.hr/tecajn/%s' % (single_date.strftime('f%d%m%y.dat'))  # %s is supposed to be f040412.dat in format 'f%d%m%Y.dat'
-            data = {}
-            # every currency to upper letters, just in case
-            # currency_array = map(lambda x: x.upper(), currency_array) - ALREADY DONE IN CALLING METHOD
-
-            self.logger.debug(_("HNB currency rate service : connecting..."))
-            raw_file = self.get_url(url)
-            if '<html>' in raw_file:
-                msg = _("Could not locate data for date '%(data)s' from url '%(url)s'") % {'data':rate_name, 'url':url, }
-                self.updated_currency['log_message'] += msg + '\n'
-                self.logger.error(msg)
-                continue
-            raw_file = raw_file.replace(',', '.').strip()
-            lines = raw_file.split("\r\n")
-            if len(lines[0]) < 10:
-                # trim the first line sometimes we get 325 sometimes 2ed pattern unknown
-                lines = lines[1:]
-            # header
-            line = lines[0]
-            rate_date_datetime = datetime.strptime(line[11:19], '%d%m%Y')
-            # If start and end date are the same, it means we called this method from method for only one date, we should check if it is allowed
-            # if date_diff == 1:
-            #    retval = self.check_rate_date(rate_date_datetime, max_delta_days)
-            #    if retval:
-            #        return retval
-            self.logger.debug(_("HNB sent a valid text file"))
-            self.logger.debug(_("Supported currencies = ") + str(self.supported_currency_array))
-
-            # create dict from currency lines
-            # LINE FORMAT: code(3)name(3)numOfUnits(3)    bid(8,6)    middle(8,6)    ask(8,6)
-            # 036AUD001       6,239750       6,258526       6,277302
-            # code = 036
-            # name = AUD
-            # num_of_units = 001
-            # buy = 6,239750
-            # middle = 6,258526
-            # sell = 6,277302
-
-            # Usually there are these three types of currency
-            # kupovni - bid_rate, prodajni - ask_rate
-            # types_of_value = ['ask_value','middle_value','bid_value']
-
-            for line in lines[1:]:
-                if len(line.strip()) < 10:
-                    # last line is 0
-                    continue
-                vals = line.strip().split()
-                if vals[0][3:6].upper() in currency_array:
-                    tmp_dict = {
-                        'ratio': float(vals[0][6:9]),
-                        'middle_rate': float(vals[2]),
-                    }
-                    if 'bid_rate' in currency_type_array:
-                        tmp_dict['bid_rate'] = float(vals[1])
-                    if 'ask_rate' in currency_type_array:
-                        tmp_dict['ask_rate'] = float(vals[3])
-                    data[vals[0][3:6].upper()] = tmp_dict
-
-            self.validate_cur(main_currency)
+            url = "https://api.hnb.hr/tecajn-eur/v3"
+            iso_date = single_date.date().isoformat()
+            url += "?datum-primjene-od=%s&datum-primjene-do=%s" % (iso_date, iso_date,)
+            res = requests.get(url)
+            j_data = json.loads(res.text)
             # Check if HNB supports all of expected currencies
-            curr_error_list = [curr for curr in currency_array if curr not in data and curr not in [service_currency, main_currency]]
+            data_curr = [c.get('valuta') for c in j_data if c.get('valuta')]
+            curr_error_list = [curr for curr in currency_array if curr not in data_curr and curr not in [service_currency, main_currency]]
             if curr_error_list:
                 warning = _('Your tried to update %s %s which are not available from the current service !!!' \
                 '\nPlease remove those currencies from the service update list and refresh currencies again.') % \
@@ -174,28 +107,7 @@ class HNB_getter(Currency_getter_interface):  # class added according to Croatia
                 # return {'exception': {'title': _('Currency update error'), 'message': warning,} }
             if curr_error_list:
                 currency_array = [x for x in currency_array if x not in curr_error_list]
-            to_remove = set(data) - set(currency_array)
-            for key in to_remove:
-                del data[key]
-
-            # if HRK is NOT main currency we have to add it because it is not in the data by default
-            if main_currency != service_currency:
-                # 1 MAIN_CURRENCY = main_rate HRK
-                main_rate_middle = data[main_currency]['middle_rate'] / data[main_currency]['ratio']
-                if 'bid_rate' in currency_type_array:
-                    main_rate_bid = data[main_currency]['bid_rate'] / data[main_currency]['ratio']
-                if 'ask_rate' in currency_type_array:
-                    main_rate_ask = data[main_currency]['ask_rate'] / data[main_currency]['ratio']
-
-                data[service_currency] = {
-                    'ratio': 1,
-                    'middle_rate': main_rate_middle,
-                }
-                if 'bid_rate' in currency_type_array:
-                    data[service_currency]['bid_rate'] = main_rate_bid
-                if 'ask_rate' in currency_type_array:
-                    data[service_currency]['ask_rate'] = main_rate_ask
-
+            data = {}
             data[main_currency] = {
                 'ratio': 1,
                 'middle_rate': 1.,
@@ -204,41 +116,24 @@ class HNB_getter(Currency_getter_interface):  # class added according to Croatia
                 data[main_currency]['bid_rate'] = 1.
             if 'ask_rate' in currency_type_array:
                 data[main_currency]['ask_rate'] = 1.
+            rate_name = single_date.strftime("%Y-%m-%d")
+            for line in j_data:
+                rate_name = line.get('datum_primjene')  # single_date.strftime("%Y-%m-%d")
+                rate_date_datetime = line.get('datum_primjene')
 
-            for curr in currency_array:
+                # if EUR is NOT main currency we have to add it because it is not in the data by default
+                curr = line.get('valuta')
+                if not curr:
+                    continue
                 if curr == main_currency or curr == service_currency:
                     continue
-
-                curr_data = data[curr]
                 self.validate_cur(curr)
-
-                if main_currency == service_currency:
-                    middle_rate = curr_data['ratio'] / curr_data['middle_rate']
-                    curr_data.update({'middle_rate': middle_rate})
-                    if 'bid_rate' in currency_type_array:
-                        bid_rate = curr_data['ratio'] / curr_data['bid_rate']
-                        curr_data.update({'bid_rate': bid_rate})
-                    if 'ask_rate' in currency_type_array:
-                        ask_rate = curr_data['ratio'] / curr_data['ask_rate']
-                        curr_data.update({'ask_rate': ask_rate})
-                else:
-                    middle_rate = main_rate_middle * curr_data['ratio'] / curr_data['middle_rate']
-                    curr_data.update({'middle_rate': middle_rate})
-                    if 'bid_rate' in currency_type_array:
-                        middle_rate_bid = main_rate_bid * curr_data['ratio'] / curr_data['bid_rate']
-                        curr_data.update({'bid_rate': middle_rate_bid})
-                    if 'ask_rate' in currency_type_array:
-                        middle_rate_ask = main_rate_ask * curr_data['ratio'] / curr_data['ask_rate']
-                        curr_data.update({'ask_rate': middle_rate_ask})
-                    curr_data['ratio'] = 1  # as in 1 EUR = 285 HUF, shown as main_rate = EUR, ratio = 1, rate = 285
-
-                log_msg = _("Middle rate retrieved : 1 ") + main_currency + ' = ' + str(curr_data['middle_rate']) + ' ' + curr
-                if 'bid_rate' in currency_type_array:
-                    log_msg += _("\nBid rate retrieved : 1 ") + main_currency + ' = ' + str(curr_data['bid_rate']) + ' ' + curr
-                if 'ask_rate' in currency_type_array:
-                    log_msg += _("\nAsk rate retrieved : 1 ") + main_currency + ' = ' + str(curr_data['ask_rate']) + ' ' + curr
-
-                self.logger.debug(log_msg)
+                data[curr] = {
+                    'ratio': 1,
+                    'middle_rate': line.get('srednji_tecaj').replace(',', '.'),
+                    'bid_rate': line.get('kupovni_tecaj').replace(',', '.'),
+                    'ask_rate': line.get('prodajni_tecaj').replace(',', '.'),
+                }
             self.updated_currency['data'][rate_name] = data
         return self.updated_currency
 

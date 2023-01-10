@@ -726,10 +726,10 @@ class l10n_hr_pdvzp_line(osv.Model):
         'obrazac':fields.many2one('l10n.hr.porez','Obrazac'),
         'partner_id':fields.many2one('res.partner','Partner'),
         'dobra':fields.float('Dobra', digits_compute=dp.get_precision('Account'), 
-                             help="Vrijednost isporuke dobara u HRK"),
+                             help="Vrijednost isporuke dobara u EUR"),
         'dobra_4263':fields.float('Dobra (42,63)', digits_compute=dp.get_precision('Account'),
-                             help="Vrijednost isporuke dobara u postupcima 42 i 63 u HRK"),
+                             help="Vrijednost isporuke dobara u postupcima 42 i 63 u EUR"),
         'dobra_tro':fields.float('Dobra (trostrano)', digits_compute=dp.get_precision('Account'),
-                             help="Vrijednost isporuke dobara u okviru trostranog posla u HRK"),
+                             help="Vrijednost isporuke dobara u okviru trostranog posla u EUR"),
         'usluge':fields.float('Usluge', digits_compute=dp.get_precision('Account'))
     }  
