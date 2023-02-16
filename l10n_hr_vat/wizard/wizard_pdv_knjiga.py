@@ -162,7 +162,7 @@ class pdv_knjiga(orm.TransientModel):
                 form.company_id.responsible_lname)),
             'format': 'text/xml',
             'jezik': 'hr-HR',
-            'uskladjenost': 'ObrazacURA-v1-0',
+            'uskladjenost': 'ObrazacURA-v2-0',
             'tip': u'Elektronički obrazac',
             'adresant': 'Ministarstvo Financija, Porezna uprava, Zagreb'
         })
@@ -211,39 +211,41 @@ class pdv_knjiga(orm.TransientModel):
                 EM.R5(partner_r5),
                 EM.R6(line['vat_type']),
                 EM.R7(line['partner_oib'].lstrip().rstrip()),
-                EM.R8(decimal_num(line['stupac6'])),
-                EM.R9(decimal_num(line['stupac7'])),
-                EM.R10(decimal_num(line['stupac8'])),
-                EM.R11(decimal_num(line['stupac9'])),
-                EM.R12(decimal_num(line['stupac10'])),
-                EM.R13(decimal_num(line['stupac11'])),
-                EM.R14(decimal_num(line['stupac12'])),
-                EM.R15(decimal_num(line['stupac13'])),
-                EM.R16(decimal_num(line['stupac14'])),
-                EM.R17(decimal_num(line['stupac15'])),
-                EM.R18(decimal_num(line['stupac16'])),
+                EM.R19(decimal_num(line['stupac6'])),
+                EM.R8(decimal_num(line['stupac7'])),
+                EM.R9(decimal_num(line['stupac8'])),
+                EM.R10(decimal_num(line['stupac9'])),
+                EM.R11(decimal_num(line['stupac10'])),
+                EM.R12(decimal_num(line['stupac11'])),
+                EM.R13(decimal_num(line['stupac12'])),
+                EM.R14(decimal_num(line['stupac13'])),
+                EM.R15(decimal_num(line['stupac14'])),
+                EM.R16(decimal_num(line['stupac15'])),
+                EM.R17(decimal_num(line['stupac16'])),
+                EM.R18(decimal_num(line['stupac17'])),
             ))
 
         Racuni = EM.Racuni(EM.R)
         Racuni.R = racuni
         Ukupno = EM.Ukupno(
-            EM.U8(decimal_num(total['stupac6'])),
-            EM.U9(decimal_num(total['stupac7'])),
-            EM.U10(decimal_num(total['stupac8'])),
-            EM.U11(decimal_num(total['stupac9'])),
-            EM.U12(decimal_num(total['stupac10'])),
-            EM.U13(decimal_num(total['stupac11'])),
-            EM.U14(decimal_num(total['stupac12'])),
-            EM.U15(decimal_num(total['stupac13'])),
-            EM.U16(decimal_num(total['stupac14'])),
-            EM.U17(decimal_num(total['stupac15'])),
-            EM.U18(decimal_num(total['stupac16'])),
+            EM.U19(decimal_num(total.get('stupac6', 0.0) or 0.0)),
+            EM.U8(decimal_num(total.get('stupac7', 0.0) or 0.0)),
+            EM.U9(decimal_num(total.get('stupac8', 0.0) or 0.0)),
+            EM.U10(decimal_num(total.get('stupac9', 0.0) or 0.0)),
+            EM.U11(decimal_num(total.get('stupac10', 0.0) or 0.0)),
+            EM.U12(decimal_num(total.get('stupac11', 0.0) or 0.0)),
+            EM.U13(decimal_num(total.get('stupac12', 0.0) or 0.0)),
+            EM.U14(decimal_num(total.get('stupac13', 0.0) or 0.0)),
+            EM.U15(decimal_num(total.get('stupac14', 0.0) or 0.0)),
+            EM.U16(decimal_num(total.get('stupac15', 0.0) or 0.0)),
+            EM.U17(decimal_num(total.get('stupac16', 0.0) or 0.0)),
+            EM.U18(decimal_num(total.get('stupac17', 0.0) or 0.0)),
         )
         tijelo = EM.Tijelo(Racuni, Ukupno)
         PDV = objectify.ElementMaker(
-            namespace='http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacURA/v1-0',
+            namespace='http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacURA/v2-0',
         )
-        obrazac = PDV.ObrazacURA(metadata, zaglavlje, tijelo, verzijaSheme='1.0')
+        obrazac = PDV.ObrazacURA(metadata, zaglavlje, tijelo, verzijaSheme='2.0')
         pdv_xml = xml_common.etree_tostring(self, obrazac)
         pdv_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' + pdv_xml
         # print pdv_xml
@@ -254,7 +256,7 @@ class pdv_knjiga(orm.TransientModel):
         xml = {
             'path': file_path,
             'xsd_path': 'shema/URA',
-            'xsd_name': 'ObrazacURA-v1-0.xsd',
+            'xsd_name': 'ObrazacURA-v2-0.xsd',
             'xml': pdv_xml
         }
         valid = xml_common.validate_xml(self, xml)
