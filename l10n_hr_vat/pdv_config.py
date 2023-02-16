@@ -233,7 +233,8 @@ class l10n_hr_pdv_report_knjiga(osv.osv):
             ('20','Stupac 20'), 
             ('21','Stupac 21'), 
             ('22','Stupac 22'),                                         
-            ],'Pozicija', select=True, required=True),               
+            ('23','Stupac 23'),
+            ],'Pozicija', select=True, required=True),
         'line_ids': fields.one2many('l10n_hr_pdv.report.knjiga.stavka', 'report_knjiga_id', 'Stavke poreza'),                
     }
 

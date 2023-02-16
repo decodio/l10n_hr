@@ -148,7 +148,7 @@ class Parser(report_sxw.rml_parse):
         return name
        
     def _get_lines(self, data):
-        stupci = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+        stupci = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
         row_start_values_sql = """rbr AS rbr, 
             --invoice.number AS invoice_number, 
             --invoice.date_invoice AS invoice_date,
@@ -165,7 +165,7 @@ class Parser(report_sxw.rml_parse):
             rbr, invoice_number, invoice_date, partner_name, partner_oib,
             stupac6, stupac7, stupac8, stupac9, stupac10, stupac11, stupac12,
             stupac13, stupac14, stupac15, stupac16, stupac17, stupac18, stupac19,
-            stupac20, stupac21, stupac22) """
+            stupac20, stupac21, stupac22, stupac23) """
         return get_vat_book_report_common().get_lines(self, data, stupci, row_start_values_sql, invoice_sql='', insert_sql=insert_sql)
 
 
@@ -193,7 +193,8 @@ class Parser(report_sxw.rml_parse):
                   stupac19 numeric,
                   stupac20 numeric,
                   stupac21 numeric,
-                  stupac22 numeric
+                  stupac22 numeric,
+                  stupac23 numeric
                 )
                 ON COMMIT DROP;
 
