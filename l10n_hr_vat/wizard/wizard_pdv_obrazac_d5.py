@@ -142,6 +142,7 @@ class pdv_obrazac(orm.TransientModel):
                     EM.Podatak108("%.2f" % (self._get_value(cr, uid, datas, 'I8', 1) or 0)),
                     EM.Podatak109("%.2f" % (self._get_value(cr, uid, datas, 'I9', 1) or 0)),
                     EM.Podatak110("%.2f" % (self._get_value(cr, uid, datas, 'I10', 1) or 0)),
+                    EM.Podatak111("%.2f" % (self._get_value(cr, uid, datas, 'I11', 1) or 0)),
                     EM.Podatak200(EM.Vrijednost("%.2f" % (self._get_value(cr, uid, datas, 'II', 1) or 0)), EM.Porez("%.2f" % (self._get_value(cr, uid, datas, 'II', 2) or 0))),
                     EM.Podatak201(EM.Vrijednost("%.2f" % (self._get_value(cr, uid, datas, 'II1', 1) or 0)), EM.Porez("%.2f" % (self._get_value(cr, uid, datas, 'II1', 2) or 0))),
                     EM.Podatak202(EM.Vrijednost("%.2f" % (self._get_value(cr, uid, datas, 'II2', 1) or 0)), EM.Porez("%.2f" % (self._get_value(cr, uid, datas, 'II2', 1) or 0))),
@@ -176,39 +177,33 @@ class pdv_obrazac(orm.TransientModel):
                     EM.Podatak315("%.2f" % (self._get_value(cr, uid, datas, 'III15', 2) or 0)),
                     EM.Podatak400("%.2f" % abs((self._get_value(cr, uid, datas, 'IV', 2) or 0))),
                     EM.Podatak500("%.2f" % abs((self._get_value(cr, uid, datas, 'V', 2) or 0))),
-                    EM.Podatak600("%.2f" % abs((self._get_value(cr, uid, datas, 'VI', 2) or 0))),
-                    EM.Podatak700(0.0),
-                    EM.Podatak810("%.2f" % (self._get_value(cr, uid, datas, 'VIII1', 1) or 0)),
-                    EM.Podatak811("%.2f" % (self._get_value(cr, uid, datas, 'VIII11', 1) or 0)),
-                    EM.Podatak812("%.2f" % (self._get_value(cr, uid, datas, 'VIII12', 1) or 0)),
-                    EM.Podatak813("%.2f" % (self._get_value(cr, uid, datas, 'VIII13', 1) or 0)),
-                    EM.Podatak814("%.2f" % (self._get_value(cr, uid, datas, 'VIII14', 1) or 0)),
-                    EM.Podatak815("%.2f" % (self._get_value(cr, uid, datas, 'VIII15', 1) or 0)),
-                    EM.Podatak820("%.2f" % (self._get_value(cr, uid, datas, 'VIII2', 1) or 0)),
-                    EM.Podatak830("%.2f" % (self._get_value(cr, uid, datas, 'VIII3', 1) or 0)),
-                    EM.Podatak831(EM.Vrijednost("%.2f" % (self._get_value(cr, uid, datas, 'VIII31', 1) or 0)), EM.Broj(0)),
-                    EM.Podatak832(EM.Vrijednost("%.2f" % (self._get_value(cr, uid, datas, 'VIII32', 1) or 0)), EM.Broj(0)),
-                    EM.Podatak833(EM.Vrijednost("%.2f" % (self._get_value(cr, uid, datas, 'VIII33', 1) or 0)), EM.Broj(0)),
-                    EM.Podatak840("%.2f" % (self._get_value(cr, uid, datas, 'VIII4', 1) or 0)),
-                    EM.Podatak850("%.2f" % (self._get_value(cr, uid, datas, 'VIII5', 1) or 0)),
-                    EM.Podatak860("%.2f" % (self._get_value(cr, uid, datas, 'VIII6', 1) or 0)),
-                    EM.Podatak870(False)                                                                             
+                    EM.Podatak610("%.2f" % (self._get_value(cr, uid, datas, 'VI1', 1) or 0)),
+                    EM.Podatak611("%.2f" % (self._get_value(cr, uid, datas, 'VI11', 1) or 0)),
+                    EM.Podatak612("%.2f" % (self._get_value(cr, uid, datas, 'VI12', 1) or 0)),
+                    EM.Podatak613("%.2f" % (self._get_value(cr, uid, datas, 'VI13', 1) or 0)),
+                    EM.Podatak614("%.2f" % (self._get_value(cr, uid, datas, 'VI14', 1) or 0)),
+                    EM.Podatak615("%.2f" % (self._get_value(cr, uid, datas, 'VI15', 1) or 0)),
+                    EM.Podatak620("%.2f" % (self._get_value(cr, uid, datas, 'VI2', 1) or 0)),
+                    EM.Podatak630("%.2f" % (self._get_value(cr, uid, datas, 'VI3', 1) or 0)),
+                    EM.Podatak640("%.2f" % (self._get_value(cr, uid, datas, 'VI4', 1) or 0)),
+                    EM.Podatak650("%.2f" % (self._get_value(cr, uid, datas, 'VI5', 1) or 0)),
+                    EM.Podatak660(False)
                     )        
 
         author, company, metadata = rc.get_common_data(self, cr, uid, datas)
 
         metadata['naslov']= u"Prijava poreza na dodanu vrijednost"   #template.xsd_id.title
-        metadata['uskladjenost'] = u'ObrazacPDV-v9-0'                #template.xsd_id.name
+        metadata['uskladjenost'] = u'ObrazacPDV-v10-0'                #template.xsd_id.name
 
         xml_metadata, uuid = rc.create_xml_metadata(self, metadata)
         xml_header = rc.create_xml_header(self, period, company, author)
 
-        OBRAZACPDV = objectify.ElementMaker(annotate=False, namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPDV/v9-0")   #template.xsd_id.namespace)
-        obrazacpdv = OBRAZACPDV.ObrazacPDV(xml_metadata, xml_header, tijelo, verzijaSheme="9.0" )   #template.xsd_id.version)
+        OBRAZACPDV = objectify.ElementMaker(annotate=False, namespace="http://e-porezna.porezna-uprava.hr/sheme/zahtjevi/ObrazacPDV/v10-0")   #template.xsd_id.namespace)
+        obrazacpdv = OBRAZACPDV.ObrazacPDV(xml_metadata, xml_header, tijelo, verzijaSheme="10.0" )   #template.xsd_id.version)
 
         xml = {'xml': rc.etree_tostring(self, obrazacpdv),
-               'xsd_path':'shema/PDV2015', # template data
-               'xsd_name':'ObrazacPDV-v9-0.xsd'}
+               'xsd_path':'shema/PDV2023', # template data
+               'xsd_name':'ObrazacPDV-v10-0.xsd'}
         xml['path'] = os.path.dirname(os.path.abspath(__file__))
 
         validate = rc.validate_xml(self, xml)

@@ -208,11 +208,11 @@
         </td>
         <td>
           <para style="P10">VRIJEDNOST ISPORUKE</para>
-          <para style="P15">(iznos u kunama i lipama)</para>
+          <para style="P15">(iznos u eurima i centima)</para>
         </td>
         <td>
           <para style="P10">PDV PO STOPI 5%, 13% i 25%</para>
-          <para style="P15">(u kunama i lipama)</para>
+          <para style="P15">(iznos u eurima i centima)</para>
         </td>
       </tr>
       <tr>
@@ -727,34 +727,11 @@
           <para style="P17">[[ formatLang(get_value(data,'IV',2) or 0.0) ]]</para>
         </td>
       </tr>
+    </blockTable>
+    <blockTable colWidths="300.0,120.0,147.0" style="Table6">
       <tr>
         <td>
-          <para style="P11">V. PO PRETHODNOM OBRACUNU: NEUPLACENI PDV DO DANA</para>
-          <para style="P11">PODNOSENJA OVE PRIJAVE - VISE UPLACENO - POREZNI KREDIT</para>
-        </td>
-        <td>
-          <para style="P17">X X X X</para>
-        </td>
-        <td>
-          <para style="P17">[[ formatLang(get_value(data,'V',2) or 0.0) ]]</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P11">VI. UKUPNO RAZLIKA: ZA UPLATE/ZA POVRAT</para>
-        </td>
-        <td>
-          <para style="P17">X X X X</para>
-        </td>
-        <td>
-          <para style="P17">[[ formatLang(get_value(data,'VI',2) or 0.0) ]]</para>
-        </td>
-      </tr>
-      </blockTable>
-      <blockTable colWidths="300.0,120.0,147.0" style="Table6">
-      <tr>
-        <td>
-          <para style="P11">VII. IZNOS GODISNJEG RAZMJERNOG ODBITKA PRETPOREZA (%)</para>         
+          <para style="P11">V. IZNOS GODISNJEG RAZMJERNOG ODBITKA PRETPOREZA (%)</para>
         </td>
         <td>
           <para style="P17"></para>
@@ -773,7 +750,8 @@
           <para style="P12">OPIS</para>         
         </td>
         <td>
-          <para style="P12">VRIJEDNOST ISPORUKE U KUNAMA I LIPAMA</para>
+          <para style="P12">VRIJEDNOST ISPORUKE</para>
+          <para style="P15">IZNOS U EURIMA I CENTIMA</para>
         </td>
         <td>
           <para style="P17"></para>
@@ -783,7 +761,7 @@
      <blockTable colWidths="300.0,120.0,147.0" style="Table6">
       <tr>
         <td>
-          <para style="P11">VIII. OSTALI PODACI</para>         
+          <para style="P11">VI. OSTALI PODACI</para>
         </td>
         <td>
           <para style="P17"></para>
@@ -794,11 +772,11 @@
       </tr> 
       <tr>
         <td>
-          <para style="P11">ZA ISPRAVAK PRETPOREZA</para>
+          <para style="P11">1. ZA ISPRAVAK PRETPOREZA</para>
           <para style="P11">(UKUPNO 1.1.+1.2.+1.3.+1.4.+1.5.)</para>          
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII1',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI1',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -809,7 +787,7 @@
           <para style="P12">  1.1 NABAVA NEKRETNINA</para>         
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII11',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI11',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -820,7 +798,7 @@
           <para style="P12">  1.2 NABAVA OSOBNIH AUTOMOBILA I DRUGIH SREDSTAVA ZA OSOBNI PRIJEVOZ</para>         
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII12',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI12',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -831,7 +809,7 @@
           <para style="P12">  1.3 PRODAJA OSOBNIH AUTOMOBILA I DRUGIH SREDSTAVA ZA OSOBNI PRIJEVOZ</para>         
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII13',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI13',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -842,7 +820,7 @@
           <para style="P12">  1.4 NABAVA DUGOTRAJNE IMOVINE</para>         
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII14',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI14',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -853,7 +831,7 @@
           <para style="P12">  1.5 PRODAJA DUGOTRAJNE IMOVINE</para>         
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII15',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI15',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -865,76 +843,21 @@
           <para style="P11">CJELINE ILI POGONA</para>          
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII2',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI2',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
         </td>
       </tr>
-      <tr>
-        <td>
-          <para style="P11">3. ISPORUKA NEKRETNINA</para>       
-        </td>
-        <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII3',1) or 0.0) ]]</para>
-        </td>
-        <td>
-          <para style="P14"></para>
-        </td>
-      </tr>
-    </blockTable>    
-    <blockTable colWidths="300.0,120.0,80.0, 67.0" style="Table2">     
-      <tr>
-        <td>
-          <para style="P12">  3.1. ISPORUKE IZ CLANKA 40. STAVKA 1. I TOCAKA J) I K) ZAKONA</para>         
-        </td>
-        <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII31',1) or 0.0) ]]</para>
-        </td>
-        <td>
-          <para style="P12"> BROJ NEKRETNINA</para>
-        </td>        
-        <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII32',2) or 0) ]]</para>
-        </td>
-      </tr>  
-      <tr>
-        <td>
-          <para style="P12">  3.2 ISPORUKE IZ CLANKA 40. STAVKA 4. ZAKONA</para>         
-        </td>
-        <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII32',1) or 0.0) ]]</para>
-        </td>
-        <td>
-          <para style="P12"> BROJ NEKRETNINA</para>
-        </td>         
-        <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII32',2) or 0) ]]</para>
-        </td>
-      </tr> 
-      <tr>
-        <td>
-          <para style="P12">  3.3 ISPORUKA NEKRETNINA KOJE SU OPOREZIVE PDV-om</para>         
-        </td>
-        <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII33',1) or 0.0) ]]</para>
-        </td>
-        <td>
-          <para style="P12"> BROJ NEKRETNINA</para>
-        </td>         
-        <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII32',2) or 0) ]]</para>
-        </td>
-      </tr> 
-    </blockTable> 
+    </blockTable>
     <blockTable colWidths="300.0,120.0,147.0" style="Table6">        
       <tr>
         <td>
-          <para style="P11">4. UKUPNO PRIMLJENE USLUGE OD POREZNIH OBVEZNIKA BEZ</para>
+          <para style="P11">3. UKUPNO PRIMLJENE USLUGE OD POREZNIH OBVEZNIKA BEZ</para>
           <para style="P11">SJEDISTA U RH (EU + TRECE ZEMLJE)</para>          
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII4',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI3',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -942,11 +865,11 @@
       </tr>
       <tr>
         <td>
-          <para style="P11">5. UKUPNO OBAVLJENE USLUGE POREZNIM OBVEZNICIMA BEZ</para>
+          <para style="P11">4. UKUPNO OBAVLJENE USLUGE POREZNIM OBVEZNICIMA BEZ</para>
           <para style="P11">SJEDISTA U RH (EU + TRECE ZEMLJE)</para>          
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII5',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI4',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -954,10 +877,10 @@
       </tr>  
       <tr>
         <td>
-          <para style="P11">6. PRIMLJENA DOBRA IZ EU U OKVIRU TROSTRANOG POSLA</para>       
+          <para style="P11">5. PRIMLJENA DOBRA IZ EU U OKVIRU TROSTRANOG POSLA</para>
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII6',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI5',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -965,10 +888,10 @@
       </tr>
       <tr>
         <td>
-          <para style="P11">7. POSTUPAK OPOREZIVANJA PREMA NAPLAĆENIM NAKNADAMA</para>       
+          <para style="P11">6. POSTUPAK OPOREZIVANJA PREMA NAPLAĆENIM NAKNADAMA</para>
         </td>
         <td>
-          <para style="P14">[[ formatLang(get_value(data,'VIII7',1) or 0.0) ]]</para>
+          <para style="P14">[[ formatLang(get_value(data,'VI6',1) or 0.0) ]]</para>
         </td>
         <td>
           <para style="P14"></para>
@@ -1009,6 +932,25 @@
       <font face="Helvetica"/>
     </para>
     <blockTable colWidths="80.0,100.0,80.0,100.0,80.0,100.0" style="Table3">
+      <tr>
+        <td colspan="2">
+          <para style="P15">BROJ RAČUNA ZA POVRAT</para>
+        </td>
+        <td></td>
+        <td>
+          <para style="P15">
+            <font color="white"> </font>
+          </para>
+          <para style="P15">_________________________________________________</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P15">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
       <tr>
         <td>
           <para style="P15">OBRACUN SASTAVIO</para>
