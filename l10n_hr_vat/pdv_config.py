@@ -77,6 +77,7 @@ class l10n_hr_pdv_report_obrazac(osv.osv):
             ('I8','Redak (I.8)'),
             ('I9','Redak (I.9)'), 
             ('I10','Redak (I.10)'),                                                                                 
+            ('I11','Redak (I.11)'),
             ('II','Redak (II)'),
             ('II1','Redak (II.1)'),         
             ('II2','Redak (II.2)'),
