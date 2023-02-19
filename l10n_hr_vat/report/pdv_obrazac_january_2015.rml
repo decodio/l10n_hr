@@ -349,7 +349,18 @@
         <td>
           <para style="P14">X X X X</para>
         </td>
-      </tr>                 
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">11. ISPORUKE PO STOPI 0%</para>
+        </td>
+        <td>
+          <para style="P14">[[ formatLang(get_value(data,'I11',1) or 0.0) ]]</para>
+        </td>
+        <td>
+          <para style="P14">X X X X</para>
+        </td>
+      </tr>
       <tr>
         <td>
           <para style="P11">II. OPOREZIVE TRANSAKCIJE - UKUPNO</para>
@@ -476,7 +487,7 @@
       <tr>
         <td>
           <para style="P12">11. PRIMLJENE ISPORUKE DOBARA I USLUGA OD</para>
-          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH PO STOPI 5%</para>          
+          <para style="P12">POREZNIH OBVEZNIKA BEZ SJEDISTA U RH PO STOPI 0% i 5%</para>
         </td>
         <td>
           <para style="P14">[[ formatLang(get_value(data,'II11',1) or 0.0) ]]</para>
@@ -907,13 +918,13 @@
     <blockTable colWidths="189.0,189.0,189.0" style="Table4">  
       <tr>   
         <td>
-          <para style="P15"> O ________________ kn </para>
+          <para style="P15"> O ________________ eura </para>
         </td>
         <td>       
-          <para style="P15"> O ________________ kn </para>
+          <para style="P15"> O ________________ eura </para>
         </td>
         <td>
-          <para style="P15"> O ________________ kn </para>
+          <para style="P15"> O ________________ eura </para>
         </td>
       </tr>
       <tr>   
