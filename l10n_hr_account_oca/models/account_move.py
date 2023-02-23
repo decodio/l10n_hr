@@ -78,9 +78,20 @@ class AccountMove(models.Model):
                     invoice.name = invoice.supplier_invoice_number
             if not invoice.fiskalni_broj:
                 raise UserError(_("Fiscal Invoice number is missing!"))
-
+        partner = self.partner_id or invoice.partner_id
         self.write({'fiskalni_broj': invoice.fiskalni_broj,
                     'date_invoice': invoice.date_invoice,
                     'invoice_id': invoice.id,
+                    'partner_id': partner.id,
                     })
         return res
+
+    @api.multi
+    @api.depends('line_ids.partner_id')
+    def _compute_partner_id(self):
+        for move in self:
+            super(AccountMove, move)._compute_partner_id()
+            if not move.partner_id:
+                partner = move.line_ids.mapped('partner_id')
+                if len(partner) > 1:  # find related invoice and use partner_id from invoice
+                    move.partner_id = move.invoice_id and move.invoice_id.partner_id.id or False
