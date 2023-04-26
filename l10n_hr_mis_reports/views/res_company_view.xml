@@ -11,6 +11,8 @@
                     <group string="XLSX Templates" name="xlsx_templates">
                         <field name="gfi_pod_xlsx_template_file_name" invisible="1"/>
                         <field name="gfi_pod_xlsx_template_file" filename="gfi_pod_xlsx_template_file_name"/>
+                        <field name="pd_report_xlsx_template_file_name" invisible="1"/>
+                        <field name="pd_report_xlsx_template_file" filename="pd_report_xlsx_template_file_name"/>
                     </group>
                 </xpath>
             </field>

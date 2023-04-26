@@ -6,6 +6,7 @@
         <field name="model">mis.report</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='kpi_ids']/tree/field[@name='type']" position="after">
+                <field name="report_sheet"/>
                 <field name="report_position"/>
             </xpath>
         </field>
