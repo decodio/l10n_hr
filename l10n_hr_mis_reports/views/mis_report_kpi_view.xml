@@ -1,12 +1,14 @@
 <odoo>
 
-    <record id="mis_report_view_kpi_form_add_report_position" model="ir.ui.view">
-        <field name="name">mis_report_view_kpi_form_add_report_position</field>
+    <record id="mis_report_view_kpi_form_add_report_sheet_and_position" model="ir.ui.view">
+        <field name="name">mis_report_view_kpi_form_add_report_sheet_and_position</field>
         <field name="inherit_id" ref="mis_builder.mis_report_view_kpi_form"/>
         <field name="model">mis.report.kpi</field>
         <field name="arch" type="xml">
-            <xpath expr="//form/group/field[@name='type']" position="after">
+            <xpath expr="//form/group/field[@name='compare_method']" position="before">
+                <field name="report_sheet"/>
                 <field name="report_position"/>
+                <newline/>
             </xpath>
         </field>
     </record>

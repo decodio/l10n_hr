@@ -8,8 +8,10 @@
             <form>
                 <sheet>
                     <group attrs="{'invisible': [('out_xls', '!=', False)]}">
-                        <field name="balance_sheet_mis_report_id" options="{'no_open': True, 'no_create_edit': True}"/>
-                        <field name="profit_loss_mis_report_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                        <field name="balance_sheet_mis_report_id" domain="[('l10n_hr_report_type', '=', 'gfi_pod')]"
+                               options="{'no_open': True, 'no_create_edit': True}"/>
+                        <field name="profit_loss_mis_report_id" domain="[('l10n_hr_report_type', '=', 'gfi_pod')]"
+                               options="{'no_open': True, 'no_create_edit': True}"/>
                     </group>
                     <field name="name" invisible="1"/>
                     <div attrs="{'invisible': [('out_xls', '=', False)]}">
