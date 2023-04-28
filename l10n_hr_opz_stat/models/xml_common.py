@@ -6,11 +6,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, exceptions, _
 from odoo.exceptions import except_orm
 from lxml import objectify, etree
-
-try:
-    from cStringIO import StringIO
-except:
-    from StringIO import StringIO
+from odoo.tools import float_is_zero, float_round, file_open
+from io import StringIO, BytesIO
 
 
 def get_zagreb_datetime():
@@ -95,7 +92,7 @@ def get_common_data(self, cr, uid, data, context=None):
         and company.partner_id.email
         or False,
         "tel": _check_valid_phone(self, company.responsible_tel),
-        "fax": _check_valid_phone(self, company.partner_id.fax),
+        "fax": _check_valid_phone(self, company.phone),  # partner_id.fax),
     }
     metadata = {
         "autor": " ".join(
@@ -152,8 +149,8 @@ def create_xml_metadata(self, metadata):
 def create_xml_header(self, period, company, author):
     unpaid_to = (
         (
-            datetime.strptime(period["date_stop"], "%Y-%m-%d")
-            + relativedelta(months=1)
+            # datetime.strptime(period["date_stop"], "%Y-%m-%d")
+                period["date_stop"] + relativedelta(months=1)
         )
         + relativedelta(day=1, months=+1, days=-1)
     ).strftime("%Y-%m-%d")
@@ -190,20 +187,49 @@ def etree_tostring(self, object):
     objectify.deannotate(object)
     return (
         etree.tostring(object, pretty_print=True)
-        .replace("ns0:", "")
-        .replace(":ns0", "")
+        .replace(b"ns0:", b"")
+        .replace(b":ns0", b"")
     )
 
 
 def validate_xml(self, xml):
-    xsd_path = os.path.join(xml["path"], xml["xsd_path"])
-    os.chdir(xsd_path)
-    xsd_file = os.path.join(xsd_path, xml["xsd_name"])
-    xsd = StringIO(open(xsd_file, "r").read())
-    xml_schema = etree.XMLSchema(etree.parse(xsd))
+    xsd_file = 'l10n_hr_opz_stat/models/schema/opz_stat_xml_v1.0/ObrazacOPZ-v1-0.xsd'
+    xsd_etree_obj = etree.parse(file_open(xsd_file))
+    official_schema = etree.XMLSchema(xsd_etree_obj)
     try:
-        # print xml['xml']  # test xml printout to console
-        xml_schema.assert_(etree.parse(StringIO(xml["xml"])))
+        t = etree.parse(BytesIO(xml["xml"]))
+        official_schema.assertValid(t)
     except AssertionError as E:
         raise except_orm(u"Greška u podacima", E[0])
     return True
+
+
+#     xsd_path = os.path.join(xml["path"], xml["xsd_path"])
+#     os.chdir(xsd_path)
+#     xsd_file = os.path.join(xsd_path, xml["xsd_name"])
+#     xsd = StringIO(open(xsd_file, "r").read())
+#
+#     xml_schema = etree.XMLSchema(etree.parse(xsd))
+#     #xml_schema = etree.parse(StringIO.BytesIO(xsd_file))  etree.XMLSchema(etree.fromstring(xsd))
+#     try:
+#         # print xml['xml']  # test xml printout to console
+#         xml_schema.assert_(etree.parse(StringIO(xml["xml"])))
+#     except AssertionError as E:
+#         raise except_orm(u"Greška u podacima", E[0])
+#     return True
+#
+# xsd_file = 'l10n_hr_opz_stat/models/schema/opz_stat_xml_v1.0/ObrazacOPZ-v1-0.xsd'
+# fx = file_open(xsd_file)
+# xsd_etree_obj = etree.parse(file_open(xsd_file))
+# official_schema = etree.XMLSchema(xsd_etree_obj)
+# try:
+#     t = etree.parse(BytesIO(xml["xml"]))
+#     official_schema.assertValid(t)
+#
+#
+# # xsd_etree_obj = etree.parse(file_open(xsd_file))
+# # official_schema = etree.XMLSchema(xsd_etree_obj)
+# # try:
+# #     t = etree.parse(BytesIO(xml_string))
+# #     official_schema.assertValid(t)
+# # except Exception as e:
