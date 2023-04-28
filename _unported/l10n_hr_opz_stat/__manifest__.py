@@ -29,21 +29,20 @@ Croatian localisation.
 ======================
 
 """,
-    "version": "8.3.1",
+    "version": "12.0.1.0.0",
     "author": "Slobodni programi",
-    "category": 'Localization',
+    "category": "Localization",
     "website": "",
-
-    'depends': [
-                'account_base',
-                ],
-    'data': [
-                'views/opz_stat_view.xml',
-                'views/account_view.xml',
-                'security/ir.model.access.csv',
-            ],
+    "depends": [
+        "account_base",
+    ],
+    "data": [
+        "views/opz_stat_view.xml",
+        "views/account_view.xml",
+        "security/ir.model.access.csv",
+    ],
     "demo": [],
-    'test': [],
+    "test": [],
     "active": False,
     "installable": True,
 }
