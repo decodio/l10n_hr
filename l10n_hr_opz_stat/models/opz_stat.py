@@ -1,33 +1,14 @@
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2016 Decodio
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 
 from odoo import models, fields, api, _
+from odoo.addons import decimal_precision as dp
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from lxml import objectify
 import os
 import base64
-import xml_common as rc
+from . import xml_common as rc
 import time
-from odoo.modules.module import get_module_resource
-
+from odoo.modules.module import get_resource_path
 # from odoo.exceptions import except_orm, ValidationError, Warning, RedirectWarning
 
 
@@ -72,12 +53,11 @@ class OpzStat(models.Model):
     xml_file = fields.Binary("XML File", readonly=True)
     xml_filename = fields.Char("XML File Name", readonly=True)
 
-    def _auto_init(self, cr, context=None):
-        res = super(OpzStat, self)._auto_init(cr, context=context)
-        f = get_module_resource("l10n_hr_opz_stat", "sql", "oe_opz_stat.sql")
+    def _auto_init(self):
+        res = super(OpzStat, self)._auto_init()
+        f = get_resource_path("l10n_hr_opz_stat", "sql", "oe_opz_stat.sql")
         sql = open(f).read()
-        cr.execute(sql)
-
+        self._cr.execute(sql)
         return res
 
     @api.multi
@@ -220,9 +200,9 @@ class OpzStat(models.Model):
         # validate = True
         if validate:
             filename = "opz_stat_" + time.strftime("%Y-%m-%d") + ".xml"
-            data64 = base64.encodestring(xml["xml"].encode("windows-1250"))
+            opz_xml = b'<?xml version="1.0" encoding="UTF-8"?>\n' + xml["xml"]
+            data64 = base64.b64encode(opz_xml)
             self.write({"xml_file": data64, "xml_filename": filename})
-
         self.state = "done"
         return False
 
@@ -308,17 +288,17 @@ class OpzStatLine(models.Model):
         "Invoice",
         copy=True,
         domain="[('partner_id', '=', partner_id),"
-        " ('account_id.type', '=', 'receivable')]",
+        " ('account_id.internal_type', '=', 'receivable')]",
     )
     invoice_number = fields.Char("Invoice Number", required=True)
     invoice_date = fields.Date("Invoice Date", required=True)
     due_date = fields.Date("Due Date", required=True)
-    amount = fields.Float("Amount", required=True, defaults=0.0)
-    amount_tax = fields.Float("Amount Tax", required=True, defaults=0.0)
-    amount_total = fields.Float("Amount with Tax", required=True, defaults=0.0)
-    paid = fields.Float("Paid Amount", required=True, defaults=0.0)
-    unpaid = fields.Float("Unpaid Amount", required=True, defaults=0.0)
-    overdue_days = fields.Integer("Overdue Days", required=True, defaults=0)
+    amount = fields.Float("Amount", required=True, defaults=0.0, digits=dp.get_precision('Account'))
+    amount_tax = fields.Float("Amount Tax", required=True, defaults=0.0, digits=dp.get_precision('Account'))
+    amount_total = fields.Float("Amount with Tax", required=True, defaults=0.0, digits=dp.get_precision('Account'))
+    paid = fields.Float("Paid Amount", required=True, defaults=0.0, digits=dp.get_precision('Account'))
+    unpaid = fields.Float("Unpaid Amount", required=True, defaults=0.0, digits=dp.get_precision('Account'))
+    overdue_days = fields.Integer("Overdue Days", required=True, defaults=0, digits=dp.get_precision('Account'))
 
     @api.onchange("partner_id")
     def onchange_partner_id(self):
@@ -339,13 +319,11 @@ class OpzStatLine(models.Model):
         if self.invoice_id:
             overdue = (
                 (
-                    datetime.strptime(self.opz_id.date_to, "%Y-%m-%d")
-                    + relativedelta(months=1)
+                    # datetime.strptime(self.opz_id.date_to, "%Y-%m-%d")
+                    self.opz_id.date_to + relativedelta(months=1)
                 )
                 + relativedelta(day=1, months=+1, days=-1)
-            ).date() - datetime.strptime(
-                self.invoice_id.date_due, "%Y-%m-%d"
-            ).date()
+            ) - self.invoice_id.date_due  # - datetime.strptime(self.invoice_id.date_due, "%Y-%m-%d").date()
             self.invoice_number = self.invoice_id.number
             self.invoice_date = self.invoice_id.date_invoice
             self.due_date = self.invoice_id.date_due
@@ -362,11 +340,11 @@ class OpzStatLine(models.Model):
         if self.due_date:
             overdue = (
                 (
-                    datetime.strptime(self.opz_id.date_to, "%Y-%m-%d")
-                    + relativedelta(months=1)
+                    #  datetime.strptime(self.opz_id.date_to, "%Y-%m-%d")
+                    self.opz_id.date_to + relativedelta(months=1)
                 )
                 + relativedelta(day=1, months=+1, days=-1)
-            ).date() - datetime.strptime(self.due_date, "%Y-%m-%d").date()
+            ) - self.due_date  # .date() - datetime.strptime(self.due_date,"%Y-%m-%d").date()
             self.overdue_days = overdue.days
         else:
             self.overdue_days = False

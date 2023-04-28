@@ -13,10 +13,11 @@
                     <field name="date_to" string="Date To"/>
                     <separator/>
                     <group expand="0" string="Group By">
-                        <filter string="Status" context="{'group_by':'state'}"/>
+                        <filter string="Status" context="{'group_by':'state'}"
+                                name="group_by_status" />
                         <separator/>
-                        <filter string="Date From" context="{'group_by':'date_from'}"/>
-                        <filter string="Date To" context="{'group_by':'date_to'}"/>
+                        <filter string="Date From" context="{'group_by':'date_from'}" name="group_by_date_from"/>
+                        <filter string="Date To"   context="{'group_by':'date_to'}"   name="group_by_date_to"/>
                     </group>
                </search>
             </field>
@@ -46,17 +47,24 @@
                         <button name="compute" type="object" states="draft" string="Compute" class="oe_highlight" groups="account.group_account_manager"/>
                         <button name="set_to_confirmed" type="object" states="draft" string="Confirm" groups="account.group_account_manager"/>
                         <button name="set_to_draft" type="object" states="confirmed,done" string="Set to Draft" groups="account.group_account_manager"/>
-                        <!--<button name="print_report" type="object" states="draft,confirmed,done" string="Print" groups="account.group_account_manager"/>-->
+                        <!--X<button name="print_report" type="object" states="draft,confirmed,done" string="Print" groups="account.group_account_manager"/>-->
                         <button name="export_xml" type="object" states="confirmed" string="Export XML" groups="account.group_account_manager"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done" statusbar_colors='{"draft":"blue","done":"grey"}'/>
                 </header>
                 <sheet string="OPZ STAT report">
+<!--                    <div class="oe_title">-->
+<!--                        <h1>-->
+<!--                            <label string="OPZ STAT"/>-->
+<!--                            <field name="name" class="oe_inline"/>-->
+<!--                        </h1>-->
+<!--                    </div>-->
                     <div class="oe_title">
+                        <label for="name"/>
                         <h1>
-                            <label string="OPZ STAT"/>
-                            <field name="name" class="oe_inline"/>
+                            <field name="name" placeholder="Enter name"/>
                         </h1>
                     </div>
+
                     <group>
                         <group col="6">
                             <div>
@@ -115,13 +123,19 @@
             <field name="help">Create and print OPZ STAT statistical report for overdue payments.</field>
         </record>
 
-        <menuitem
-            name="OPZ STAT"
-            parent="account.next_id_22"
-            action="action_opz_stat_report"
-            groups="account.group_account_manager"
-            id="menu_opz_stat_report"
-            sequence="90"
-            icon="STOCK_PRINT"/>
+<!--        <menuitem-->
+<!--            name="OPZ STAT"-->
+<!--            parent="account.next_id_22"-->
+<!--            action="action_opz_stat_report"-->
+<!--            groups="account.group_account_manager"-->
+<!--            id="menu_opz_stat_report"-->
+<!--            sequence="90"-->
+<!--            icon="STOCK_PRINT"/>-->
+
+    <menuitem id="menu_opz_stat_report"
+              name="OPZ STAT"
+              action="action_opz_stat_report"
+              parent="account.menu_finance" sequence="900"
+              groups="account.group_account_invoice"/>
 
 </odoo>
