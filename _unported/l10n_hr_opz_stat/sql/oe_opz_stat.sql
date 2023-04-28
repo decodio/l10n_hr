@@ -114,7 +114,11 @@ WITH inv_data AS (
                --,oml.currency_rate::numeric
                --,oml.currency_id::int
                --,ROUND((oml.open_amount::numeric),2) as open_amount
-               ,oml.closed_amount::numeric
+               --,oml.closed_amount::numeric  - KGB FIX
+               ,ROUND((CASE WHEN oml.currency_rate != 0.0
+                    THEN oml.closed_amount / oml.currency_rate
+                    ELSE oml.closed_amount
+                END::numeric),2) as closed_amount  -- lcy_closed_amount
                --,oml.date_maturity::date
                --,oml.posting_date::date
               ,ROUND((CASE WHEN oml.currency_rate != 0.0

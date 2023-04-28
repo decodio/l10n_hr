@@ -20,9 +20,12 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
+from odoo import models, fields, api, _
+
 
 class account_account(models.Model):
     _inherit = "account.account"
 
-    exclude_from_opz_stat = fields.Boolean('Exclude from OPZ-STAT', default = False)
+    exclude_from_opz_stat = fields.Boolean(
+        "Exclude from OPZ-STAT", default=False
+    )
