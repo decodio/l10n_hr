@@ -7,9 +7,9 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="account.view_account_form"/>
             <field name="arch" type="xml">
-                <field name="active" position="after">
+                <xpath expr="//field[@name='deprecated']" position="after"> <!--   <field name="active" position="after">-->
                     <field name="exclude_from_opz_stat"/>
-                </field>
+                </xpath>
             </field>
         </record>
      
