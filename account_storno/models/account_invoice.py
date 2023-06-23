@@ -239,6 +239,8 @@ class AccountInvoice(models.Model):
         # taken from account invoice if it is set otherwise do not add it to
         # values because odoo will compute the partner_bank_id based on invoice
         # partner_id
-        if invoice.type in ('out_invoice', 'out_refund') and invoice.partner_bank_id:
+        # Make this a universal rule, no matter of invoice type if @partner_bank_id is defined make a refund
+        # on that account as well
+        if invoice.partner_bank_id:
             values['partner_bank_id'] = invoice.partner_bank_id.id
         return values
