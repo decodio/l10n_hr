@@ -35,7 +35,8 @@ class AccountInvoice(models.Model):
     def action_move_create(self):
         res = super().action_move_create()
         aml_obj = self.env['account.move.line']
-        for invoice in self:
+        # skip PDV check
+        for invoice in self.with_context(allow_account_change=True):
             advance_payment_move_lines = aml_obj
             for advance in invoice.advance_invoice_ids.filtered(lambda adv: adv.state in {'open', 'paid'}):
                 advance_move_line = advance.move_id.line_ids.filtered(
