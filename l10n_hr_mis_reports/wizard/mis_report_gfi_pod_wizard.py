@@ -47,8 +47,8 @@ class MisReportGFIPODWizard(models.TransientModel):
             if aop_position_cell:
                 report_position_data = data.get(aop_position_cell.value)
                 if report_position_data:
-                    previous_year_cell.value = int(float_round(report_position_data.get('previous'), precision_digits=0))
-                    current_year_cell.value = int(float_round(report_position_data.get('current'), precision_digits=0))
+                    previous_year_cell.value = round(float_round(report_position_data.get('previous'), precision_digits=2), 2)
+                    current_year_cell.value = round(float_round(report_position_data.get('current'), precision_digits=2), 2)
 
     @api.multi
     def _create_xls_report(self, company):
