@@ -1,5 +1,4 @@
 import uuid
-import os
 import pytz
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -8,6 +7,7 @@ from odoo.exceptions import except_orm
 from lxml import objectify, etree
 from odoo.tools import float_is_zero, float_round, file_open
 from io import StringIO, BytesIO
+from odoo.exceptions import Warning
 
 
 def get_zagreb_datetime():
@@ -89,8 +89,8 @@ def get_common_data(self, cr, uid, data, context=None):
         "zip": company.zip,
         "city": company.city,
         "email": company.partner_id.email
-        and company.partner_id.email
-        or False,
+                 and company.partner_id.email
+                 or False,
         "tel": _check_valid_phone(self, company.responsible_tel),
         "fax": _check_valid_phone(self, company.phone),  # partner_id.fax),
     }
@@ -142,17 +142,16 @@ def create_xml_metadata(self, metadata):
         MD.Tip(metadata["tip"], dc="http://purl.org/dc/elements/1.1/type"),
         MD.Adresant(metadata["adresant"]),
     )
-
     return md, identifikator
 
 
 def create_xml_header(self, period, company, author):
     unpaid_to = (
-        (
-            # datetime.strptime(period["date_stop"], "%Y-%m-%d")
-                period["date_stop"] + relativedelta(months=1)
-        )
-        + relativedelta(day=1, months=+1, days=-1)
+            (
+                # datetime.strptime(period["date_stop"], "%Y-%m-%d")
+                    period["date_stop"] + relativedelta(months=1)
+            )
+            + relativedelta(day=1, months=+1, days=-1)
     ).strftime("%Y-%m-%d")
     EM = objectify.ElementMaker(annotate=False)
     header = EM.Zaglavlje(
@@ -179,7 +178,6 @@ def create_xml_header(self, period, company, author):
         EM.NaDan(period["date_stop"]),
         EM.NisuNaplaceniDo(unpaid_to),
     )
-
     return header
 
 
@@ -199,37 +197,7 @@ def validate_xml(self, xml):
     try:
         t = etree.parse(BytesIO(xml["xml"]))
         official_schema.assertValid(t)
-    except AssertionError as E:
-        raise except_orm(u"Greška u podacima", E[0])
+    except Exception as E:
+        warning_str = u"Greška u podacima:\n %s" % repr(E)
+        raise Warning(warning_str)
     return True
-
-
-#     xsd_path = os.path.join(xml["path"], xml["xsd_path"])
-#     os.chdir(xsd_path)
-#     xsd_file = os.path.join(xsd_path, xml["xsd_name"])
-#     xsd = StringIO(open(xsd_file, "r").read())
-#
-#     xml_schema = etree.XMLSchema(etree.parse(xsd))
-#     #xml_schema = etree.parse(StringIO.BytesIO(xsd_file))  etree.XMLSchema(etree.fromstring(xsd))
-#     try:
-#         # print xml['xml']  # test xml printout to console
-#         xml_schema.assert_(etree.parse(StringIO(xml["xml"])))
-#     except AssertionError as E:
-#         raise except_orm(u"Greška u podacima", E[0])
-#     return True
-#
-# xsd_file = 'l10n_hr_opz_stat/models/schema/opz_stat_xml_v1.0/ObrazacOPZ-v1-0.xsd'
-# fx = file_open(xsd_file)
-# xsd_etree_obj = etree.parse(file_open(xsd_file))
-# official_schema = etree.XMLSchema(xsd_etree_obj)
-# try:
-#     t = etree.parse(BytesIO(xml["xml"]))
-#     official_schema.assertValid(t)
-#
-#
-# # xsd_etree_obj = etree.parse(file_open(xsd_file))
-# # official_schema = etree.XMLSchema(xsd_etree_obj)
-# # try:
-# #     t = etree.parse(BytesIO(xml_string))
-# #     official_schema.assertValid(t)
-# # except Exception as e:
