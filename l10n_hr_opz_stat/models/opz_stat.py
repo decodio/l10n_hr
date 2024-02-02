@@ -1,16 +1,10 @@
 
 from odoo import models, fields, api, _
-from odoo.addons import decimal_precision as dp
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from lxml import objectify
 import os
 import base64
 from . import xml_common as rc
-import time
 from odoo.modules.module import get_resource_path
-# from odoo.exceptions import except_orm, ValidationError, Warning, RedirectWarning
-
 
 class OpzStat(models.Model):
     _name = "opz.stat"
@@ -34,9 +28,7 @@ class OpzStat(models.Model):
         required=True,
         readonly=True,
         states={"draft": [("readonly", False)]},
-        default=lambda self: self.env["res.company"]._company_default_get(
-            "opz.stat"
-        ),
+        default=lambda self: self.env["res.company"]._company_default_get("opz.stat")
     )
     state = fields.Selection(
         [
@@ -52,6 +44,7 @@ class OpzStat(models.Model):
     )
     xml_file = fields.Binary("XML File", readonly=True)
     xml_filename = fields.Char("XML File Name", readonly=True)
+    skip_xml_validation = fields.Boolean("Skip XML validation", default=False)
 
     def _auto_init(self):
         res = super(OpzStat, self)._auto_init()
@@ -68,14 +61,12 @@ class OpzStat(models.Model):
                      _date_to      := '%(date_to)s'
                     ,_opz_id    := %(opz_id)s
                          )
-
            """ % {
             "date_to": self.date_to,
             "opz_id": self.id,
         }
-
         self._cr.execute(sql)
-        return False
+        return True
 
     @api.multi
     def set_to_confirmed(self):
@@ -189,53 +180,42 @@ class OpzStat(models.Model):
         obrazacopz_stat = OBRAZACOPZ.ObrazacOPZ(
             xml_metadata, xml_header, tijelo, verzijaSheme="1.0"
         )
-
-        xml = {
-            "xml": rc.etree_tostring(self, obrazacopz_stat),
-            "xsd_path": "schema/opz_stat_xml_v1.0",
-            "xsd_name": "ObrazacOPZ-v1-0.xsd",
-        }
-        xml["path"] = os.path.dirname(os.path.abspath(__file__))
-        validate = rc.validate_xml(self, xml)
-        # validate = True
-        if validate:
-            filename = "opz_stat_" + time.strftime("%Y-%m-%d") + ".xml"
-            opz_xml = b'<?xml version="1.0" encoding="UTF-8"?>\n' + xml["xml"]
-            data64 = base64.b64encode(opz_xml)
-            self.write({"xml_file": data64, "xml_filename": filename})
-        self.state = "done"
-        return False
+        xml = {"xml": rc.etree_tostring(self, obrazacopz_stat), "xsd_path": "schema/opz_stat_xml_v1.0",
+               "xsd_name": "ObrazacOPZ-v1-0.xsd", "path": os.path.dirname(os.path.abspath(__file__))}
+        if not self.skip_xml_validation:
+            rc.validate_xml(self, xml)
+        filename = "OPZ_STAT_%s.xml" % fields.Date.to_string(fields.Date.today())
+        opz_xml = b'<?xml version="1.0" encoding="UTF-8"?>\n' + xml["xml"]
+        data64 = base64.b64encode(opz_xml)
+        self.write({"xml_file": data64, "xml_filename": filename, "state": 'done'})
+        return True
 
     @api.multi
     def _get_partners(self):
-        partners = []
         sql = """
-                SELECT DISTINCT opzl.partner_id
-                                ,CASE WHEN opzl.partner_vat_type = 'vat' THEN 1
-                                      WHEN opzl.partner_vat_type = 'vatid' THEN 2
-                                      WHEN opzl.partner_vat_type = 'other' THEN 3
-                                END AS partner_vat_type
-                                ,opzl.partner_vat_number
-                                ,opzl.partner_name
-                                ,SUM(opzl.amount) AS partner_amount
-                                ,SUM(opzl.amount_tax) AS partner_amount_tax
-                                ,SUM(opzl.amount_total) AS partner_amount_total
-                                ,SUM(opzl.paid) AS partner_paid
-                                ,SUM(opzl.unpaid) AS partner_unpaid
-                 FROM opz_stat_line opzl
-                WHERE opzl.opz_id = %(opz_id)s
-               GROUP BY opzl.partner_id, opzl.partner_vat_type, opzl.partner_vat_number, opzl.partner_name
-              """ % {
-            "opz_id": self.id,
-        }
-
+            SELECT 
+                DISTINCT opzl.partner_id
+                ,CASE WHEN opzl.partner_vat_type = 'vat' THEN 1
+                      WHEN opzl.partner_vat_type = 'vatid' THEN 2
+                      WHEN opzl.partner_vat_type = 'other' THEN 3
+                END AS partner_vat_type
+                ,opzl.partner_vat_number
+                ,opzl.partner_name
+                ,SUM(opzl.amount) AS partner_amount
+                ,SUM(opzl.amount_tax) AS partner_amount_tax
+                ,SUM(opzl.amount_total) AS partner_amount_total
+                ,SUM(opzl.paid) AS partner_paid
+                ,SUM(opzl.unpaid) AS partner_unpaid
+             FROM opz_stat_line opzl
+            WHERE opzl.opz_id = %(opz_id)s
+           GROUP BY opzl.partner_id, opzl.partner_vat_type, opzl.partner_vat_number, opzl.partner_name
+          """ % {"opz_id": self.id}
         self._cr.execute(sql)
         partners = self._cr.dictfetchall()
         return partners
 
     @api.multi
     def _get_partner_lines(self, partner_id):
-        lines = []
         sql = """
                 SELECT opzl.invoice_number
                       ,opzl.invoice_date
@@ -253,98 +233,6 @@ class OpzStat(models.Model):
             "opz_id": self.id,
             "partner_id": partner_id,
         }
-
         self._cr.execute(sql)
         lines = self._cr.dictfetchall()
         return lines
-
-
-class OpzStatLine(models.Model):
-    _name = "opz.stat.line"
-    _description = "OPZ STAT report lines"
-    _order = "invoice_date"
-
-    opz_id = fields.Many2one(
-        "opz.stat", "OPZ STAT", required=True, ondelete="cascade"
-    )
-    partner_id = fields.Many2one(
-        "res.partner", "Partner", domain="[('customer', '=', True)]"
-    )
-    partner_name = fields.Char("Partner Name", required=True)
-    partner_vat_type = fields.Selection(
-        [
-            ("vat", "1"),
-            ("vatid", "2"),
-            ("other", "3"),
-        ],
-        "VAT Type",
-        required=True,
-        index=True,
-        default="vat",
-    )
-    partner_vat_number = fields.Char("VAT Number", required=True)
-    invoice_id = fields.Many2one(
-        "account.invoice",
-        "Invoice",
-        copy=True,
-        domain="[('partner_id', '=', partner_id),"
-        " ('account_id.internal_type', '=', 'receivable')]",
-    )
-    invoice_number = fields.Char("Invoice Number", required=True)
-    invoice_date = fields.Date("Invoice Date", required=True)
-    due_date = fields.Date("Due Date", required=True)
-    amount = fields.Float("Amount", required=True, defaults=0.0, digits=dp.get_precision('Account'))
-    amount_tax = fields.Float("Amount Tax", required=True, defaults=0.0, digits=dp.get_precision('Account'))
-    amount_total = fields.Float("Amount with Tax", required=True, defaults=0.0, digits=dp.get_precision('Account'))
-    paid = fields.Float("Paid Amount", required=True, defaults=0.0, digits=dp.get_precision('Account'))
-    unpaid = fields.Float("Unpaid Amount", required=True, defaults=0.0, digits=dp.get_precision('Account'))
-    overdue_days = fields.Integer("Overdue Days", required=True, defaults=0, digits=dp.get_precision('Account'))
-
-    @api.onchange("partner_id")
-    def onchange_partner_id(self):
-        if self.partner_id:
-            self.partner_name = self.partner_id.name
-            if self.partner_vat_type == "vat":
-                self.partner_vat_number = (
-                    self.partner_id.vat and self.partner_id.vat[2:]
-                )
-            else:
-                self.partner_vat_number = self.partner_id.vat
-        else:
-            self.partner_name = False
-            self.partner_vat_number = False
-
-    @api.onchange("invoice_id")
-    def onchange_invoice_id(self):
-        if self.invoice_id:
-            overdue = (
-                (
-                    # datetime.strptime(self.opz_id.date_to, "%Y-%m-%d")
-                    self.opz_id.date_to + relativedelta(months=1)
-                )
-                + relativedelta(day=1, months=+1, days=-1)
-            ) - self.invoice_id.date_due  # - datetime.strptime(self.invoice_id.date_due, "%Y-%m-%d").date()
-            self.invoice_number = self.invoice_id.number
-            self.invoice_date = self.invoice_id.date_invoice
-            self.due_date = self.invoice_id.date_due
-            self.amount = self.invoice_id.amount_untaxed
-            self.amount_tax = self.invoice_id.amount_tax
-            self.amount_total = self.invoice_id.amount_total
-            self.overdue_days = overdue.days
-            # TODO residual must be computed
-            self.paid = self.invoice_id.amount_total - self.invoice_id.residual
-            self.unpaid = self.invoice_id.residual
-
-    @api.onchange("due_date")
-    def onchange_due_date(self):
-        if self.due_date:
-            overdue = (
-                (
-                    #  datetime.strptime(self.opz_id.date_to, "%Y-%m-%d")
-                    self.opz_id.date_to + relativedelta(months=1)
-                )
-                + relativedelta(day=1, months=+1, days=-1)
-            ) - self.due_date  # .date() - datetime.strptime(self.due_date,"%Y-%m-%d").date()
-            self.overdue_days = overdue.days
-        else:
-            self.overdue_days = False
