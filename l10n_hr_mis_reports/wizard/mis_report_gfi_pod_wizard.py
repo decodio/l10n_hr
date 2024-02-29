@@ -10,6 +10,8 @@ PREVIOUS_YEAR_CELL = 'I'
 CURRENT_YEAR_CELL = 'J'
 PROFIT_LOSS_SHEET_NAME = 'RDG'
 BALANCE_SHEET_NAME = 'Bilanca'
+DIRECT_NET_CASH_FLOW_SHEET_NAME = 'NT_D'
+INDIRECT_NET_CASH_FLOW_SHEET_NAME = 'NT_I'
 SHEET_ROW_START = 8
 
 
@@ -19,6 +21,8 @@ class MisReportGFIPODWizard(models.TransientModel):
 
     profit_loss_mis_report_id = fields.Many2one('mis.report.instance', string='Profit/Loss Report', required=1)
     balance_sheet_mis_report_id = fields.Many2one('mis.report.instance', string='Balance Sheet Report', required=1)
+    cash_flow_mis_report_id = fields.Many2one('mis.report.instance', string='Cash Flow Report', required=0)
+    direction = fields.Selection([('direct', 'Direct'), ('indirect', 'Indirect')], string='Direction')
     out_xls = fields.Binary('Excel file', readonly=True)
     name = fields.Char(string='File name', readonly=True)
 
@@ -58,10 +62,18 @@ class MisReportGFIPODWizard(models.TransientModel):
         xlsx_template = openpyxl.load_workbook(infile)
         balance_sheet = xlsx_template[BALANCE_SHEET_NAME]
         profit_loss_sheet = xlsx_template[PROFIT_LOSS_SHEET_NAME]
+        cash_flow_sheet = False
+        if self.direction == 'direct':
+            cash_flow_sheet = xlsx_template[DIRECT_NET_CASH_FLOW_SHEET_NAME]
+        elif self.direction == 'indirect':
+            cash_flow_sheet = xlsx_template[INDIRECT_NET_CASH_FLOW_SHEET_NAME]
         # RDG
         self._inject_mis_report_data(self.profit_loss_mis_report_id, profit_loss_sheet)
         # Bilanca
         self._inject_mis_report_data(self.balance_sheet_mis_report_id, balance_sheet)
+        # Novcani Tijek
+        if self.cash_flow_mis_report_id and cash_flow_sheet:
+            self._inject_mis_report_data(self.cash_flow_mis_report_id, cash_flow_sheet)
         buffer = BytesIO()
         xlsx_template.save(buffer)
         buffer.seek(0)
