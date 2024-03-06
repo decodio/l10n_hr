@@ -6,6 +6,7 @@ L10N_HR_REPORT_TYPES = [('gfi_pod', 'GFI-POD'),
 L10N_HR_REPORT_SUBTYPES = [('profit_loss', 'Profit/Loss'),
                            ('balance_sheet', 'Balance Sheet'),
                            ('cash_flow', 'Cash Flow'),
+                           ('additional', 'Additional'),
                            ]
 
 

@@ -19,6 +19,9 @@
                                options="{'no_open': True, 'no_create_edit': True}"/>
                         <field name="direction" widget="radio" options="{'horizontal': true}"
                                attrs="{'invisible': [('cash_flow_mis_report_id', '=', False)]}"/>
+                        <field name="additional_mis_report_id"
+                               domain="[('l10n_hr_report_type', '=', 'gfi_pod'), ('l10n_hr_report_subtype', '=', 'additional')]"
+                               options="{'no_open': True, 'no_create_edit': True}"/>
                     </group>
                     <field name="name" invisible="1"/>
                     <div attrs="{'invisible': [('out_xls', '=', False)]}">
