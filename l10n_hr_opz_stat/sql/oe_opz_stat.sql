@@ -128,7 +128,7 @@ SELECT d.date_due, d.partner_name, d.invoice_id, d.date_invoice, _opz_id, d.lcy_
       ,d.partner_vat_number, d.partner_vat_type, d.invoice_number, d.partner_id, d.lcy_invoice_amount_total, d.overdue_days, d.closed_amount
        ,1         , timezone('UTC', now()), timezone('UTC', now()), 1
  FROM inv_data d
-WHERE d.open_amount_lcy > 0.0 AND d.invoice_number IS NOT NULL -- can happen, garbage in data
+WHERE d.open_amount_lcy != 0.0 AND d.invoice_number IS NOT NULL -- can happen, garbage in data
 AND NOT EXISTS (SELECT 1 FROM opz_stat_line opzl WHERE opzl.partner_id = d.partner_id
                     AND (opzl.invoice_id IS NOT NULL AND opzl.invoice_id = d.invoice_id)
                     AND opzl.opz_id =_opz_id
