@@ -117,8 +117,8 @@ WITH inv_data AS (
         FROM open_move_line as oml
         JOIN res_partner par ON par.id = oml.partner_id
         WHERE 1 = 1
-        AND oml.open_amount > 0.0
-        AND oml.invoice_amount_total >= 0.0
+        AND oml.open_amount != 0.0
+        AND oml.invoice_amount_total != 0.0
 )
 INSERT INTO opz_stat_line(
        due_date  , partner_name  , invoice_id  , invoice_date  , opz_id , amount_tax          , unpaid          , amount
