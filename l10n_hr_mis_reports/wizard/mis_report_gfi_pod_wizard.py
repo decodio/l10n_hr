@@ -6,6 +6,7 @@ import openpyxl
 from openpyxl.cell.cell import Cell
 import base64
 REPORT_POSITION_CELL = 'G'
+ADDITIONAL_REPORT_POSITION_CELL = 'H'
 PREVIOUS_YEAR_CELL = 'I'
 CURRENT_YEAR_CELL = 'J'
 PROFIT_LOSS_SHEET_NAME = 'RDG'
@@ -29,7 +30,7 @@ class MisReportGFIPODWizard(models.TransientModel):
     name = fields.Char(string='File name', readonly=True)
 
     @api.multi
-    def _inject_mis_report_data(self, mis_report, xlsx_template_sheet):
+    def _inject_mis_report_data(self, mis_report, xlsx_template_sheet, report_position_cell=REPORT_POSITION_CELL):
         kpi_report_position_data = dict(
             mis_report.report_id.kpi_ids.filtered('report_position').mapped(lambda l: (l.name, l.report_position)))
         kpi_data = mis_report.compute()
@@ -42,7 +43,7 @@ class MisReportGFIPODWizard(models.TransientModel):
                     'current': current_year.get('val', 0.0) or 0.0}
         for line in xlsx_template_sheet.iter_rows(min_row=SHEET_ROW_START):
             aop_position_cell = list(
-                filter(lambda c: isinstance(c, Cell) and c.column_letter == REPORT_POSITION_CELL, line))
+                filter(lambda c: isinstance(c, Cell) and c.column_letter == report_position_cell, line))
             previous_year_cell = list(
                 filter(lambda c: isinstance(c, Cell) and c.column_letter == PREVIOUS_YEAR_CELL, line))
             current_year_cell = list(
@@ -79,7 +80,8 @@ class MisReportGFIPODWizard(models.TransientModel):
             self._inject_mis_report_data(self.cash_flow_mis_report_id, cash_flow_sheet)
         # Dodatni podaci
         if self.additional_mis_report_id and additional_sheet:
-            self._inject_mis_report_data(self.additional_mis_report_id, additional_sheet)
+            self._inject_mis_report_data(self.additional_mis_report_id, additional_sheet,
+                                         report_position_cell=ADDITIONAL_REPORT_POSITION_CELL)
         buffer = BytesIO()
         xlsx_template.save(buffer)
         buffer.seek(0)
