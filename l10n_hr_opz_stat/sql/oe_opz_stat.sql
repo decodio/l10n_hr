@@ -45,7 +45,7 @@ WITH inv_data AS (
             ,COALESCE(inv.date_invoice, aml.date) AS date_invoice
             ,COALESCE(aml.date_maturity, inv.date_due) AS date_due
             ,inv."id" AS invoice_id
-            ,COALESCE(inv.number, aml.name) AS invoice_number
+            ,COALESCE(inv.number, aml.name, 'NO-REFERENCE') AS invoice_number
             ,COALESCE(inv.amount_untaxed, 0.0) AS invoice_amount
             ,COALESCE(inv.amount_tax, 0.0) AS invoice_amount_tax
             ,COALESCE(inv.amount_total, 0.0) AS invoice_amount_total
@@ -117,8 +117,7 @@ WITH inv_data AS (
         FROM open_move_line as oml
         JOIN res_partner par ON par.id = oml.partner_id
         WHERE 1 = 1
-        AND oml.open_amount != 0.0
-        AND oml.invoice_amount_total != 0.0
+        AND COALESCE(oml.open_amount, oml.invoice_amount_total) != 0.0
 )
 INSERT INTO opz_stat_line(
        due_date  , partner_name  , invoice_id  , invoice_date  , opz_id , amount_tax          , unpaid          , amount
@@ -128,11 +127,18 @@ SELECT d.date_due, d.partner_name, d.invoice_id, d.date_invoice, _opz_id, d.lcy_
       ,d.partner_vat_number, d.partner_vat_type, d.invoice_number, d.partner_id, d.lcy_invoice_amount_total, d.overdue_days, d.closed_amount
        ,1         , timezone('UTC', now()), timezone('UTC', now()), 1
  FROM inv_data d
-WHERE d.open_amount_lcy != 0.0 AND d.invoice_number IS NOT NULL -- can happen, garbage in data
-AND NOT EXISTS (SELECT 1 FROM opz_stat_line opzl WHERE opzl.partner_id = d.partner_id
-                    AND (opzl.invoice_id IS NOT NULL AND opzl.invoice_id = d.invoice_id)
-                    AND opzl.opz_id =_opz_id
-                )
+WHERE 1 = 1
+AND d.open_amount_lcy != 0.0
+AND d.invoice_number IS NOT NULL -- can happen, garbage in data
+AND CASE
+        WHEN EXISTS (SELECT 1 FROM opz_stat_res_partner_rel WHERE opz_stat_id = _opz_id) THEN
+        CASE
+            WHEN d.partner_id IN (SELECT partner_id FROM opz_stat_res_partner_rel WHERE opz_stat_id = _opz_id) THEN 1
+            ELSE 0
+        END
+        ELSE 1
+    END = 1
+
 ;
 RETURN '';
 END;
