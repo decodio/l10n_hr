@@ -1,10 +1,10 @@
-
 from odoo import models, fields, api, _
 from lxml import objectify
 import os
 import base64
 from . import xml_common as rc
 from odoo.modules.module import get_resource_path
+
 
 class OpzStat(models.Model):
     _name = "opz.stat"
@@ -45,6 +45,15 @@ class OpzStat(models.Model):
     xml_file = fields.Binary("XML File", readonly=True)
     xml_filename = fields.Char("XML File Name", readonly=True)
     skip_xml_validation = fields.Boolean("Skip XML validation", default=False)
+    skip_negative_amount = fields.Boolean("Skip Negative Amount", default=False)
+    partner_ids = fields.Many2many('res.partner',
+                                   'opz_stat_res_partner_rel',
+                                   'opz_stat_id', 'partner_id',
+                                   string='Partners',
+                                   readonly=True,
+                                   states={"draft": [("readonly", False)]},
+                                   copy=False,
+                                   )
 
     def _auto_init(self):
         res = super(OpzStat, self)._auto_init()
@@ -55,6 +64,8 @@ class OpzStat(models.Model):
 
     @api.multi
     def compute(self):
+        # Remove lines first
+        self.opz_stat_line.unlink()
         sql = """
              SELECT DISTINCT 1
              FROM oe_opz_stat(
@@ -66,6 +77,9 @@ class OpzStat(models.Model):
             "opz_id": self.id,
         }
         self._cr.execute(sql)
+        self.refresh()
+        if self.skip_negative_amount:
+            self.opz_stat_line.filtered(lambda l: l.unpaid < 0.0).unlink()
         return True
 
     @api.multi
