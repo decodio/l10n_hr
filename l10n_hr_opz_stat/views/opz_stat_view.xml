@@ -78,6 +78,7 @@
                             <field name="xml_file" filename="xml_filename" class="oe_inline"/>
                             <field name="xml_filename" invisible="1" class="oe_inline"/>
                             <field name="skip_xml_validation"/>
+                            <field name="skip_negative_amount"/>
                         </group>
                     </group>
                     <notebook>
@@ -100,6 +101,9 @@
                                     <field name="unpaid"/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Partners">
+                            <field name="partner_ids"/>
                         </page>
                     </notebook>
                 </sheet>
