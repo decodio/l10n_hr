@@ -16,29 +16,27 @@ $BODY$
 BEGIN
 
 WITH inv_data AS (
---        with r_line as(
---           SELECT amrl.move_line_id, amrl.closing_amount
---              FROM account_move_reconcile_line amrl
---              JOIN account_move_line amli on amli.id = amrl.move_line_id
---              JOIN account_move_line amlp on amlp.id = amrl.reconciled_move_line_id
---             WHERE amrl.reconciled_move_line_id is not null
---               AND amrl.move_line_id is not null
---               AND amrl.closing_amount !=0.0
---               AND amrl.reconciliation_date <= date_trunc('month', (_date_to::date  + INTERVAL '1 month'))::date + INTERVAL '1 month' - interval '1 day'
---               AND amli."date" <= _date_to
---               AND amlp."date" <= date_trunc('month', (_date_to::date  + INTERVAL '1 month'))::date + INTERVAL '1 month' - interval '1 day'
---           )
     WITH r_line AS (
-        SELECT apr.debit_move_id AS move_line_id, COALESCE(apr.amount, apr.amount_currency) AS closing_amount
+        SELECT apr.credit_move_id, apr.debit_move_id
+               ,COALESCE(apr.amount, apr.amount_currency) AS closing_amount
             FROM account_partial_reconcile apr
             WHERE 1 = 1
             AND apr.max_date <= _date_to
-            AND apr.max_date <= date_trunc('month', (_date_to::date  + INTERVAL '1 month'))::date + INTERVAL '1 month' - interval '1 day'
+    )
+    ,ml_debit_closed AS (
+        SELECT rl.credit_move_id AS move_line_id, SUM(rl.closing_amount) AS closed_amount
+            FROM r_line rl
+        GROUP BY move_line_id
+    )
+    ,ml_credit_closed AS (
+        SELECT rl.debit_move_id AS move_line_id, SUM(rl.closing_amount) AS closed_amount
+            FROM r_line rl
+        GROUP BY move_line_id
     )
     ,ml_closed AS (
-        SELECT rl.move_line_id, SUM(rl.closing_amount) AS closed_amount
-            FROM r_line rl
-        GROUP BY rl.move_line_id
+        SELECT * FROM ml_credit_closed
+        UNION
+        SELECT * FROM ml_debit_closed
     )
     ,open_move_line AS (
         SELECT aml.partner_id
@@ -53,13 +51,13 @@ WITH inv_data AS (
             ,COALESCE( NULLIF(aml.amount_currency, 0.0), aml.debit - aml.credit) AS amount_currency
             --,aml.debit - aml.credit as amount_lcy
             ,CASE WHEN (aml.debit + aml.credit) != 0.0
-                  THEN COALESCE(ABS(NULLIF(aml.amount_currency,0.0)), ABS(aml.debit + aml.credit))/ABS(aml.debit + aml.credit)
+                  THEN COALESCE(ABS(NULLIF(aml.amount_currency, 0.0)), ABS(aml.debit + aml.credit))/ABS(aml.debit + aml.credit)
                   ELSE 1.0
               END AS currency_rate
             --,Coalesce(aml.currency_id, rc.currency_id) as currency_id
-            ,CASE WHEN (COALESCE(NULLIF(aml.amount_currency,0.0), aml.debit - aml.credit)) > 0.00
-                  THEN (COALESCE(NULLIF(aml.amount_currency,0.0), aml.debit - aml.credit)) - COALESCE(mc.closed_amount, 0.0)
-                  ELSE (COALESCE(NULLIF(aml.amount_currency,0.0), aml.debit - aml.credit)) + COALESCE(mc.closed_amount, 0.0)
+            ,CASE WHEN (COALESCE(NULLIF(aml.amount_currency, 0.0), aml.debit - aml.credit)) > 0.00
+                  THEN (COALESCE(NULLIF(aml.amount_currency, 0.0), aml.debit - aml.credit)) - COALESCE(mc.closed_amount, 0.0)
+                  ELSE (COALESCE(NULLIF(aml.amount_currency, 0.0), aml.debit - aml.credit)) + COALESCE(mc.closed_amount, 0.0)
               END as open_amount
              ,(CASE WHEN COALESCE(mc.closed_amount, 0.0) > 0.0 THEN mc.closed_amount ELSE 0.0 END) AS closed_amount
             --,Coalesce(aml.date_maturity, aml."date") as date_maturity
@@ -90,6 +88,7 @@ WITH inv_data AS (
         ,oml.date_due
         ,oml.invoice_id
         ,oml.invoice_number
+        ,oml.amount_currency
         ,ROUND((CASE WHEN oml.currency_rate != 0.0
             THEN oml.invoice_amount / oml.currency_rate
             ELSE oml.invoice_amount
@@ -123,7 +122,7 @@ INSERT INTO opz_stat_line(
        due_date  , partner_name  , invoice_id  , invoice_date  , opz_id , amount_tax          , unpaid          , amount
       ,partner_vat_number  , partner_vat_type , invoice_number  , partner_id  , amount_total          , overdue_days , paid
        ,create_uid, create_date          , write_date           , write_uid)
-SELECT d.date_due, d.partner_name, d.invoice_id, d.date_invoice, _opz_id, d.lcy_invoice_amount_tax, d.open_amount_lcy, d.lcy_invoice_amount
+SELECT d.date_due, d.partner_name, d.invoice_id, d.date_invoice, _opz_id, d.lcy_invoice_amount_tax, d.open_amount_lcy, COALESCE(NULLIF(d.lcy_invoice_amount, 0.0), d.amount_currency, 0.0)
       ,d.partner_vat_number, d.partner_vat_type, d.invoice_number, d.partner_id, d.lcy_invoice_amount_total, d.overdue_days, d.closed_amount
        ,1         , timezone('UTC', now()), timezone('UTC', now()), 1
  FROM inv_data d
