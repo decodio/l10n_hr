@@ -309,10 +309,10 @@ class Joppd(models.Model):
         if self.vrsta != '4' and not self.sideB_ids:
             # DB : samo vrsta 4 se predaje bez redaka na strani B!
             raise ValidationError('Nije moguće završiti bez redaka na strani B!')
-        if self.date_joppd != fields.Date.today():
-            # DB : nisam bas 100% siguran da ce ovjek ovkao... ali zassada nek bude
-            self.date_joppd = fields.Date.today()
-            self.code = self._get_joppd_oznaka()
+        # if self.date_joppd != fields.Date.today():
+        #     # DB : nisam bas 100% siguran da ce ovjek ovkao... ali zassada nek bude
+        #     self.date_joppd = fields.Date.today()
+        #     self.code = self._get_joppd_oznaka()
         self.name = '_'.join(('JOPPD',
                               self.podnositelj_oznaka,
                               self.podnositelj_oib,
