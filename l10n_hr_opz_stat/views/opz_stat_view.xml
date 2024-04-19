@@ -45,12 +45,12 @@
                 <header>
                     <button name="compute" type="object" states="draft" string="Compute" class="oe_highlight"
                             groups="account.group_account_manager"/>
-                    <button name="set_to_confirmed" type="object" states="draft" string="Confirm" class="btn-primary alert-warning"
+                    <button name="set_to_confirmed" type="object" states="draft" string="Confirm" class="btn-primary"
                             groups="account.group_account_manager"/>
                     <button name="set_to_draft" type="object" states="confirmed,done" string="Set to Draft"
                             groups="account.group_account_manager"/>
                     <!--<button name="print_report" type="object" states="draft,confirmed,done" string="Print" groups="account.group_account_manager"/>-->
-                    <button name="export_xml" type="object" states="confirmed" string="Export XML" class="btn-primary alert-info"
+                    <button name="export_xml" type="object" states="confirmed" string="Export XML" class="btn-primary"
                             groups="account.group_account_manager"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"
                            statusbar_colors='{"draft":"blue","done":"grey"}'/>
@@ -84,7 +84,7 @@
                     <notebook>
                         <page string="Invoices">
                             <field name="opz_stat_line">
-                                <tree string="OPZ STAT lines" editable="bottom">
+                                <tree string="OPZ STAT lines" editable="bottom" limit="200">
                                     <field name="partner_vat_type" widget="selection"/>
                                     <field name="partner_id"/>
                                     <field name="partner_name"/>
