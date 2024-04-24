@@ -46,6 +46,7 @@ class OpzStat(models.Model):
     xml_filename = fields.Char("XML File Name", readonly=True)
     skip_xml_validation = fields.Boolean("Skip XML validation", default=False)
     skip_negative_amount = fields.Boolean("Skip Negative Amount", default=False)
+    sum_others = fields.Boolean("Sum Others", default=False)
     partner_ids = fields.Many2many('res.partner',
                                    'opz_stat_res_partner_rel',
                                    'opz_stat_id', 'partner_id',
@@ -99,11 +100,8 @@ class OpzStat(models.Model):
     @api.multi
     def export_xml(self):
         self.ensure_one()
-        kupac_line_no = 1
+        kupac_line_no = 0
         period = {"date_start": self.date_from, "date_stop": self.date_to}
-        # last_due_date = (
-        # datetime.strptime(self.date_to, '%Y-%m-%d') + relativedelta(months=1)).strftime('%Y-%m-%d')
-
         Tijelo = objectify.Element("Tijelo")
         Kupci = objectify.SubElement(Tijelo, "Kupci")
 
@@ -114,9 +112,13 @@ class OpzStat(models.Model):
         NeplaceniIznosRacunaObrasca = 0.0
         OPZUkupanIznosRacunaSPdv = 0.0
         OPZUkupanIznosPdv = 0.0
-
+        if self.sum_others:
+            amounts  = self._calc_other_partner_amounts()
+            OPZUkupanIznosRacunaSPdv = amounts.get("amount_total")
+            OPZUkupanIznosPdv = amounts.get("amount_tax")
         partners = self._get_partners()
         for partner in partners:
+            kupac_line_no += 1
             lines = self._get_partner_lines(partner["partner_id"])
             Kupac = objectify.SubElement(Kupci, "Kupac")
             Kupac.K1 = kupac_line_no  # Redni broj
@@ -150,16 +152,11 @@ class OpzStat(models.Model):
                 Racun.R9 = line["paid"]  # plaćeni iznos
                 Racun.R10 = line["unpaid"]  # otvoreni iznos
                 line_no += 1
-
                 UkupanIznosRacunaObrasca += line["amount"]
                 UkupanIznosPdvObrasca += line["amount_tax"]
                 UkupanIznosRacunaSPdvObrasca += line["amount_total"]
                 UkupniPlaceniIznosRacunaObrasca += line["paid"]
                 NeplaceniIznosRacunaObrasca += line["unpaid"]
-                OPZUkupanIznosRacunaSPdv = 0.0
-                OPZUkupanIznosPdv = 0.0
-
-            kupac_line_no += 1
 
         Tijelo.UkupanIznosRacunaObrasca = round(UkupanIznosRacunaObrasca, 2)
         Tijelo.UkupanIznosPdvObrasca = round(UkupanIznosPdvObrasca, 2)
@@ -206,6 +203,9 @@ class OpzStat(models.Model):
 
     @api.multi
     def _get_partners(self):
+        allowed_vat_types = ['vat', 'vat_id']
+        if not self.sum_others:
+            allowed_vat_types += ['other']
         sql = """
             SELECT 
                 DISTINCT opzl.partner_id
@@ -221,12 +221,29 @@ class OpzStat(models.Model):
                 ,SUM(opzl.paid) AS partner_paid
                 ,SUM(opzl.unpaid) AS partner_unpaid
              FROM opz_stat_line opzl
-            WHERE opzl.opz_id = %(opz_id)s
+            WHERE opzl.opz_id = %s AND opzl.partner_vat_type IN %s
            GROUP BY opzl.partner_id, opzl.partner_vat_type, opzl.partner_vat_number, opzl.partner_name
-          """ % {"opz_id": self.id}
-        self._cr.execute(sql)
-        partners = self._cr.dictfetchall()
+          """
+        self.env.cr.execute(sql, (self.id, tuple(allowed_vat_types)))
+        partners = self.env.cr.dictfetchall()
         return partners
+
+    @api.multi
+    def _calc_other_partner_amounts(self):
+        allowed_vat_types = ['other']
+        sql = """
+                SELECT 
+                    SUM(opzl.amount_total) AS amount_total
+                    ,SUM(opzl.amount) AS amount
+                    ,SUM(opzl.amount_tax) AS amount_tax
+                    ,SUM(opzl.paid) AS amount_paid
+                    ,SUM(opzl.unpaid) AS amount_unpaid
+                 FROM opz_stat_line opzl
+                WHERE opzl.opz_id = %s AND opzl.partner_vat_type IN %s
+              """
+        self.env.cr.execute(sql, (self.id, tuple(allowed_vat_types)))
+        totals = self.env.cr.dictfetchone()
+        return totals
 
     @api.multi
     def _get_partner_lines(self, partner_id):
@@ -240,13 +257,9 @@ class OpzStat(models.Model):
                       ,opzl.amount_total
                       ,opzl.paid
                       ,opzl.unpaid
-                 FROM opz_stat_line opzl
-                WHERE opzl.opz_id = %(opz_id)s
-                  AND opzl.partner_id = %(partner_id)s
-              """ % {
-            "opz_id": self.id,
-            "partner_id": partner_id,
-        }
-        self._cr.execute(sql)
-        lines = self._cr.dictfetchall()
+                FROM opz_stat_line opzl
+                WHERE opzl.opz_id = %s AND opzl.partner_id = %s
+              """
+        self.env.cr.execute(sql, (self.id, partner_id))
+        lines = self.env.cr.dictfetchall()
         return lines
