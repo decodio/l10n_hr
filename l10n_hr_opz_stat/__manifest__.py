@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Module: l10n_hr_opz_stat
-#    Author: Tomislav Bosnjakovic
+#    Authors: Tomislav Bosnjakovic, Goran Bogic
 #    mail:   tomislav.bosnjakovic(AT)slobodni-programi.hr
 #    Copyright: Slobodni programi d.o.o., Zagreb
 #    Contributions:
@@ -30,16 +30,17 @@ Croatian localisation.
 
 """,
     "version": "12.0.1.0.0",
-    "author": "Slobodni programi",
+    "author": "Ecodica",
     "category": "Localization",
     "website": "",
     "depends": [
         "account_base",
     ],
     "data": [
-        "views/opz_stat_view.xml",
-        "views/account_view.xml",
         "security/ir.model.access.csv",
+        "views/account_view.xml",
+        "views/res_partner_view.xml",
+        "views/opz_stat_view.xml",
     ],
     "demo": [],
     "test": [],

@@ -4,7 +4,7 @@ from odoo.addons import decimal_precision as dp
 from dateutil.relativedelta import relativedelta
 PARTNER_VAT_TYPES = [
             ("vat", "1"),
-            ("vatid", "2"),
+            ("vat_id", "2"),
             ("other", "3"),
         ]
 
@@ -12,7 +12,7 @@ PARTNER_VAT_TYPES = [
 class OpzStatLine(models.Model):
     _name = "opz.stat.line"
     _description = "OPZ STAT report lines"
-    _order = "invoice_date"
+    _order = "invoice_date, due_date, amount"
 
     opz_id = fields.Many2one("opz.stat", "OPZ STAT", required=True, ondelete="cascade")
     partner_id = fields.Many2one("res.partner", "Partner", domain="[('customer', '=', True)]")
@@ -41,9 +41,7 @@ class OpzStatLine(models.Model):
         if self.partner_id:
             self.partner_name = self.partner_id.name
             if self.partner_vat_type == "vat":
-                self.partner_vat_number = (
-                    self.partner_id.vat and self.partner_id.vat[2:]
-                )
+                self.partner_vat_number = self.partner_id.vat and self.partner_id.vat[2:]
             else:
                 self.partner_vat_number = self.partner_id.vat
         else:
