@@ -79,6 +79,7 @@
                             <field name="xml_filename" invisible="1" class="oe_inline"/>
                             <field name="skip_xml_validation"/>
                             <field name="skip_negative_amount"/>
+                            <field name="sum_others"/>
                         </group>
                     </group>
                     <notebook>
