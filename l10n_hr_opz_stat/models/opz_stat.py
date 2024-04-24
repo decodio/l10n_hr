@@ -210,7 +210,7 @@ class OpzStat(models.Model):
             SELECT 
                 DISTINCT opzl.partner_id
                 ,CASE WHEN opzl.partner_vat_type = 'vat' THEN 1
-                      WHEN opzl.partner_vat_type = 'vatid' THEN 2
+                      WHEN opzl.partner_vat_type = 'vat_id' THEN 2
                       WHEN opzl.partner_vat_type = 'other' THEN 3
                 END AS partner_vat_type
                 ,opzl.partner_vat_number

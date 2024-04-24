@@ -81,9 +81,7 @@ WITH inv_data AS (
                         THEN SUBSTRING(par.vat, 3)
                    ELSE par.vat
                    END), '-') AS partner_vat_number
-        ,(CASE WHEN par.vat LIKE 'HR%'
-               THEN 'vat'
-          ELSE 'vatid' END) AS partner_vat_type
+        ,par.opz_stat_vat_id AS partner_vat_type
         ,(CASE WHEN oml.date_invoice > oml.date_due THEN oml.date_due ELSE oml.date_invoice END ) AS date_invoice
         ,oml.date_due
         ,oml.invoice_id
