@@ -17,6 +17,7 @@
         "mis_builder",
         "account",
         "l10n_hr_base",
+        "partner_firstname"
     ],
     "external_dependencies": {
         "python": ['openpyxl'],
