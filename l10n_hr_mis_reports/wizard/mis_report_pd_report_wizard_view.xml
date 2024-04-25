@@ -12,13 +12,19 @@
                                options="{'no_open': True, 'no_create_edit': True}"/>
                     </group>
                     <field name="name" invisible="1"/>
+                    <field name="xml_name" invisible="1"/>
                     <div attrs="{'invisible': [('out_xlsx', '=', False)]}">
                         <h2>PD Report export completed</h2>
                         <p>Here is the file: <field name="out_xlsx" readonly="1" filename="name"/></p>
                     </div>
+                    <div attrs="{'invisible': [('out_xml', '=', False)]}">
+                        <h2>XML export completed</h2>
+                        <p>Here is the file: <field name="out_xml" readonly="1" filename="xml_name"/></p>
+                    </div>
                 </sheet>
                 <footer>
                     <button type="object" name="create_report" string="Create Excel Report" class="btn-primary"/>
+                    <button type="object" name="create_xml_file" string="Create XML File" class="btn-primary"/>
                     <button string="Close" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
