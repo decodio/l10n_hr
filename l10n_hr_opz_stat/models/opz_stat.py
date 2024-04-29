@@ -72,10 +72,12 @@ class OpzStat(models.Model):
              FROM oe_opz_stat(
                      _date_to      := '%(date_to)s'
                     ,_opz_id    := %(opz_id)s
+                    ,_company_id := %(company_id)s
                          )
            """ % {
             "date_to": self.date_to,
             "opz_id": self.id,
+            "company_id": self.company_id.id,
         }
         self._cr.execute(sql)
         self.refresh()
