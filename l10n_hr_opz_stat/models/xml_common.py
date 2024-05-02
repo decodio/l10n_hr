@@ -146,13 +146,6 @@ def create_xml_metadata(self, metadata):
 
 
 def create_xml_header(self, period, company, author):
-    unpaid_to = (
-            (
-                # datetime.strptime(period["date_stop"], "%Y-%m-%d")
-                    period["date_stop"] + relativedelta(months=1)
-            )
-            + relativedelta(day=1, months=+1, days=-1)
-    ).strftime("%Y-%m-%d")
     EM = objectify.ElementMaker(annotate=False)
     header = EM.Zaglavlje(
         EM.Razdoblje(
@@ -176,7 +169,7 @@ def create_xml_header(self, period, company, author):
             EM.Email(company.get("email", False) and company["email"] or ""),
         ),
         EM.NaDan(period["date_stop"]),
-        EM.NisuNaplaceniDo(unpaid_to),
+        EM.NisuNaplaceniDo(period["date_stop"]),
     )
     return header
 
