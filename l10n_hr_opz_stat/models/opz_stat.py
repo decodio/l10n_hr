@@ -130,7 +130,7 @@ class OpzStat(models.Model):
             Kupac.K3 = partner[
                 "partner_vat_number"
             ]  # porezni broj ovisno o vrijednosti K2
-            Kupac.K4 = partner["partner_name"]  # Naziv kupca
+            Kupac.K4 = partner["partner_name"][:128]  # Naziv kupca
             Kupac.K5 = partner["partner_amount"]  # Iznos računa ukupno
             Kupac.K6 = partner["partner_amount_tax"]  # Iznos PDV ukupno
             Kupac.K7 = partner[
