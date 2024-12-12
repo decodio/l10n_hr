@@ -39,6 +39,7 @@ from dateutil.relativedelta import relativedelta
 #from lxml import etree
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
+from openerp.tools.config import config
 from openerp.addons.base_base.res.res_currency_rate_update import Currency_getter_factory, Currency_getter_interface
 import requests
 import json
@@ -65,7 +66,8 @@ class HNB_getter(Currency_getter_interface):  # class added according to Croatia
 
     def get_available_currencies(self):
         """implementation of abstract method of Currency_getter_interface"""
-        url = "https://api.hnb.hr/tecajn-eur/v3"
+        default_url = "https://api.hnb.hr/tecajn-eur/v3"
+        url = config.get("hnb_api_endpoint_url", default=default_url)
         res = requests.get(url)
         data = json.loads(res.text)
         currencies = [c.get('valuta') for c in data if c.get('valuta')]
@@ -90,7 +92,8 @@ class HNB_getter(Currency_getter_interface):  # class added according to Croatia
 
         date_diff = (date_end - date_start).days + 1
         for single_date in [d for d in (date_start + relativedelta(days= +n) for n in range(date_diff)) if d <= date_end]:
-            url = "https://api.hnb.hr/tecajn-eur/v3"
+            default_url = "https://api.hnb.hr/tecajn-eur/v3"
+            url = config.get("hnb_api_endpoint_url", default=default_url)
             iso_date = single_date.date().isoformat()
             url += "?datum-primjene-od=%s&datum-primjene-do=%s" % (iso_date, iso_date,)
             res = requests.get(url)
