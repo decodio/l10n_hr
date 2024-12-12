@@ -44,6 +44,8 @@ Import exchange rates from three different sources on the internet :
     Takes official rates from http://www.hnb.hr. You can get previous exchange rates by specifying
     different URL's for download based on desired date of exchange rate.
     E.g. http://www.hnb.hr/tecajn/f040412.dat is exchange rate on day 04-04-2012 (in format %d%m%Y)
+    
+    In addition we can set the hnb_api_endpoint_url parameter in odoo config file for a custom HNB endpoint url
 
 2. Raiffeisen Bank Austria (RBA) in Croatia
     Parsed from downloaded text file.
