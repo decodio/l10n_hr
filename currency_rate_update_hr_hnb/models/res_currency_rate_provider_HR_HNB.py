@@ -104,7 +104,9 @@ class ResCurrencyRateProviderHrHNB(models.Model):
 
     @api.multi
     def _l10n_hr_hnb_urlopen(self, currencies=None, date_from=None, date_to=None):
-        url = "https://api.hnb.hr/tecajn-eur/v3"
+        default_url = "https://api.hnb.hr/tecajn-eur/v3"
+        url = self.env['ir.config_parameter'].sudo().get_param(
+            'hnb.api.endpoint', default_url)
         if date_from is not None:
             if date_to is not None:
                 url += "?datum-primjene-od=%s&datum-primjene-do=%s" % (
