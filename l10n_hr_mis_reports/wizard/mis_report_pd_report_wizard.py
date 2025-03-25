@@ -29,7 +29,8 @@ class MisReportPDReportWizard(models.TransientModel):
     xml_name = fields.Char(string='XML  File-name', readonly=True)
 
     def _get_default_mis_report_id(self):
-        return self.env['mis.report.instance'].search([('l10n_hr_report_type', '=', 'pd')])
+        return self.env['mis.report.instance'].search([('l10n_hr_report_type', '=', 'pd')], limit=1,
+                                                      order='date_to DESC')
 
     @api.multi
     def _update_first_sheet_company_data(self, mis_report, sheet):
