@@ -50,6 +50,7 @@
                     <button name="set_to_draft" type="object" states="confirmed,done" string="Set to Draft"
                             groups="account.group_account_manager"/>
                     <!--<button name="print_report" type="object" states="draft,confirmed,done" string="Print" groups="account.group_account_manager"/>-->
+                    <button name="view_lines" type="object" string="View Lines" groups="account.group_account_manager"/>
                     <button name="export_xml" type="object" states="confirmed" string="Export XML" class="btn-primary"
                             groups="account.group_account_manager"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"
@@ -67,12 +68,11 @@
                     </group>
                     <group>
                         <group>
-                            <label for="date_from" string="Date from"/>
-                            <div>
-                                <field name="date_from" nolabel="1" class="oe_inline"/>
-                                <span><strong> - to </strong></span>
-                                <field name="date_to" nolabel="1" class="oe_inline"/>
-                            </div>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="date_open"/>
+                            </group>
                         </group>
                         <group>
                             <field name="xml_file" filename="xml_filename" class="oe_inline"/>
@@ -105,6 +105,9 @@
                         </page>
                         <page string="Partners">
                             <field name="partner_ids"/>
+                        </page>
+                        <page string="Journals">
+                            <field name="journal_ids"/>
                         </page>
                     </notebook>
                 </sheet>
