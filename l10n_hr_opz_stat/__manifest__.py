@@ -29,7 +29,7 @@ Croatian localisation.
 ======================
 
 """,
-    "version": "12.0.1.0.0",
+    "version": "12.0.2.0.0",
     "author": "Ecodica",
     "category": "Localization",
     "website": "",
@@ -41,6 +41,7 @@ Croatian localisation.
         "views/account_view.xml",
         "views/res_partner_view.xml",
         "views/opz_stat_view.xml",
+        "views/opz_stat_line_views.xml",
     ],
     "demo": [],
     "test": [],

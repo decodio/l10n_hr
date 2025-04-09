@@ -10,7 +10,7 @@ from oe_opz_stat(
 )
 
 */
-CREATE OR REPLACE FUNCTION oe_opz_stat(IN _date_to date, IN _opz_id bigint, IN _company_id bigint) RETURNS varchar AS
+CREATE OR REPLACE FUNCTION oe_opz_stat(IN _date_to date, IN _date_open date, IN _opz_id bigint, IN _company_id bigint) RETURNS varchar AS
 $BODY$
 BEGIN
 
@@ -20,7 +20,7 @@ WITH inv_data AS (
                ,COALESCE(apr.amount, apr.amount_currency) AS closing_amount
             FROM account_partial_reconcile apr
             WHERE 1 = 1
-            AND apr.max_date <= _date_to
+            AND apr.max_date <= _date_open
     )
     ,ml_debit_closed AS (
         SELECT rl.credit_move_id AS move_line_id, SUM(rl.closing_amount) AS closed_amount
@@ -42,6 +42,7 @@ WITH inv_data AS (
             ,COALESCE(inv.date_invoice, aml.date) AS date_invoice
             ,COALESCE(aml.date_maturity, inv.date_due) AS date_due
             ,inv."id" AS invoice_id
+            ,am.journal_id AS journal_id
             ,COALESCE(inv.number, aml.name, 'NO-REFERENCE') AS invoice_number
             ,COALESCE(inv.amount_untaxed, 0.0) AS invoice_amount
             ,COALESCE(inv.amount_tax, 0.0) AS invoice_amount_tax
@@ -85,6 +86,7 @@ WITH inv_data AS (
         ,(CASE WHEN oml.date_invoice > oml.date_due THEN oml.date_due ELSE oml.date_invoice END ) AS date_invoice
         ,oml.date_due
         ,oml.invoice_id
+        ,oml.journal_id
         ,oml.invoice_number
         ,ROUND((CASE WHEN oml.currency_rate != 0.0
             THEN oml.amount_currency / oml.currency_rate
@@ -143,7 +145,14 @@ AND CASE
         END
         ELSE 1
     END = 1
-
+AND CASE
+        WHEN EXISTS (SELECT 1 FROM opz_stat_account_journal_rel WHERE opz_stat_id = _opz_id) THEN
+        CASE
+            WHEN d.journal_id IN (SELECT journal_id FROM opz_stat_account_journal_rel WHERE opz_stat_id = _opz_id) THEN 1
+            ELSE 0
+        END
+        ELSE 1
+    END = 1
 ;
 RETURN '';
 END;
