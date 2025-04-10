@@ -79,12 +79,14 @@ class OpzStat(models.Model):
         sql = """
              SELECT DISTINCT 1
              FROM oe_opz_stat(
-                     _date_to      := '%(date_to)s'
+                     _date_from      := '%(date_from)s'
+                     ,_date_to      := '%(date_to)s'
                      ,_date_open      := '%(date_open)s'
                     ,_opz_id    := %(opz_id)s
                     ,_company_id := %(company_id)s
                          )
            """ % {
+            "date_from": self.date_from,
             "date_to": self.date_to,
             "date_open": self.date_open,
             "opz_id": self.id,
@@ -172,7 +174,7 @@ class OpzStat(models.Model):
             for line in lines:
                 Racun = objectify.SubElement(Racuni, "Racun")
                 Racun.R1 = line_no  # Redni broj
-                Racun.R2 = line["invoice_number"][:128]  # Broj (naziv) računa
+                Racun.R2 = line["invoice_number"][:64]  # Broj (naziv) računa
                 Racun.R3 = line["invoice_date"]  # Datum računa
                 Racun.R4 = line["due_date"]  # Datum dospjeća
                 Racun.R5 = line["overdue_days"]  # broj dana kašnjenja
