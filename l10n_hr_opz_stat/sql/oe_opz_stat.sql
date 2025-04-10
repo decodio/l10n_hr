@@ -10,7 +10,8 @@ from oe_opz_stat(
 )
 
 */
-CREATE OR REPLACE FUNCTION oe_opz_stat(IN _date_to date, IN _date_open date, IN _opz_id bigint, IN _company_id bigint) RETURNS varchar AS
+CREATE OR REPLACE FUNCTION oe_opz_stat(IN _date_from date, IN _date_to date, IN _date_open date,
+                                        IN _opz_id bigint, IN _company_id bigint) RETURNS varchar AS
 $BODY$
 BEGIN
 
@@ -74,7 +75,8 @@ WITH inv_data AS (
         AND am.state = 'posted'
         AND aml.company_id = _company_id
         AND COALESCE(aa.exclude_from_opz_stat, FALSE) = FALSE
-        AND COALESCE(aml.date_maturity, inv.date_due) <= _date_to  --+ INTERVAL '1 month'
+        AND COALESCE(aml.date_maturity, inv.date_due) >= _date_from
+        AND COALESCE(aml.date_maturity, inv.date_due) <= _date_to
     )
     SELECT oml.partner_id
         ,par.name AS partner_name
