@@ -10,7 +10,7 @@ Implemented based on:
     """,
     "category": "Croatia",
     "images": [],
-    "version": "12.0.1.0.0",
+    "version": "12.0.2.0.0",
     "application": False,
     'author': "Ecodica",
     "license": 'LGPL-3',
