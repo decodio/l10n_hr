@@ -18,12 +18,14 @@ class L10nHrKpd(models.Model):
     _description = 'Defines KPD classification.'
     _order = 'code ASC'
     _inherit = ['mail.thread']
+    _rec_name = 'display_name'
 
     code = fields.Char(string="Code", required=True, copy=False)
     date_start = fields.Date(string="Start Date", required=True)
     date_end = fields.Date(string="End Date")
     level = fields.Char(string="Level", readonly=True, required=True)
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(string="Name", required=True, translate=True)
+    display_name = fields.Char(string="Display Name", compute='_compute_display_name', store=True)
     type = fields.Selection(
         string="Type",
         selection=[
@@ -60,3 +62,9 @@ class L10nHrKpd(models.Model):
                 raise UserError(
                     _("The KPD code is not properly formatted!")
                 )
+
+    @api.multi
+    @api.depends('code', 'name')
+    def _compute_display_name(self):
+        for kpd in self:
+            kpd.display_name = kpd.code + ' - ' + kpd.name
