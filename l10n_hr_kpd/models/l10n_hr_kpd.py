@@ -1,6 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
-
+from odoo.osv import expression
 import re
 
 CODE_PATTERNS = {
@@ -25,7 +25,6 @@ class L10nHrKpd(models.Model):
     date_end = fields.Date(string="End Date")
     level = fields.Char(string="Level", readonly=True, required=True)
     name = fields.Char(string="Name", required=True, translate=True)
-    display_name = fields.Char(string="Display Name", compute='_compute_display_name', store=True)
     type = fields.Selection(
         string="Type",
         selection=[
@@ -64,7 +63,20 @@ class L10nHrKpd(models.Model):
                 )
 
     @api.multi
-    @api.depends('code', 'name')
-    def _compute_display_name(self):
+    def name_get(self):
+        res = []
         for kpd in self:
-            kpd.display_name = kpd.code + ' - ' + kpd.name
+            rec_name = '%s - %s' % (kpd.code, kpd.name)
+            res.append((kpd.id, rec_name))
+        return res
+
+    @api.model
+    def name_search(self, name, args=None, operator="ilike", limit=100):
+        args = args or []
+        domain = []
+        if name:
+            domain = ["|", ("code", operator, name), ("name", operator, name)]
+            if operator in expression.NEGATIVE_TERM_OPERATORS:
+                domain = ["&", "!"] + domain[1:]
+        kpds = self.search(domain + args, limit=limit)
+        return kpds.name_get()
