@@ -5,11 +5,13 @@ class L10nHrVatexTaxExempt(models.Model):
     _name = "l10n.hr.vatex.tax.exempt"
     _description = "Defines VATEX tax category."
     _inherit = ['mail.thread']
+    _rec_name = 'display_name'
 
     code = fields.Char(string="Code", required=True)
-    name = fields.Char(string="Name", required=True)
-    display_name = fields.Char(string="Display Name", compute='_compute_display_name', store=True)
-    description = fields.Text(string="Description")
+    name = fields.Char(string="Name", required=True, translate=True)
+    # not multi-lang
+    # display_name = fields.Char(string="Display Name", compute='_compute_display_name', store=True)
+    description = fields.Text(string="Description", translate=True)
 
     _sql_constraints = [
         ('code_uniq', 'UNIQUE(code)', 'The VATEX tax exempt code has to be unique!')
