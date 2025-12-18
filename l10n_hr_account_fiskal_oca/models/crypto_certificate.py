@@ -1,4 +1,5 @@
 # Copyright 2020 Decodio Applications Ltd (https://decod.io)
+# Copyright 2025 Ecodica d.o.o (https://www.ecodica.eu)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 import os
@@ -17,7 +18,7 @@ class CryptoCertificate(models.Model):
         for crt in self:
             if crt.type != 'server_rec':
                 continue
-            if not crt.csr:
+            if not crt.csr or not crt.crt:
                 continue
             try:
                 pp = OpenSSL.crypto.load_certificate(1, crt.crt)
@@ -40,22 +41,17 @@ class CryptoCertificate(models.Model):
                 if c[0] == b'CN':
                     cert_subject_cn = c[1]
             usage = False
-            if cert_issuer_ou is not None:  # OLD cert, new cert this is None!
-                if cert_issuer_ou == b'DEMO':
-                    usage = 'Fiskal_DEMO_V1'
-                else:
-                    usage = 'Fiskal_PROD_V1'
-            elif cert_issuer_cn is not None:
-                if cert_issuer_cn == b'Fina Demo CA 2014':
-                    if cert_subject_cn == b'FISKAL 3':
+            if cert_issuer_cn is not None:
+                if cert_issuer_cn == b'Fina Demo CA 2020':
+                    if cert_subject_cn == b'FISKAL 4':
+                        usage = 'Fiskal_DEMO_V4'
+                    else:
                         usage = 'Fiskal_DEMO_V3'
-                    else:
-                        usage = 'Fiskal_DEMO_V2'
                 else:
-                    if cert_subject_cn == b'FISKAL 3':
-                        usage = 'Fiskal_PROD_V3'
+                    if cert_subject_cn == b'FISKAL 4':
+                        usage = 'Fiskal_PROD_V4'
                     else:
-                        usage = 'Fiskal_PROD_V2'
+                        usage = 'Fiskal_PROD_V3'
             crt.usage = usage
 
     def _get_datastore_path(self):
