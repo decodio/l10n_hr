@@ -5,7 +5,7 @@ import os
 from ..fiskal.fiskal import Fiskalizacija
 from odoo import api, fields, models, _
 from odoo.exceptions import MissingError, ValidationError
-
+from operator import attrgetter, itemgetter
 
 SCHEMA_HELP = """
 verzija: 1.3 Datum verzije: 04.07.2016.
@@ -39,13 +39,12 @@ class Company(models.Model):
     def _get_schema_selection(self):
         fiskal_path = self._get_fiskal_path()
         fiskal_path += 'schema'
-        res = [(s,s) for s in os.listdir(fiskal_path)]
+        res = sorted([(s, s) for s in os.listdir(fiskal_path)], key=itemgetter(1))
         return res
 
-
     fiskal_cert_id = fields.Many2one('crypto.certificate',
-        string="Certifikat za fiskalizaciju",
-        domain="[('state', '=', 'confirmed')]")
+                                     string="Certifikat za fiskalizaciju",
+                                     domain="[('state', '=', 'confirmed')]")
 
     # TODO : check for OIB in cert, production must match company vat,
     #        demo should match spec or company vat...
@@ -54,7 +53,7 @@ class Company(models.Model):
         string='Specijalno', size=1000,
         help="OIB informatičke tvrtke koja održava software, "
              "za demo cert mora odgovarati OIBu sa demo certifikata",
-        )
+    )
     fiskal_schema = fields.Selection(
         selection=_get_schema_selection,
         string="Fiskalizaction schema",
@@ -63,18 +62,8 @@ class Company(models.Model):
 
     @api.onchange('fiskal_cert_id')
     def onchange_fiskal_cert(self):
-        """
-        Maybe put this in field domain later...
-        """
-        # DB: maybe also:
-        # if 'Fiskal' not in self.fiskal_cert_id.usage:
-        # but, strict for now...
-        if self.fiskal_cert_id.usage not in [
-                'Fiskal_DEMO_V1', 'Fiskal_PROD_V1',
-                'Fiskal_DEMO_V2', 'Fiskal_PROD_V2',
-                'Fiskal_DEMO_V3', 'Fiskal_PROD_V3']:
-            self.fiskal_cert_id = False  # DB: just empty value, no raise...
-            # raise ValidationError(_('Selected certificate is not intended for fiscalization purposes!'))
+        if self.fiskal_cert_id.usage not in ['Fiskal_DEMO_V3', 'Fiskal_PROD_V3', 'Fiskal_DEMO_V4', 'Fiskal_PROD_v4']:
+            self.fiskal_cert_id = False
 
     def _get_log_vals(self, msg_type, msg_obj, response, time_start):
         """
@@ -99,8 +88,8 @@ class Company(models.Model):
                       hasattr(response, 'Greske') and
                       response.Greske[0][0].PorukaGreske or 'OK',
             'fiskal_prostor_id': msg_obj.odoo_object._name == 'account.invoice'
-                     and msg_obj.odoo_object.fiskal_uredjaj_id.prostor_id.id or
-                     False,
+                                 and msg_obj.odoo_object.fiskal_uredjaj_id.prostor_id.id or
+                                 False,
             'invoice_id': msg_obj.odoo_object._name == 'account.invoice' and
                           msg_obj.odoo_object.id or False,
             'company_id': self.id
@@ -130,7 +119,6 @@ class Company(models.Model):
                 "ECHO failed with : " + fisk.log.received_log
             )
 
-
     def get_fiskal_data(self):
         fina_cert = self.fiskal_cert_id
         if not fina_cert:
@@ -145,7 +133,7 @@ class Company(models.Model):
         cert_path = fiskal_path + '/fina_cert'
         for fcert in os.listdir(cert_path):
             if not production and 'Demo' in fcert or \
-                production and 'Demo' not in fcert:
+                    production and 'Demo' not in fcert:
                 fpath = os.path.join(cert_path, fcert)
                 if 'Chain' in fcert:
                     ca_path = fpath

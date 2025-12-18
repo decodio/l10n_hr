@@ -6,10 +6,10 @@
         <field name="model">res.company</field>
         <field name="inherit_id" ref="l10n_hr_account_oca.view_company_form_l10n_hr_account"/>
         <field name="arch" type="xml">
-            <field name="fiskal_separator" position="after">
-                <field name="fiskal_cert_id" />
+            <field name="fiskal_responsible_id" position="after">
+                <field name="fiskal_cert_id" colspan="2"/>
                 <field name="fiskal_spec" attrs="{'required':[('croatia','=',True)]}"/>
-                <field name="fiskal_schema"/>
+                <field name="fiskal_schema" colspan="4"/>
                 <button string="Test Fiscalisation connection"
                         type="object" name="button_test_echo"
                         attrs="{'invisible':[('fiskal_cert_id','=',False)]}"

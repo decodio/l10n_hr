@@ -8,8 +8,8 @@
         """,
 
     'description': """
-       Law regulates the way of issueing all kind of customer invoices regarding 
-        payment - all except bank transfer must be ficalized at time of confirming or
+       Law regulates the way of issuing all kind of customer invoices regarding 
+        payment - all except bank transfer must be fiscalized at time of confirming or
         if that is not possible within 48 hours of confirming.
         This module adds fiscalization functionality.
         
@@ -21,17 +21,15 @@
     'author': 'Ecodica',
     'website': 'https://www.ecodica.eu',
     'license': 'LGPL-3',
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/12.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
     'category': 'Invoices & Payments',
-    'version': '12.0.0.0.1',
+    'version': '12.0.1.0.1',
 
     # any module necessary for this one to work correctly
     'depends': [
         'l10n_hr_account_oca',
         'crypto_store',
+        # F2.0
+        'l10n_hr_business_process_type',
     ],
 
     # always loaded
@@ -48,7 +46,7 @@
     ],
     # only if external dependency exists
     'external_dependencies': {
-        "python": [],
+        "python": ['suds'],
         "bin": [],
         "pycryptodome": [],
         "backports.ssl_match_hostname": [],
