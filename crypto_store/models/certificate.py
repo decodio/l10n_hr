@@ -1,10 +1,11 @@
 # Copyright 2020 Decodio Applications Ltd (https://decod.io)
+# Copyright 2025 Ecodica d.o.o (https://www.ecodica.eu)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
-import base64
 from datetime import datetime
-from OpenSSL import crypto as SSLCrypto
-# from M2Crypto import BIO, Rand, SMIME, EVP, RSA, X509, ASN1
+from base64 import b64decode
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.serialization import Encoding, NoEncryption, PrivateFormat, pkcs12
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -40,7 +41,8 @@ class CryptoCertificate(models.Model):
                         pkey = req.get_pubkey()
                         try:
                             crt = cer.get_certificate()[0]
-                            cer.status = 'valid_certificate' if crt.verify() and crt.verify(pkey) else 'invalid_certificate'
+                            cer.status = 'valid_certificate' if crt.verify() and crt.verify(
+                                pkey) else 'invalid_certificate'
                         except:
                             cer.status = 'invalid_certificate'
                 elif 'rec' in cer.type:
@@ -50,7 +52,7 @@ class CryptoCertificate(models.Model):
                     if not cer.csr:
                         cer.status = 'cert_not_converted'
                         continue
-                    #TODO: more checks?, but it can't be converted if something is wrong...
+                    # TODO: more checks?, but it can't be converted if something is wrong...
                     cer.status = 'certificate_converted'
             else:
                 cer.status = 'unknown'
@@ -69,7 +71,7 @@ class CryptoCertificate(models.Model):
     name = fields.Char(string='Name', size=256)
     usage = fields.Char(
         compute="_get_usage",
-        string="Usage", )#store=True
+        string="Usage", )  # store=True
     type = fields.Selection(
         selection=[
             ('server_gen', 'Server - generated'),
@@ -77,7 +79,7 @@ class CryptoCertificate(models.Model):
             ('person_gen', 'Personal - generated'),
             ('person_rec', 'Personal - recieved (PFX/P12)'),
             ('other', 'Other types'),
-            ],
+        ],
         string="Type",
         default='server_rec')
 
@@ -87,14 +89,14 @@ class CryptoCertificate(models.Model):
         states={'draft': [('readonly', False)]},
         help='Certificate Sign Request (csr) in PEM format.'
              'or private key from P12/PFX cert',
-                      )
+    )
     crt = fields.Text(
         string='Certificate / Public',
         readonly=True,
         states={'draft': [('readonly', False)],
                 'waiting': [('readonly', False)]},
         help='Certificate (crt) in PEM format.'
-             'or certificate from P12/PFX cert',)
+             'or certificate from P12/PFX cert', )
 
     pairkey_id = fields.Many2one('crypto.pairkey', 'Key pair')
     date_expire = fields.Date('Expire date')
@@ -159,121 +161,40 @@ class CryptoCertificate(models.Model):
         for cert in self:
             cert.state = 'cancel'
 
-    # @api.one
-    # def get_request(self):
-    #     """
-    #     Return Request object.
-    #     """
-    #     return self.csr and X509.load_request_string(self.csr.encode('ascii')) or None
-
-
     def button_convert_p12(self):
         self.ensure_one()
         if self.cert_file:
             _password = self.cert_password or ''
+            _password = bytes(_password, 'windows-1252', 'strict')
             try:
-                p12 = SSLCrypto.load_pkcs12(base64.decodestring(self.cert_file), _password)
-            except:
+                private_key, certificate, _dummy = pkcs12.load_key_and_certificates(b64decode(self.cert_file),
+                                                                                    _password,
+                                                                                    backend=default_backend())
+            except Exception as e:
                 raise UserError('Certificate acces error, check password or file type!')
 
-            csr = SSLCrypto.dump_privatekey(SSLCrypto.FILETYPE_PEM, p12.get_privatekey())    # PEM formatted private key
-            crt = SSLCrypto.dump_certificate(SSLCrypto.FILETYPE_PEM, p12.get_certificate())  # PEM formatted certificate
+            crt = certificate.public_bytes(Encoding.PEM)
+            csr = private_key.private_bytes(
+                Encoding.PEM,
+                format=PrivateFormat.TraditionalOpenSSL,
+                encryption_algorithm=NoEncryption(),
+            )
+            cert_not_before = certificate.not_valid_before
+            cert_not_after = certificate.not_valid_after
 
-            name = p12.get_friendlyname().decode('utf-8')
-            curent_cert = p12.get_certificate()
-            cert_not_before = curent_cert.get_notBefore().decode('utf-8')
-            cert_not_after = curent_cert.get_notAfter().decode('utf-8')
             def convert_date(date):
                 try:
-                    dt = datetime.strptime(date, "%Y%m%d%H%M%SZ")
+                    dt = datetime.strftime(date, "%d.%m.%Y[%H:%M]")
                 except Exception as E:
                     print(repr(E))
                     return ""
-                return dt.strftime("%d.%m.%Y[%H:%M]")
+                return dt
 
             cert_valid_str = ' - '.join((convert_date(cert_not_before), convert_date(cert_not_after)))
 
             if not self.name:
-                self.name = ' '.join((name, cert_valid_str))
+                self.name = ' '.join((str(certificate.subject), cert_valid_str))
             self.csr = csr or ''
             self.crt = crt or ''
-            self.date_expire = datetime.strptime(cert_not_after, "%Y%m%d%H%M%SZ").strftime("%Y-%m-%d")
-
-    # @api.one
-    # def get_certificate(self):
-    #     """
-    #     Return Certificate object.
-    #     """
-    #     return self.crt and X509.load_cert_string(self.crt.encode('ascii'))
-
-    # @api.one
-    # def generate_certificate(self, issuer, ext=None, serial_number=1, version=2,
-    #                          date_begin=None, date_end=None, expiration=365):
-    #     """
-    #     Generate certificate
-    #     """
-    #
-    #     if self.status in ['empty', 'valid_request']:
-    #         # Get request data
-    #         pk = self.pairkey_id.as_pkey()[0]
-    #         req = self.get_request()[0]
-    #         if req is None:
-    #             raise
-    #         sub = req.get_subject()
-    #         pkey = req.get_pubkey()
-    #         # Building certificate
-    #         cert = X509.X509()
-    #         cert.set_serial_number(serial_number)
-    #         cert.set_version(version)
-    #         cert.set_subject(sub)
-    #
-    #         now = ASN1.ASN1_UTCTIME()
-    #         if date_begin is None:
-    #             t = long(time.time()) + time.timezone
-    #             now.set_time(t)
-    #         else:
-    #             now.set_datetime(datetime.strptime(date_begin, "%Y-%m-%d"))
-    #
-    #         nowPlusYear = ASN1.ASN1_UTCTIME()
-    #         if date_end is None:
-    #             nowPlusYear.set_time(t + 60 * 60 * 24 * expiration)
-    #         else:
-    #             nowPlusYear.set_datetime(datetime.strptime(date_end, "%Y-%m-%d"))
-    #
-    #         cert.set_not_before(now)
-    #         cert.set_not_after(nowPlusYear)
-    #         cert.set_issuer(issuer)
-    #         cert.set_pubkey(pkey)
-    #         cert.set_pubkey(cert.get_pubkey())
-    #         if ext:
-    #             cert.add_ext(ext)
-    #         cert.sign(pk, 'sha1')
-    #         self.write({'crt': cert.as_pem()})
-
-    # #TODO signer here
-    # def smime(self, cr, uid, ids, message, context=None):
-    #     """
-    #     Sign message in SMIME format.
-    #     """
-    #     r = {}
-    #     for cert in self.browse(cr, uid, ids):
-    #         #if cert.status == 'valid': # EXTRANGE: Invalid certificates can be used for sign!
-    #         if True:
-    #             smime = SMIME.SMIME()
-    #             ks = BIO.MemoryBuffer(cert.pairkey_id.key.encode('ascii'))
-    #             cs = BIO.MemoryBuffer(cert.crt.encode('ascii'))
-    #             bf = BIO.MemoryBuffer(str(message))
-    #             out = BIO.MemoryBuffer()
-    #             try:
-    #                 smime.load_key_bio(ks, cs)
-    #             except EVP.EVPError:
-    #                 raise osv.except_osv(_('Error in Key and Certificate strings !'), _('Please check if private key and certificate are in ASCII PEM format.'))
-    #             sbf = smime.sign(bf)
-    #             smime.write(out, sbf)
-    #             r[cert.id] = out.read()
-    #         else:
-    #             raise osv.except_osv(_('This certificate is not ready to sign any message !'), _('Please set a certificate to continue. You must send your certification request to a authoritative certificator to get one, or execute a self sign certification'))
-    #     return r
-
-
-
+            self.date_expire = fields.Date.to_date(cert_not_after)
+            self.state = 'confirmed'

@@ -6,12 +6,11 @@
     "summary": """Management for all sort of keys, certificates, etc.""",
     "category": "Tools",
     "images": [],
-    "version": "12.0.1.0.0",
+    "version": "12.0.2.0.0",
     "application": False,
 
     "author": "Coop. Trab. Moldeo Interactive Ltda.,"
               "Ecodica",
-    # "support": "support@odoo-hrvatska.orgr",
     "website": "https://decod.io",
     "license": "LGPL-3",
     "depends": [
