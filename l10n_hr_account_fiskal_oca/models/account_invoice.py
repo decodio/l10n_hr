@@ -60,8 +60,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
             raise UserError(
                 _('Fiscalization is not active for this document!!'))
         if not self.fiskal_user_id.partner_id.vat:
-            raise UserError(
-                _('User OIB is not not entered! It is required'))
+            raise UserError(_('User OIB is not entered! It is required!'))
         if not self.company_id.fiskal_cert_id:
             raise UserError(
                 _('No fiscal certificate found, please install one '

@@ -18,6 +18,11 @@ class AccountMove(models.Model):
     @api.multi
     def post(self, invoice=False):
         res = super(AccountMove, self).post(invoice=invoice)
+        bp_type = (invoice and invoice.l10n_hr_business_process_type_id
+                   and invoice.l10n_hr_business_process_type_id.code or '')
+        # Do not check/fiscalize for other business process types
+        if bp_type != 'XF1':
+            return res
         if invoice and \
             invoice.type in ('out_invoice', 'out_refund') and \
             invoice.company_id.croatia:

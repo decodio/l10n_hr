@@ -9,6 +9,7 @@ from Crypto.Hash import SHA, MD5
 from Crypto.PublicKey import RSA
 from . import soap
 
+
 def generate_zki(zki_datalist, key_str):
     '''
     as function so it can be called to ckeck generaqted ZKI without
@@ -29,9 +30,11 @@ def generate_zki(zki_datalist, key_str):
     md5h.update(signature)
     return md5h.hexdigest()
 
+
 def format_decimal(decimal):
     '''Formats float for Fiskal communication'''
     return '%.2f' % decimal
+
 
 def get_uuid():
     '''recomended for fiscalization is UUID4'''
@@ -72,10 +75,8 @@ class Fiskalizacija():
             suds_options['location'] = 'https://cistest.apis-it.hr:8449/FiskalizacijaServiceTest'
 
         self.client = Client(fiskal_data['wsdl'], **suds_options)
-        self.client.options.transport = soap.CustomHttpTransport(
-                                        ca_certs=fiskal_data['ca_path'])
+        self.client.options.transport = soap.CustomHttpTransport(ca_certs=fiskal_data['ca_path'])
         self.log = xml_message_log_plugin
-
 
     def create(self, name):
         '''
@@ -86,7 +87,7 @@ class Fiskalizacija():
             wtype = self.client.factory.create(name)
         else:
             wtype = self.client.factory.create(
-                                    "%s:%s" % (self.default_ns, name))
+                "%s:%s" % (self.default_ns, name))
         return wtype
 
     def generate_header(self):
@@ -147,9 +148,7 @@ class Fiskalizacija():
 
     def process_response(self, request_hdr, response):
         '''Process response and return response data in dictionary'''
-
         response = dict(response)
-
         # if 'Zaglavlje' not in response:
         #     raise Exception('No header in response')
         # if 'IdPoruke' not in response['Zaglavlje']:
@@ -166,7 +165,4 @@ class Fiskalizacija():
 
         if 'Signature' in response:
             del response['Signature']
-
-
-
         return response
