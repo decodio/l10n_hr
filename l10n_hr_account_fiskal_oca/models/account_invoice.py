@@ -125,23 +125,26 @@ class FiscalInvoiceMixin(models.AbstractModel):
             elif fiskal_type == 'marza':
                 iznos_marza += tax.base
 
+        racun.Pdv = []
         for pdv in tax_data['Pdv']:
             _pdv = tax_data['Pdv'][pdv]
-            porez = factory.create('Porez')
-            porez.__delattr__('Naziv')
+            porez = factory.create('PorezType')
+            # porez.__delattr__('Naziv')
             porez.Stopa = fiskal.format_decimal(pdv)
             porez.Osnovica = fiskal.format_decimal(_pdv['Osnovica'])
             porez.Iznos = fiskal.format_decimal(_pdv['Iznos'])
-            racun.Pdv.Porez.append(porez)
+            racun.Pdv.append(porez)
 
+        racun.Pnp = []
         for pnp in tax_data['Pnp']:
             _pnp = tax_data['Pnp'][pnp]
             porez = factory.create('Porez')
             porez.Stopa = fiskal.format_decimal(pnp)
             porez.Osnovica = fiskal.format_decimal(_pnp['Osnovica'])
             porez.Iznos = fiskal.format_decimal(_pnp['Iznos'])
-            racun.Pnp.Porez.append(porez)
+            racun.Pnp.append(porez)
 
+        racun.OstaliPor = []
         for ost in tax_data['OstaliPor']:
             _ost = tax_data['OstaliPor'][ost]
             porez = factory.create('Porez')
@@ -149,7 +152,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
             porez.Stopa = fiskal.format_decimal(ost)
             porez.Osnovica = fiskal.format_decimal(_ost['Osnovica'])
             porez.Iznos = fiskal.format_decimal(_pnp['Iznos'])
-            racun.OstaliPor.Porez.append(porez)
+            racun.OstaliPor.append(porez)
 
         if iznos_oslob_pdv:
             racun.IznosOslobPdv = fiskal.format_decimal(iznos_oslob_pdv)
@@ -167,7 +170,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
         return racun
 
     def _prepare_fisk_racun(self, factory, fiskal_data):
-        racun = factory.create('Racun')
+        racun = factory.create('RacunType')
 
         # 1. get company OIB
         if not fiskal_data.get('test', False):

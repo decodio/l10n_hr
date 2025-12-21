@@ -20,6 +20,11 @@ from suds.bindings.binding import envns as soap_envns
 _logger = getLogger(__name__)
 
 
+class XMLSignerWithSHA1(XMLSigner):
+    def check_deprecated_methods(self):
+        pass
+
+
 class XmlDSigMessagePlugin(MessagePlugin):
     """
     Suds message plugin for generating and verifying XML signatures
@@ -66,7 +71,7 @@ class XmlDSigMessagePlugin(MessagePlugin):
         payload.set('Id', reference_uri)
         payload.refitPrefixes()  # push ds up xml tree
 
-        signer = XMLSigner(
+        signer = XMLSignerWithSHA1(
             signature_algorithm="rsa-sha1",
             digest_algorithm="sha1",
             c14n_algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"
@@ -98,7 +103,7 @@ class XmlDSigMessagePlugin(MessagePlugin):
 
         sp = etree.tostring(signed_payload)
         signed_data = Parser().parse(string=sp).root()
-        #signed_data.updatePrefix('tns', '"http://www.apis-it.hr/fin/2012/types/f73"')
+        # signed_data.updatePrefix('tns', '"http://www.apis-it.hr/fin/2012/types/f73"')
 
         body.replaceChild(payload, signed_data)
         context.envelope = envelope_element.plain().encode('utf-8')
@@ -137,7 +142,6 @@ class XmlDSigMessagePlugin(MessagePlugin):
             envelope.refitPrefixes()
 
             return envelope.str()
-
 
         valid_signature = False
         # return  # TMP!
@@ -188,7 +192,6 @@ class CustomHttpTransport(HttpTransport):
             del kwargs['ca_certs']
 
         HttpTransport.__init__(self, **kwargs)
-
 
     def u2handlers(self):
         '''Adds CustomHTTPErrorProcessor to handlers list'''
