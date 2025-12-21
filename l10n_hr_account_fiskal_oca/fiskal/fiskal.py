@@ -96,7 +96,7 @@ class Fiskalizacija():
         : DatumVrijeme : datestring formatted as :
         '''
 
-        zaglavlje = self.create('Zaglavlje')
+        zaglavlje = self.create('ZaglavljeType')
         zaglavlje.IdPoruke = uuid4().urn.split(':')[-1]
         company = self.odoo_object._name == 'res.company' and \
                   self.odoo_object or self.odoo_object.company_id
