@@ -19,3 +19,11 @@ class L10nHrBusinessProcessType(models.Model):
         for bpt in self:
             if bpt.code and bpt.name:
                 bpt.display_name = bpt.code + ' - ' + bpt.name
+
+    @api.multi
+    def name_get(self):
+        result = []
+        for bpt in self:
+            name = '%s - %s' %(bpt.code, bpt.name)
+            result.append((bpt.id, name))
+        return result
