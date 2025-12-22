@@ -109,7 +109,7 @@ class Company(models.Model):
             fiskal_data=fd, odoo_object=self
         )
         time_start = self.get_l10n_hr_time_formatted()
-        msg = 'TEST message'
+        msg = b'TEST message'
         echo = fisk.send('echo', msg)
         self.create_fiskal_log('echo', fisk, echo, time_start)
         if echo != msg:
@@ -130,15 +130,13 @@ class Company(models.Model):
         wsdl_file = schema + '/wsdl/FiskalizacijaService.wsdl'
 
         ca_path, cis_ca_list = None, []
-        cert_path = fiskal_path + '/fina_cert'
+        cert_path = fiskal_path + '/fina_cert/%s/' %('prod' if production else 'demo')
         for fcert in os.listdir(cert_path):
-            if not production and 'Demo' in fcert or \
-                    production and 'Demo' not in fcert:
-                fpath = os.path.join(cert_path, fcert)
-                if 'Chain' in fcert:
-                    ca_path = fpath
-                else:
-                    cis_ca_list.append(fpath)
+            fpath = os.path.join(cert_path, fcert)
+            if 'Chain' in fcert:
+                ca_path = fpath
+            else:
+                cis_ca_list.append(fpath)
 
         res = {
             'wsdl': wsdl_file,
