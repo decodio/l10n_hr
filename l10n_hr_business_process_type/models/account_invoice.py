@@ -6,6 +6,7 @@ class AccountInvoice(models.Model):
 
     l10n_hr_business_process_type_id = fields.Many2one(
         comodel_name='l10n.hr.business.process.type',
+        readonly=True, states={'draft': [('readonly', False)]},
         string="Business Process Type")
 
     @api.onchange('journal_id')
