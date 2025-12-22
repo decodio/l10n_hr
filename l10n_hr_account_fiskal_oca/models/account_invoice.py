@@ -125,34 +125,37 @@ class FiscalInvoiceMixin(models.AbstractModel):
             elif fiskal_type == 'marza':
                 iznos_marza += tax.base
 
-        racun.Pdv = []
         for pdv in tax_data['Pdv']:
+            if not racun.Pdv:
+                racun.Pdv = factory.create('PdvType')
             _pdv = tax_data['Pdv'][pdv]
             porez = factory.create('PorezType')
             # porez.__delattr__('Naziv')
             porez.Stopa = fiskal.format_decimal(pdv)
             porez.Osnovica = fiskal.format_decimal(_pdv['Osnovica'])
             porez.Iznos = fiskal.format_decimal(_pdv['Iznos'])
-            racun.Pdv.append(porez)
+            racun.Pdv.Porez.append(porez)
 
-        racun.Pnp = []
         for pnp in tax_data['Pnp']:
+            if not racun.Pnp:
+                racun.Pnp = factory.create('PorezNaPotrosnjuType')
             _pnp = tax_data['Pnp'][pnp]
             porez = factory.create('Porez')
             porez.Stopa = fiskal.format_decimal(pnp)
             porez.Osnovica = fiskal.format_decimal(_pnp['Osnovica'])
             porez.Iznos = fiskal.format_decimal(_pnp['Iznos'])
-            racun.Pnp.append(porez)
+            racun.Pnp.Porez.append(porez)
 
-        racun.OstaliPor = []
         for ost in tax_data['OstaliPor']:
+            if not racun.OstaliPor:
+                racun.OstaliPor = factory.create('OstaliPoreziType')
             _ost = tax_data['OstaliPor'][ost]
             porez = factory.create('Porez')
             porez.Naziv = _ost['Naziv']
             porez.Stopa = fiskal.format_decimal(ost)
             porez.Osnovica = fiskal.format_decimal(_ost['Osnovica'])
             porez.Iznos = fiskal.format_decimal(_pnp['Iznos'])
-            racun.OstaliPor.append(porez)
+            racun.OstaliPor.Porez.append(porez)
 
         if iznos_oslob_pdv:
             racun.IznosOslobPdv = fiskal.format_decimal(iznos_oslob_pdv)
@@ -162,11 +165,13 @@ class FiscalInvoiceMixin(models.AbstractModel):
             racun.IznosMarza = fiskal.format_decimal(iznos_marza)
 
         for nak in tax_data['Naknade']:
+            if not racun.Naknade:
+                racun.Naknade = factory.create('NaknadeType')
             naziv, iznos = nak
-            naknada = factory.create('Naknada')
+            naknada = factory.create('NaknadaType')
             naknada.NazivN = naziv
             naknada.IznosN = fiskal.format_decimal(iznos)
-            racun.Naknade.append(naknada)
+            racun.Naknade.Naknada.append(naknada)
         return racun
 
     def _prepare_fisk_racun(self, factory, fiskal_data):
@@ -262,8 +267,8 @@ class FiscalInvoiceMixin(models.AbstractModel):
             racun.BrRac.OznPosPr = fis_racun[1]
             racun.BrRac.OznNapUr = fis_racun[2]
             response = fisk.send(msg_type, racun, raw_response=True)
-
-        self.company_id.create_fiskal_log(msg_type, fisk, response, time_start)
+        log_type = msg_type if msg_type != 'racuni' else 'racun'
+        self.company_id.create_fiskal_log(log_type, fisk, response, time_start)
         if hasattr(response, 'Jir'):
             if not self.jir:
                 self.jir = response.Jir
