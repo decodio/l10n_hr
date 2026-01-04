@@ -5,6 +5,7 @@
 from ..fiskal import fiskal
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.float_utils import float_compare
 
 
 class FiscalPrateciDokumentMixin(models.AbstractModel):
@@ -50,24 +51,6 @@ class FiscalInvoiceMixin(models.AbstractModel):
         states={'draft': [('readonly', False)]},
         help="Paragon broj racuna, ako je racun izdan na paragon. "
              "Potrebno upisati prije potvrđivanja računa")
-
-    def _check_fiskal_invoice_data(self):
-        """
-        Check for all required elements and permissions
-        :return: fiskal number parts
-        """
-        if not self.journal_id.fiscalisation_active:
-            raise UserError(
-                _('Fiscalization is not active for this document!!'))
-        if not self.fiskal_user_id.partner_id.vat:
-            raise UserError(_('User OIB is not entered! It is required!'))
-        if not self.company_id.fiskal_cert_id:
-            raise UserError(
-                _('No fiscal certificate found, please install one '
-                  'activate and select it on company setup!'))
-        # assuming we have validated invoice and have fiskal number present!
-        #return self.fiskalni_broj.split(self.company_id.fiskal_separator)
-        # return True
 
     def _prepare_fisk_racun_taxes(self, racun, factory):
 
@@ -201,11 +184,12 @@ class FiscalInvoiceMixin(models.AbstractModel):
         racun.DatVrijeme = dat_vrijeme
         racun.OznSlijed = self.fiskal_uredjaj_id.prostor_id.sljed_racuna
 
-        #br_rac = self.fiskalni_broj.split(self.company_id.fiskal_separator)
+        # br_rac = self.fiskalni_broj.split(self.company_id.fiskal_separator)
 
         racun.IznosUkupno = fiskal.format_decimal(self.amount_total)
         racun.NacinPlac = self.nacin_placanja
         racun.OibOper = self.fiskal_user_id.partner_id.get_oib()
+        racun.OibPrimateljaRacuna = self.partner_id.vat and self.partner_id.vat.replace('HR', '')
         racun.NakDost = nak_dost
         racun.ZastKod = self.zki
 
@@ -226,17 +210,23 @@ class FiscalInvoiceMixin(models.AbstractModel):
         msg_type : Racun,
 
         """
+        errors = self._l10n_hr_post_fiskal_check()
+        if errors:
+            msg = _("Fiscalisation not possible: \n")
+            msg += "\n".join(errors)
+            raise ValidationError(msg)
         if self.jir and len(self.jir) > 30:
             if msg_type != 'provjera':
                 msg_type = 'provjera'
-            # return False  # vec je prosao fiskalizaciju
+            # maybe this instead
+            # raise UserError(_('Invoice is already fiscalized!'))
+            return False  # vec je prosao fiskalizaciju
 
         time_start = self.company_id.get_l10n_hr_time_formatted()
         if not self.fiskal_user_id:
             # MUST USE CURRENT user for fiscalization!
             # Except in case of paragon račun? or naknadna dostava?
             self.fiskal_user_id = self._uid
-        self._check_fiskal_invoice_data()
         fiskal_data = self.company_id.get_fiskal_data()
         fiskal_data['time'] = time_start
         fis_racun = self.fiskalni_broj.split(self.company_id.fiskal_separator)
@@ -253,7 +243,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
                 fis_racun[1],
                 fis_racun[2],
                 fiskal.format_decimal(self.amount_total)
-                ]
+            ]
             self.zki = fiskal.generate_zki(
                 zki_datalist=zki_datalist,
                 key_str=self.company_id.fiskal_cert_id.csr
@@ -275,8 +265,49 @@ class FiscalInvoiceMixin(models.AbstractModel):
             else:
                 pass
 
-    def check_fiskalizacija(self):
-        pass
+    def _l10n_hr_post_fiskal_check(self):
+        res = []
+        nacin_placanja = self.nacin_placanja
+        if not self.journal_id.fiscalisation_active:
+            res.append(_('Fiscalization is not active for this document!!'))
+        if not self.fiskal_user_id.partner_id.vat:
+            res.append(_('User OIB is not entered! It is required!'))
+        if not self.company_id.fiskal_cert_id:
+            res.append(
+                _('No fiscal certificate found, please install one '
+                  'activate and select it on company setup!')
+            )
+        if (
+                self.journal_id.fiscalisation_active
+                and self.partner_id.is_company
+                and not self.company_id.partner_id.vat
+        ):
+            res.append(
+                _("To fiscalize an R1 invoice, an OIB must be set on the company %s") % self.partner_id.display_name
+            )
+        if (
+                self.journal_id.fiscalisation_active and
+                self.partner_id.is_company and nacin_placanja == 'T'
+        ):
+            res.append(
+                _("R1 invoice cannot be fiscalized with Transaction payment type")
+            )
+        if (
+                self.journal_id.fiscalisation_active and nacin_placanja == 'G' and
+                float_compare(self.amount_total, 10000, precision_digits=self.currency_id.decimal_places) == 1
+        ):
+            res.append(
+                _("Invoice total amount bigger than 10.000,00 € cannot be fiscalized with the Cash payment type")
+            )
+        if (
+                self.journal_id.fiscalisation_active and
+                nacin_placanja == 'G' and self.partner_id.is_company and
+                float_compare(self.amount_total, 700, precision_digits=self.currency_id.decimal_places) == 1
+        ):
+            res.append(
+                _("R1 invoice total amount bigger than 700,00 € cannot be fiscalized with the Cash payment type")
+            )
+        return res
 
 
 class AccountInvoice(models.Model):
@@ -317,7 +348,7 @@ class AccountInvoice(models.Model):
             self.fiskaliziraj()
         # TODO: nova shema ima metodu provjere da li je racun fiskaliziran!
         elif len(self.jir) >= 32:  # BOLE: JIR je 32+ znaka !
-            #res = self.fiskaliziraj('provjera') # samo WSDL 1.4 ovog nema u 1.5 ?!
+            # res = self.fiskaliziraj('provjera') # samo WSDL 1.4 ovog nema u 1.5 ?!
             raise UserError('Nema potrebe ponavljati postupak fiskalizacije!')
 
     def button_check_zki(self):
@@ -340,8 +371,8 @@ class AccountInvoice(models.Model):
             'br_racuna': fisk_br,
             'ukupan_iznos': self.amount_total,
             'datum_vrijeme': self.vrijeme_izdavanja and
-                        self.vrijeme_izdavanja or
-                        self.company_id.get_l10n_hr_time_formatted().get['datum_vrijeme'],
+                             self.vrijeme_izdavanja or
+                             self.company_id.get_l10n_hr_time_formatted().get['datum_vrijeme'],
             'oznaka_pp': self.fiskal_uredjaj_id and
                          self.fiskal_uredjaj_id.prostor_id.oznaka_prostor or False,
             'oznaka_nu': self.fiskal_uredjaj_id and
