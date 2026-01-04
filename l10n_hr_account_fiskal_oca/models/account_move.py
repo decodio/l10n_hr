@@ -14,7 +14,6 @@ class AccountMove(models.Model):
             return
         return super()._gen_fiskal_number(invoice, move)
 
-
     @api.multi
     def post(self, invoice=False):
         res = super(AccountMove, self).post(invoice=invoice)
@@ -23,15 +22,7 @@ class AccountMove(models.Model):
         # Do not check/fiscalize for other business process types
         if bp_type != 'XF1':
             return res
-        if invoice and \
-            invoice.type in ('out_invoice', 'out_refund') and \
-            invoice.company_id.croatia:
-            if invoice.journal_id.fiscalisation_active:
-                invoice.fiskaliziraj()
-            else:
-                if invoice.nacin_placanja != 'T':
-                    raise ValidationError(
-                        "Odabrani način plaćanja nije dozvoljen "
-                        "jer fiskalizacija nije aktivna za dnevnik '%s'" % \
-                                          invoice.journal_id.name)
+        if invoice and invoice.type in ('out_invoice', 'out_refund') \
+                and invoice.company_id.croatia and invoice.journal_id.fiscalisation_active:
+            invoice.fiskaliziraj()
         return res
