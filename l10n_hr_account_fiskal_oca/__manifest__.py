@@ -22,7 +22,7 @@
     'website': 'https://www.ecodica.eu',
     'license': 'LGPL-3',
     'category': 'Invoices & Payments',
-    'version': '12.0.1.0.1',
+    'version': '12.0.2.0.1',
 
     # any module necessary for this one to work correctly
     'depends': [
