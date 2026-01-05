@@ -189,7 +189,12 @@ class FiscalInvoiceMixin(models.AbstractModel):
         racun.IznosUkupno = fiskal.format_decimal(self.amount_total)
         racun.NacinPlac = self.nacin_placanja
         racun.OibOper = self.fiskal_user_id.partner_id.get_oib()
-        racun.OibPrimateljaRacuna = self.partner_id.vat and self.partner_id.vat.replace('HR', '')
+        if self.partner_id.is_company:
+            if not self.partner_id.vat:
+                raise UserError(
+                    _("Partner {} is defined as R1 but missing VAT").format(self.partner_id.display_name)
+                )
+            racun.OibPrimateljaRacuna = self.partner_id.vat.replace('HR', '')
         racun.NakDost = nak_dost
         racun.ZastKod = self.zki
 
