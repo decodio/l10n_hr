@@ -132,6 +132,7 @@ class CryptoCertificate(models.Model):
         for cert in self:
             if cert.state == 'confirmed':
                 raise UserError(_('Deleting certificate in confirmed state is not allowed!'))
+        return super().unlink()
 
     def _check_valid(self):
         '''
