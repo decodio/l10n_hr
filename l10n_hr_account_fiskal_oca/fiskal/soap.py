@@ -153,18 +153,15 @@ class XmlDSigMessagePlugin(MessagePlugin):
             body = reply_element.getChild('Body')
             payload = body[0]
             qname = payload.qname()
-            cert_der = _extract_keyinfo_cert(payload)
-            cert = crypto.load_certificate(crypto.FILETYPE_ASN1, cert_der)
-
             if 'Echo' in qname or 'Fault' in qname:
                 _logger.warning('Not verifying certificate for qname: %s', qname)
                 return
-
+            cert_der = _extract_keyinfo_cert(payload)
+            cert = crypto.load_certificate(crypto.FILETYPE_ASN1, cert_der)
             if self.cis_cert_cn:
                 _verify_cn(cert, self.cis_cert_cn)
             else:
                 _logger.warning('CIS certificate common name not configured')
-
             # Ain't nobody got time for that...
             valid_signature = True
             # verifier = XMLVerifier()
