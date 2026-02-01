@@ -105,15 +105,13 @@ class Company(models.Model):
 
     def button_test_echo(self):
         fd = self.get_fiskal_data()
-        fisk = Fiskalizacija(
-            fiskal_data=fd, odoo_object=self
-        )
+        fisk = Fiskalizacija(fiskal_data=fd, odoo_object=self)
         time_start = self.get_l10n_hr_time_formatted()
         msg = b'TEST message'
         echo = fisk.send('echo', msg)
         self.create_fiskal_log('echo', fisk, echo, time_start)
-        if echo != msg:
-            # i commit created log! then raise!
+        if str(echo) != str(msg):
+            # I commit created log! then raise!
             self.env.cr.commit()
             raise ValidationError(
                 "ECHO failed with : " + fisk.log.received_log
