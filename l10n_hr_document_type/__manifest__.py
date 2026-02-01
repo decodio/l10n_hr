@@ -4,7 +4,7 @@
     "summary": """Defines UNTDID1001 document types for Croatian fiscal 2.0""",
     "category": "Croatia",
     "images": [],
-    "version": "12.0.1.0.0",
+    "version": "12.0.2.0.0",
     "application": False,
     'author': "Ecodica",
     "license": 'LGPL-3',
@@ -27,6 +27,7 @@
         # Views
         "views/l10n_hr_document_type_views.xml",
         "views/account_journal_views.xml",
+        "views/account_invoice_views.xml",
         "views/menu_items.xml",
     ],
     "qweb": [],
