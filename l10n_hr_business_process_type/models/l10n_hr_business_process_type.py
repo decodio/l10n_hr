@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.osv.expression import NEGATIVE_TERM_OPERATORS
 
 
 class L10nHrBusinessProcessType(models.Model):
@@ -24,6 +25,17 @@ class L10nHrBusinessProcessType(models.Model):
     def name_get(self):
         result = []
         for bpt in self:
-            name = '%s - %s' %(bpt.code, bpt.name)
+            name = '%s - %s' % (bpt.code, bpt.name)
             result.append((bpt.id, name))
         return result
+
+    @api.model
+    def name_search(self, name, args=None, operator="ilike", limit=100):
+        args = args or []
+        domain = []
+        if name:
+            domain = ["|", ("code", operator, name), ("name", operator, name)]
+            if operator in NEGATIVE_TERM_OPERATORS:
+                domain = ["&", "!"] + domain[1:]
+        types = self.search(domain + args, limit=limit)
+        return [(t.id, t.display_name) for t in types.sudo()]
