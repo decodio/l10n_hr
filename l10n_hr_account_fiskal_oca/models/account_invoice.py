@@ -347,6 +347,16 @@ class AccountInvoice(models.Model):
             self.fiscalisation_active = False
         return super(AccountInvoice, self)._onchange_journal_id()
 
+    @api.onchange('l10n_hr_business_process_type_id')
+    def _onchange_l10n_hr_business_process_type_id(self):
+        if self.type in ('out_invoice', 'out_refund'):
+            res = dict(domain=dict(partner_id=[('is_company', '=', True), ('customer', '=', True)]))
+            if self.l10n_hr_business_process_type_id.code == 'XF1':
+                res['domain']['partner_id'] = [('is_company', '=', False), ('vat', '!=', False),
+                                               ('country_id.code', '=', 'HR')]
+
+            return res
+
     def button_fiskaliziraj(self):
         self.ensure_one()
         if not self.jir:
@@ -401,8 +411,9 @@ class AccountInvoice(models.Model):
 
 
 class AccountInvoicePD(models.Model):
-    _inehrit = 'fiscal.mixin'
     _name = 'account.invoice.fiscal.pd'
+    _description = 'Account Invoice - Prateci Dokumenti'
+    _inherit = 'fiscal.mixin'
 
     invoice_id = fields.Many2one(
         comodel_name='account.invoice',
