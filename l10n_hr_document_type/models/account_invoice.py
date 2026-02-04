@@ -14,6 +14,7 @@ class AccountInvoice(models.Model):
         res = super()._onchange_journal_id()
         if self.company_id.country_id.code != "HR":
             return res
-        if self.journal_id.l10n_hr_untdid1001_document_type_id:
-            self.l10n_hr_untdid1001_document_type_id = self.journal_id.l10n_hr_untdid1001_document_type_id.id
+        # Better safe than sorry
+        # if self.journal_id.l10n_hr_untdid1001_document_type_id:
+        #     self.l10n_hr_untdid1001_document_type_id = self.journal_id.l10n_hr_untdid1001_document_type_id.id
         return res

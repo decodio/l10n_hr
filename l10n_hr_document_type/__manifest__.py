@@ -27,7 +27,6 @@
         # Views
         "views/l10n_hr_document_type_views.xml",
         "views/account_journal_views.xml",
-        "views/account_invoice_views.xml",
         "views/menu_items.xml",
     ],
     "qweb": [],
