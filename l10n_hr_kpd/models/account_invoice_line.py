@@ -11,7 +11,8 @@ class AccountInvoiceLine(models.Model):
     @api.depends('product_id')
     def _compute_l10n_hr_kpd_id(self):
         for line in self:
-            kpd = line.product_id.with_context(force_company=line.company_id.id).l10n_hr_property_kpd_id
+            company = line.invoice_id.company_id
+            kpd = line.product_id.with_context(force_company=company and company.id or False).l10n_hr_property_kpd_id
             if not kpd:
                 kpd = line.product_id.categ_id.l10n_hr_kpd_id
                 if not kpd and line.product_id.categ_id:
