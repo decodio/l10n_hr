@@ -6,6 +6,13 @@ from ..fiskal import fiskal
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.float_utils import float_compare
+import base64
+from datetime import datetime
+import qrcode
+import io
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class FiscalPrateciDokumentMixin(models.AbstractModel):
@@ -33,24 +40,53 @@ class FiscalInvoiceMixin(models.AbstractModel):
         string="XML vrijeme računa",
         help="Value from fiscalization msg stored as string",
         size=19, readonly=True, copy=False)
-
-    # fiskal_user_id = fields.Many2one( # -> moved to l10n-hr_account_oca!!
-    #     comodel_name='res.users',
-    #     string='Fiskalizirao',
-    #     help='Fiskalizacija. Osoba koja je potvrdila racun',
-    #     copy=False)
-    # zki = fields.Char(
-    #     string='ZKI',
-    #     readonly=True, copy=False)
-    # jir = fields.Char(
-    #     string='JIR',
-    #     readonly=True, copy=False)
     paragon_br_rac = fields.Char(
         'Paragon br.',
         readonly=True, copy=False,
         states={'draft': [('readonly', False)]},
         help="Paragon broj racuna, ako je racun izdan na paragon. "
              "Potrebno upisati prije potvrđivanja računa")
+    fiskal_qr = fields.Binary(compute="_compute_fiskal_qr", string="Fiskal QR code", help="Binary field visible in the interface")
+
+    def _generate_fiskal_qr_code(self):
+        self.ensure_one()
+        data = "https://porezna.gov.hr/rn?"
+        if self.jir:
+            data += "jir=" + self.jir  # fiskalizirani racun
+        else:
+            # ispis prije poslane fiskalne poruke ili je poslana poruka
+            # imala neku gresku pa JIR nije dodjeljen
+            data += "zki=" + self.zki
+        datum = datetime.strptime(self.vrijeme_izdavanja, "%d.%m.%Y %H:%M:%S").strftime("%Y%m%d_%H%M")
+        data += "&datv=" + datum
+        iznos = "&izn=%.2f" % self.amount_total
+        data += iznos.replace(".", "")  # bez decimalne tocke u linku!
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=1,
+        )
+        qr.add_data(data)
+        qr.make(fit=True)
+        try:
+            img = qr.make_image(fill_color="black", back_color="white")
+            ret = io.BytesIO()
+            img.save(ret, img.kind)
+            ret.seek(0)
+            res = base64.b64encode(ret.getvalue())
+        except Exception as e:
+            _logger.error(repr(e))
+            res = False
+        return res
+
+    @api.depends("jir", "zki")
+    def _compute_fiskal_qr(self):
+        for inv in self:
+            qr_code = False
+            if inv.jir and inv.zki:
+                qr_code = self._generate_fiskal_qr_code()
+            inv.fiskal_qr = qr_code
 
     def _prepare_fisk_racun_taxes(self, racun, factory):
 
