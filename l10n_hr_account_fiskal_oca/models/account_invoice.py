@@ -85,7 +85,7 @@ class FiscalInvoiceMixin(models.AbstractModel):
         for inv in self:
             qr_code = False
             if inv.jir and inv.zki:
-                qr_code = self._generate_fiskal_qr_code()
+                qr_code = inv._generate_fiskal_qr_code()
             inv.fiskal_qr = qr_code
 
     def _prepare_fisk_racun_taxes(self, racun, factory):
