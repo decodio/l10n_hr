@@ -113,10 +113,9 @@ class ResCurrencyRateProviderHrHNB(models.Model):
                     fields.Date.to_string(date_from),
                     fields.Date.to_string(date_to)
                 )
-        if currencies is not None:
+        elif currencies is not None:
             for cur in currencies:
                 url += "?valuta=" + cur
-
         res = request.urlopen(url)
         data = json.loads(res.read().decode("UTF-8"))
         return data
